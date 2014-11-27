@@ -6,9 +6,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.diusrex.tictactoe.BoardStatus;
+import com.diusrex.tictactoe.BoxPosition;
 import com.diusrex.tictactoe.Move;
 import com.diusrex.tictactoe.Player;
-import com.diusrex.tictactoe.Position;
+import com.diusrex.tictactoe.SectionPosition;
 import com.diusrex.tictactoe.TicTacToeEngine;
 
 public class EngineTest {
@@ -17,21 +18,25 @@ public class EngineTest {
     Move moveP1_2;
     Move moveP2SameAsMoveP1;
     Move moveP2;
+    Move moveP2_WrongSectionToP1;
 
     Move invalidPosition;
     Move invalidPlayer;
 
     @Before
     public void setup() {
-        board = new BoardStatus();
-        Position duplicatedPosition = new Position(0, 0);
-        Position validPosition = new Position(1, 1);
+        board = new BoardStatus(new SectionPosition(0, 0));
+        BoxPosition duplicatedPosition = new BoxPosition(0, 0);
+        BoxPosition validPosition = new BoxPosition(1, 1);
         moveP1 = new Move(duplicatedPosition, Player.Player_1); // Position 0, 0
         moveP1_2 = new Move(validPosition, Player.Player_1);
         moveP2SameAsMoveP1 = new Move(duplicatedPosition, Player.Player_2);
-        moveP2 = new Move(new Position(1, 1), Player.Player_2);
+        moveP2 = new Move(new BoxPosition(1, 1), Player.Player_2);
 
-        invalidPosition = new Move(new Position(-1, -1), Player.Player_1);
+        moveP2_WrongSectionToP1 = new Move(new BoxPosition(7, 7),
+                Player.Player_2);
+
+        invalidPosition = new Move(new BoxPosition(-1, -1), Player.Player_1);
         invalidPlayer = new Move(validPosition, Player.Unowned);
     }
 
@@ -101,4 +106,74 @@ public class EngineTest {
                 board.getBoxOwner(invalidPlayer.getPosition()));
     }
 
+    @Test
+    public void testWrongSection() {
+        TicTacToeEngine.applyMove(board, moveP1);
+        Assert.assertFalse(TicTacToeEngine.applyMove(board,
+                moveP2_WrongSectionToP1));
+
+    }
+
+    /*
+     * Need to test for when the box to pay into is full -> Then can play
+     * anywhere
+     */
+
+    @Test
+    public void testSectionToPlayInNextBasic() {
+        BoxPosition pos = new BoxPosition(0, 0);
+        SectionPosition expectedSection = new SectionPosition(0, 0);
+
+        TestUtils.assertAreEqual(expectedSection,
+                TicTacToeEngine.getSectionToPlayInNext(pos));
+
+        pos = new BoxPosition(2, 2);
+        expectedSection = new SectionPosition(2, 2);
+
+        TestUtils.assertAreEqual(expectedSection,
+                TicTacToeEngine.getSectionToPlayInNext(pos));
+
+        pos = new BoxPosition(3, 4);
+        expectedSection = new SectionPosition(0, 1);
+
+        TestUtils.assertAreEqual(expectedSection,
+                TicTacToeEngine.getSectionToPlayInNext(pos));
+    }
+
+    @Test
+    public void testSectionToPlayInFull() {
+        SectionPosition fullSection = new SectionPosition(0, 0);
+        fillSection(fullSection);
+
+        // Need to make sure is the correct player to play next
+        Player playerToPlayNext = Player.Player_1;
+        
+        // Need to make it so the player must play inside that section
+        board.setBoxOwner(fullSection.getTopLeftPosition(), playerToPlayNext);
+        
+        playerToPlayNext = Player.Player_2;
+        
+        BoxPosition untakenPosition = new BoxPosition(5, 5);
+
+        Assert.assertTrue(TicTacToeEngine.applyMove(board, new Move(
+                untakenPosition, playerToPlayNext)));
+    }
+
+    // WARNING: Will not update who owns the section
+    private void fillSection(SectionPosition toFill) {
+        BoxPosition offset = toFill.getTopLeftPosition();
+        Player playerToOwn = Player.Player_1;
+        for (int x = 0; x < 3; ++x) {
+            for (int y = 0; y < 3; ++y) {
+                BoxPosition basePosition = new BoxPosition(x, y);
+                board.setBoxOwner(basePosition.increaseBy(offset), playerToOwn);
+
+                // Switch players
+                if (playerToOwn == Player.Player_1)
+                    playerToOwn = Player.Player_2;
+                else
+                    playerToOwn = Player.Player_1;
+            }
+        }
+    }
 }
