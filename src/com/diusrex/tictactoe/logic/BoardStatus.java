@@ -72,7 +72,7 @@ public class BoardStatus {
         return getBoxOwner(pos.getX(), pos.getY());
     }
 
-    private Player getBoxOwner(int x, int y) {
+    public Player getBoxOwner(int x, int y) {
         return boardOwners[x][y];
     }
 
