@@ -49,8 +49,7 @@ public class EngineSectionTests {
             int count, Player player) {
         for (int i = 0; i < count; ++i, start = start.increaseBy(increase)) {
             board.setSectionToPlayIn(start.getSectionIn());
-            Assert.assertTrue(TicTacToeEngine.applyMove(board, new Move(start,
-                    player)));
+            TestUtils.applyMoveToBoard(board, new Move(start, player));
         }
     }
 
@@ -92,23 +91,22 @@ public class EngineSectionTests {
         BoxPosition player1PositionStart = new BoxPosition(0, 0);
         SectionPosition player1Section = player1PositionStart.getSectionIn();
 
-        Player currentPlayer = Player.Player_1;
-        board.playerToGoNext = currentPlayer;
+        Player mainPlayer = Player.Player_1;
+        board.playerToGoNext = mainPlayer;
 
         // Diagonal version 1
         takeLineInBoard(player1PositionStart, new BoxPosition(1, 1), 2,
-                currentPlayer);
+                mainPlayer);
         Assert.assertEquals(Player.Unowned,
                 board.getSectionOwner(player1Section));
 
         // Take the final spot
         BoxPosition winningPos = new BoxPosition(2, 2);
-        board.setSectionToPlayIn(winningPos.getSectionIn());
-        Assert.assertTrue(TicTacToeEngine.applyMove(board, new Move(winningPos,
-                currentPlayer)));
+        board.setSectionToPlayIn(player1Section);
 
-        Assert.assertEquals(currentPlayer,
-                board.getSectionOwner(player1Section));
+        TestUtils.applyMoveToBoard(board, new Move(winningPos, mainPlayer));
+
+        Assert.assertEquals(mainPlayer, board.getSectionOwner(player1Section));
     }
 
     @Test
@@ -127,9 +125,9 @@ public class EngineSectionTests {
 
         // Take the final spot
         BoxPosition winningPos = new BoxPosition(0, 2);
-        board.setSectionToPlayIn(winningPos.getSectionIn());
-        Assert.assertTrue(TicTacToeEngine.applyMove(board, new Move(winningPos,
-                currentPlayer)));
+        board.setSectionToPlayIn(player1Section);
+
+        TestUtils.applyMoveToBoard(board, new Move(winningPos, currentPlayer));
 
         Assert.assertEquals(currentPlayer,
                 board.getSectionOwner(player1Section));

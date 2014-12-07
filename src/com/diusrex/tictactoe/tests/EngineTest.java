@@ -53,7 +53,8 @@ public class EngineTest {
 
     @Test
     public void testApplyMove() {
-        Assert.assertTrue(TicTacToeEngine.applyMove(board, moveP1));
+        TestUtils.applyMoveToBoard(board, moveP1);
+
         Assert.assertEquals(moveP1.getPlayer(),
                 board.getBoxOwner(moveP1.getPosition()));
     }
@@ -62,7 +63,8 @@ public class EngineTest {
     public void testMultipleMoves() {
         TicTacToeEngine.applyMove(board, moveP1);
 
-        Assert.assertTrue(TicTacToeEngine.applyMove(board, moveP2));
+        TestUtils.applyMoveToBoard(board, moveP2);
+
         Assert.assertEquals(moveP2.getPlayer(),
                 board.getBoxOwner(moveP2.getPosition()));
     }
@@ -71,14 +73,17 @@ public class EngineTest {
     public void testTooManyP1Moves() {
         TicTacToeEngine.applyMove(board, moveP1);
 
-        Assert.assertFalse(TicTacToeEngine.applyMove(board, moveP1_2));
+        TestUtils.testInvalidMoveOnBoard(board, moveP1_2);
+
         Assert.assertNotSame(moveP1_2.getPlayer(),
                 board.getBoxOwner(moveP1_2.getPosition()));
     }
 
     @Test
     public void testTooManyP2Moves() {
-        Assert.assertFalse(TicTacToeEngine.applyMove(board, moveP2));
+
+        TestUtils.testInvalidMoveOnBoard(board, moveP2);
+
         Assert.assertNotSame(moveP2.getPlayer(),
                 board.getBoxOwner(moveP2.getPosition()));
     }
@@ -87,21 +92,22 @@ public class EngineTest {
     public void testAlreadyOwned() {
         TicTacToeEngine.applyMove(board, moveP1);
 
-        Assert.assertFalse(TicTacToeEngine.applyMove(board, moveP2SameAsMoveP1));
+        TestUtils.testInvalidMoveOnBoard(board, moveP2SameAsMoveP1);
+
         Assert.assertEquals(moveP1.getPlayer(),
                 board.getBoxOwner(moveP1.getPosition()));
     }
 
     @Test
     public void testInvalidPosition() {
-        Assert.assertFalse(TicTacToeEngine.applyMove(board, invalidPosition));
+        Assert.assertFalse(TicTacToeEngine.isValidMove(board, invalidPosition));
     }
 
     @Test
     public void testUnknownPlayerMove() {
         TicTacToeEngine.applyMove(board, moveP1);
 
-        Assert.assertFalse(TicTacToeEngine.applyMove(board, invalidPlayer));
+        TestUtils.testInvalidMoveOnBoard(board, invalidPlayer);
         Assert.assertEquals(Player.Unowned,
                 board.getBoxOwner(invalidPlayer.getPosition()));
     }
@@ -109,9 +115,8 @@ public class EngineTest {
     @Test
     public void testWrongSection() {
         TicTacToeEngine.applyMove(board, moveP1);
-        Assert.assertFalse(TicTacToeEngine.applyMove(board,
-                moveP2_WrongSectionToP1));
 
+        TestUtils.testInvalidMoveOnBoard(board, moveP2_WrongSectionToP1);
     }
 
     @Test
@@ -134,20 +139,22 @@ public class EngineTest {
         TestUtils.assertAreEqual(expectedSection,
                 TicTacToeEngine.getSectionToPlayInNext(pos));
     }
-    
+
     @Test
     public void testApplyMoveSectionToPlayInNext() {
         BoxPosition pos = new BoxPosition(2, 2);
         Player player = Player.Player_1;
         Move move = new Move(pos, player);
-        Assert.assertTrue(TicTacToeEngine.applyMove(board, move));
-        Assert.assertEquals(TicTacToeEngine.getSectionToPlayInNext(pos), board.getSectionToPlayIn());
-        
+        TestUtils.applyMoveToBoard(board, move);
+        Assert.assertEquals(TicTacToeEngine.getSectionToPlayInNext(pos),
+                board.getSectionToPlayIn());
+
         pos = new BoxPosition(8, 6);
         player = Player.Player_2;
         move = new Move(pos, player);
-        Assert.assertTrue(TicTacToeEngine.applyMove(board, move));
-        Assert.assertEquals(TicTacToeEngine.getSectionToPlayInNext(pos), board.getSectionToPlayIn());
+        TestUtils.applyMoveToBoard(board, move);
+        Assert.assertEquals(TicTacToeEngine.getSectionToPlayInNext(pos),
+                board.getSectionToPlayIn());
     }
 
     @Test
@@ -165,9 +172,8 @@ public class EngineTest {
 
         BoxPosition untakenPosition = new BoxPosition(5, 5);
 
-        Assert.assertTrue(TicTacToeEngine.applyMove(board, new Move(
-                untakenPosition, playerToPlayNext)));
+        TestUtils.applyMoveToBoard(board, new Move(untakenPosition,
+                playerToPlayNext));
     }
 
-    
 }

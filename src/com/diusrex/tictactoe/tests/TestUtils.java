@@ -4,8 +4,10 @@ import junit.framework.Assert;
 
 import com.diusrex.tictactoe.BoardStatus;
 import com.diusrex.tictactoe.BoxPosition;
+import com.diusrex.tictactoe.Move;
 import com.diusrex.tictactoe.Player;
 import com.diusrex.tictactoe.SectionPosition;
+import com.diusrex.tictactoe.TicTacToeEngine;
 
 public class TestUtils {
     public static class BoardStatusNoCount extends BoardStatus {
@@ -23,7 +25,17 @@ public class TestUtils {
             }
         }
     }
-    
+
+    public static void applyMoveToBoard(BoardStatus board, Move move) {
+        Assert.assertTrue(TicTacToeEngine.isValidMove(board, move));
+        TicTacToeEngine.applyMove(board, move);
+    }
+
+    public static void testInvalidMoveOnBoard(BoardStatus board, Move move) {
+        Assert.assertFalse(TicTacToeEngine.isValidMove(board, move));
+        TicTacToeEngine.applyMove(board, move);
+    }
+
     public static void assertAreEqual(SectionPosition expected,
             SectionPosition actual) {
         Assert.assertEquals(expected.getX(), actual.getX());

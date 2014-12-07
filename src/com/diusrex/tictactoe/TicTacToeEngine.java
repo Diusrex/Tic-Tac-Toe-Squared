@@ -2,27 +2,25 @@ package com.diusrex.tictactoe;
 
 public class TicTacToeEngine {
 
-    public static boolean applyMove(BoardStatus board, Move move) {
-        if (isInvalidMove(board, move))
-            return false;
-
-        board.applyMove(move);
-        board.setSectionToPlayIn(getSectionToPlayInNext(move));
-        updateSectionOwner(board, move);
-        return true;
+    public static boolean isValidMove(BoardStatus board, Move move) {
+        return isInsideBounds(board, move) && isInOrder(board, move)
+                && isInCorrectSection(board, move) && isNotOwned(board, move)
+                && move.getPlayer() != Player.Unowned;
     }
 
-    private static boolean isInvalidMove(BoardStatus board, Move move) {
-        return isOutsideBounds(board, move) || isOutOfOrder(board, move)
-                || isInWrongSection(board, move) || isAlreadyOwned(board, move)
-                || move.getPlayer() == Player.Unowned;
+    public static void applyMove(BoardStatus board, Move move) {
+        if (isValidMove(board, move)) {
+            board.applyMove(move);
+            board.setSectionToPlayIn(getSectionToPlayInNext(move));
+            updateSectionOwner(board, move);
+        }
     }
 
-    private static boolean isOutsideBounds(BoardStatus board, Move move) {
-        return !board.isInsideBounds(move.getPosition());
+    private static boolean isInsideBounds(BoardStatus board, Move move) {
+        return board.isInsideBounds(move.getPosition());
     }
 
-    private static boolean isOutOfOrder(BoardStatus board, Move move) {
+    private static boolean isInOrder(BoardStatus board, Move move) {
         int p1Count = board.getPlayerCount(Player.Player_1);
         int p2Count = board.getPlayerCount(Player.Player_2);
 
@@ -32,24 +30,20 @@ public class TicTacToeEngine {
         else
             ++p2Count;
 
-        // The two times where it will fail
-        return p1Count < p2Count || p1Count > p2Count + 1;
+        return p1Count == p2Count || p1Count == p2Count + 1;
     }
 
-    private static boolean isAlreadyOwned(BoardStatus board, Move move) {
-        return board.getBoxOwner(move.getPosition()) != Player.Unowned;
+    private static boolean isNotOwned(BoardStatus board, Move move) {
+        return board.getBoxOwner(move.getPosition()) == Player.Unowned;
     }
 
-    private static boolean isInWrongSection(BoardStatus board, Move move) {
+    private static boolean isInCorrectSection(BoardStatus board, Move move) {
         SectionPosition requiredSection = board.getSectionToPlayIn();
         SectionPosition actualSection = move.getSectionIn();
 
         // Checks if it is in the correct section
-        if (requiredSection.equals(actualSection))
-            return false;
-
-        // The only other option is if it is full
-        return !sectionIsFull(board, requiredSection);
+        return requiredSection.equals(actualSection)
+                || sectionIsFull(board, requiredSection);
     }
 
     private static boolean sectionIsFull(BoardStatus board,
@@ -66,32 +60,36 @@ public class TicTacToeEngine {
 
         return true;
     }
-    
-    public Player recalculateSectionOwner(BoardStatus board, SectionPosition section) {
+
+    public Player recalculateSectionOwner(BoardStatus board,
+            SectionPosition section) {
         Player possibleWinner = isHorizontalComplete(board, section);
-        
+
         Player previousWinner = board.getSectionOwner(section);
         if (keepPreviousWinner(previousWinner, possibleWinner))
             return previousWinner;
-        
+
         return possibleWinner;
     }
 
     private boolean keepPreviousWinner(Player previousWinner,
             Player possibleWinner) {
-        return previousWinner != Player.Unowned && possibleWinner != Player.Unowned;
+        return previousWinner != Player.Unowned
+                && possibleWinner != Player.Unowned;
     }
 
-    private Player isHorizontalComplete(BoardStatus board, SectionPosition section) {
+    private Player isHorizontalComplete(BoardStatus board,
+            SectionPosition section) {
         BoxPosition currentPos = section.getTopLeftPosition();
-        
+
         BoxPosition increaseBetweenChecks = new BoxPosition(0, 1);
-        
-        for (int i = 0; i < 3; ++i, currentPos = currentPos.increaseBy(increaseBetweenChecks)) {
+
+        for (int i = 0; i < 3; ++i, currentPos = currentPos
+                .increaseBy(increaseBetweenChecks)) {
             if (isHorizontalComplete(board, currentPos))
                 return board.getBoxOwner(currentPos);
         }
-        
+
         return Player.Unowned;
     }
 
