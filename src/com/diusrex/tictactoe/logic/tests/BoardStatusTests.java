@@ -1,12 +1,12 @@
-package com.diusrex.tictactoe.tests;
+package com.diusrex.tictactoe.logic.tests;
 
 import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.diusrex.tictactoe.BoardStatus;
-import com.diusrex.tictactoe.BoxPosition;
+import com.diusrex.tictactoe.logic.BoardStatus;
+import com.diusrex.tictactoe.logic.BoxPosition;
 
 public class BoardStatusTests {
     BoardStatus status;

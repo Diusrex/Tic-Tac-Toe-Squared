@@ -1,16 +1,16 @@
-package com.diusrex.tictactoe.tests;
+package com.diusrex.tictactoe.logic.tests;
 
 import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.diusrex.tictactoe.BoardStatus;
-import com.diusrex.tictactoe.BoxPosition;
-import com.diusrex.tictactoe.Move;
-import com.diusrex.tictactoe.Player;
-import com.diusrex.tictactoe.SectionPosition;
-import com.diusrex.tictactoe.TicTacToeEngine;
+import com.diusrex.tictactoe.logic.BoardStatus;
+import com.diusrex.tictactoe.logic.BoxPosition;
+import com.diusrex.tictactoe.logic.Move;
+import com.diusrex.tictactoe.logic.Player;
+import com.diusrex.tictactoe.logic.SectionPosition;
+import com.diusrex.tictactoe.logic.TicTacToeEngine;
 
 public class EngineTest {
     BoardStatus board;

@@ -1,4 +1,4 @@
-package com.diusrex.tictactoe;
+package com.diusrex.tictactoe.logic;
 
 public class BoardStatus {
     public static final int NUMBER_OF_BOXES_PER_SIDE = 9;

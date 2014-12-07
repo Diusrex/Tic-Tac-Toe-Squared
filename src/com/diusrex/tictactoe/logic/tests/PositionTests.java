@@ -1,9 +1,9 @@
-package com.diusrex.tictactoe.tests;
+package com.diusrex.tictactoe.logic.tests;
 
 import org.junit.Test;
 
-import com.diusrex.tictactoe.BoxPosition;
-import com.diusrex.tictactoe.SectionPosition;
+import com.diusrex.tictactoe.logic.BoxPosition;
+import com.diusrex.tictactoe.logic.SectionPosition;
 
 public class PositionTests {
     @Test
