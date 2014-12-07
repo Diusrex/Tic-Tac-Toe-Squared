@@ -50,6 +50,11 @@ public class EngineTest {
         Assert.assertEquals(Player.Unowned,
                 board.getBoxOwner(moveP2.getPosition()));
     }
+    
+    @Test
+    public void testNullMove() {
+        TestUtils.testInvalidMoveOnBoard(board, null);
+    }
 
     @Test
     public void testApplyMove() {

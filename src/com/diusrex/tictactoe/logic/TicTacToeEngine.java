@@ -3,6 +3,9 @@ package com.diusrex.tictactoe.logic;
 public class TicTacToeEngine {
 
     public static boolean isValidMove(BoardStatus board, Move move) {
+        if (move == null)
+            return false;
+        
         return isInsideBounds(board, move) && isInOrder(board, move)
                 && isInCorrectSection(board, move) && isNotOwned(board, move)
                 && move.getPlayer() != Player.Unowned;
