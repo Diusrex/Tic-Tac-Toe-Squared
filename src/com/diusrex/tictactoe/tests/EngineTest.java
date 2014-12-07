@@ -114,11 +114,6 @@ public class EngineTest {
 
     }
 
-    /*
-     * Need to test for when the box to pay into is full -> Then can play
-     * anywhere
-     */
-
     @Test
     public void testSectionToPlayInNextBasic() {
         BoxPosition pos = new BoxPosition(0, 0);
@@ -139,41 +134,40 @@ public class EngineTest {
         TestUtils.assertAreEqual(expectedSection,
                 TicTacToeEngine.getSectionToPlayInNext(pos));
     }
+    
+    @Test
+    public void testApplyMoveSectionToPlayInNext() {
+        BoxPosition pos = new BoxPosition(2, 2);
+        Player player = Player.Player_1;
+        Move move = new Move(pos, player);
+        Assert.assertTrue(TicTacToeEngine.applyMove(board, move));
+        Assert.assertEquals(TicTacToeEngine.getSectionToPlayInNext(pos), board.getSectionToPlayIn());
+        
+        pos = new BoxPosition(8, 6);
+        player = Player.Player_2;
+        move = new Move(pos, player);
+        Assert.assertTrue(TicTacToeEngine.applyMove(board, move));
+        Assert.assertEquals(TicTacToeEngine.getSectionToPlayInNext(pos), board.getSectionToPlayIn());
+    }
 
     @Test
     public void testSectionToPlayInFull() {
         SectionPosition fullSection = new SectionPosition(0, 0);
-        fillSection(fullSection);
+        TestUtils.fillSection(board, fullSection);
 
         // Need to make sure is the correct player to play next
         Player playerToPlayNext = Player.Player_1;
-        
+
         // Need to make it so the player must play inside that section
         board.setBoxOwner(fullSection.getTopLeftPosition(), playerToPlayNext);
-        
+
         playerToPlayNext = Player.Player_2;
-        
+
         BoxPosition untakenPosition = new BoxPosition(5, 5);
 
         Assert.assertTrue(TicTacToeEngine.applyMove(board, new Move(
                 untakenPosition, playerToPlayNext)));
     }
 
-    // WARNING: Will not update who owns the section
-    private void fillSection(SectionPosition toFill) {
-        BoxPosition offset = toFill.getTopLeftPosition();
-        Player playerToOwn = Player.Player_1;
-        for (int x = 0; x < 3; ++x) {
-            for (int y = 0; y < 3; ++y) {
-                BoxPosition basePosition = new BoxPosition(x, y);
-                board.setBoxOwner(basePosition.increaseBy(offset), playerToOwn);
-
-                // Switch players
-                if (playerToOwn == Player.Player_1)
-                    playerToOwn = Player.Player_2;
-                else
-                    playerToOwn = Player.Player_1;
-            }
-        }
-    }
+    
 }

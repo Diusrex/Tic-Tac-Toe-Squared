@@ -6,8 +6,8 @@ public class BoardStatus {
     public static final int SIZE_OF_SECTION = NUMBER_OF_BOXES_PER_SIDE
             / NUMBER_OF_SECTIONS_PER_SIDE;
 
-    Player[][] boardOwners;
-    Player[][] sectionOwners;
+    private Player[][] boardOwners;
+    private Player[][] sectionOwners;
 
     private SectionPosition sectionToPlayIn;
 
@@ -52,17 +52,20 @@ public class BoardStatus {
         sectionOwners[x][y] = owner;
     }
 
+    public void applyMove(Move move) {
+        setBoxOwner(move.getPosition(), move.getPlayer());
+    }
+
     public void setBoxOwner(BoxPosition pos, Player newOwner) {
         setBoxOwner(pos.getX(), pos.getY(), newOwner);
-        updateSectionToPlayIn(pos);
     }
 
     private void setBoxOwner(int x, int y, Player owner) {
         boardOwners[x][y] = owner;
     }
 
-    protected void updateSectionToPlayIn(BoxPosition pos) {
-        sectionToPlayIn = TicTacToeEngine.getSectionToPlayInNext(pos);
+    public void setSectionToPlayIn(SectionPosition pos) {
+        sectionToPlayIn = pos;
     }
 
     public Player getBoxOwner(BoxPosition pos) {

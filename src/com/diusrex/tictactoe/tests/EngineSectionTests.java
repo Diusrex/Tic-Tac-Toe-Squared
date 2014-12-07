@@ -5,35 +5,14 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.diusrex.tictactoe.BoardStatus;
 import com.diusrex.tictactoe.BoxPosition;
 import com.diusrex.tictactoe.Move;
 import com.diusrex.tictactoe.Player;
 import com.diusrex.tictactoe.SectionPosition;
 import com.diusrex.tictactoe.TicTacToeEngine;
+import com.diusrex.tictactoe.tests.TestUtils.BoardStatusNoCount;
 
 public class EngineSectionTests {
-    private class BoardStatusNoCount extends BoardStatus {
-        BoardStatusNoCount(SectionPosition pos) {
-            super(pos);
-        }
-
-        public Player playerToGoNext;
-
-        public int getPlayerCount(Player wantedPlayer) {
-            if (playerToGoNext == Player.Player_1) {
-                return 0;
-            } else {
-                return (wantedPlayer == Player.Player_1) ? 1 : 0;
-            }
-        }
-
-        public void moveToSection(SectionPosition sectionToGoTo) {
-            updateSectionToPlayIn(new BoxPosition(sectionToGoTo.getX(),
-                    sectionToGoTo.getY()));
-        }
-    }
-
     final int lengthOfCompleteLine = 3;
 
     BoardStatusNoCount board;
@@ -69,7 +48,7 @@ public class EngineSectionTests {
     private void takeLineInBoard(BoxPosition start, BoxPosition increase,
             int count, Player player) {
         for (int i = 0; i < count; ++i, start = start.increaseBy(increase)) {
-            board.moveToSection(start.getSectionIn());
+            board.setSectionToPlayIn(start.getSectionIn());
             Assert.assertTrue(TicTacToeEngine.applyMove(board, new Move(start,
                     player)));
         }
@@ -124,7 +103,7 @@ public class EngineSectionTests {
 
         // Take the final spot
         BoxPosition winningPos = new BoxPosition(2, 2);
-        board.moveToSection(winningPos.getSectionIn());
+        board.setSectionToPlayIn(winningPos.getSectionIn());
         Assert.assertTrue(TicTacToeEngine.applyMove(board, new Move(winningPos,
                 currentPlayer)));
 
@@ -148,7 +127,7 @@ public class EngineSectionTests {
 
         // Take the final spot
         BoxPosition winningPos = new BoxPosition(0, 2);
-        board.moveToSection(winningPos.getSectionIn());
+        board.setSectionToPlayIn(winningPos.getSectionIn());
         Assert.assertTrue(TicTacToeEngine.applyMove(board, new Move(winningPos,
                 currentPlayer)));
 

@@ -6,7 +6,8 @@ public class TicTacToeEngine {
         if (isInvalidMove(board, move))
             return false;
 
-        board.setBoxOwner(move.getPosition(), move.getPlayer());
+        board.applyMove(move);
+        board.setSectionToPlayIn(getSectionToPlayInNext(move));
         updateSectionOwner(board, move);
         return true;
     }
@@ -65,6 +66,34 @@ public class TicTacToeEngine {
 
         return true;
     }
+    
+    public Player recalculateSectionOwner(BoardStatus board, SectionPosition section) {
+        Player possibleWinner = isHorizontalComplete(board, section);
+        
+        Player previousWinner = board.getSectionOwner(section);
+        if (keepPreviousWinner(previousWinner, possibleWinner))
+            return previousWinner;
+        
+        return possibleWinner;
+    }
+
+    private boolean keepPreviousWinner(Player previousWinner,
+            Player possibleWinner) {
+        return previousWinner != Player.Unowned && possibleWinner != Player.Unowned;
+    }
+
+    private Player isHorizontalComplete(BoardStatus board, SectionPosition section) {
+        BoxPosition currentPos = section.getTopLeftPosition();
+        
+        BoxPosition increaseBetweenChecks = new BoxPosition(0, 1);
+        
+        for (int i = 0; i < 3; ++i, currentPos = currentPos.increaseBy(increaseBetweenChecks)) {
+            if (isHorizontalComplete(board, currentPos))
+                return board.getBoxOwner(currentPos);
+        }
+        
+        return Player.Unowned;
+    }
 
     private static void updateSectionOwner(BoardStatus board, Move move) {
         SectionPosition changedSection = move.getSectionIn();
@@ -82,7 +111,7 @@ public class TicTacToeEngine {
     private static boolean isHorizontalComplete(BoardStatus board,
             BoxPosition pos) {
         BoxPosition startPos = new BoxPosition(
-                convertToStartingSectionPos(pos.getX()), pos.getY());
+                convertToStartingSectionLinePos(pos.getX()), pos.getY());
         BoxPosition increase = new BoxPosition(1, 0);
 
         return sectionLineOwnedByPlayer(board, startPos, increase);
@@ -90,7 +119,7 @@ public class TicTacToeEngine {
 
     private static boolean isVerticalComplete(BoardStatus board, BoxPosition pos) {
         BoxPosition startPos = new BoxPosition(pos.getX(),
-                convertToStartingSectionPos(pos.getY()));
+                convertToStartingSectionLinePos(pos.getY()));
         BoxPosition increase = new BoxPosition(0, 1);
 
         return sectionLineOwnedByPlayer(board, startPos, increase);
@@ -99,8 +128,8 @@ public class TicTacToeEngine {
     private static boolean isDiagonalComplete(BoardStatus board, BoxPosition pos) {
         // From (0, 0) to (2, 0) within section
         BoxPosition startPos = new BoxPosition(
-                convertToStartingSectionPos(pos.getX()),
-                convertToStartingSectionPos(pos.getY()));
+                convertToStartingSectionLinePos(pos.getX()),
+                convertToStartingSectionLinePos(pos.getY()));
         BoxPosition increase = new BoxPosition(1, 1);
         if (sectionLineOwnedByPlayer(board, startPos, increase))
             return true;
@@ -111,7 +140,7 @@ public class TicTacToeEngine {
         return sectionLineOwnedByPlayer(board, startPos, increase);
     }
 
-    private static int convertToStartingSectionPos(int x) {
+    private static int convertToStartingSectionLinePos(int x) {
         return (x / BoardStatus.SIZE_OF_SECTION) * BoardStatus.SIZE_OF_SECTION;
     }
 
@@ -131,6 +160,10 @@ public class TicTacToeEngine {
         return true;
     }
 
+    public static SectionPosition getSectionToPlayInNext(Move move) {
+        return getSectionToPlayInNext(move.getPosition());
+    }
+
     public static SectionPosition getSectionToPlayInNext(BoxPosition pos) {
         SectionPosition sectionIn = pos.getSectionIn();
         pos = pos.decreaseBy(sectionIn.getTopLeftPosition());
@@ -146,7 +179,7 @@ public class TicTacToeEngine {
         winner = getVerticalWinnerOrUnowned(board);
         if (winner != Player.Unowned)
             return winner;
-        
+
         return getDiagnonalWinnerOrUnowned(board);
     }
 
@@ -187,12 +220,12 @@ public class TicTacToeEngine {
         if (winner != Player.Unowned)
             return winner;
 
-        increase = new SectionPosition(-1,  1);
+        increase = new SectionPosition(-1, 1);
         startPos = new SectionPosition(2, 0);
-        
+
         return getLineWinnerOrUnowned(board, startPos, increase);
     }
-    
+
     private static Player getLineWinnerOrUnowned(BoardStatus board,
             SectionPosition startPos, SectionPosition increase) {
         Player expectedPlayer = board.getSectionOwner(startPos);
