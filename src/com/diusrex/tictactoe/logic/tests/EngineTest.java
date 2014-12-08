@@ -33,8 +33,7 @@ public class EngineTest {
         moveP2SameAsMoveP1 = new Move(duplicatedPosition, Player.Player_2);
         moveP2 = new Move(new BoxPosition(1, 1), Player.Player_2);
 
-        moveP2_WrongSectionToP1 = new Move(new BoxPosition(7, 7),
-                Player.Player_2);
+        moveP2_WrongSectionToP1 = new Move(new BoxPosition(7, 7), Player.Player_2);
 
         invalidPosition = new Move(new BoxPosition(-1, -1), Player.Player_1);
         invalidPlayer = new Move(validPosition, Player.Unowned);
@@ -43,14 +42,11 @@ public class EngineTest {
     @Test
     public void testBoardIsUnknown() {
         // Make sure it is not taken
-        Assert.assertEquals(Player.Unowned,
-                board.getBoxOwner(moveP1.getPosition()));
-        Assert.assertEquals(Player.Unowned,
-                board.getBoxOwner(moveP1_2.getPosition()));
-        Assert.assertEquals(Player.Unowned,
-                board.getBoxOwner(moveP2.getPosition()));
+        Assert.assertEquals(Player.Unowned, board.getBoxOwner(moveP1.getPosition()));
+        Assert.assertEquals(Player.Unowned, board.getBoxOwner(moveP1_2.getPosition()));
+        Assert.assertEquals(Player.Unowned, board.getBoxOwner(moveP2.getPosition()));
     }
-    
+
     @Test
     public void testNullMove() {
         TestUtils.testInvalidMoveOnBoard(board, null);
@@ -60,8 +56,7 @@ public class EngineTest {
     public void testApplyMove() {
         TestUtils.applyMoveToBoard(board, moveP1);
 
-        Assert.assertEquals(moveP1.getPlayer(),
-                board.getBoxOwner(moveP1.getPosition()));
+        Assert.assertEquals(moveP1.getPlayer(), board.getBoxOwner(moveP1.getPosition()));
     }
 
     @Test
@@ -70,8 +65,7 @@ public class EngineTest {
 
         TestUtils.applyMoveToBoard(board, moveP2);
 
-        Assert.assertEquals(moveP2.getPlayer(),
-                board.getBoxOwner(moveP2.getPosition()));
+        Assert.assertEquals(moveP2.getPlayer(), board.getBoxOwner(moveP2.getPosition()));
     }
 
     @Test
@@ -80,8 +74,7 @@ public class EngineTest {
 
         TestUtils.testInvalidMoveOnBoard(board, moveP1_2);
 
-        Assert.assertNotSame(moveP1_2.getPlayer(),
-                board.getBoxOwner(moveP1_2.getPosition()));
+        Assert.assertNotSame(moveP1_2.getPlayer(), board.getBoxOwner(moveP1_2.getPosition()));
     }
 
     @Test
@@ -89,8 +82,7 @@ public class EngineTest {
 
         TestUtils.testInvalidMoveOnBoard(board, moveP2);
 
-        Assert.assertNotSame(moveP2.getPlayer(),
-                board.getBoxOwner(moveP2.getPosition()));
+        Assert.assertNotSame(moveP2.getPlayer(), board.getBoxOwner(moveP2.getPosition()));
     }
 
     @Test
@@ -99,8 +91,7 @@ public class EngineTest {
 
         TestUtils.testInvalidMoveOnBoard(board, moveP2SameAsMoveP1);
 
-        Assert.assertEquals(moveP1.getPlayer(),
-                board.getBoxOwner(moveP1.getPosition()));
+        Assert.assertEquals(moveP1.getPlayer(), board.getBoxOwner(moveP1.getPosition()));
     }
 
     @Test
@@ -113,8 +104,7 @@ public class EngineTest {
         TicTacToeEngine.applyMove(board, moveP1);
 
         TestUtils.testInvalidMoveOnBoard(board, invalidPlayer);
-        Assert.assertEquals(Player.Unowned,
-                board.getBoxOwner(invalidPlayer.getPosition()));
+        Assert.assertEquals(Player.Unowned, board.getBoxOwner(invalidPlayer.getPosition()));
     }
 
     @Test
@@ -129,20 +119,17 @@ public class EngineTest {
         BoxPosition pos = new BoxPosition(0, 0);
         SectionPosition expectedSection = new SectionPosition(0, 0);
 
-        TestUtils.assertAreEqual(expectedSection,
-                TicTacToeEngine.getSectionToPlayInNext(pos));
+        TestUtils.assertAreEqual(expectedSection, TicTacToeEngine.getSectionToPlayInNext(pos));
 
         pos = new BoxPosition(2, 2);
         expectedSection = new SectionPosition(2, 2);
 
-        TestUtils.assertAreEqual(expectedSection,
-                TicTacToeEngine.getSectionToPlayInNext(pos));
+        TestUtils.assertAreEqual(expectedSection, TicTacToeEngine.getSectionToPlayInNext(pos));
 
         pos = new BoxPosition(3, 4);
         expectedSection = new SectionPosition(0, 1);
 
-        TestUtils.assertAreEqual(expectedSection,
-                TicTacToeEngine.getSectionToPlayInNext(pos));
+        TestUtils.assertAreEqual(expectedSection, TicTacToeEngine.getSectionToPlayInNext(pos));
     }
 
     @Test
@@ -151,15 +138,13 @@ public class EngineTest {
         Player player = Player.Player_1;
         Move move = new Move(pos, player);
         TestUtils.applyMoveToBoard(board, move);
-        Assert.assertEquals(TicTacToeEngine.getSectionToPlayInNext(pos),
-                board.getSectionToPlayIn());
+        Assert.assertEquals(TicTacToeEngine.getSectionToPlayInNext(pos), board.getSectionToPlayIn());
 
         pos = new BoxPosition(8, 6);
         player = Player.Player_2;
         move = new Move(pos, player);
         TestUtils.applyMoveToBoard(board, move);
-        Assert.assertEquals(TicTacToeEngine.getSectionToPlayInNext(pos),
-                board.getSectionToPlayIn());
+        Assert.assertEquals(TicTacToeEngine.getSectionToPlayInNext(pos), board.getSectionToPlayIn());
     }
 
     @Test
@@ -177,8 +162,7 @@ public class EngineTest {
 
         BoxPosition untakenPosition = new BoxPosition(5, 5);
 
-        TestUtils.applyMoveToBoard(board, new Move(untakenPosition,
-                playerToPlayNext));
+        TestUtils.applyMoveToBoard(board, new Move(untakenPosition, playerToPlayNext));
     }
 
 }

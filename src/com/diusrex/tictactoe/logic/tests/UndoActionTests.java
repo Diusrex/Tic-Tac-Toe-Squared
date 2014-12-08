@@ -69,7 +69,7 @@ public class UndoActionTests {
     }
 
     @Test
-    public void testUndoMoveFromFull() {
+    public void testUndoMoveSupposedToPlayInFull() {
         SectionPosition fullSection = new SectionPosition(1, 1);
         fillSection(fullSection);
 
@@ -78,12 +78,39 @@ public class UndoActionTests {
 
         board.setSectionToPlayIn(fullSection);
         backupBoardState();
-        
+
         TestUtils.applyMoveToBoard(board, move);
 
         UndoAction.undoLastMove(board);
 
         assertBoardStateUnchanged();
+    }
+
+    @Test
+    public void testUndoSectionWinningMove() {
+        SectionPosition sectionToWin = new SectionPosition(0, 0);
+        winSection(sectionToWin);
+
+        Assert.assertEquals(mainPlayer, board.getSectionOwner(sectionToWin));
+        UndoAction.undoLastMove(board);
+
+        Assert.assertEquals(Player.Unowned, board.getSectionOwner(sectionToWin));
+    }
+
+    @Test
+    public void testUndoSectionDoesntLoseSection() {
+        SectionPosition sectionToWin = new SectionPosition(0, 0);
+        winSection(sectionToWin);
+
+        Assert.assertEquals(mainPlayer, board.getSectionOwner(sectionToWin));
+
+        board.setSectionToPlayIn(sectionToWin);
+        BoxPosition moveThatDoesntEffectOwnership = new BoxPosition(2, 2);
+        TicTacToeEngine.applyMove(board, new Move(moveThatDoesntEffectOwnership, mainPlayer));
+
+        UndoAction.undoLastMove(board);
+
+        Assert.assertEquals(mainPlayer, board.getSectionOwner(sectionToWin));
     }
 
     private void fillSection(SectionPosition fullSection) {
@@ -96,33 +123,6 @@ public class UndoActionTests {
         }
     }
 
-    @Test
-    public void testUndoSectionWinningMove() {
-        SectionPosition sectionToWin = new SectionPosition(0, 0);
-        winSection(sectionToWin);
-        
-        Assert.assertEquals(mainPlayer, board.getSectionOwner(sectionToWin));
-        UndoAction.undoLastMove(board);
-
-        Assert.assertEquals(Player.Unowned, board.getSectionOwner(sectionToWin));
-    }
-    
-    @Test
-    public void testUndoSectionDoesntLoseSection() {
-        SectionPosition sectionToWin = new SectionPosition(0, 0);
-        winSection(sectionToWin);
-        
-        Assert.assertEquals(mainPlayer, board.getSectionOwner(sectionToWin));
-        
-        board.setSectionToPlayIn(sectionToWin);
-        BoxPosition moveThatDoesntEffectOwnership = new BoxPosition(2, 2);
-        TicTacToeEngine.applyMove(board, new Move(moveThatDoesntEffectOwnership, mainPlayer));
-        
-        UndoAction.undoLastMove(board);
-        
-        Assert.assertEquals(mainPlayer, board.getSectionOwner(sectionToWin));
-    }
-    
     private void winSection(SectionPosition section) {
         BoxPosition current = section.getTopLeftPosition();
         BoxPosition increase = new BoxPosition(1, 0);
@@ -150,31 +150,26 @@ public class UndoActionTests {
         origionalBoxOwners = new Player[BoardStatus.NUMBER_OF_BOXES_PER_SIDE][BoardStatus.NUMBER_OF_BOXES_PER_SIDE];
         for (int x = 0; x < BoardStatus.NUMBER_OF_BOXES_PER_SIDE; ++x)
             for (int y = 0; y < BoardStatus.NUMBER_OF_BOXES_PER_SIDE; ++y)
-                origionalBoxOwners[x][y] = board.getBoxOwner(new BoxPosition(x,
-                        y));
+                origionalBoxOwners[x][y] = board.getBoxOwner(new BoxPosition(x, y));
     }
 
     private void backupSectionOwners() {
         origionalSectionOwners = new Player[BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE][BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE];
         for (int x = 0; x < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++x)
             for (int y = 0; y < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++y)
-                origionalSectionOwners[x][y] = board
-                        .getSectionOwner(new SectionPosition(x, y));
+                origionalSectionOwners[x][y] = board.getSectionOwner(new SectionPosition(x, y));
     }
 
     private void assertBoardStateUnchanged() {
         Assert.assertEquals(stackSize, board.getAllMoves().size());
-        TestUtils.assertAreEqual(origionalSectionToPlayIn,
-                board.getSectionToPlayIn());
+        TestUtils.assertAreEqual(origionalSectionToPlayIn, board.getSectionToPlayIn());
 
         for (int x = 0; x < BoardStatus.NUMBER_OF_BOXES_PER_SIDE; ++x)
             for (int y = 0; y < BoardStatus.NUMBER_OF_BOXES_PER_SIDE; ++y)
-                Assert.assertEquals(origionalBoxOwners[x][y],
-                        board.getBoxOwner(new BoxPosition(x, y)));
+                Assert.assertEquals(origionalBoxOwners[x][y], board.getBoxOwner(new BoxPosition(x, y)));
 
         for (int x = 0; x < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++x)
             for (int y = 0; y < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++y)
-                Assert.assertEquals(origionalSectionOwners[x][y],
-                        board.getSectionOwner(new SectionPosition(x, y)));
+                Assert.assertEquals(origionalSectionOwners[x][y], board.getSectionOwner(new SectionPosition(x, y)));
     }
 }

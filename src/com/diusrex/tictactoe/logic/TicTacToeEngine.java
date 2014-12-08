@@ -7,9 +7,8 @@ public class TicTacToeEngine {
         if (move == null)
             return false;
 
-        return isInsideBounds(board, move) && isInOrder(board, move)
-                && isInCorrectSection(board, move) && isNotOwned(board, move)
-                && move.getPlayer() != Player.Unowned;
+        return isInsideBounds(board, move) && isInOrder(board, move) && isInCorrectSection(board, move)
+                && isNotOwned(board, move) && move.getPlayer() != Player.Unowned;
     }
 
     public static void applyMove(BoardStatus board, Move move) {
@@ -46,12 +45,10 @@ public class TicTacToeEngine {
         SectionPosition actualSection = move.getSectionIn();
 
         // Checks if it is in the correct section
-        return requiredSection.equals(actualSection)
-                || sectionIsFull(board, requiredSection);
+        return requiredSection.equals(actualSection) || sectionIsFull(board, requiredSection);
     }
 
-    private static boolean sectionIsFull(BoardStatus board,
-            SectionPosition requiredSection) {
+    private static boolean sectionIsFull(BoardStatus board, SectionPosition requiredSection) {
         BoxPosition offset = requiredSection.getTopLeftPosition();
 
         for (int x = 0; x < 3; ++x) {
@@ -72,7 +69,7 @@ public class TicTacToeEngine {
             return;
 
         Player detectedSectionOwner = GridChecker.searchForPattern(board.getBoxGrid(), changedSection);
-        
+
         board.setSectionOwner(changedSection, detectedSectionOwner);
     }
 

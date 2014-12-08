@@ -3,7 +3,7 @@ package com.diusrex.tictactoe.logic;
 public class SectionPosition {
     private final int x;
     private final int y;
-    
+
     public SectionPosition(int x, int y) {
         this.x = x;
         this.y = y;
@@ -16,7 +16,7 @@ public class SectionPosition {
     public int getY() {
         return y;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null)

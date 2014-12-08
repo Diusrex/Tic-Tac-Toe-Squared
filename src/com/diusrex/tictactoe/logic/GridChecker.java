@@ -14,11 +14,10 @@ public class GridChecker {
 
     // Will return the first pattern it finds. If there are multiple, then it
     // will return the first
-    public static Player searchForPattern(Player[][] grid,
-            SectionPosition sectionIn) {
+    public static Player searchForPattern(Player[][] grid, SectionPosition sectionIn) {
         if (!gridIsValid(grid, sectionIn))
             return Player.Unowned;
-        
+
         Player foundPlayer = searchForHorizontalPattern(grid, sectionIn);
 
         if (foundPlayer != Player.Unowned)
@@ -32,11 +31,10 @@ public class GridChecker {
         return searchForDiagonalPattern(grid, sectionIn);
     }
 
-    private static boolean gridIsValid(Player[][] grid,
-            SectionPosition sectionIn) {
+    private static boolean gridIsValid(Player[][] grid, SectionPosition sectionIn) {
         if (grid == null)
             return false;
-        
+
         boolean validXSpot = sectionIsValid(sectionIn.getX(), grid);
         boolean validYSpot = sectionIsValid(sectionIn.getY(), grid);
         return validXSpot && validYSpot;
@@ -46,36 +44,31 @@ public class GridChecker {
         return sectionValue >= 0 && sectionValue * BoardStatus.SIZE_OF_SECTION < grid.length;
     }
 
-    private static Player searchForHorizontalPattern(Player[][] grid,
-            SectionPosition sectionIn) {
+    private static Player searchForHorizontalPattern(Player[][] grid, SectionPosition sectionIn) {
         BoxPosition currentPos = sectionIn.getTopLeftPosition();
         BoxPosition horizontalIncrease = new BoxPosition(1, 0);
         BoxPosition verticalIncrease = new BoxPosition(0, 1);
 
-        for (int i = 0; i < LINE_LENGTH; ++i, currentPos = currentPos
-                .increaseBy(verticalIncrease)) {
+        for (int i = 0; i < LINE_LENGTH; ++i, currentPos = currentPos.increaseBy(verticalIncrease)) {
             if (lineOwnedBySinglePlayer(grid, currentPos, horizontalIncrease))
                 return getPlayer(grid, currentPos);
         }
         return Player.Unowned;
     }
 
-    private static Player searchForVerticalPattern(Player[][] grid,
-            SectionPosition sectionIn) {
+    private static Player searchForVerticalPattern(Player[][] grid, SectionPosition sectionIn) {
         BoxPosition currentPos = sectionIn.getTopLeftPosition();
         BoxPosition horizontalIncrease = new BoxPosition(1, 0);
         BoxPosition verticalIncrease = new BoxPosition(0, 1);
 
-        for (int i = 0; i < LINE_LENGTH; ++i, currentPos = currentPos
-                .increaseBy(horizontalIncrease)) {
+        for (int i = 0; i < LINE_LENGTH; ++i, currentPos = currentPos.increaseBy(horizontalIncrease)) {
             if (lineOwnedBySinglePlayer(grid, currentPos, verticalIncrease))
                 return getPlayer(grid, currentPos);
         }
         return Player.Unowned;
     }
 
-    private static Player searchForDiagonalPattern(Player[][] grid,
-            SectionPosition sectionIn) {
+    private static Player searchForDiagonalPattern(Player[][] grid, SectionPosition sectionIn) {
         BoxPosition currentPos = sectionIn.getTopLeftPosition();
         BoxPosition diagonalIncrease = new BoxPosition(1, 1);
 
@@ -93,16 +86,14 @@ public class GridChecker {
         return Player.Unowned;
     }
 
-    private static boolean lineOwnedBySinglePlayer(Player[][] grid,
-            BoxPosition lineStart, BoxPosition increase) {
+    private static boolean lineOwnedBySinglePlayer(Player[][] grid, BoxPosition lineStart, BoxPosition increase) {
         final Player firstPlayer = getPlayer(grid, lineStart);
         if (firstPlayer == Player.Unowned)
             return false;
 
         BoxPosition currentSpot = lineStart;
         // Could skip the spot at 0, but this works too
-        for (int i = 0; i < LINE_LENGTH; ++i, currentSpot = currentSpot
-                .increaseBy(increase)) {
+        for (int i = 0; i < LINE_LENGTH; ++i, currentSpot = currentSpot.increaseBy(increase)) {
             if (firstPlayer != getPlayer(grid, currentSpot))
                 return false;
         }

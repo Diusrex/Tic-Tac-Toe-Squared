@@ -27,26 +27,20 @@ public class EngineSectionTests {
     }
 
     private void winSection(SectionPosition player1Section, Player mainPlayer) {
-        takeSectionForPlayerHorizontal(player1Section.getTopLeftPosition(),
-                mainPlayer);
+        takeSectionForPlayerHorizontal(player1Section.getTopLeftPosition(), mainPlayer);
     }
 
     // Will take the given section for one player, and the other section for the
     // other player
-    private void takeSectionForPlayerHorizontal(BoxPosition lineStart,
-            Player player) {
-        takeLineInBoard(lineStart, new BoxPosition(1, 0), lengthOfCompleteLine,
-                player);
+    private void takeSectionForPlayerHorizontal(BoxPosition lineStart, Player player) {
+        takeLineInBoard(lineStart, new BoxPosition(1, 0), lengthOfCompleteLine, player);
     }
 
-    private void takeSectionForPlayerVertical(BoxPosition lineStart,
-            Player player) {
-        takeLineInBoard(lineStart, new BoxPosition(0, 1), lengthOfCompleteLine,
-                player);
+    private void takeSectionForPlayerVertical(BoxPosition lineStart, Player player) {
+        takeLineInBoard(lineStart, new BoxPosition(0, 1), lengthOfCompleteLine, player);
     }
 
-    private void takeLineInBoard(BoxPosition start, BoxPosition increase,
-            int count, Player player) {
+    private void takeLineInBoard(BoxPosition start, BoxPosition increase, int count, Player player) {
         for (int i = 0; i < count; ++i, start = start.increaseBy(increase)) {
             board.setSectionToPlayIn(start.getSectionIn());
             TestUtils.applyMoveToBoard(board, new Move(start, player));
@@ -62,8 +56,7 @@ public class EngineSectionTests {
         board.playerToGoNext = currentPlayer;
         takeSectionForPlayerHorizontal(player1PositionStart, currentPlayer);
 
-        Assert.assertEquals(currentPlayer,
-                board.getSectionOwner(player1Section));
+        Assert.assertEquals(currentPlayer, board.getSectionOwner(player1Section));
     }
 
     @Test
@@ -82,8 +75,7 @@ public class EngineSectionTests {
         board.playerToGoNext = currentPlayer;
         takeSectionForPlayerVertical(player1PositionStart, currentPlayer);
 
-        Assert.assertEquals(Player.Player_2,
-                board.getSectionOwner(player2Section));
+        Assert.assertEquals(Player.Player_2, board.getSectionOwner(player2Section));
     }
 
     @Test
@@ -95,10 +87,8 @@ public class EngineSectionTests {
         board.playerToGoNext = mainPlayer;
 
         // Diagonal version 1
-        takeLineInBoard(player1PositionStart, new BoxPosition(1, 1), 2,
-                mainPlayer);
-        Assert.assertEquals(Player.Unowned,
-                board.getSectionOwner(player1Section));
+        takeLineInBoard(player1PositionStart, new BoxPosition(1, 1), 2, mainPlayer);
+        Assert.assertEquals(Player.Unowned, board.getSectionOwner(player1Section));
 
         // Take the final spot
         BoxPosition winningPos = new BoxPosition(2, 2);
@@ -118,10 +108,8 @@ public class EngineSectionTests {
         board.playerToGoNext = currentPlayer;
 
         // Diagonal version 2
-        takeLineInBoard(player1PositionStart, new BoxPosition(-1, 1), 2,
-                currentPlayer);
-        Assert.assertEquals(Player.Unowned,
-                board.getSectionOwner(player1Section));
+        takeLineInBoard(player1PositionStart, new BoxPosition(-1, 1), 2, currentPlayer);
+        Assert.assertEquals(Player.Unowned, board.getSectionOwner(player1Section));
 
         // Take the final spot
         BoxPosition winningPos = new BoxPosition(0, 2);
@@ -129,8 +117,7 @@ public class EngineSectionTests {
 
         TestUtils.applyMoveToBoard(board, new Move(winningPos, currentPlayer));
 
-        Assert.assertEquals(currentPlayer,
-                board.getSectionOwner(player1Section));
+        Assert.assertEquals(currentPlayer, board.getSectionOwner(player1Section));
     }
 
     @Test
@@ -140,8 +127,7 @@ public class EngineSectionTests {
         SectionPosition firstSection = new SectionPosition(0, 0);
 
         // Need to test all 3 different lines
-        for (int i = 0; i < 3; ++i, firstSection = firstSection
-                .increaseBy(lineShift)) {
+        for (int i = 0; i < 3; ++i, firstSection = firstSection.increaseBy(lineShift)) {
             winBoardWithLine(horizontalIncrease, firstSection);
         }
     }
@@ -153,8 +139,7 @@ public class EngineSectionTests {
         SectionPosition firstSection = new SectionPosition(0, 0);
 
         // Need to test all 3 different lines
-        for (int i = 0; i < 3; ++i, firstSection = firstSection
-                .increaseBy(lineShift)) {
+        for (int i = 0; i < 3; ++i, firstSection = firstSection.increaseBy(lineShift)) {
             winBoardWithLine(verticalIncrease, firstSection);
         }
     }
@@ -172,8 +157,7 @@ public class EngineSectionTests {
         winBoardWithLine(diagonalIncrease, firstSection);
     }
 
-    private void winBoardWithLine(SectionPosition increase,
-            SectionPosition start) {
+    private void winBoardWithLine(SectionPosition increase, SectionPosition start) {
         resetBoard();
         Assert.assertEquals(Player.Unowned, TicTacToeEngine.getWinner(board));
         SectionPosition secondSection = start.increaseBy(increase);

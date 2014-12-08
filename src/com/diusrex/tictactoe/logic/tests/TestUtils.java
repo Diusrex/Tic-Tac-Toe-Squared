@@ -36,8 +36,7 @@ public class TestUtils {
         TicTacToeEngine.applyMove(board, move);
     }
 
-    public static void assertAreEqual(SectionPosition expected,
-            SectionPosition actual) {
+    public static void assertAreEqual(SectionPosition expected, SectionPosition actual) {
         Assert.assertEquals(expected.getX(), actual.getX());
         Assert.assertEquals(expected.getY(), actual.getY());
     }

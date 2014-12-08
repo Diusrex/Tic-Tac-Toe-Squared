@@ -1,7 +1,7 @@
 package com.diusrex.tictactoe.logic;
 
 public class Move {
-    
+
     private final BoxPosition pos;
     private final Player player;
 
@@ -13,7 +13,7 @@ public class Move {
     public BoxPosition getPosition() {
         return pos;
     }
-    
+
     public Player getPlayer() {
         return player;
     }

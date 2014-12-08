@@ -35,8 +35,7 @@ public class GridCheckerTests {
 
     @Test
     public void testNoPattern() {
-        Assert.assertEquals(Player.Unowned,
-                GridChecker.searchForPattern(grid, new SectionPosition(0, 0)));
+        Assert.assertEquals(Player.Unowned, GridChecker.searchForPattern(grid, new SectionPosition(0, 0)));
     }
 
     @Test
@@ -48,8 +47,8 @@ public class GridCheckerTests {
     @Test
     public void testSectionOutside() {
         final int NUMBER_OF_SECTIONS_IN_GRID = 1;
-        grid = new Player[NUMBER_OF_SECTIONS_IN_GRID * BoardStatus.SIZE_OF_SECTION]
-                [NUMBER_OF_SECTIONS_IN_GRID * BoardStatus.SIZE_OF_SECTION];
+        grid = new Player[NUMBER_OF_SECTIONS_IN_GRID * BoardStatus.SIZE_OF_SECTION][NUMBER_OF_SECTIONS_IN_GRID
+                * BoardStatus.SIZE_OF_SECTION];
 
         SectionPosition sectionIn = new SectionPosition(-1, 0);
         GridChecker.searchForPattern(grid, sectionIn);
@@ -72,18 +71,15 @@ public class GridCheckerTests {
 
         Player currentPlayer = Player.Player_1;
 
-        for (int i = 0; i < 3; ++i, startPos = startPos
-                .increaseBy(verticalIncrease), finalPos = finalPos
+        for (int i = 0; i < 3; ++i, startPos = startPos.increaseBy(verticalIncrease), finalPos = finalPos
                 .increaseBy(verticalIncrease)) {
             // Will not completely fill the line
             fillLine(startPos, horizontalIncrease, currentPlayer, 2);
-            Assert.assertEquals(Player.Unowned,
-                    GridChecker.searchForPattern(grid, sectionIn));
+            Assert.assertEquals(Player.Unowned, GridChecker.searchForPattern(grid, sectionIn));
 
             setGridPlayer(finalPos, currentPlayer);
 
-            Assert.assertEquals(currentPlayer,
-                    GridChecker.searchForPattern(grid, sectionIn));
+            Assert.assertEquals(currentPlayer, GridChecker.searchForPattern(grid, sectionIn));
             resetGrid();
         }
     }
@@ -96,18 +92,15 @@ public class GridCheckerTests {
 
         Player currentPlayer = Player.Player_1;
 
-        for (int i = 0; i < 3; ++i, startPos = startPos
-                .increaseBy(horizontalIncrease), finalPos = finalPos
+        for (int i = 0; i < 3; ++i, startPos = startPos.increaseBy(horizontalIncrease), finalPos = finalPos
                 .increaseBy(horizontalIncrease)) {
             // Will not completely fill the line
             fillLine(startPos, verticalIncrease, currentPlayer, 2);
-            Assert.assertEquals(Player.Unowned,
-                    GridChecker.searchForPattern(grid, sectionIn));
+            Assert.assertEquals(Player.Unowned, GridChecker.searchForPattern(grid, sectionIn));
 
             setGridPlayer(finalPos, currentPlayer);
 
-            Assert.assertEquals(currentPlayer,
-                    GridChecker.searchForPattern(grid, sectionIn));
+            Assert.assertEquals(currentPlayer, GridChecker.searchForPattern(grid, sectionIn));
             resetGrid();
         }
     }
@@ -124,13 +117,11 @@ public class GridCheckerTests {
 
         fillLine(startPos, diagonalIncrease, currentPlayer, 2);
 
-        Assert.assertEquals(Player.Unowned,
-                GridChecker.searchForPattern(grid, sectionIn));
+        Assert.assertEquals(Player.Unowned, GridChecker.searchForPattern(grid, sectionIn));
 
         setGridPlayer(finalPos, currentPlayer);
 
-        Assert.assertEquals(currentPlayer,
-                GridChecker.searchForPattern(grid, sectionIn));
+        Assert.assertEquals(currentPlayer, GridChecker.searchForPattern(grid, sectionIn));
     }
 
     @Test
@@ -145,19 +136,15 @@ public class GridCheckerTests {
 
         fillLine(startPos, diagonalIncrease, currentPlayer, 2);
 
-        Assert.assertEquals(Player.Unowned,
-                GridChecker.searchForPattern(grid, sectionIn));
+        Assert.assertEquals(Player.Unowned, GridChecker.searchForPattern(grid, sectionIn));
 
         setGridPlayer(finalPos, currentPlayer);
 
-        Assert.assertEquals(currentPlayer,
-                GridChecker.searchForPattern(grid, sectionIn));
+        Assert.assertEquals(currentPlayer, GridChecker.searchForPattern(grid, sectionIn));
     }
 
-    private void fillLine(BoxPosition startPos, BoxPosition increase,
-            Player player, int length) {
-        for (int i = 0; i < length; ++i, startPos = startPos
-                .increaseBy(increase)) {
+    private void fillLine(BoxPosition startPos, BoxPosition increase, Player player, int length) {
+        for (int i = 0; i < length; ++i, startPos = startPos.increaseBy(increase)) {
             setGridPlayer(startPos, player);
         }
     }

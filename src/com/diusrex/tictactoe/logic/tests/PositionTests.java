@@ -28,8 +28,7 @@ public class PositionTests {
                 sectionPos.getTopLeftPosition());
 
         sectionPos = new SectionPosition(1, 2);
-        TestUtils.assertAreEqual(new BoxPosition(3, 6),
-                sectionPos.getTopLeftPosition());
+        TestUtils.assertAreEqual(new BoxPosition(3, 6), sectionPos.getTopLeftPosition());
     }
 
 }

@@ -5,14 +5,13 @@ import java.util.Stack;
 public class BoardStatus {
     public static final int NUMBER_OF_BOXES_PER_SIDE = 9;
     public static final int NUMBER_OF_SECTIONS_PER_SIDE = 3;
-    public static final int SIZE_OF_SECTION = NUMBER_OF_BOXES_PER_SIDE
-            / NUMBER_OF_SECTIONS_PER_SIDE;
+    public static final int SIZE_OF_SECTION = NUMBER_OF_BOXES_PER_SIDE / NUMBER_OF_SECTIONS_PER_SIDE;
 
     private Player[][] boardOwners;
     private Player[][] sectionOwners;
 
     private SectionPosition sectionToPlayIn;
-    
+
     private Stack<Move> allMoves;
 
     public BoardStatus() {
@@ -24,7 +23,7 @@ public class BoardStatus {
         initializeSectionOwners();
 
         sectionToPlayIn = startingSection;
-        
+
         allMoves = new Stack<Move>();
     }
 
@@ -104,8 +103,7 @@ public class BoardStatus {
     }
 
     public boolean isInsideBounds(BoxPosition pos) {
-        return (pos.getX() >= 0 && pos.getX() < NUMBER_OF_BOXES_PER_SIDE
-                && pos.getY() >= 0 && pos.getY() < NUMBER_OF_BOXES_PER_SIDE);
+        return (pos.getX() >= 0 && pos.getX() < NUMBER_OF_BOXES_PER_SIDE && pos.getY() >= 0 && pos.getY() < NUMBER_OF_BOXES_PER_SIDE);
     }
 
     public Player[][] getBoxGrid() {
