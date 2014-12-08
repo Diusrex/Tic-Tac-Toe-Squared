@@ -101,4 +101,12 @@ public class BoardStatus {
                 && pos.getY() >= 0 && pos.getY() < NUMBER_OF_BOXES_PER_SIDE);
     }
 
+    public Player[][] getBoxGrid() {
+        return boardOwners;
+    }
+
+    public Player[][] getOwnerGrid() {
+        return sectionOwners;
+    }
+
 }
