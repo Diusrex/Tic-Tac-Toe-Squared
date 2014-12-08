@@ -1,5 +1,7 @@
 package com.diusrex.tictactoe.logic;
 
+import java.util.Stack;
+
 public class BoardStatus {
     public static final int NUMBER_OF_BOXES_PER_SIDE = 9;
     public static final int NUMBER_OF_SECTIONS_PER_SIDE = 3;
@@ -10,6 +12,8 @@ public class BoardStatus {
     private Player[][] sectionOwners;
 
     private SectionPosition sectionToPlayIn;
+    
+    private Stack<Move> allMoves;
 
     public BoardStatus() {
         this(new SectionPosition(1, 1));
@@ -20,6 +24,8 @@ public class BoardStatus {
         initializeSectionOwners();
 
         sectionToPlayIn = startingSection;
+        
+        allMoves = new Stack<Move>();
     }
 
     private void initializeSectionOwners() {
@@ -53,6 +59,7 @@ public class BoardStatus {
     }
 
     public void applyMove(Move move) {
+        allMoves.push(move);
         setBoxOwner(move.getPosition(), move.getPlayer());
     }
 
@@ -107,6 +114,10 @@ public class BoardStatus {
 
     public Player[][] getOwnerGrid() {
         return sectionOwners;
+    }
+
+    public Stack<Move> getAllMoves() {
+        return allMoves;
     }
 
 }
