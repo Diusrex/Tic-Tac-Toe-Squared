@@ -1,11 +1,38 @@
 package com.diusrex.tictactoe.logic;
 
+import java.util.Arrays;
 import java.util.Stack;
 
 public class BoardStatus {
     public static final int NUMBER_OF_BOXES_PER_SIDE = 9;
     public static final int NUMBER_OF_SECTIONS_PER_SIDE = 3;
     public static final int SIZE_OF_SECTION = NUMBER_OF_BOXES_PER_SIDE / NUMBER_OF_SECTIONS_PER_SIDE;
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        BoardStatus other = (BoardStatus) obj;
+        if (allMoves == null) {
+            if (other.allMoves != null)
+                return false;
+        } else if (allMoves.size() != other.allMoves.size())
+            return false;
+        if (!Arrays.deepEquals(boardOwners, other.boardOwners))
+            return false;
+        if (!Arrays.deepEquals(sectionOwners, other.sectionOwners))
+            return false;
+        if (sectionToPlayIn == null) {
+            if (other.sectionToPlayIn != null)
+                return false;
+        } else if (!sectionToPlayIn.equals(other.sectionToPlayIn))
+            return false;
+        return true;
+    }
 
     private Player[][] boardOwners;
     private Player[][] sectionOwners;

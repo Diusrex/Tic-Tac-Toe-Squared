@@ -1,5 +1,7 @@
 package com.diusrex.tictactoe.logic;
 
+import java.util.Stack;
+
 public class TicTacToeEngine {
 
     public static boolean isValidMove(BoardStatus board, Move move) {
@@ -90,5 +92,41 @@ public class TicTacToeEngine {
 
     public static Player getWinner(BoardStatus board) {
         return GridChecker.searchForPattern(board.getOwnerGrid());
+    }
+
+    static final int SIZE_OF_SAVED_MOVE = 3;
+
+    public static String getSaveString(BoardStatus board) {
+        Stack<Move> allMoves = board.getAllMoves();
+        StringBuffer buffer = new StringBuffer();
+        for (Move move : allMoves) {
+            buffer.append(moveToString(move));
+        }
+
+        return buffer.toString();
+    }
+
+    private static String moveToString(Move m) {
+        return String.format("%d%d%s", m.getPosition().getX(), m.getPosition().getY(), m.getPlayer().toString());
+    }
+
+    // Will allow any move to be played
+    public static BoardStatus loadBoardFromString(String savedBoardStatus) {
+        BoardStatus board = new BoardStatus();
+        for (int i = 0; i + SIZE_OF_SAVED_MOVE - 2 < savedBoardStatus.length(); i += SIZE_OF_SAVED_MOVE) {
+            Move move = stringToMove(savedBoardStatus.substring(i, i + SIZE_OF_SAVED_MOVE));
+            applyMove(board, move);
+        }
+
+        return board;
+    }
+
+    private static Move stringToMove(String substring) {
+        int totalValue = Integer.parseInt(substring);
+        Player mainPlayer = Player.values()[totalValue % 10];
+        int x = totalValue / 100;
+        int y = (totalValue / 10) % 10;
+
+        return new Move(new BoxPosition(x, y), mainPlayer);
     }
 }
