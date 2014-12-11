@@ -61,7 +61,7 @@ public class EngineTest {
 
     @Test
     public void testMultipleMoves() {
-        TicTacToeEngine.applyMove(board, moveP1);
+        TestUtils.applyMoveToBoard(board, moveP1);
 
         TestUtils.applyMoveToBoard(board, moveP2);
 
@@ -70,7 +70,7 @@ public class EngineTest {
 
     @Test
     public void testTooManyP1Moves() {
-        TicTacToeEngine.applyMove(board, moveP1);
+        TestUtils.applyMoveToBoard(board, moveP1);
 
         TestUtils.testInvalidMoveOnBoard(board, moveP1_2);
 
@@ -79,7 +79,6 @@ public class EngineTest {
 
     @Test
     public void testTooManyP2Moves() {
-
         TestUtils.testInvalidMoveOnBoard(board, moveP2);
 
         Assert.assertNotSame(moveP2.getPlayer(), board.getBoxOwner(moveP2.getPosition()));
@@ -87,7 +86,7 @@ public class EngineTest {
 
     @Test
     public void testAlreadyOwned() {
-        TicTacToeEngine.applyMove(board, moveP1);
+        TestUtils.applyMoveToBoard(board, moveP1);
 
         TestUtils.testInvalidMoveOnBoard(board, moveP2SameAsMoveP1);
 
@@ -101,7 +100,7 @@ public class EngineTest {
 
     @Test
     public void testUnknownPlayerMove() {
-        TicTacToeEngine.applyMove(board, moveP1);
+        TestUtils.applyMoveToBoard(board, moveP1);
 
         TestUtils.testInvalidMoveOnBoard(board, invalidPlayer);
         Assert.assertEquals(Player.Unowned, board.getBoxOwner(invalidPlayer.getPosition()));
@@ -109,7 +108,7 @@ public class EngineTest {
 
     @Test
     public void testWrongSection() {
-        TicTacToeEngine.applyMove(board, moveP1);
+        TestUtils.applyMoveToBoard(board, moveP1);
 
         TestUtils.testInvalidMoveOnBoard(board, moveP2_WrongSectionToP1);
     }

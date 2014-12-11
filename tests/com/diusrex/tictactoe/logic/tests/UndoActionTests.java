@@ -39,7 +39,7 @@ public class UndoActionTests {
         mainSection = new SectionPosition(1, 1);
         appliedMove = new Move(new BoxPosition(1, 1), mainPlayer);
 
-        TicTacToeEngine.applyMove(board, appliedMove);
+        TestUtils.applyMoveToBoard(board, appliedMove);
 
         validMove = new Move(new BoxPosition(3, 3), mainPlayer);
 
@@ -106,7 +106,7 @@ public class UndoActionTests {
 
         board.setSectionToPlayIn(sectionToWin);
         BoxPosition moveThatDoesntEffectOwnership = new BoxPosition(2, 2);
-        TicTacToeEngine.applyMove(board, new Move(moveThatDoesntEffectOwnership, mainPlayer));
+        TestUtils.applyMoveToBoard(board, new Move(moveThatDoesntEffectOwnership, mainPlayer));
 
         UndoAction.undoLastMove(board);
 
@@ -127,13 +127,13 @@ public class UndoActionTests {
         BoxPosition current = section.getTopLeftPosition();
         BoxPosition increase = new BoxPosition(1, 0);
         board.setSectionToPlayIn(section);
-        TicTacToeEngine.applyMove(board, new Move(current, mainPlayer));
+        TestUtils.applyMoveToBoard(board, new Move(current, mainPlayer));
         current = current.increaseBy(increase);
         board.setSectionToPlayIn(section);
-        TicTacToeEngine.applyMove(board, new Move(current, mainPlayer));
+        TestUtils.applyMoveToBoard(board, new Move(current, mainPlayer));
         current = current.increaseBy(increase);
         board.setSectionToPlayIn(section);
-        TicTacToeEngine.applyMove(board, new Move(current, mainPlayer));
+        TestUtils.applyMoveToBoard(board, new Move(current, mainPlayer));
         current = current.increaseBy(increase);
     }
 
