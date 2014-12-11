@@ -11,12 +11,16 @@ public class TicTacToeEngine {
                 && isNotOwned(board, move) && move.getPlayer() != Player.Unowned;
     }
 
-    public static void applyMove(BoardStatus board, Move move) {
+    public static void applyMoveIfValid(BoardStatus board, Move move) {
         if (isValidMove(board, move)) {
-            board.applyMove(move);
-            board.setSectionToPlayIn(getSectionToPlayInNext(move));
-            updateSectionOwner(board, move);
+            applyMove(board, move);
         }
+    }
+
+    private static void applyMove(BoardStatus board, Move move) {
+        board.applyMove(move);
+        board.setSectionToPlayIn(getSectionToPlayInNext(move));
+        updateSectionOwner(board, move);
     }
 
     private static boolean isInsideBounds(BoardStatus board, Move move) {

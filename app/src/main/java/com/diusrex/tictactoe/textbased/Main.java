@@ -35,7 +35,7 @@ public class Main {
                 
                 nextMove = getCurrentPlayersMove();
             }
-            TicTacToeEngine.applyMove(board, nextMove);
+            TicTacToeEngine.applyMoveIfValid(board, nextMove);
             
             currentPlayer = (currentPlayer + 1) % 2;
         }

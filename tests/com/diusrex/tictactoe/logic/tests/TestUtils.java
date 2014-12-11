@@ -28,12 +28,12 @@ public class TestUtils {
 
     public static void applyMoveToBoard(BoardStatus board, Move move) {
         Assert.assertTrue(TicTacToeEngine.isValidMove(board, move));
-        TicTacToeEngine.applyMove(board, move);
+        TicTacToeEngine.applyMoveIfValid(board, move);
     }
 
     public static void testInvalidMoveOnBoard(BoardStatus board, Move move) {
         Assert.assertFalse(TicTacToeEngine.isValidMove(board, move));
-        TicTacToeEngine.applyMove(board, move);
+        TicTacToeEngine.applyMoveIfValid(board, move);
     }
 
     public static void assertAreEqual(SectionPosition expected, SectionPosition actual) {
