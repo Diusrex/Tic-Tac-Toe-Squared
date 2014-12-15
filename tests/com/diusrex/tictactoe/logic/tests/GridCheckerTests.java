@@ -8,6 +8,7 @@ import org.junit.Test;
 import com.diusrex.tictactoe.logic.BoardStatus;
 import com.diusrex.tictactoe.logic.BoxPosition;
 import com.diusrex.tictactoe.logic.GridChecker;
+import com.diusrex.tictactoe.logic.Line;
 import com.diusrex.tictactoe.logic.Player;
 import com.diusrex.tictactoe.logic.SectionPosition;
 
@@ -143,6 +144,90 @@ public class GridCheckerTests {
         Assert.assertEquals(currentPlayer, GridChecker.searchForPattern(grid, sectionIn));
     }
 
+    @Test
+    public void testHorizontalLine() {
+        BoxPosition startPos = new BoxPosition(0, 0);
+        BoxPosition finalPos = new BoxPosition(2, 0);
+        SectionPosition sectionIn = startPos.getSectionIn();
+
+        Player currentPlayer = Player.Player_1;
+
+        for (int i = 0; i < 3; ++i, startPos = startPos.increaseBy(verticalIncrease), finalPos = finalPos
+                .increaseBy(verticalIncrease)) {
+            // Will not completely fill the line
+            fillLine(startPos, horizontalIncrease, currentPlayer, 2);
+            Assert.assertEquals(null, GridChecker.searchForLineOrGetNull(grid, sectionIn));
+
+            setGridPlayer(finalPos, currentPlayer);
+
+            Line foundLine = GridChecker.searchForLineOrGetNull(grid, sectionIn);
+
+            testLinesAreEqual(new Line(startPos, finalPos), foundLine);
+
+            resetGrid();
+        }
+    }
+
+    @Test
+    public void testVerticalLine() {
+        BoxPosition startPos = new BoxPosition(3, 6);
+        BoxPosition finalPos = new BoxPosition(3, 8);
+        SectionPosition sectionIn = startPos.getSectionIn();
+
+        Player currentPlayer = Player.Player_1;
+
+        for (int i = 0; i < 3; ++i, startPos = startPos.increaseBy(horizontalIncrease), finalPos = finalPos
+                .increaseBy(horizontalIncrease)) {
+            // Will not completely fill the line
+            fillLine(startPos, verticalIncrease, currentPlayer, 2);
+
+            setGridPlayer(finalPos, currentPlayer);
+
+            Line foundLine = GridChecker.searchForLineOrGetNull(grid, sectionIn);
+
+            testLinesAreEqual(new Line(startPos, finalPos), foundLine);
+            resetGrid();
+        }
+    }
+
+    @Test
+    public void testDiagonalLineOne() {
+        BoxPosition startPos = new BoxPosition(3, 3);
+        BoxPosition finalPos = new BoxPosition(5, 5);
+        SectionPosition sectionIn = startPos.getSectionIn();
+
+        Player currentPlayer = Player.Player_2;
+
+        BoxPosition diagonalIncrease = new BoxPosition(1, 1);
+
+        fillLine(startPos, diagonalIncrease, currentPlayer, 2);
+
+        Assert.assertEquals(null, GridChecker.searchForLineOrGetNull(grid, sectionIn));
+
+        setGridPlayer(finalPos, currentPlayer);
+
+        testLinesAreEqual(new Line(startPos, finalPos), GridChecker.searchForLineOrGetNull(grid, sectionIn));
+    }
+
+    @Test
+    public void testDiagonalLineTwo() {
+        BoxPosition startPos = new BoxPosition(3, 5);
+        BoxPosition finalPos = new BoxPosition(5, 3);
+        SectionPosition sectionIn = startPos.getSectionIn();
+
+        Player currentPlayer = Player.Player_2;
+
+        BoxPosition diagonalIncrease = new BoxPosition(1, -1);
+
+        fillLine(startPos, diagonalIncrease, currentPlayer, 2);
+
+        Assert.assertEquals(Player.Unowned, GridChecker.searchForPattern(grid, sectionIn));
+
+        setGridPlayer(finalPos, currentPlayer);
+
+        testLinesAreEqual(new Line(startPos, finalPos), GridChecker.searchForLineOrGetNull(grid, sectionIn));
+    }
+
     private void fillLine(BoxPosition startPos, BoxPosition increase, Player player, int length) {
         for (int i = 0; i < length; ++i, startPos = startPos.increaseBy(increase)) {
             setGridPlayer(startPos, player);
@@ -151,5 +236,16 @@ public class GridCheckerTests {
 
     private void setGridPlayer(BoxPosition pos, Player player) {
         grid[pos.getX()][pos.getY()] = player;
+    }
+
+    private void testLinesAreEqual(Line expected, Line actual) {
+        if (expected.getStart().equals(actual.getStart())) {
+            TestUtils.assertAreEqual(expected.getEnd(), actual.getEnd());
+        }
+
+        else {
+            TestUtils.assertAreEqual(expected.getStart(), actual.getEnd());
+            TestUtils.assertAreEqual(expected.getEnd(), actual.getStart());
+        }
     }
 }
