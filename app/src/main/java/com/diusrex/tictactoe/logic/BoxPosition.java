@@ -19,11 +19,19 @@ public class BoxPosition {
     }
 
     public BoxPosition increaseBy(BoxPosition increase) {
-        return new BoxPosition(x + increase.x, y + increase.y);
+        return increaseBy(increase.x, increase.y);
     }
 
-    public BoxPosition decreaseBy(BoxPosition increase) {
-        return new BoxPosition(x - increase.x, y - increase.y);
+    public BoxPosition increaseBy(int x, int y) {
+        return new BoxPosition(this.x + x, this.y + y);
+    }
+
+    public BoxPosition decreaseBy(BoxPosition decrease) {
+        return decreaseBy(decrease.x, decrease.y);
+    }
+
+    public BoxPosition decreaseBy(int x, int y) {
+        return new BoxPosition(this.x - x, this.y - y);
     }
 
     @Override
