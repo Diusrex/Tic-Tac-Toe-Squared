@@ -164,4 +164,11 @@ public class EngineTest {
         TestUtils.applyMoveToBoard(board, new Move(untakenPosition, playerToPlayNext));
     }
 
+    @Test
+    public void testGetNextPlayer() {
+        Assert.assertEquals(Player.Player_1, TicTacToeEngine.getNextPlayer(board));
+        
+        TestUtils.applyMoveToBoard(board, moveP1);
+        Assert.assertEquals(Player.Player_2, TicTacToeEngine.getNextPlayer(board));
+    }
 }

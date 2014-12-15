@@ -129,4 +129,14 @@ public class TicTacToeEngine {
 
         return new Move(new BoxPosition(x, y), mainPlayer);
     }
+
+    public static Player getNextPlayer(BoardStatus board) {
+        int p1Count = board.getPlayerCount(Player.Player_1);
+        int p2Count = board.getPlayerCount(Player.Player_2);
+
+        if (p1Count == p2Count)
+            return Player.Player_1;
+        else
+            return Player.Player_2;
+    }
 }
