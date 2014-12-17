@@ -15,7 +15,7 @@ public class UndoAction {
         restoreBoxToUnowned(board, topMove.getPosition());
 
         if (moveLostOwnership(board, topMove))
-            board.setSectionOwner(topMove.getSectionIn(), Player.Unowned);
+            board.setSectionOwner(topMove.getSectionIn(), null, Player.Unowned);
 
         restoreSectionToPlayIn(board, allMoves, topMove.getPosition());
     }

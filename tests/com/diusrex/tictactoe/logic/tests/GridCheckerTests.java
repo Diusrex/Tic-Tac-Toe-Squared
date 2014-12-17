@@ -162,7 +162,7 @@ public class GridCheckerTests {
 
             Line foundLine = GridChecker.searchForLineOrGetNull(grid, sectionIn);
 
-            testLinesAreEqual(new Line(startPos, finalPos), foundLine);
+            TestUtils.testLinesAreEqual(new Line(startPos, finalPos), foundLine);
 
             resetGrid();
         }
@@ -185,7 +185,7 @@ public class GridCheckerTests {
 
             Line foundLine = GridChecker.searchForLineOrGetNull(grid, sectionIn);
 
-            testLinesAreEqual(new Line(startPos, finalPos), foundLine);
+            TestUtils.testLinesAreEqual(new Line(startPos, finalPos), foundLine);
             resetGrid();
         }
     }
@@ -206,7 +206,7 @@ public class GridCheckerTests {
 
         setGridPlayer(finalPos, currentPlayer);
 
-        testLinesAreEqual(new Line(startPos, finalPos), GridChecker.searchForLineOrGetNull(grid, sectionIn));
+        TestUtils.testLinesAreEqual(new Line(startPos, finalPos), GridChecker.searchForLineOrGetNull(grid, sectionIn));
     }
 
     @Test
@@ -225,7 +225,7 @@ public class GridCheckerTests {
 
         setGridPlayer(finalPos, currentPlayer);
 
-        testLinesAreEqual(new Line(startPos, finalPos), GridChecker.searchForLineOrGetNull(grid, sectionIn));
+        TestUtils.testLinesAreEqual(new Line(startPos, finalPos), GridChecker.searchForLineOrGetNull(grid, sectionIn));
     }
 
     private void fillLine(BoxPosition startPos, BoxPosition increase, Player player, int length) {
@@ -238,14 +238,5 @@ public class GridCheckerTests {
         grid[pos.getX()][pos.getY()] = player;
     }
 
-    private void testLinesAreEqual(Line expected, Line actual) {
-        if (expected.getStart().equals(actual.getStart())) {
-            TestUtils.assertAreEqual(expected.getEnd(), actual.getEnd());
-        }
-
-        else {
-            TestUtils.assertAreEqual(expected.getStart(), actual.getEnd());
-            TestUtils.assertAreEqual(expected.getEnd(), actual.getStart());
-        }
-    }
+    
 }

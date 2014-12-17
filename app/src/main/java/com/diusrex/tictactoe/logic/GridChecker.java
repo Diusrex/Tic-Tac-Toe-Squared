@@ -28,6 +28,10 @@ public class GridChecker {
         return Player.Unowned;
     }
 
+    public static Line searchForLineOrGetNull(Player[][] grid) {
+        return searchForLineOrGetNull(grid, new SectionPosition(0, 0));
+    }
+
     public static Line searchForLineOrGetNull(Player[][] grid, SectionPosition sectionIn) {
         if (!gridIsValid(grid, sectionIn))
             return null;
@@ -116,4 +120,6 @@ public class GridChecker {
     private static Player getPlayer(Player[][] grid, BoxPosition pos) {
         return grid[pos.getX()][pos.getY()];
     }
+
+
 }

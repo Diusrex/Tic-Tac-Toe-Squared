@@ -7,10 +7,10 @@ import org.junit.Test;
 
 import com.diusrex.tictactoe.logic.BoardStatus;
 import com.diusrex.tictactoe.logic.BoxPosition;
+import com.diusrex.tictactoe.logic.Line;
 import com.diusrex.tictactoe.logic.Move;
 import com.diusrex.tictactoe.logic.Player;
 import com.diusrex.tictactoe.logic.SectionPosition;
-import com.diusrex.tictactoe.logic.TicTacToeEngine;
 import com.diusrex.tictactoe.logic.UndoAction;
 import com.diusrex.tictactoe.logic.tests.TestUtils.BoardStatusNoCount;
 
@@ -25,10 +25,12 @@ public class UndoActionTests {
     SectionPosition origionalSectionToPlayIn;
     Player[][] origionalBoxOwners;
     Player[][] origionalSectionOwners;
-
+    Line[][] lines;
+    
     SectionPosition mainSection;
     Move appliedMove;
     Move validMove;
+
 
     @Before
     public void setup() {
@@ -95,6 +97,7 @@ public class UndoActionTests {
         UndoAction.undoLastMove(board);
 
         Assert.assertEquals(Player.Unowned, board.getSectionOwner(sectionToWin));
+        Assert.assertEquals(null, board.getLine(sectionToWin));
     }
 
     @Test
@@ -111,6 +114,7 @@ public class UndoActionTests {
         UndoAction.undoLastMove(board);
 
         Assert.assertEquals(mainPlayer, board.getSectionOwner(sectionToWin));
+        TestUtils.testLinesAreEqual(new Line(new BoxPosition(0, 0), new BoxPosition(2, 0)), board.getLine(sectionToWin));
     }
 
     private void fillSection(SectionPosition fullSection) {
@@ -126,15 +130,17 @@ public class UndoActionTests {
     private void winSection(SectionPosition section) {
         BoxPosition current = section.getTopLeftPosition();
         BoxPosition increase = new BoxPosition(1, 0);
+        
         board.setSectionToPlayIn(section);
         TestUtils.applyMoveToBoard(board, new Move(current, mainPlayer));
         current = current.increaseBy(increase);
+        
         board.setSectionToPlayIn(section);
         TestUtils.applyMoveToBoard(board, new Move(current, mainPlayer));
         current = current.increaseBy(increase);
+        
         board.setSectionToPlayIn(section);
         TestUtils.applyMoveToBoard(board, new Move(current, mainPlayer));
-        current = current.increaseBy(increase);
     }
 
     private void backupBoardState() {
@@ -144,6 +150,8 @@ public class UndoActionTests {
         backupBoxOwners();
 
         backupSectionOwners();
+
+        backupLines();
     }
 
     private void backupBoxOwners() {
@@ -159,6 +167,13 @@ public class UndoActionTests {
             for (int y = 0; y < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++y)
                 origionalSectionOwners[x][y] = board.getSectionOwner(new SectionPosition(x, y));
     }
+    
+    private void backupLines() {
+        lines = new Line[BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE][BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE];
+        for (int x = 0; x < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++x)
+            for (int y = 0; y < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++y)
+                lines[x][y] = board.getLine(new SectionPosition(x, y));
+    }
 
     private void assertBoardStateUnchanged() {
         Assert.assertEquals(stackSize, board.getAllMoves().size());
@@ -171,5 +186,9 @@ public class UndoActionTests {
         for (int x = 0; x < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++x)
             for (int y = 0; y < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++y)
                 Assert.assertEquals(origionalSectionOwners[x][y], board.getSectionOwner(new SectionPosition(x, y)));
+
+        for (int x = 0; x < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++x)
+            for (int y = 0; y < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++y)
+                Assert.assertEquals(lines[x][y], board.getLine(new SectionPosition(x, y)));
     }
 }

@@ -75,8 +75,10 @@ public class TicTacToeEngine {
             return;
 
         Player detectedSectionOwner = GridChecker.searchForPattern(board.getBoxGrid(), changedSection);
-
-        board.setSectionOwner(changedSection, detectedSectionOwner);
+        if (detectedSectionOwner != Player.Unowned) {
+            Line winLine = GridChecker.searchForLineOrGetNull(board.getBoxGrid(), changedSection);
+            board.setSectionOwner(changedSection, winLine, detectedSectionOwner);
+        }
     }
 
     public static SectionPosition getSectionToPlayInNext(Move move) {

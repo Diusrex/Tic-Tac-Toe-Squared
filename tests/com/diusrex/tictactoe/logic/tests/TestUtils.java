@@ -4,6 +4,7 @@ import junit.framework.Assert;
 
 import com.diusrex.tictactoe.logic.BoardStatus;
 import com.diusrex.tictactoe.logic.BoxPosition;
+import com.diusrex.tictactoe.logic.Line;
 import com.diusrex.tictactoe.logic.Move;
 import com.diusrex.tictactoe.logic.Player;
 import com.diusrex.tictactoe.logic.SectionPosition;
@@ -61,6 +62,17 @@ public class TestUtils {
                 else
                     playerToOwn = Player.Player_1;
             }
+        }
+    }
+    
+    public static void testLinesAreEqual(Line expected, Line actual) {
+        if (expected.getStart().equals(actual.getStart())) {
+            TestUtils.assertAreEqual(expected.getEnd(), actual.getEnd());
+        }
+
+        else {
+            TestUtils.assertAreEqual(expected.getStart(), actual.getEnd());
+            TestUtils.assertAreEqual(expected.getEnd(), actual.getStart());
         }
     }
 }

@@ -36,6 +36,7 @@ public class BoardStatus {
 
     private Player[][] boardOwners;
     private Player[][] sectionOwners;
+    private Line[][] lines;
 
     private SectionPosition sectionToPlayIn;
 
@@ -56,10 +57,11 @@ public class BoardStatus {
 
     private void initializeSectionOwners() {
         sectionOwners = new Player[NUMBER_OF_SECTIONS_PER_SIDE][NUMBER_OF_SECTIONS_PER_SIDE];
+        lines = new Line[NUMBER_OF_SECTIONS_PER_SIDE][NUMBER_OF_SECTIONS_PER_SIDE];
 
         for (int x = 0; x < NUMBER_OF_SECTIONS_PER_SIDE; ++x) {
             for (int y = 0; y < NUMBER_OF_SECTIONS_PER_SIDE; ++y)
-                setSectionOwner(x, y, Player.Unowned);
+                setSectionOwner(x, y, null, Player.Unowned);
         }
     }
 
@@ -76,12 +78,13 @@ public class BoardStatus {
         return sectionToPlayIn;
     }
 
-    public void setSectionOwner(SectionPosition changedSection, Player player) {
-        setSectionOwner(changedSection.getX(), changedSection.getY(), player);
+    public void setSectionOwner(SectionPosition changedSection, Line line, Player player) {
+        setSectionOwner(changedSection.getX(), changedSection.getY(), line, player);
     }
 
-    private void setSectionOwner(int x, int y, Player owner) {
+    private void setSectionOwner(int x, int y, Line line, Player owner) {
         sectionOwners[x][y] = owner;
+        lines[x][y] = line;
     }
 
     public void applyMove(Move move) {
@@ -145,4 +148,7 @@ public class BoardStatus {
         return allMoves;
     }
 
+    public Line getLine(SectionPosition sectionPosition) {
+        return lines[sectionPosition.getX()][sectionPosition.getY()];
+    }
 }

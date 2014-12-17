@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.diusrex.tictactoe.logic.BoxPosition;
+import com.diusrex.tictactoe.logic.Line;
 import com.diusrex.tictactoe.logic.Move;
 import com.diusrex.tictactoe.logic.Player;
 import com.diusrex.tictactoe.logic.SectionPosition;
@@ -57,6 +58,7 @@ public class EngineSectionTests {
         takeSectionForPlayerHorizontal(player1PositionStart, currentPlayer);
 
         Assert.assertEquals(currentPlayer, board.getSectionOwner(player1Section));
+        TestUtils.testLinesAreEqual(new Line(player1PositionStart, player1PositionStart.increaseBy(2, 0)), board.getLine(player1Section));
     }
 
     @Test
