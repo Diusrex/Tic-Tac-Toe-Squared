@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="section_color">#FFFFFF</color>
+    <color name="selected_and_play_in">#BBFF00FF</color>
+    <color name="selected">#BB0000EE</color>
+    <color name="play_in">#BBEE0000</color>
+</resources>
