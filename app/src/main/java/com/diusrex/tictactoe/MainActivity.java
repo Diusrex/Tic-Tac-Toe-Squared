@@ -1,39 +1,132 @@
 package com.diusrex.tictactoe;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
+import com.diusrex.tictactoe.logic.BoardStatus;
+import com.diusrex.tictactoe.logic.BoxPosition;
+import com.diusrex.tictactoe.logic.Move;
+import com.diusrex.tictactoe.logic.Player;
+import com.diusrex.tictactoe.logic.SectionPosition;
+import com.diusrex.tictactoe.logic.TicTacToeEngine;
 
-public class MainActivity extends ActionBarActivity {
+import java.util.Calendar;
+
+public class MainActivity extends Activity implements GameEventHandler {
+    static final String SAVED_BOARD_STATE = "Saved_Board_State";
+    static final long COOLDOWN = 250;
+
+    BoardStatus board;
+    Player currentPlayer;
+
+    MyGrid mainGrid;
+
+    MainGridOwner requester;
+    SectionOwner mainSection;
+
+    long previousTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (savedInstanceState != null) {
+            loadBoardStatus(savedInstanceState);
+        } else {
+            board = new BoardStatus();
         }
 
-        return super.onOptionsItemSelected(item);
+        mainGrid = (MyGrid) findViewById(R.id.mainGrid);
+
+        requester = new MainGridOwner(this, this, mainGrid);
+    }
+
+    private void loadBoardStatus(Bundle savedInstanceState) {
+        String boardState = savedInstanceState.getString(SAVED_BOARD_STATE);
+        board = TicTacToeEngine.loadBoardFromString(boardState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        GridOrganizer.populateGrid(this, board, requester);
+
+        currentPlayer = TicTacToeEngine.getNextPlayer(board);
+
+        handleWinOrPrepareForNextMove(new BoxPosition(0, 0), getCurrentTime());
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString(SAVED_BOARD_STATE, TicTacToeEngine.getSaveString(board));
+    }
+
+    @Override
+    public void boxSelected(BoxPosition position) {
+        Move move = new Move(position, currentPlayer);
+
+        long currentTime = getCurrentTime();
+        if (TicTacToeEngine.isValidMove(board, move) && currentTime - previousTime > COOLDOWN) {
+            TicTacToeEngine.applyMoveIfValid(board, move);
+
+            requester.updateBoxValue(board, position);
+
+            handleWinOrPrepareForNextMove(position, currentTime);
+        }
+    }
+
+    private void handleWinOrPrepareForNextMove(BoxPosition position, long currentTime) {
+        if (TicTacToeEngine.getWinner(board) == Player.Unowned) {
+            prepareForNextMove(currentTime);
+        } else {
+            handleWin(position);
+        }
+    }
+
+    private void prepareForNextMove(long currentTime) {
+        currentPlayer = TicTacToeEngine.getNextPlayer(board);
+
+        sectionSelected(board.getSectionToPlayIn());
+
+        updateSectionToPlayIn();
+
+        previousTime = currentTime;
+    }
+
+    private void updateSectionToPlayIn() {
+        requester.selectionToPlayInChanged(board.getSectionToPlayIn());
+    }
+
+    private void handleWin(BoxPosition position) {
+        sectionSelected(position.getSectionIn());
+
+        // Don't let any moves be done
+        currentPlayer = Player.Unowned;
+
+        // There is no section to play into
+        requester.selectionToPlayInChanged(new SectionPosition(-1, -1));
+
+        requester.updateWinLine(board);
+    }
+
+    @Override
+    public void sectionSelected(SectionPosition section) {
+        populateSelectedSection(section);
+        requester.selectionSelectedChanged(section);
+    }
+
+    private void populateSelectedSection(SectionPosition section) {
+        MyGrid selectedSectionGrid = (MyGrid) findViewById(R.id.selectedSection);
+        mainSection = new SelectedSectionOwner(section, selectedSectionGrid, this);
+        GridOrganizer.populateGrid(this, board, mainSection);
+    }
+
+    private long getCurrentTime() {
+        Calendar c = Calendar.getInstance();
+        return c.getTimeInMillis();
     }
 }
