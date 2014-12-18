@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="com/diusrex/tictactoe/MainActivity.java|com/diusrex/tictactoe/SectionFragment.java" kind="src" path="app/src/main/java"/>
 	<classpathentry kind="src" path="tests"/>
+	<classpathentry excluding="com/diusrex/tictactoe/GameEventHandler.java|com/diusrex/tictactoe/GameGridDrawer.java|com/diusrex/tictactoe/GridOrganizer.java|com/diusrex/tictactoe/GridRequester.java|com/diusrex/tictactoe/MainActivity.java|com/diusrex/tictactoe/MainGridRequester.java|com/diusrex/tictactoe/MyGrid.java|com/diusrex/tictactoe/SectionRequester.java|com/diusrex/tictactoe/SelectedSectionRequester.java" kind="src" path="app/src/main/java"/>
 	<classpathentry kind="lib" path="app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.2/classes.jar"/>
 	<classpathentry kind="lib" path="app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.2/classes.jar"/>
 	<classpathentry kind="lib" path="app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.2/libs/internal_impl-21.0.2.jar"/>
