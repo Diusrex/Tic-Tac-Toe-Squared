@@ -2,6 +2,7 @@ package com.diusrex.tictactoe;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.diusrex.tictactoe.logic.BoardStatus;
 import com.diusrex.tictactoe.logic.BoxPosition;
@@ -9,6 +10,7 @@ import com.diusrex.tictactoe.logic.Move;
 import com.diusrex.tictactoe.logic.Player;
 import com.diusrex.tictactoe.logic.SectionPosition;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
+import com.diusrex.tictactoe.logic.UndoAction;
 
 import java.util.Calendar;
 
@@ -128,5 +130,21 @@ public class MainActivity extends Activity implements GameEventHandler {
     private long getCurrentTime() {
         Calendar c = Calendar.getInstance();
         return c.getTimeInMillis();
+    }
+
+    public void undoMove(View v) {
+        if (canUndoLastMove()) {
+            Move lastMove = board.getAllMoves().peek();
+
+            UndoAction.undoLastMove(board);
+            prepareForNextMove(getCurrentTime());
+
+            requester.updateBoxValue(board, lastMove.getPosition());
+        }
+
+    }
+
+    private boolean canUndoLastMove() {
+        return board.getAllMoves().size() != 0;
     }
 }
