@@ -39,6 +39,7 @@ public class MyGrid extends GridLayout {
     public void removeLine() {
         this.lineStart = null;
         this.lineEnd = null;
+        invalidate();
     }
 
     public void setLineWidth(int width) {
