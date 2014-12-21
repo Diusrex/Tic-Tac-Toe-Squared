@@ -71,20 +71,18 @@ public class MainActivity extends Activity implements GameEventHandler {
 
         currentPlayer = TicTacToeEngine.getNextPlayer(board);
 
+        // This defaultSection would only be used if the board is new
+        SectionPosition defaultSection = board.getSectionToPlayIn();
+        String defaultSectionString = TicTacToeEngine.sectionPositionToString(defaultSection);
+
+        SectionPosition selectedSection = TicTacToeEngine.stringToSectionPosition(
+                prefs.getString(SAVED_SELECTED_SECTION, defaultSectionString));
+
         if (!winnerExists()) {
-            SectionPosition defaultSection = board.getSectionToPlayIn();
-            String defaultSectionString = TicTacToeEngine.sectionPositionToString(defaultSection);
-
-            SectionPosition selectedSection = TicTacToeEngine.stringToSectionPosition(
-                    prefs.getString(SAVED_SELECTED_SECTION, defaultSectionString));
-
             prepareForNextMove(getCurrentTime(), selectedSection);
-
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.remove(SAVED_SELECTED_SECTION);
-            editor.apply();
         } else {
             disablePerformingMove();
+            sectionSelected(selectedSection);
         }
     }
 
