@@ -173,7 +173,7 @@ public class MainActivity extends Activity implements GameEventHandler {
         currentPlayer = Player.Unowned;
 
         // There is no section to play into
-        mainGridOwner.selectionToPlayInChanged(new SectionPosition(-1, -1));
+        mainGridOwner.selectionToPlayInChanged(SectionPosition.make(-1, -1));
     }
 
     private void showWinDialog(String winningPlayer) {

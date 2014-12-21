@@ -47,7 +47,7 @@ public class MainGridOwner implements GridOwner {
 
     @Override
     public void addGridItem(Activity activity, BoardStatus board, int x, int y, BoxImageResourceInfo boxImageType) {
-        SectionPosition pos = new SectionPosition(x, y);
+        SectionPosition pos = SectionPosition.make(x, y);
 
         FrameLayout frame = (FrameLayout) activity.getLayoutInflater().inflate(R.layout.section_layout, null);
         overlayHandler.setSectionFrame(frame, x, y);
@@ -62,7 +62,7 @@ public class MainGridOwner implements GridOwner {
     }
 
     private void setUpSelectingSection(FrameLayout upSelectingGrid, int x, int y) {
-        upSelectingGrid.setTag(new SectionPosition(x, y));
+        upSelectingGrid.setTag(SectionPosition.make(x, y));
         upSelectingGrid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
