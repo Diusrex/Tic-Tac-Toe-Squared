@@ -96,4 +96,10 @@ public class SectionOverlayHandler {
     private FrameLayout getFrame(BoxPosition pos) {
         return frames[pos.getX()][pos.getY()];
     }
+
+    public void removeWinLine(MyGrid grid) {
+        if (grid.hasLine()) {
+            grid.removeLine();
+        }
+    }
 }

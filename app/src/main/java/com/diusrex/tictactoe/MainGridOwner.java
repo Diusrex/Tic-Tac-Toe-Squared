@@ -102,6 +102,8 @@ public class MainGridOwner implements GridOwner {
         if (TicTacToeEngine.getWinner(board) != Player.Unowned) {
             Line line = GridChecker.searchForLineOrGetNull(board.getOwnerGrid());
             overlayHandler.setWinLine(mainGrid, line);
+        } else {
+            overlayHandler.removeWinLine(mainGrid);
         }
     }
 }
