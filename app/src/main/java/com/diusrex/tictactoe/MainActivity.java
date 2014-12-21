@@ -6,6 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.diusrex.tictactoe.dialogs.WinDialogFragment;
+import com.diusrex.tictactoe.box_images.BoxImageResourceInfo;
+import com.diusrex.tictactoe.box_images.LargeMove;
+import com.diusrex.tictactoe.box_images.LargeMoveMostRecent;
+import com.diusrex.tictactoe.box_images.MostRecentMove;
+import com.diusrex.tictactoe.box_images.RegularMove;
 import com.diusrex.tictactoe.logic.BoardStatus;
 import com.diusrex.tictactoe.logic.BoxPosition;
 import com.diusrex.tictactoe.logic.Move;
@@ -26,12 +31,22 @@ public class MainActivity extends Activity implements GameEventHandler {
     MainGridOwner mainGridOwner;
     SectionOwner mainSection;
 
+    BoxImageResourceInfo regularBox;
+    BoxImageResourceInfo mostRecentBox;
+    BoxImageResourceInfo largeBox;
+    BoxImageResourceInfo largeBoxMostRecent;
+
     long previousTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        regularBox = new RegularMove();
+        mostRecentBox = new MostRecentMove();
+        largeBox = new LargeMove();
+        largeBoxMostRecent = new LargeMoveMostRecent();
 
         restoreBoard(savedInstanceState);
 
@@ -57,7 +72,8 @@ public class MainActivity extends Activity implements GameEventHandler {
     protected void onResume() {
         super.onResume();
 
-        GridOrganizer.populateGrid(this, board, mainGridOwner);
+        GridOrganizer.populateGrid(this, board, mainGridOwner, regularBox);
+        updateMostRecentBox();
 
         currentPlayer = TicTacToeEngine.getNextPlayer(board);
 
@@ -81,11 +97,21 @@ public class MainActivity extends Activity implements GameEventHandler {
 
         long currentTime = getCurrentTime();
         if (TicTacToeEngine.isValidMove(board, move) && currentTime - previousTime > COOLDOWN) {
+            changeMostRecentMoveToRegular();
+
             TicTacToeEngine.applyMoveIfValid(board, move);
 
-            mainGridOwner.updateBoxValue(board, position);
+            mainGridOwner.updateBoxValue(board, position, mostRecentBox);
 
             handleWinOrPrepareForNextMove(position, currentTime);
+        }
+    }
+
+    private void changeMostRecentMoveToRegular() {
+        Move mostRecent = TicTacToeEngine.getMostRecentMoveOrNull(board);
+
+        if (mostRecent != null) {
+            mainGridOwner.updateBoxValue(board, mostRecent.getPosition(), regularBox);
         }
     }
 
@@ -148,7 +174,19 @@ public class MainActivity extends Activity implements GameEventHandler {
     private void populateSelectedSection(SectionPosition section) {
         MyGrid selectedSectionGrid = (MyGrid) findViewById(R.id.selectedSection);
         mainSection = new SelectedSectionOwner(section, selectedSectionGrid, this);
-        GridOrganizer.populateGrid(this, board, mainSection);
+        GridOrganizer.populateGrid(this, board, mainSection, largeBox);
+        updateSelectedSectionMostRecent(section);
+    }
+
+    private void updateSelectedSectionMostRecent(SectionPosition section) {
+        Move mostRecentMove = TicTacToeEngine.getMostRecentMoveOrNull(board);
+        if (mostRecentMove == null)
+            return;
+
+        SectionPosition mostRecentMoveSection = mostRecentMove.getSectionIn();
+        if (mostRecentMoveSection.equals(section)) {
+            mainSection.updateBoxValue(board, mostRecentMove.getPosition(), largeBoxMostRecent);
+        }
     }
 
     private long getCurrentTime() {
@@ -163,8 +201,10 @@ public class MainActivity extends Activity implements GameEventHandler {
             UndoAction.undoLastMove(board);
             prepareForNextMove(getCurrentTime());
 
-            mainGridOwner.updateBoxValue(board, lastMove.getPosition());
+            mainGridOwner.updateBoxValue(board, lastMove.getPosition(), regularBox);
             mainGridOwner.updateWinLine(board);
+
+            updateMostRecentBox();
         }
     }
 
@@ -183,5 +223,13 @@ public class MainActivity extends Activity implements GameEventHandler {
 
     private boolean canUndoLastMove() {
         return board.getAllMoves().size() != 0;
+    }
+
+    private void updateMostRecentBox() {
+        Move mostRecent = TicTacToeEngine.getMostRecentMoveOrNull(board);
+
+        if (mostRecent != null) {
+            mainGridOwner.updateBoxValue(board, mostRecent.getPosition(), mostRecentBox);
+        }
     }
 }
