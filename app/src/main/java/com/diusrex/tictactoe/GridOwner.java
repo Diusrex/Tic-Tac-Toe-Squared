@@ -2,6 +2,7 @@ package com.diusrex.tictactoe;
 
 import android.app.Activity;
 
+import com.diusrex.tictactoe.box_images.BoxImageResourceInfo;
 import com.diusrex.tictactoe.logic.BoardStatus;
 
 public interface GridOwner {
@@ -9,7 +10,7 @@ public interface GridOwner {
 
     public void removeAllViews();
 
-    void addGridItem(Activity activity, BoardStatus board, int x, int y);
+    void addGridItem(Activity activity, BoardStatus board, int x, int y, BoxImageResourceInfo boxImageType);
 
     void addSingleHorizontalSpace(Activity activity);
 

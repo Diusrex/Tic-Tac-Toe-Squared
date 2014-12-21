@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Space;
 
+import com.diusrex.tictactoe.box_images.BoxImageResourceInfo;
 import com.diusrex.tictactoe.logic.BoardStatus;
 import com.diusrex.tictactoe.logic.BoxPosition;
 import com.diusrex.tictactoe.logic.GridChecker;
@@ -45,7 +46,7 @@ public class MainGridOwner implements GridOwner {
     }
 
     @Override
-    public void addGridItem(Activity activity, BoardStatus board, int x, int y) {
+    public void addGridItem(Activity activity, BoardStatus board, int x, int y, BoxImageResourceInfo boxImageType) {
         SectionPosition pos = new SectionPosition(x, y);
 
         FrameLayout frame = (FrameLayout) activity.getLayoutInflater().inflate(R.layout.section_layout, null);
@@ -57,7 +58,7 @@ public class MainGridOwner implements GridOwner {
 
         mainGrid.addView(frame);
 
-        GridOrganizer.populateGrid(activity, board, sections[x][y]);
+        GridOrganizer.populateGrid(activity, board, sections[x][y], boxImageType);
     }
 
     private void setUpSelectingSection(FrameLayout upSelectingGrid, int x, int y) {
@@ -92,9 +93,9 @@ public class MainGridOwner implements GridOwner {
         overlayHandler.selectionSelectedChanged(section);
     }
 
-    public void updateBoxValue(BoardStatus board, BoxPosition position) {
+    public void updateBoxValue(BoardStatus board, BoxPosition position, BoxImageResourceInfo boxImageType) {
         SectionPosition sectionToChange = position.getSectionIn();
-        sections[sectionToChange.getX()][sectionToChange.getY()].updateBoxValue(board, position);
+        sections[sectionToChange.getX()][sectionToChange.getY()].updateBoxValue(board, position, boxImageType);
     }
 
     @Override
