@@ -25,11 +25,14 @@ import java.util.Calendar;
 public class MainActivity extends Activity implements GameEventHandler {
     static final String SAVED_BOARD_PREFERENCE_FILE = "PreferenceFile";
     static final String SAVED_BOARD_STATE = "SavedBoardState";
+    static final String SAVED_SELECTED_SECTION = "SavedSelectedSection";
     static final long COOLDOWN = 250;
 
     BoardStatus board;
     Player currentPlayer;
     SharedPreferences prefs;
+
+    SectionPosition currentSelectedSection;
 
     MainGridOwner mainGridOwner;
     SectionOwner mainSection;
@@ -69,7 +72,17 @@ public class MainActivity extends Activity implements GameEventHandler {
         currentPlayer = TicTacToeEngine.getNextPlayer(board);
 
         if (!winnerExists()) {
-            prepareForNextMove(getCurrentTime());
+            SectionPosition defaultSection = board.getSectionToPlayIn();
+            String defaultSectionString = TicTacToeEngine.sectionPositionToString(defaultSection);
+
+            SectionPosition selectedSection = TicTacToeEngine.stringToSectionPosition(
+                    prefs.getString(SAVED_SELECTED_SECTION, defaultSectionString));
+
+            prepareForNextMove(getCurrentTime(), selectedSection);
+
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.remove(SAVED_SELECTED_SECTION);
+            editor.apply();
         } else {
             disablePerformingMove();
         }
@@ -92,6 +105,7 @@ public class MainActivity extends Activity implements GameEventHandler {
 
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(SAVED_BOARD_STATE, saveGameString);
+        editor.putString(SAVED_SELECTED_SECTION, TicTacToeEngine.sectionPositionToString(currentSelectedSection));
         editor.apply();
     }
 
@@ -123,7 +137,7 @@ public class MainActivity extends Activity implements GameEventHandler {
         if (winnerExists()) {
             handleWin(position);
         } else {
-            prepareForNextMove(currentTime);
+            prepareForNextMove(currentTime, board.getSectionToPlayIn());
         }
     }
 
@@ -131,10 +145,10 @@ public class MainActivity extends Activity implements GameEventHandler {
         return TicTacToeEngine.getWinner(board) != Player.Unowned;
     }
 
-    private void prepareForNextMove(long currentTime) {
+    private void prepareForNextMove(long currentTime, SectionPosition selectedSection) {
         currentPlayer = TicTacToeEngine.getNextPlayer(board);
 
-        sectionSelected(board.getSectionToPlayIn());
+        sectionSelected(selectedSection);
 
         updateSectionToPlayIn();
 
@@ -171,6 +185,7 @@ public class MainActivity extends Activity implements GameEventHandler {
 
     @Override
     public void sectionSelected(SectionPosition section) {
+        currentSelectedSection = section;
         populateSelectedSection(section);
         mainGridOwner.selectionSelectedChanged(section);
     }
@@ -203,7 +218,7 @@ public class MainActivity extends Activity implements GameEventHandler {
             Move lastMove = board.getAllMoves().peek();
 
             UndoAction.undoLastMove(board);
-            prepareForNextMove(getCurrentTime());
+            prepareForNextMove(getCurrentTime(), board.getSectionToPlayIn());
 
             mainGridOwner.updateBoxValue(board, lastMove.getPosition(), regularBox);
             mainGridOwner.updateWinLine(board);

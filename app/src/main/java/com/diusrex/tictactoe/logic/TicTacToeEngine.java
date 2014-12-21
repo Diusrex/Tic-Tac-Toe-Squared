@@ -129,13 +129,25 @@ public class TicTacToeEngine {
         return board;
     }
 
-    private static Move stringToMove(String substring) {
+    public static Move stringToMove(String substring) {
         int totalValue = Integer.parseInt(substring);
         Player mainPlayer = Player.values()[totalValue % 10];
         int x = totalValue / 100;
         int y = (totalValue / 10) % 10;
 
         return new Move(new BoxPosition(x, y), mainPlayer);
+    }
+
+    public static String sectionPositionToString(SectionPosition sectionPosition) {
+        return String.format("%d%d",sectionPosition.getX(), sectionPosition.getY());
+    }
+
+    public static SectionPosition stringToSectionPosition(String substring) {
+        int totalValue = Integer.parseInt(substring);
+        int x = totalValue / 10;
+        int y = totalValue% 10;
+
+        return new SectionPosition(x, y);
     }
 
     public static Player getNextPlayer(BoardStatus board) {
