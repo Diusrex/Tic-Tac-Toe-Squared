@@ -25,7 +25,7 @@ public class EngineTest {
 
     @Before
     public void setup() {
-        board = new BoardStatus(new SectionPosition(0, 0));
+        board = new BoardStatus(SectionPosition.make(0, 0));
         BoxPosition duplicatedPosition = BoxPosition.make(0, 0);
         BoxPosition validPosition = BoxPosition.make(1, 1);
         moveP1 = new Move(duplicatedPosition, Player.Player_1); // Position 0, 0
@@ -116,17 +116,17 @@ public class EngineTest {
     @Test
     public void testSectionToPlayInNextBasic() {
         BoxPosition pos = BoxPosition.make(0, 0);
-        SectionPosition expectedSection = new SectionPosition(0, 0);
+        SectionPosition expectedSection = SectionPosition.make(0, 0);
 
         TestUtils.assertAreEqual(expectedSection, TicTacToeEngine.getSectionToPlayInNext(pos));
 
         pos = BoxPosition.make(2, 2);
-        expectedSection = new SectionPosition(2, 2);
+        expectedSection = SectionPosition.make(2, 2);
 
         TestUtils.assertAreEqual(expectedSection, TicTacToeEngine.getSectionToPlayInNext(pos));
 
         pos = BoxPosition.make(3, 4);
-        expectedSection = new SectionPosition(0, 1);
+        expectedSection = SectionPosition.make(0, 1);
 
         TestUtils.assertAreEqual(expectedSection, TicTacToeEngine.getSectionToPlayInNext(pos));
     }
@@ -148,7 +148,7 @@ public class EngineTest {
 
     @Test
     public void testSectionToPlayInFull() {
-        SectionPosition fullSection = new SectionPosition(0, 0);
+        SectionPosition fullSection = SectionPosition.make(0, 0);
         TestUtils.fillSection(board, fullSection);
 
         // Need to make sure is the correct player to play next

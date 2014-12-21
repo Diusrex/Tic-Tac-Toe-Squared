@@ -76,6 +76,6 @@ public class BoxPosition {
         int sectionX = x / BoardStatus.SIZE_OF_SECTION;
         int sectionY = y / BoardStatus.SIZE_OF_SECTION;
 
-        return new SectionPosition(sectionX, sectionY);
+        return SectionPosition.make(sectionX, sectionY);
     }
 }

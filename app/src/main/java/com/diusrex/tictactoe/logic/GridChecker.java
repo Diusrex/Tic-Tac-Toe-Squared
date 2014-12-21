@@ -13,7 +13,7 @@ public class GridChecker {
     static final BoxPosition verticalLineTotalIncrease = BoxPosition.make(0, 2);
 
     public static Player searchForPattern(Player[][] grid) {
-        return searchForPattern(grid, new SectionPosition(0, 0));
+        return searchForPattern(grid, SectionPosition.make(0, 0));
     }
 
     // Will return the first pattern it finds. If there are multiple, then it
@@ -29,7 +29,7 @@ public class GridChecker {
     }
 
     public static Line searchForLineOrGetNull(Player[][] grid) {
-        return searchForLineOrGetNull(grid, new SectionPosition(0, 0));
+        return searchForLineOrGetNull(grid, SectionPosition.make(0, 0));
     }
 
     public static Line searchForLineOrGetNull(Player[][] grid, SectionPosition sectionIn) {

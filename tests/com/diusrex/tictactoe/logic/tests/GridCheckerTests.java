@@ -36,12 +36,12 @@ public class GridCheckerTests {
 
     @Test
     public void testNoPattern() {
-        Assert.assertEquals(Player.Unowned, GridChecker.searchForPattern(grid, new SectionPosition(0, 0)));
+        Assert.assertEquals(Player.Unowned, GridChecker.searchForPattern(grid, SectionPosition.make(0, 0)));
     }
 
     @Test
     public void testNullGridGiven() {
-        GridChecker.searchForPattern(null, new SectionPosition(0, 0));
+        GridChecker.searchForPattern(null, SectionPosition.make(0, 0));
     }
 
     // These are all invalid positions for the given grid
@@ -51,16 +51,16 @@ public class GridCheckerTests {
         grid = new Player[NUMBER_OF_SECTIONS_IN_GRID * BoardStatus.SIZE_OF_SECTION][NUMBER_OF_SECTIONS_IN_GRID
                 * BoardStatus.SIZE_OF_SECTION];
 
-        SectionPosition sectionIn = new SectionPosition(-1, 0);
+        SectionPosition sectionIn = SectionPosition.make(-1, 0);
         GridChecker.searchForPattern(grid, sectionIn);
 
-        sectionIn = new SectionPosition(NUMBER_OF_SECTIONS_IN_GRID, 0);
+        sectionIn = SectionPosition.make(NUMBER_OF_SECTIONS_IN_GRID, 0);
         GridChecker.searchForPattern(grid, sectionIn);
 
-        sectionIn = new SectionPosition(0, -1);
+        sectionIn = SectionPosition.make(0, -1);
         GridChecker.searchForPattern(grid, sectionIn);
 
-        sectionIn = new SectionPosition(0, NUMBER_OF_SECTIONS_IN_GRID);
+        sectionIn = SectionPosition.make(0, NUMBER_OF_SECTIONS_IN_GRID);
         GridChecker.searchForPattern(grid, sectionIn);
     }
 

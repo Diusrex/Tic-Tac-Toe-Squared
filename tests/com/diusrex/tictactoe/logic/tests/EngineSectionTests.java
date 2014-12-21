@@ -24,7 +24,7 @@ public class EngineSectionTests {
     }
 
     private void resetBoard() {
-        board = new BoardStatusNoCount(new SectionPosition(0, 0));
+        board = new BoardStatusNoCount(SectionPosition.make(0, 0));
     }
 
     private void winSection(SectionPosition player1Section, Player mainPlayer) {
@@ -124,9 +124,9 @@ public class EngineSectionTests {
 
     @Test
     public void testWinGameHorizontal() {
-        SectionPosition lineShift = new SectionPosition(0, 1);
-        SectionPosition horizontalIncrease = new SectionPosition(1, 0);
-        SectionPosition firstSection = new SectionPosition(0, 0);
+        SectionPosition lineShift = SectionPosition.make(0, 1);
+        SectionPosition horizontalIncrease = SectionPosition.make(1, 0);
+        SectionPosition firstSection = SectionPosition.make(0, 0);
 
         // Need to test all 3 different lines
         for (int i = 0; i < 3; ++i, firstSection = firstSection.increaseBy(lineShift)) {
@@ -136,9 +136,9 @@ public class EngineSectionTests {
 
     @Test
     public void testWinGameVertical() {
-        SectionPosition lineShift = new SectionPosition(1, 0);
-        SectionPosition verticalIncrease = new SectionPosition(0, 1);
-        SectionPosition firstSection = new SectionPosition(0, 0);
+        SectionPosition lineShift = SectionPosition.make(1, 0);
+        SectionPosition verticalIncrease = SectionPosition.make(0, 1);
+        SectionPosition firstSection = SectionPosition.make(0, 0);
 
         // Need to test all 3 different lines
         for (int i = 0; i < 3; ++i, firstSection = firstSection.increaseBy(lineShift)) {
@@ -148,13 +148,13 @@ public class EngineSectionTests {
 
     @Test
     public void testWinGameDiagonal() {
-        SectionPosition diagonalIncrease = new SectionPosition(1, 1);
-        SectionPosition firstSection = new SectionPosition(0, 0);
+        SectionPosition diagonalIncrease = SectionPosition.make(1, 1);
+        SectionPosition firstSection = SectionPosition.make(0, 0);
 
         winBoardWithLine(diagonalIncrease, firstSection);
 
-        diagonalIncrease = new SectionPosition(-1, 1);
-        firstSection = new SectionPosition(2, 0);
+        diagonalIncrease = SectionPosition.make(-1, 1);
+        firstSection = SectionPosition.make(2, 0);
 
         winBoardWithLine(diagonalIncrease, firstSection);
     }

@@ -95,7 +95,7 @@ public class TicTacToeEngine {
         SectionPosition sectionIn = pos.getSectionIn();
         pos = pos.decreaseBy(sectionIn.getTopLeftPosition());
 
-        return new SectionPosition(pos.getX(), pos.getY());
+        return SectionPosition.make(pos.getX(), pos.getY());
     }
 
     public static Player getWinner(BoardStatus board) {
@@ -147,7 +147,7 @@ public class TicTacToeEngine {
         int x = totalValue / 10;
         int y = totalValue% 10;
 
-        return new SectionPosition(x, y);
+        return SectionPosition.make(x, y);
     }
 
     public static Player getNextPlayer(BoardStatus board) {

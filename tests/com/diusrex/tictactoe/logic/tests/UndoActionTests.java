@@ -34,11 +34,11 @@ public class UndoActionTests {
 
     @Before
     public void setup() {
-        board = new BoardStatusNoCount(new SectionPosition(0, 0));
+        board = new BoardStatusNoCount(SectionPosition.make(0, 0));
         mainPlayer = Player.Player_1;
         board.playerToGoNext = mainPlayer;
 
-        mainSection = new SectionPosition(1, 1);
+        mainSection = SectionPosition.make(1, 1);
         appliedMove = new Move(BoxPosition.make(1, 1), mainPlayer);
 
         TestUtils.applyMoveToBoard(board, appliedMove);
@@ -72,7 +72,7 @@ public class UndoActionTests {
 
     @Test
     public void testUndoMoveSupposedToPlayInFull() {
-        SectionPosition fullSection = new SectionPosition(1, 1);
+        SectionPosition fullSection = SectionPosition.make(1, 1);
         fillSection(fullSection);
 
         BoxPosition pos = BoxPosition.make(8, 8);
@@ -90,7 +90,7 @@ public class UndoActionTests {
 
     @Test
     public void testUndoSectionWinningMove() {
-        SectionPosition sectionToWin = new SectionPosition(0, 0);
+        SectionPosition sectionToWin = SectionPosition.make(0, 0);
         winSection(sectionToWin);
 
         Assert.assertEquals(mainPlayer, board.getSectionOwner(sectionToWin));
@@ -102,7 +102,7 @@ public class UndoActionTests {
 
     @Test
     public void testUndoSectionDoesntLoseSection() {
-        SectionPosition sectionToWin = new SectionPosition(0, 0);
+        SectionPosition sectionToWin = SectionPosition.make(0, 0);
         winSection(sectionToWin);
 
         Assert.assertEquals(mainPlayer, board.getSectionOwner(sectionToWin));
@@ -165,14 +165,14 @@ public class UndoActionTests {
         origionalSectionOwners = new Player[BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE][BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE];
         for (int x = 0; x < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++x)
             for (int y = 0; y < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++y)
-                origionalSectionOwners[x][y] = board.getSectionOwner(new SectionPosition(x, y));
+                origionalSectionOwners[x][y] = board.getSectionOwner(SectionPosition.make(x, y));
     }
     
     private void backupLines() {
         lines = new Line[BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE][BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE];
         for (int x = 0; x < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++x)
             for (int y = 0; y < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++y)
-                lines[x][y] = board.getLine(new SectionPosition(x, y));
+                lines[x][y] = board.getLine(SectionPosition.make(x, y));
     }
 
     private void assertBoardStateUnchanged() {
@@ -185,10 +185,10 @@ public class UndoActionTests {
 
         for (int x = 0; x < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++x)
             for (int y = 0; y < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++y)
-                Assert.assertEquals(origionalSectionOwners[x][y], board.getSectionOwner(new SectionPosition(x, y)));
+                Assert.assertEquals(origionalSectionOwners[x][y], board.getSectionOwner(SectionPosition.make(x, y)));
 
         for (int x = 0; x < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++x)
             for (int y = 0; y < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++y)
-                Assert.assertEquals(lines[x][y], board.getLine(new SectionPosition(x, y)));
+                Assert.assertEquals(lines[x][y], board.getLine(SectionPosition.make(x, y)));
     }
 }

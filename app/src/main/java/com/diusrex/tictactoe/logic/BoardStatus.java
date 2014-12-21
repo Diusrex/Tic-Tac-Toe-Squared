@@ -43,7 +43,7 @@ public class BoardStatus {
     private Stack<Move> allMoves;
 
     public BoardStatus() {
-        this(new SectionPosition(1, 1));
+        this(SectionPosition.make(1, 1));
     }
 
     public BoardStatus(SectionPosition startingSection) {
