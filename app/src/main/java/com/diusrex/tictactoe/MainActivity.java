@@ -1,9 +1,11 @@
 package com.diusrex.tictactoe;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.View;
 
+import com.diusrex.tictactoe.dialogs.WinDialogFragment;
 import com.diusrex.tictactoe.logic.BoardStatus;
 import com.diusrex.tictactoe.logic.BoxPosition;
 import com.diusrex.tictactoe.logic.Move;
@@ -21,9 +23,7 @@ public class MainActivity extends Activity implements GameEventHandler {
     BoardStatus board;
     Player currentPlayer;
 
-    MyGrid mainGrid;
-
-    MainGridOwner requester;
+    MainGridOwner mainGridOwner;
     SectionOwner mainSection;
 
     long previousTime;
@@ -33,15 +33,19 @@ public class MainActivity extends Activity implements GameEventHandler {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        restoreBoard(savedInstanceState);
+
+        MyGrid mainGrid = (MyGrid) findViewById(R.id.mainGrid);
+
+        mainGridOwner = new MainGridOwner(this, this, mainGrid);
+    }
+
+    private void restoreBoard(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             loadBoardStatus(savedInstanceState);
         } else {
             board = new BoardStatus();
         }
-
-        mainGrid = (MyGrid) findViewById(R.id.mainGrid);
-
-        requester = new MainGridOwner(this, this, mainGrid);
     }
 
     private void loadBoardStatus(Bundle savedInstanceState) {
@@ -53,11 +57,15 @@ public class MainActivity extends Activity implements GameEventHandler {
     protected void onResume() {
         super.onResume();
 
-        GridOrganizer.populateGrid(this, board, requester);
+        GridOrganizer.populateGrid(this, board, mainGridOwner);
 
         currentPlayer = TicTacToeEngine.getNextPlayer(board);
 
-        handleWinOrPrepareForNextMove(new BoxPosition(0, 0), getCurrentTime());
+        if (!winnerExists()) {
+            prepareForNextMove(getCurrentTime());
+        } else {
+            disablePerformingMove();
+        }
     }
 
     @Override
@@ -75,18 +83,22 @@ public class MainActivity extends Activity implements GameEventHandler {
         if (TicTacToeEngine.isValidMove(board, move) && currentTime - previousTime > COOLDOWN) {
             TicTacToeEngine.applyMoveIfValid(board, move);
 
-            requester.updateBoxValue(board, position);
+            mainGridOwner.updateBoxValue(board, position);
 
             handleWinOrPrepareForNextMove(position, currentTime);
         }
     }
 
     private void handleWinOrPrepareForNextMove(BoxPosition position, long currentTime) {
-        if (TicTacToeEngine.getWinner(board) == Player.Unowned) {
-            prepareForNextMove(currentTime);
-        } else {
+        if (winnerExists()) {
             handleWin(position);
+        } else {
+            prepareForNextMove(currentTime);
         }
+    }
+
+    private boolean winnerExists() {
+        return TicTacToeEngine.getWinner(board) != Player.Unowned;
     }
 
     private void prepareForNextMove(long currentTime) {
@@ -100,25 +112,37 @@ public class MainActivity extends Activity implements GameEventHandler {
     }
 
     private void updateSectionToPlayIn() {
-        requester.selectionToPlayInChanged(board.getSectionToPlayIn());
+        mainGridOwner.selectionToPlayInChanged(board.getSectionToPlayIn());
     }
 
     private void handleWin(BoxPosition position) {
+        mainGridOwner.updateWinLine(board);
+
         sectionSelected(position.getSectionIn());
 
-        // Don't let any moves be done
+        String winningPlayer = getPlayerAsString();
+        disablePerformingMove();
+
+        showWinDialog(winningPlayer);
+    }
+
+    private void disablePerformingMove() {
+        // Will not allow the player unowned to play
         currentPlayer = Player.Unowned;
 
         // There is no section to play into
-        requester.selectionToPlayInChanged(new SectionPosition(-1, -1));
+        mainGridOwner.selectionToPlayInChanged(new SectionPosition(-1, -1));
+    }
 
-        requester.updateWinLine(board);
+    private void showWinDialog(String winningPlayer) {
+        DialogFragment fragment = WinDialogFragment.newInstance(winningPlayer);
+        fragment.show(getFragmentManager(), "dialog");
     }
 
     @Override
     public void sectionSelected(SectionPosition section) {
         populateSelectedSection(section);
-        requester.selectionSelectedChanged(section);
+        mainGridOwner.selectionSelectedChanged(section);
     }
 
     private void populateSelectedSection(SectionPosition section) {
@@ -139,9 +163,22 @@ public class MainActivity extends Activity implements GameEventHandler {
             UndoAction.undoLastMove(board);
             prepareForNextMove(getCurrentTime());
 
-            requester.updateBoxValue(board, lastMove.getPosition());
+            mainGridOwner.updateBoxValue(board, lastMove.getPosition());
+            mainGridOwner.updateWinLine(board);
         }
+    }
 
+    private String getPlayerAsString() {
+        switch (currentPlayer) {
+        case Player_1:
+            return getString(R.string.player_1);
+
+        case Player_2:
+            return getString(R.string.player_2);
+
+        default:
+            return getString(R.string.no_player);
+        }
     }
 
     private boolean canUndoLastMove() {
