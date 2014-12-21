@@ -3,6 +3,12 @@ package com.diusrex.tictactoe.logic;
 import java.util.Stack;
 
 public class TicTacToeEngine {
+    public static Move getMostRecentMoveOrNull(BoardStatus board) {
+        if (board.getAllMoves().size() == 0)
+            return null;
+
+        return board.getAllMoves().peek();
+    }
 
     public static boolean isValidMove(BoardStatus board, Move move) {
         // Should be able to handle this properly
