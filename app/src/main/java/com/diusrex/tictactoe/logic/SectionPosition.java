@@ -32,7 +32,7 @@ public class SectionPosition {
     }
 
     public BoxPosition getTopLeftPosition() {
-        return new BoxPosition(x * BoardStatus.SIZE_OF_SECTION, y * BoardStatus.SIZE_OF_SECTION);
+        return BoxPosition.make(x * BoardStatus.SIZE_OF_SECTION, y * BoardStatus.SIZE_OF_SECTION);
     }
 
     public SectionPosition increaseBy(SectionPosition increase) {

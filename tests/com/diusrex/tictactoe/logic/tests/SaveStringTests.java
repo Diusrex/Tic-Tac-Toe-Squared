@@ -19,8 +19,8 @@ public class SaveStringTests {
     @Before
     public void setup() {
         board = new BoardStatus();
-        playerOneMove = new Move(new BoxPosition(3, 3), Player.Player_1);
-        playerTwoMove = new Move(new BoxPosition(1, 1), Player.Player_2);
+        playerOneMove = new Move(BoxPosition.make(3, 3), Player.Player_1);
+        playerTwoMove = new Move(BoxPosition.make(1, 1), Player.Player_2);
     }
 
     @Test

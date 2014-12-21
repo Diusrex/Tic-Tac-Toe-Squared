@@ -20,21 +20,21 @@ public class BoardStatusTests {
 
     @Test
     public void testIsNotInsideBounds() {
-        BoxPosition invalidPos = new BoxPosition(0, BoardStatus.NUMBER_OF_BOXES_PER_SIDE);
+        BoxPosition invalidPos = BoxPosition.make(0, BoardStatus.NUMBER_OF_BOXES_PER_SIDE);
         Assert.assertFalse(status.isInsideBounds(invalidPos));
-        invalidPos = new BoxPosition(BoardStatus.NUMBER_OF_BOXES_PER_SIDE, 0);
+        invalidPos = BoxPosition.make(BoardStatus.NUMBER_OF_BOXES_PER_SIDE, 0);
         Assert.assertFalse(status.isInsideBounds(invalidPos));
-        invalidPos = new BoxPosition(-1, 0);
+        invalidPos = BoxPosition.make(-1, 0);
         Assert.assertFalse(status.isInsideBounds(invalidPos));
-        invalidPos = new BoxPosition(0, -1);
+        invalidPos = BoxPosition.make(0, -1);
         Assert.assertFalse(status.isInsideBounds(invalidPos));
     }
 
     @Test
     public void testIsInsideBounds() {
-        BoxPosition validPos = new BoxPosition(0, 0);
+        BoxPosition validPos = BoxPosition.make(0, 0);
         Assert.assertTrue(status.isInsideBounds(validPos));
-        validPos = new BoxPosition(BoardStatus.NUMBER_OF_BOXES_PER_SIDE - 1, BoardStatus.NUMBER_OF_BOXES_PER_SIDE - 1);
+        validPos = BoxPosition.make(BoardStatus.NUMBER_OF_BOXES_PER_SIDE - 1, BoardStatus.NUMBER_OF_BOXES_PER_SIDE - 1);
         Assert.assertTrue(status.isInsideBounds(validPos));
     }
 
@@ -42,7 +42,7 @@ public class BoardStatusTests {
     public void testAddingMovesToStack() {
         Assert.assertEquals(0, getMovesSize());
 
-        BoxPosition movePos = new BoxPosition(0, 0);
+        BoxPosition movePos = BoxPosition.make(0, 0);
         Move move = new Move(movePos, Player.Player_1);
 
         status.applyMove(move);

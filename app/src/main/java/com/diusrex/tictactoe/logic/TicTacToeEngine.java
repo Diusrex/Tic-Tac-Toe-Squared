@@ -65,7 +65,7 @@ public class TicTacToeEngine {
 
         for (int x = 0; x < 3; ++x) {
             for (int y = 0; y < 3; ++y) {
-                BoxPosition positionInSection = new BoxPosition(x, y);
+                BoxPosition positionInSection = BoxPosition.make(x, y);
                 if (board.getBoxOwner(positionInSection.increaseBy(offset)) == Player.Unowned)
                     return false;
             }
@@ -135,7 +135,7 @@ public class TicTacToeEngine {
         int x = totalValue / 100;
         int y = (totalValue / 10) % 10;
 
-        return new Move(new BoxPosition(x, y), mainPlayer);
+        return new Move(BoxPosition.make(x, y), mainPlayer);
     }
 
     public static String sectionPositionToString(SectionPosition sectionPosition) {

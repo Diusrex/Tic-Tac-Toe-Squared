@@ -16,8 +16,8 @@ public class GridCheckerTests {
     static final int SIZE = 9;
     Player[][] grid;
 
-    static final BoxPosition horizontalIncrease = new BoxPosition(1, 0);
-    static final BoxPosition verticalIncrease = new BoxPosition(0, 1);
+    static final BoxPosition horizontalIncrease = BoxPosition.make(1, 0);
+    static final BoxPosition verticalIncrease = BoxPosition.make(0, 1);
 
     @Before
     public void setUp() {
@@ -66,8 +66,8 @@ public class GridCheckerTests {
 
     @Test
     public void testHorizontalPatterns() {
-        BoxPosition startPos = new BoxPosition(0, 0);
-        BoxPosition finalPos = new BoxPosition(2, 0);
+        BoxPosition startPos = BoxPosition.make(0, 0);
+        BoxPosition finalPos = BoxPosition.make(2, 0);
         SectionPosition sectionIn = startPos.getSectionIn();
 
         Player currentPlayer = Player.Player_1;
@@ -87,8 +87,8 @@ public class GridCheckerTests {
 
     @Test
     public void testVerticalPatterns() {
-        BoxPosition startPos = new BoxPosition(3, 6);
-        BoxPosition finalPos = new BoxPosition(3, 8);
+        BoxPosition startPos = BoxPosition.make(3, 6);
+        BoxPosition finalPos = BoxPosition.make(3, 8);
         SectionPosition sectionIn = startPos.getSectionIn();
 
         Player currentPlayer = Player.Player_1;
@@ -108,13 +108,13 @@ public class GridCheckerTests {
 
     @Test
     public void testDiagonalPatternOne() {
-        BoxPosition startPos = new BoxPosition(3, 3);
-        BoxPosition finalPos = new BoxPosition(5, 5);
+        BoxPosition startPos = BoxPosition.make(3, 3);
+        BoxPosition finalPos = BoxPosition.make(5, 5);
         SectionPosition sectionIn = startPos.getSectionIn();
 
         Player currentPlayer = Player.Player_2;
 
-        BoxPosition diagonalIncrease = new BoxPosition(1, 1);
+        BoxPosition diagonalIncrease = BoxPosition.make(1, 1);
 
         fillLine(startPos, diagonalIncrease, currentPlayer, 2);
 
@@ -127,13 +127,13 @@ public class GridCheckerTests {
 
     @Test
     public void testDiagonalPatternTwo() {
-        BoxPosition startPos = new BoxPosition(3, 5);
-        BoxPosition finalPos = new BoxPosition(5, 3);
+        BoxPosition startPos = BoxPosition.make(3, 5);
+        BoxPosition finalPos = BoxPosition.make(5, 3);
         SectionPosition sectionIn = startPos.getSectionIn();
 
         Player currentPlayer = Player.Player_2;
 
-        BoxPosition diagonalIncrease = new BoxPosition(1, -1);
+        BoxPosition diagonalIncrease = BoxPosition.make(1, -1);
 
         fillLine(startPos, diagonalIncrease, currentPlayer, 2);
 
@@ -146,8 +146,8 @@ public class GridCheckerTests {
 
     @Test
     public void testHorizontalLine() {
-        BoxPosition startPos = new BoxPosition(0, 0);
-        BoxPosition finalPos = new BoxPosition(2, 0);
+        BoxPosition startPos = BoxPosition.make(0, 0);
+        BoxPosition finalPos = BoxPosition.make(2, 0);
         SectionPosition sectionIn = startPos.getSectionIn();
 
         Player currentPlayer = Player.Player_1;
@@ -170,8 +170,8 @@ public class GridCheckerTests {
 
     @Test
     public void testVerticalLine() {
-        BoxPosition startPos = new BoxPosition(3, 6);
-        BoxPosition finalPos = new BoxPosition(3, 8);
+        BoxPosition startPos = BoxPosition.make(3, 6);
+        BoxPosition finalPos = BoxPosition.make(3, 8);
         SectionPosition sectionIn = startPos.getSectionIn();
 
         Player currentPlayer = Player.Player_1;
@@ -192,13 +192,13 @@ public class GridCheckerTests {
 
     @Test
     public void testDiagonalLineOne() {
-        BoxPosition startPos = new BoxPosition(3, 3);
-        BoxPosition finalPos = new BoxPosition(5, 5);
+        BoxPosition startPos = BoxPosition.make(3, 3);
+        BoxPosition finalPos = BoxPosition.make(5, 5);
         SectionPosition sectionIn = startPos.getSectionIn();
 
         Player currentPlayer = Player.Player_2;
 
-        BoxPosition diagonalIncrease = new BoxPosition(1, 1);
+        BoxPosition diagonalIncrease = BoxPosition.make(1, 1);
 
         fillLine(startPos, diagonalIncrease, currentPlayer, 2);
 
@@ -211,13 +211,13 @@ public class GridCheckerTests {
 
     @Test
     public void testDiagonalLineTwo() {
-        BoxPosition startPos = new BoxPosition(3, 5);
-        BoxPosition finalPos = new BoxPosition(5, 3);
+        BoxPosition startPos = BoxPosition.make(3, 5);
+        BoxPosition finalPos = BoxPosition.make(5, 3);
         SectionPosition sectionIn = startPos.getSectionIn();
 
         Player currentPlayer = Player.Player_2;
 
-        BoxPosition diagonalIncrease = new BoxPosition(1, -1);
+        BoxPosition diagonalIncrease = BoxPosition.make(1, -1);
 
         fillLine(startPos, diagonalIncrease, currentPlayer, 2);
 

@@ -34,11 +34,11 @@ public class EngineSectionTests {
     // Will take the given section for one player, and the other section for the
     // other player
     private void takeSectionForPlayerHorizontal(BoxPosition lineStart, Player player) {
-        takeLineInBoard(lineStart, new BoxPosition(1, 0), lengthOfCompleteLine, player);
+        takeLineInBoard(lineStart, BoxPosition.make(1, 0), lengthOfCompleteLine, player);
     }
 
     private void takeSectionForPlayerVertical(BoxPosition lineStart, Player player) {
-        takeLineInBoard(lineStart, new BoxPosition(0, 1), lengthOfCompleteLine, player);
+        takeLineInBoard(lineStart, BoxPosition.make(0, 1), lengthOfCompleteLine, player);
     }
 
     private void takeLineInBoard(BoxPosition start, BoxPosition increase, int count, Player player) {
@@ -50,7 +50,7 @@ public class EngineSectionTests {
 
     @Test
     public void testSectionOwned() {
-        BoxPosition player1PositionStart = new BoxPosition(0, 0);
+        BoxPosition player1PositionStart = BoxPosition.make(0, 0);
         SectionPosition player1Section = player1PositionStart.getSectionIn();
 
         Player currentPlayer = Player.Player_1;
@@ -63,7 +63,7 @@ public class EngineSectionTests {
 
     @Test
     public void testSectionCannotBeRetaken() {
-        BoxPosition player2PositionStart = new BoxPosition(1, 0);
+        BoxPosition player2PositionStart = BoxPosition.make(1, 0);
         SectionPosition player2Section = player2PositionStart.getSectionIn();
 
         Player currentPlayer = Player.Player_2;
@@ -71,7 +71,7 @@ public class EngineSectionTests {
         takeSectionForPlayerVertical(player2PositionStart, currentPlayer);
 
         // Will be to the left
-        BoxPosition player1PositionStart = new BoxPosition(0, 0);
+        BoxPosition player1PositionStart = BoxPosition.make(0, 0);
 
         currentPlayer = Player.Player_1;
         board.playerToGoNext = currentPlayer;
@@ -82,18 +82,18 @@ public class EngineSectionTests {
 
     @Test
     public void testSectionIncomplete() {
-        BoxPosition player1PositionStart = new BoxPosition(0, 0);
+        BoxPosition player1PositionStart = BoxPosition.make(0, 0);
         SectionPosition player1Section = player1PositionStart.getSectionIn();
 
         Player mainPlayer = Player.Player_1;
         board.playerToGoNext = mainPlayer;
 
         // Diagonal version 1
-        takeLineInBoard(player1PositionStart, new BoxPosition(1, 1), 2, mainPlayer);
+        takeLineInBoard(player1PositionStart, BoxPosition.make(1, 1), 2, mainPlayer);
         Assert.assertEquals(Player.Unowned, board.getSectionOwner(player1Section));
 
         // Take the final spot
-        BoxPosition winningPos = new BoxPosition(2, 2);
+        BoxPosition winningPos = BoxPosition.make(2, 2);
         board.setSectionToPlayIn(player1Section);
 
         TestUtils.applyMoveToBoard(board, new Move(winningPos, mainPlayer));
@@ -103,18 +103,18 @@ public class EngineSectionTests {
 
     @Test
     public void testOtherDiagonal() {
-        BoxPosition player1PositionStart = new BoxPosition(2, 0);
+        BoxPosition player1PositionStart = BoxPosition.make(2, 0);
         SectionPosition player1Section = player1PositionStart.getSectionIn();
 
         Player currentPlayer = Player.Player_1;
         board.playerToGoNext = currentPlayer;
 
         // Diagonal version 2
-        takeLineInBoard(player1PositionStart, new BoxPosition(-1, 1), 2, currentPlayer);
+        takeLineInBoard(player1PositionStart, BoxPosition.make(-1, 1), 2, currentPlayer);
         Assert.assertEquals(Player.Unowned, board.getSectionOwner(player1Section));
 
         // Take the final spot
-        BoxPosition winningPos = new BoxPosition(0, 2);
+        BoxPosition winningPos = BoxPosition.make(0, 2);
         board.setSectionToPlayIn(player1Section);
 
         TestUtils.applyMoveToBoard(board, new Move(winningPos, currentPlayer));

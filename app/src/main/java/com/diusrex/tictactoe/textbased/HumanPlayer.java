@@ -25,7 +25,7 @@ public class HumanPlayer implements PlayerController {
         System.out.print("What y position do you want to play in? ");
         int y = scanner.nextInt();
 
-        return new BoxPosition(x, y);
+        return BoxPosition.make(x, y);
     }
 
     private void printOutInformation(BoardStatus board) {

@@ -53,7 +53,7 @@ public class TestUtils {
         Player playerToOwn = Player.Player_1;
         for (int x = 0; x < 3; ++x) {
             for (int y = 0; y < 3; ++y) {
-                BoxPosition basePosition = new BoxPosition(x, y);
+                BoxPosition basePosition = BoxPosition.make(x, y);
                 board.setBoxOwner(basePosition.increaseBy(offset), playerToOwn);
 
                 // Switch players

@@ -7,10 +7,10 @@ package com.diusrex.tictactoe.logic;
  */
 public class GridChecker {
     static final int LINE_LENGTH = 3;
-    static final BoxPosition horizontalIncrease = new BoxPosition(1, 0);
-    static final BoxPosition horizontalLineTotalIncrease = new BoxPosition(2, 0);
-    static final BoxPosition verticalIncrease = new BoxPosition(0, 1);
-    static final BoxPosition verticalLineTotalIncrease = new BoxPosition(0, 2);
+    static final BoxPosition horizontalIncrease = BoxPosition.make(1, 0);
+    static final BoxPosition horizontalLineTotalIncrease = BoxPosition.make(2, 0);
+    static final BoxPosition verticalIncrease = BoxPosition.make(0, 1);
+    static final BoxPosition verticalLineTotalIncrease = BoxPosition.make(0, 2);
 
     public static Player searchForPattern(Player[][] grid) {
         return searchForPattern(grid, new SectionPosition(0, 0));
@@ -60,16 +60,16 @@ public class GridChecker {
 
     private static Line searchForDiagonalLineOrNull(Player[][] grid, SectionPosition sectionIn) {
         BoxPosition currentPos = sectionIn.getTopLeftPosition();
-        BoxPosition diagonalIncrease = new BoxPosition(1, 1);
+        BoxPosition diagonalIncrease = BoxPosition.make(1, 1);
         BoxPosition diagonalLineTotalIncrease = diagonalIncrease.increaseBy(diagonalIncrease);
 
         if (lineOwnedBySinglePlayer(grid, currentPos, diagonalIncrease))
             return new Line(currentPos, currentPos.increaseBy(diagonalLineTotalIncrease));
 
-        BoxPosition differenceBetweenDiagonals = new BoxPosition(2, 0);
+        BoxPosition differenceBetweenDiagonals = BoxPosition.make(2, 0);
         currentPos = currentPos.increaseBy(differenceBetweenDiagonals);
 
-        diagonalIncrease = new BoxPosition(-1, 1);
+        diagonalIncrease = BoxPosition.make(-1, 1);
         diagonalLineTotalIncrease = diagonalIncrease.increaseBy(diagonalIncrease);
 
         if (lineOwnedBySinglePlayer(grid, currentPos, diagonalIncrease))

@@ -26,16 +26,16 @@ public class EngineTest {
     @Before
     public void setup() {
         board = new BoardStatus(new SectionPosition(0, 0));
-        BoxPosition duplicatedPosition = new BoxPosition(0, 0);
-        BoxPosition validPosition = new BoxPosition(1, 1);
+        BoxPosition duplicatedPosition = BoxPosition.make(0, 0);
+        BoxPosition validPosition = BoxPosition.make(1, 1);
         moveP1 = new Move(duplicatedPosition, Player.Player_1); // Position 0, 0
         moveP1_2 = new Move(validPosition, Player.Player_1);
         moveP2SameAsMoveP1 = new Move(duplicatedPosition, Player.Player_2);
-        moveP2 = new Move(new BoxPosition(1, 1), Player.Player_2);
+        moveP2 = new Move(BoxPosition.make(1, 1), Player.Player_2);
 
-        moveP2_WrongSectionToP1 = new Move(new BoxPosition(7, 7), Player.Player_2);
+        moveP2_WrongSectionToP1 = new Move(BoxPosition.make(7, 7), Player.Player_2);
 
-        invalidPosition = new Move(new BoxPosition(-1, -1), Player.Player_1);
+        invalidPosition = new Move(BoxPosition.make(-1, -1), Player.Player_1);
         invalidPlayer = new Move(validPosition, Player.Unowned);
     }
 
@@ -115,17 +115,17 @@ public class EngineTest {
 
     @Test
     public void testSectionToPlayInNextBasic() {
-        BoxPosition pos = new BoxPosition(0, 0);
+        BoxPosition pos = BoxPosition.make(0, 0);
         SectionPosition expectedSection = new SectionPosition(0, 0);
 
         TestUtils.assertAreEqual(expectedSection, TicTacToeEngine.getSectionToPlayInNext(pos));
 
-        pos = new BoxPosition(2, 2);
+        pos = BoxPosition.make(2, 2);
         expectedSection = new SectionPosition(2, 2);
 
         TestUtils.assertAreEqual(expectedSection, TicTacToeEngine.getSectionToPlayInNext(pos));
 
-        pos = new BoxPosition(3, 4);
+        pos = BoxPosition.make(3, 4);
         expectedSection = new SectionPosition(0, 1);
 
         TestUtils.assertAreEqual(expectedSection, TicTacToeEngine.getSectionToPlayInNext(pos));
@@ -133,13 +133,13 @@ public class EngineTest {
 
     @Test
     public void testApplyMoveSectionToPlayInNext() {
-        BoxPosition pos = new BoxPosition(2, 2);
+        BoxPosition pos = BoxPosition.make(2, 2);
         Player player = Player.Player_1;
         Move move = new Move(pos, player);
         TestUtils.applyMoveToBoard(board, move);
         Assert.assertEquals(TicTacToeEngine.getSectionToPlayInNext(pos), board.getSectionToPlayIn());
 
-        pos = new BoxPosition(8, 6);
+        pos = BoxPosition.make(8, 6);
         player = Player.Player_2;
         move = new Move(pos, player);
         TestUtils.applyMoveToBoard(board, move);
@@ -159,7 +159,7 @@ public class EngineTest {
 
         playerToPlayNext = Player.Player_2;
 
-        BoxPosition untakenPosition = new BoxPosition(5, 5);
+        BoxPosition untakenPosition = BoxPosition.make(5, 5);
 
         TestUtils.applyMoveToBoard(board, new Move(untakenPosition, playerToPlayNext));
     }
