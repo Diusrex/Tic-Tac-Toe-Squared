@@ -2,15 +2,16 @@ package com.diusrex.tictactoe;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
-import com.diusrex.tictactoe.dialogs.WinDialogFragment;
 import com.diusrex.tictactoe.box_images.BoxImageResourceInfo;
 import com.diusrex.tictactoe.box_images.LargeMove;
 import com.diusrex.tictactoe.box_images.LargeMoveMostRecent;
 import com.diusrex.tictactoe.box_images.MostRecentMove;
 import com.diusrex.tictactoe.box_images.RegularMove;
+import com.diusrex.tictactoe.dialogs.WinDialogFragment;
 import com.diusrex.tictactoe.logic.BoardStatus;
 import com.diusrex.tictactoe.logic.BoxPosition;
 import com.diusrex.tictactoe.logic.Move;
@@ -22,11 +23,13 @@ import com.diusrex.tictactoe.logic.UndoAction;
 import java.util.Calendar;
 
 public class MainActivity extends Activity implements GameEventHandler {
-    static final String SAVED_BOARD_STATE = "Saved_Board_State";
+    static final String SAVED_BOARD_PREFERENCE_FILE = "PreferenceFile";
+    static final String SAVED_BOARD_STATE = "SavedBoardState";
     static final long COOLDOWN = 250;
 
     BoardStatus board;
     Player currentPlayer;
+    SharedPreferences prefs;
 
     MainGridOwner mainGridOwner;
     SectionOwner mainSection;
@@ -43,34 +46,22 @@ public class MainActivity extends Activity implements GameEventHandler {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        prefs = getSharedPreferences(SAVED_BOARD_PREFERENCE_FILE, 0);
+
         regularBox = new RegularMove();
         mostRecentBox = new MostRecentMove();
         largeBox = new LargeMove();
         largeBoxMostRecent = new LargeMoveMostRecent();
-
-        restoreBoard(savedInstanceState);
 
         MyGrid mainGrid = (MyGrid) findViewById(R.id.mainGrid);
 
         mainGridOwner = new MainGridOwner(this, this, mainGrid);
     }
 
-    private void restoreBoard(Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            loadBoardStatus(savedInstanceState);
-        } else {
-            board = new BoardStatus();
-        }
-    }
-
-    private void loadBoardStatus(Bundle savedInstanceState) {
-        String boardState = savedInstanceState.getString(SAVED_BOARD_STATE);
-        board = TicTacToeEngine.loadBoardFromString(boardState);
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
+        restoreBoard();
 
         GridOrganizer.populateGrid(this, board, mainGridOwner, regularBox);
         updateMostRecentBox();
@@ -84,11 +75,24 @@ public class MainActivity extends Activity implements GameEventHandler {
         }
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+    private void restoreBoard() {
+        loadBoardStatus();
+    }
 
-        outState.putString(SAVED_BOARD_STATE, TicTacToeEngine.getSaveString(board));
+    private void loadBoardStatus() {
+        String boardState = prefs.getString(SAVED_BOARD_STATE, "");
+        board = TicTacToeEngine.loadBoardFromString(boardState);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        String saveGameString = TicTacToeEngine.getSaveString(board);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(SAVED_BOARD_STATE, saveGameString);
+        editor.apply();
     }
 
     @Override
