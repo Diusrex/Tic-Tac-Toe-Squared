@@ -8,6 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:columnCount="5"
-        android:id="@+id/mainGrid" />
+        android:id="@+id/mainGrid"
+        android:background="@android:color/black" />
 
 </FrameLayout>
