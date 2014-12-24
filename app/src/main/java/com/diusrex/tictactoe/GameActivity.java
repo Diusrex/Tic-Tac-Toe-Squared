@@ -61,6 +61,9 @@ public class GameActivity extends Activity implements GameEventHandler {
         boolean newGame = getIntent().getBooleanExtra(IS_NEW_GAME, true);
         if (newGame) {
             saverAndLoader.resetBoardState();
+
+            // Make sure it does not try this again
+            getIntent().putExtra(IS_NEW_GAME, false);
         }
     }
 
