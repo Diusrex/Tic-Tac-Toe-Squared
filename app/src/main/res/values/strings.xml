@@ -14,5 +14,9 @@
     <string name="win_dialog_title">There is a WINNER</string>
     <string name="congratulate_winner" formatted="true">Congratulations %s for winning the game!</string>
     <string name="return_to_game">Return to game</string>
+    <string name="title">Novem Tic Tac Toe</string>
+    <string name="new_game">New Game</string>
+    <string name="continue_game">Continue Game</string>
+    <string name="how_to_play">How to Play</string>
 
 </resources>
