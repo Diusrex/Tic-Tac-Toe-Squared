@@ -18,6 +18,12 @@ public class BoardStateSaverAndLoader {
         prefs = context.getSharedPreferences(SAVED_BOARD_PREFERENCE_FILE, 0);
     }
 
+    public boolean saveGameExists() {
+        BoardStatus savedBoard = loadBoard();
+
+        return !savedBoard.equals(new BoardStatus());
+    }
+
     public void resetBoardState() {
         SharedPreferences.Editor editor = prefs.edit();
         editor.remove(SAVED_BOARD_STATE);

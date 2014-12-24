@@ -12,6 +12,7 @@
         android:layout_gravity="center_horizontal"/>
 
     <Button
+        android:id="@+id/startNewGameButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/new_game"
@@ -19,6 +20,7 @@
         android:onClick="startNewGame"/>
 
     <Button
+        android:id="@+id/continueGameButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/continue_game"
@@ -26,6 +28,7 @@
         android:onClick="continueGame"/>
 
     <Button
+        android:id="@+id/showHelpScreenButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/how_to_play"

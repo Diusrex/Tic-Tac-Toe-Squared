@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 public class ActivityMainMenu extends Activity {
     @Override
@@ -11,11 +12,20 @@ public class ActivityMainMenu extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        disableContinueGameButtonIfNoGame();
     }
 
-    private void disableContinueGameButtonIfNoGame() {
-        // For now, will not disable it (works the same)
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        updateContinueButtonEnabled();
+    }
+
+    private void updateContinueButtonEnabled() {
+        BoardStateSaverAndLoader loader = new BoardStateSaverAndLoader(this);
+        Button continueGameButton = (Button) findViewById(R.id.continueGameButton);
+
+        continueGameButton.setEnabled(loader.saveGameExists());
     }
 
     public void startNewGame(View v) {
