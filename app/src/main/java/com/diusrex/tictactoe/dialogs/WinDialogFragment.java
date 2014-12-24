@@ -1,20 +1,30 @@
 package com.diusrex.tictactoe.dialogs;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 
 import com.diusrex.tictactoe.R;
 
-/**
- * Created by Diusrex on 2014-12-17.
- */
+// Must be attached to an activity that extends the WinDialogListener
 public class WinDialogFragment extends DialogFragment {
     static final String PLAYER = "player";
 
     String player;
+
+    WinDialogActivityListener listener;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        listener = (WinDialogActivityListener) activity;
+    }
 
     public static WinDialogFragment newInstance(String player) {
         WinDialogFragment f = new WinDialogFragment();
@@ -34,9 +44,56 @@ public class WinDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder = setUpOutput(builder);
-        builder = setUpButtons(builder);
+        builder = setUpView(builder);
 
         return builder.create();
+    }
+
+    private AlertDialog.Builder setUpView(AlertDialog.Builder builder) {
+        LayoutInflater layoutInflater = getActivity().getLayoutInflater();
+
+        View inputInfo = layoutInflater.inflate(R.layout.dialog_win,
+                null);
+
+        setUpReturnToGameButton((Button) inputInfo.findViewById(R.id.returnToGameButton));
+        setUpRematchButton((Button) inputInfo.findViewById(R.id.rematchButton));
+        setUpReturnToMenuButton((Button) inputInfo.findViewById(R.id.returnToMenuButton));
+
+        builder.setView(inputInfo);
+
+        return builder;
+    }
+
+    private void setUpReturnToGameButton(Button returnToGameButton) {
+
+        returnToGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.returnToGame();
+                dismiss();
+            }
+        });
+    }
+
+    private void setUpRematchButton(Button rematchButton) {
+
+        rematchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.runNewGame();
+                dismiss();
+            }
+        });
+    }
+
+    private void setUpReturnToMenuButton(Button returnToMenuButton) {
+        returnToMenuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.returnToMainMenu();
+                dismiss();
+            }
+        });
     }
 
     private AlertDialog.Builder setUpOutput(AlertDialog.Builder builder) {
@@ -44,32 +101,6 @@ public class WinDialogFragment extends DialogFragment {
 
         String message = getString(R.string.congratulate_winner, player);
         builder.setMessage(message);
-
-        return builder;
-    }
-
-    AlertDialog.Builder setUpButtons(AlertDialog.Builder builder) {
-        builder.setNegativeButton(getString(R.string.back_to_menu), new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        builder.setNeutralButton(R.string.return_to_game, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        builder.setPositiveButton(getString(R.string.rematch), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
 
         return builder;
     }
