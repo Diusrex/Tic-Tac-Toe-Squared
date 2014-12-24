@@ -2,7 +2,6 @@ package com.diusrex.tictactoe;
 
 import android.app.Activity;
 import android.app.DialogFragment;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
@@ -24,14 +23,12 @@ import java.util.Calendar;
 
 public class GameActivity extends Activity implements GameEventHandler {
     static public final String IS_NEW_GAME = "IsNewGame";
-    static private final String SAVED_BOARD_PREFERENCE_FILE = "PreferenceFile";
-    static private final String SAVED_BOARD_STATE = "SavedBoardState";
-    static private final String SAVED_SELECTED_SECTION = "SavedSelectedSection";
     static private final long COOLDOWN = 250;
 
     BoardStatus board;
     Player currentPlayer;
-    SharedPreferences prefs;
+
+    BoardStateSaverAndLoader saverAndLoader;
 
     SectionPosition currentSelectedSection;
 
@@ -50,7 +47,7 @@ public class GameActivity extends Activity implements GameEventHandler {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        prefs = getSharedPreferences(SAVED_BOARD_PREFERENCE_FILE, 0);
+        saverAndLoader = new BoardStateSaverAndLoader(this);
 
         regularBox = new RegularMove();
         mostRecentBox = new MostRecentMove();
@@ -63,33 +60,19 @@ public class GameActivity extends Activity implements GameEventHandler {
 
         boolean newGame = getIntent().getBooleanExtra(IS_NEW_GAME, true);
         if (newGame) {
-            resetBoardState();
+            saverAndLoader.resetBoardState();
         }
-    }
-
-    private void resetBoardState() {
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.remove(SAVED_BOARD_STATE);
-        editor.remove(SAVED_SELECTED_SECTION);
-        editor.apply();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        restoreBoard();
+        board = saverAndLoader.loadBoard();
+        updateCurrentPlayer();
 
-        GridOrganizer.populateGrid(this, board, mainGridOwner, regularBox);
-        updateMostRecentBox();
+        redrawBoard();
 
-        currentPlayer = TicTacToeEngine.getNextPlayer(board);
-
-        // This defaultSection would only be used if the board is new
-        SectionPosition defaultSection = board.getSectionToPlayIn();
-        String defaultSectionString = TicTacToeEngine.sectionPositionToString(defaultSection);
-
-        SectionPosition selectedSection = TicTacToeEngine.stringToSectionPosition(
-                prefs.getString(SAVED_SELECTED_SECTION, defaultSectionString));
+        SectionPosition selectedSection = saverAndLoader.loadSelectedSection(board);
 
         if (!winnerExists()) {
             prepareForNextMove(getCurrentTime(), selectedSection);
@@ -99,25 +82,20 @@ public class GameActivity extends Activity implements GameEventHandler {
         }
     }
 
-    private void restoreBoard() {
-        String boardState = prefs.getString(SAVED_BOARD_STATE, "");
-        board = TicTacToeEngine.loadBoardFromString(boardState);
+    private void updateCurrentPlayer() {
+        currentPlayer = TicTacToeEngine.getNextPlayer(board);
+    }
+
+    private void redrawBoard() {
+        GridOrganizer.populateGrid(this, board, mainGridOwner, regularBox);
+        updateMostRecentBox();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
-        saveBoardState();
-    }
-
-    private void saveBoardState() {
-        String saveGameString = TicTacToeEngine.getSaveString(board);
-
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(SAVED_BOARD_STATE, saveGameString);
-        editor.putString(SAVED_SELECTED_SECTION, TicTacToeEngine.sectionPositionToString(currentSelectedSection));
-        editor.apply();
+        saverAndLoader.saveGameState(board, currentSelectedSection);
     }
 
     @Override
@@ -157,7 +135,7 @@ public class GameActivity extends Activity implements GameEventHandler {
     }
 
     private void prepareForNextMove(long currentTime, SectionPosition selectedSection) {
-        currentPlayer = TicTacToeEngine.getNextPlayer(board);
+        updateCurrentPlayer();
 
         sectionSelected(selectedSection);
 
