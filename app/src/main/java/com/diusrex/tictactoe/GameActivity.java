@@ -22,11 +22,12 @@ import com.diusrex.tictactoe.logic.UndoAction;
 
 import java.util.Calendar;
 
-public class MainActivity extends Activity implements GameEventHandler {
-    static final String SAVED_BOARD_PREFERENCE_FILE = "PreferenceFile";
-    static final String SAVED_BOARD_STATE = "SavedBoardState";
-    static final String SAVED_SELECTED_SECTION = "SavedSelectedSection";
-    static final long COOLDOWN = 250;
+public class GameActivity extends Activity implements GameEventHandler {
+    static public final String IS_NEW_GAME = "IsNewGame";
+    static private final String SAVED_BOARD_PREFERENCE_FILE = "PreferenceFile";
+    static private final String SAVED_BOARD_STATE = "SavedBoardState";
+    static private final String SAVED_SELECTED_SECTION = "SavedSelectedSection";
+    static private final long COOLDOWN = 250;
 
     BoardStatus board;
     Player currentPlayer;
@@ -47,7 +48,7 @@ public class MainActivity extends Activity implements GameEventHandler {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_game);
 
         prefs = getSharedPreferences(SAVED_BOARD_PREFERENCE_FILE, 0);
 
@@ -59,6 +60,18 @@ public class MainActivity extends Activity implements GameEventHandler {
         MyGrid mainGrid = (MyGrid) findViewById(R.id.mainGrid);
 
         mainGridOwner = new MainGridOwner(this, this, mainGrid);
+
+        boolean newGame = getIntent().getBooleanExtra(IS_NEW_GAME, true);
+        if (newGame) {
+            resetBoardState();
+        }
+    }
+
+    private void resetBoardState() {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(SAVED_BOARD_STATE);
+        editor.remove(SAVED_SELECTED_SECTION);
+        editor.apply();
     }
 
     @Override
@@ -87,10 +100,6 @@ public class MainActivity extends Activity implements GameEventHandler {
     }
 
     private void restoreBoard() {
-        loadBoardStatus();
-    }
-
-    private void loadBoardStatus() {
         String boardState = prefs.getString(SAVED_BOARD_STATE, "");
         board = TicTacToeEngine.loadBoardFromString(boardState);
     }
@@ -99,6 +108,10 @@ public class MainActivity extends Activity implements GameEventHandler {
     protected void onPause() {
         super.onPause();
 
+        saveBoardState();
+    }
+
+    private void saveBoardState() {
         String saveGameString = TicTacToeEngine.getSaveString(board);
 
         SharedPreferences.Editor editor = prefs.edit();

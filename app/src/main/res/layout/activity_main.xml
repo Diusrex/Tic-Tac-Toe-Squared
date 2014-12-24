@@ -1,43 +1,34 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity"
-    android:background="@color/material_blue_grey_900">
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
 
-
-    <com.diusrex.tictactoe.MyGrid
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:columnCount="5"
-        android:id="@+id/mainGrid"
-        android:background="@android:color/holo_red_dark"
-        />
-
-    <com.diusrex.tictactoe.MyGrid
-        android:id="@+id/selectedSection"
-        android:layout_below="@id/mainGrid"
-        android:layout_marginTop="30dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:columnCount="5"
-        android:layout_centerHorizontal="true"
-        />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/title"
+        android:layout_gravity="center_horizontal"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/undo_move"
-        android:id="@+id/button"
-        android:layout_below="@id/selectedSection"
-        android:layout_centerHorizontal="true"
-        android:onClick="undoMove"/>
+        android:text="@string/new_game"
+        android:layout_gravity="center_horizontal"
+        android:onClick="startNewGame"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/continue_game"
+        android:layout_gravity="center_horizontal"
+        android:onClick="continueGame"/>
 
-</RelativeLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/how_to_play"
+        android:layout_gravity="center_horizontal"
+        android:onClick="showHelpScreen"/>
+</LinearLayout>
