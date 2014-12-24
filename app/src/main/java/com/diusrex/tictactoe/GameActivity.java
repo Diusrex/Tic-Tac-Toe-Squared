@@ -10,6 +10,7 @@ import com.diusrex.tictactoe.box_images.LargeMove;
 import com.diusrex.tictactoe.box_images.LargeMoveMostRecent;
 import com.diusrex.tictactoe.box_images.MostRecentMove;
 import com.diusrex.tictactoe.box_images.RegularMove;
+import com.diusrex.tictactoe.dialogs.WinDialogActivityListener;
 import com.diusrex.tictactoe.dialogs.WinDialogFragment;
 import com.diusrex.tictactoe.logic.BoardStatus;
 import com.diusrex.tictactoe.logic.BoxPosition;
@@ -21,7 +22,7 @@ import com.diusrex.tictactoe.logic.UndoAction;
 
 import java.util.Calendar;
 
-public class GameActivity extends Activity implements GameEventHandler {
+public class GameActivity extends Activity implements GameEventHandler, WinDialogActivityListener {
     static public final String IS_NEW_GAME = "IsNewGame";
     static private final long COOLDOWN = 250;
 
@@ -80,6 +81,7 @@ public class GameActivity extends Activity implements GameEventHandler {
         if (!winnerExists()) {
             prepareForNextMove(getCurrentTime(), selectedSection);
         } else {
+            // Will now reshow the win dialog if there is a winner
             disablePerformingMove();
             sectionSelected(selectedSection);
         }
@@ -242,5 +244,28 @@ public class GameActivity extends Activity implements GameEventHandler {
         if (mostRecent != null) {
             mainGridOwner.updateBoxValue(board, mostRecent.getPosition(), mostRecentBox);
         }
+    }
+
+    @Override
+    public void returnToMainMenu() {
+        // Need to reset these because they are what will be saved
+        board = new BoardStatus();
+        currentSelectedSection = board.getSectionToPlayIn();
+        finish();
+    }
+
+    @Override
+    public void returnToGame() {
+        // Nothing needs to be done here
+    }
+
+    @Override
+    public void runNewGame() {
+        board = new BoardStatus();
+        redrawBoard();
+
+        SectionPosition selectedSection = board.getSectionToPlayIn();
+
+        prepareForNextMove(getCurrentTime(), selectedSection);
     }
 }
