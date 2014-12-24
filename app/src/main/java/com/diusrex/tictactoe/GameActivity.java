@@ -31,8 +31,6 @@ public class GameActivity extends Activity implements GameEventHandler, WinDialo
 
     BoardStateSaverAndLoader saverAndLoader;
 
-    SectionPosition currentSelectedSection;
-
     MainGridOwner mainGridOwner;
     SectionOwner mainSection;
 
@@ -100,7 +98,7 @@ public class GameActivity extends Activity implements GameEventHandler, WinDialo
     protected void onPause() {
         super.onPause();
 
-        saverAndLoader.saveGameState(board, currentSelectedSection);
+        saverAndLoader.saveGameState(board);
     }
 
     @Override
@@ -179,7 +177,7 @@ public class GameActivity extends Activity implements GameEventHandler, WinDialo
 
     @Override
     public void sectionSelected(SectionPosition section) {
-        currentSelectedSection = section;
+        saverAndLoader.selectedSectionChanged(section);
         populateSelectedSection(section);
         mainGridOwner.selectionSelectedChanged(section);
     }
@@ -250,7 +248,7 @@ public class GameActivity extends Activity implements GameEventHandler, WinDialo
     public void returnToMainMenu() {
         // Need to reset these because they are what will be saved
         board = new BoardStatus();
-        currentSelectedSection = board.getSectionToPlayIn();
+        saverAndLoader.selectedSectionChanged(board.getSectionToPlayIn());
         finish();
     }
 

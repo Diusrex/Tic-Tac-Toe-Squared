@@ -45,12 +45,17 @@ public class BoardStateSaverAndLoader {
         return TicTacToeEngine.stringToSectionPosition(selectedSection);
     }
 
-    public void saveGameState(BoardStatus board, SectionPosition selectedSection) {
+    public void selectedSectionChanged(SectionPosition selectedSection) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(SAVED_SELECTED_SECTION, TicTacToeEngine.sectionPositionToString(selectedSection));
+        editor.apply();
+    }
+
+    public void saveGameState(BoardStatus board) {
         String saveGameString = TicTacToeEngine.getSaveString(board);
 
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(SAVED_BOARD_STATE, saveGameString);
-        editor.putString(SAVED_SELECTED_SECTION, TicTacToeEngine.sectionPositionToString(selectedSection));
         editor.apply();
     }
 }
