@@ -20,5 +20,7 @@
     <string name="how_to_play">How to Play</string>
     <string name="draw_output">There was a draw</string>
     <string name="draw_dialog_title">Draw</string>
+    <string name="game_done">Game is finished</string>
+    <string name="current_player_image_description">Image for current player</string>
 
 </resources>

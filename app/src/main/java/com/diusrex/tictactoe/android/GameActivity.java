@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.diusrex.tictactoe.R;
 import com.diusrex.tictactoe.android.dialogs.DrawDialogFragment;
@@ -40,7 +42,9 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
         saverAndLoader = new BoardStateSaverAndLoader(this);
 
         MainGridOwner mainGridOwner = new MainGridOwner(this, this, (MyGrid) findViewById(R.id.mainGrid));
-        graphicsUpdater = new GameGraphicsUpdater(mainGridOwner);
+        TextView playerText = (TextView) findViewById(R.id.currentPlayerText);
+        ImageView playerImage = (ImageView) findViewById(R.id.currentPlayerImage);
+        graphicsUpdater = new GameGraphicsUpdater(mainGridOwner, playerText, playerImage);
 
         boolean newGame = getIntent().getBooleanExtra(IS_NEW_GAME, true);
         if (newGame) {
@@ -59,9 +63,11 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
 
         graphicsUpdater.redrawBoard(this, board);
 
-        SectionPosition selectedSection = saverAndLoader.loadSelectedSection(board);
+        resumeGame();
+    }
 
-        // ToDo: Refactor this if else into a function
+    private void resumeGame() {
+        SectionPosition selectedSection = saverAndLoader.loadSelectedSection(board);
         if (gameStillRunning()) {
             prepareForNextMove(getCurrentTime(), selectedSection);
         } else {
@@ -77,6 +83,7 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
 
     private void updateCurrentPlayer() {
         currentPlayer = TicTacToeEngine.getNextPlayer(board);
+        graphicsUpdater.playerChanged(currentPlayer, getPlayerAsString());
     }
 
     @Override
@@ -151,6 +158,7 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
 
         // There is no section to play into
         graphicsUpdater.sectionToPlayInChanged(SectionPosition.make(-1, -1));
+        graphicsUpdater.noMovesMayBeMade();
     }
 
     private void showWinDialog(String winningPlayer) {

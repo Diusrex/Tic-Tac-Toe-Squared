@@ -1,7 +1,10 @@
 package com.diusrex.tictactoe.android;
 
 import android.app.Activity;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.diusrex.tictactoe.R;
 import com.diusrex.tictactoe.box_images.BoxImageResourceInfo;
 import com.diusrex.tictactoe.box_images.LargeMove;
 import com.diusrex.tictactoe.box_images.LargeMoveMostRecent;
@@ -9,18 +12,23 @@ import com.diusrex.tictactoe.box_images.MostRecentMove;
 import com.diusrex.tictactoe.box_images.RegularMove;
 import com.diusrex.tictactoe.logic.BoardStatus;
 import com.diusrex.tictactoe.logic.Move;
+import com.diusrex.tictactoe.logic.Player;
 import com.diusrex.tictactoe.logic.SectionPosition;
 
 public class GameGraphicsUpdater {
     private final MainGridOwner mainGridOwner;
+    private final TextView playerText;
+    private final ImageView playerImage;
 
     private final BoxImageResourceInfo regularBox;
     private final BoxImageResourceInfo mostRecentBox;
     private final BoxImageResourceInfo largeBox;
     private final BoxImageResourceInfo largeBoxMostRecent;
 
-    GameGraphicsUpdater(MainGridOwner mainGridOwner) {
+    GameGraphicsUpdater(MainGridOwner mainGridOwner, TextView playerText, ImageView playerImage) {
         this.mainGridOwner = mainGridOwner;
+        this.playerText = playerText;
+        this.playerImage = playerImage;
 
         regularBox = new RegularMove();
         mostRecentBox = new MostRecentMove();
@@ -70,5 +78,28 @@ public class GameGraphicsUpdater {
         SectionPosition mostRecentMoveSection = mostRecentMove.getSectionIn();
         if (mostRecentMoveSection.equals(section))
             mainSection.updateBoxValue(board, mostRecentMove.getPosition(), largeBoxMostRecent);
+    }
+
+    public void noMovesMayBeMade() {
+        playerText.setText(R.string.game_done);
+        playerImage.setImageResource(android.R.color.transparent);
+    }
+
+    public void playerChanged(Player currentPlayer, String playerAsString) {
+        playerText.setText(playerAsString);
+
+        switch (currentPlayer) {
+        case Player_1:
+            playerImage.setImageResource(regularBox.getPlayerOneImage());
+            break;
+
+        case Player_2:
+            playerImage.setImageResource(regularBox.getPlayerTwoImage());
+            break;
+
+        case Unowned:
+            playerImage.setImageResource(regularBox.getUnownedImage());
+            break;
+        }
     }
 }
