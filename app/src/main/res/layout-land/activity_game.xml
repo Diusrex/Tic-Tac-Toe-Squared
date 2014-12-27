@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              android:paddingTop="@dimen/activity_vertical_margin"
+              android:paddingBottom="@dimen/activity_vertical_margin"
+              tools:context=".MainActivity"
+              android:background="@color/material_blue_grey_900"
+              android:orientation="horizontal">
+
+    <com.diusrex.tictactoe.MyGrid
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="5"
+        android:id="@+id/mainGrid"
+        android:background="@android:color/holo_red_dark"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:layout_toRightOf="@id/mainGrid"
+        android:layout_toEndOf="@id/mainGrid"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp">
+
+        <com.diusrex.tictactoe.MyGrid
+            android:id="@+id/selectedSection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/button"
+            android:columnCount="5"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="bottom"
+            android:text="@string/undo_move"
+            android:id="@+id/button"
+            android:onClick="undoMove"
+            />
+    </RelativeLayout>
+</RelativeLayout>
