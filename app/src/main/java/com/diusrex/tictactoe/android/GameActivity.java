@@ -6,8 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.diusrex.tictactoe.R;
-import com.diusrex.tictactoe.dialogs.WinDialogActivityListener;
-import com.diusrex.tictactoe.dialogs.WinDialogFragment;
+import com.diusrex.tictactoe.android.dialogs.DrawDialogFragment;
+import com.diusrex.tictactoe.android.dialogs.GameEndActivityListener;
+import com.diusrex.tictactoe.android.dialogs.WinDialogFragment;
 import com.diusrex.tictactoe.logic.BoardStatus;
 import com.diusrex.tictactoe.logic.BoxPosition;
 import com.diusrex.tictactoe.logic.Move;
@@ -18,7 +19,7 @@ import com.diusrex.tictactoe.logic.UndoAction;
 
 import java.util.Calendar;
 
-public class GameActivity extends Activity implements GameEventHandler, WinDialogActivityListener {
+public class GameActivity extends Activity implements GameEventHandler, GameEndActivityListener {
     static public final String IS_NEW_GAME = "IsNewGame";
     static private final long COOLDOWN = 250;
 
@@ -60,13 +61,18 @@ public class GameActivity extends Activity implements GameEventHandler, WinDialo
 
         SectionPosition selectedSection = saverAndLoader.loadSelectedSection(board);
 
-        if (!winnerExists()) {
+        // ToDo: Refactor this if else into a function
+        if (gameStillRunning()) {
             prepareForNextMove(getCurrentTime(), selectedSection);
         } else {
-            // Will now reshow the win dialog if there is a winner
+            // Make it so no player can make a move
             disablePerformingMove();
             sectionSelected(selectedSection);
         }
+    }
+
+    private boolean gameStillRunning() {
+        return !winnerExists() && !isADraw();
     }
 
     private void updateCurrentPlayer() {
@@ -96,9 +102,15 @@ public class GameActivity extends Activity implements GameEventHandler, WinDialo
     private void handleWinOrPrepareForNextMove(BoxPosition position, long currentTime) {
         if (winnerExists()) {
             handleWin(position);
+        } else if (isADraw()) {
+            handleDraw(position);
         } else {
             prepareForNextMove(currentTime, board.getSectionToPlayIn());
         }
+    }
+
+    private boolean isADraw() {
+        return TicTacToeEngine.boardIsFull(board);
     }
 
     private boolean winnerExists() {
@@ -126,6 +138,13 @@ public class GameActivity extends Activity implements GameEventHandler, WinDialo
         showWinDialog(winningPlayer);
     }
 
+    private void handleDraw(BoxPosition position) {
+        sectionSelected(position.getSectionIn());
+        disablePerformingMove();
+
+        showDrawDialog();
+    }
+
     private void disablePerformingMove() {
         // Will not allow the player unowned to play
         currentPlayer = Player.Unowned;
@@ -136,6 +155,11 @@ public class GameActivity extends Activity implements GameEventHandler, WinDialo
 
     private void showWinDialog(String winningPlayer) {
         DialogFragment fragment = WinDialogFragment.newInstance(winningPlayer);
+        fragment.show(getFragmentManager(), "dialog");
+    }
+
+    private void showDrawDialog() {
+        DialogFragment fragment = DrawDialogFragment.newInstance();
         fragment.show(getFragmentManager(), "dialog");
     }
 
@@ -157,8 +181,6 @@ public class GameActivity extends Activity implements GameEventHandler, WinDialo
 
     public void undoMove(View v) {
         if (canUndoLastMove()) {
-            Move lastMove = board.getAllMoves().peek();
-
             UndoAction.undoLastMove(board);
 
             graphicsUpdater.redrawBoard(this, board);
