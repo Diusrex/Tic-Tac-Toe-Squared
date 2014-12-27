@@ -18,5 +18,7 @@
     <string name="return_to_menu">To Main Menu</string>
     <string name="continue_game">Continue Game</string>
     <string name="how_to_play">How to Play</string>
+    <string name="draw_output">There was a draw</string>
+    <string name="draw_dialog_title">Draw</string>
 
 </resources>
