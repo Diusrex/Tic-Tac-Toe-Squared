@@ -1,7 +1,7 @@
 package com.diusrex.tictactoe.android.dialogs;
 
 
-public interface WinDialogActivityListener {
+public interface GameEndActivityListener {
     public void returnToMainMenu();
 
     public void returnToGame();
