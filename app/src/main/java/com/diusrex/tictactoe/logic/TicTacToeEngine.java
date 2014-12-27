@@ -154,4 +154,14 @@ public class TicTacToeEngine {
         else
             return Player.Player_2;
     }
+
+    public static boolean boardIsFull(BoardStatus board) {
+        for (int y = 0; y < BoardStatus.NUMBER_OF_BOXES_PER_SIDE; ++y) {
+            for (int x = 0; x < BoardStatus.NUMBER_OF_BOXES_PER_SIDE; ++x) {
+                if (board.getBoxOwner(x, y) == Player.Unowned)
+                    return false;
+            }
+        }
+        return true;
+    }
 }
