@@ -5,11 +5,6 @@ import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.View;
 
-import com.diusrex.tictactoe.box_images.BoxImageResourceInfo;
-import com.diusrex.tictactoe.box_images.LargeMove;
-import com.diusrex.tictactoe.box_images.LargeMoveMostRecent;
-import com.diusrex.tictactoe.box_images.MostRecentMove;
-import com.diusrex.tictactoe.box_images.RegularMove;
 import com.diusrex.tictactoe.dialogs.WinDialogActivityListener;
 import com.diusrex.tictactoe.dialogs.WinDialogFragment;
 import com.diusrex.tictactoe.logic.BoardStatus;
@@ -31,13 +26,7 @@ public class GameActivity extends Activity implements GameEventHandler, WinDialo
 
     BoardStateSaverAndLoader saverAndLoader;
 
-    MainGridOwner mainGridOwner;
-    SectionOwner mainSection;
-
-    BoxImageResourceInfo regularBox;
-    BoxImageResourceInfo mostRecentBox;
-    BoxImageResourceInfo largeBox;
-    BoxImageResourceInfo largeBoxMostRecent;
+    GameGraphicsUpdater graphicsUpdater;
 
     long previousTime;
 
@@ -48,14 +37,8 @@ public class GameActivity extends Activity implements GameEventHandler, WinDialo
 
         saverAndLoader = new BoardStateSaverAndLoader(this);
 
-        regularBox = new RegularMove();
-        mostRecentBox = new MostRecentMove();
-        largeBox = new LargeMove();
-        largeBoxMostRecent = new LargeMoveMostRecent();
-
-        MyGrid mainGrid = (MyGrid) findViewById(R.id.mainGrid);
-
-        mainGridOwner = new MainGridOwner(this, this, mainGrid);
+        MainGridOwner mainGridOwner = new MainGridOwner(this, this, (MyGrid) findViewById(R.id.mainGrid));
+        graphicsUpdater = new GameGraphicsUpdater(mainGridOwner);
 
         boolean newGame = getIntent().getBooleanExtra(IS_NEW_GAME, true);
         if (newGame) {
@@ -72,7 +55,7 @@ public class GameActivity extends Activity implements GameEventHandler, WinDialo
         board = saverAndLoader.loadBoard();
         updateCurrentPlayer();
 
-        redrawBoard();
+        graphicsUpdater.redrawBoard(this, board);
 
         SectionPosition selectedSection = saverAndLoader.loadSelectedSection(board);
 
@@ -89,11 +72,6 @@ public class GameActivity extends Activity implements GameEventHandler, WinDialo
         currentPlayer = TicTacToeEngine.getNextPlayer(board);
     }
 
-    private void redrawBoard() {
-        GridOrganizer.populateGrid(this, board, mainGridOwner, regularBox);
-        updateMostRecentBox();
-    }
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -107,21 +85,10 @@ public class GameActivity extends Activity implements GameEventHandler, WinDialo
 
         long currentTime = getCurrentTime();
         if (TicTacToeEngine.isValidMove(board, move) && currentTime - previousTime > COOLDOWN) {
-            changeMostRecentMoveToRegular();
-
             TicTacToeEngine.applyMoveIfValid(board, move);
-
-            mainGridOwner.updateBoxValue(board, position, mostRecentBox);
+            graphicsUpdater.redrawBoard(this, board);
 
             handleWinOrPrepareForNextMove(position, currentTime);
-        }
-    }
-
-    private void changeMostRecentMoveToRegular() {
-        Move mostRecent = TicTacToeEngine.getMostRecentMoveOrNull(board);
-
-        if (mostRecent != null) {
-            mainGridOwner.updateBoxValue(board, mostRecent.getPosition(), regularBox);
         }
     }
 
@@ -142,17 +109,13 @@ public class GameActivity extends Activity implements GameEventHandler, WinDialo
 
         sectionSelected(selectedSection);
 
-        updateSectionToPlayIn();
+        graphicsUpdater.sectionToPlayInChanged(board.getSectionToPlayIn());
 
         previousTime = currentTime;
     }
 
-    private void updateSectionToPlayIn() {
-        mainGridOwner.selectionToPlayInChanged(board.getSectionToPlayIn());
-    }
-
     private void handleWin(BoxPosition position) {
-        mainGridOwner.updateWinLine(board);
+        graphicsUpdater.updateWinLine(board);
 
         sectionSelected(position.getSectionIn());
 
@@ -167,7 +130,7 @@ public class GameActivity extends Activity implements GameEventHandler, WinDialo
         currentPlayer = Player.Unowned;
 
         // There is no section to play into
-        mainGridOwner.selectionToPlayInChanged(SectionPosition.make(-1, -1));
+        graphicsUpdater.sectionToPlayInChanged(SectionPosition.make(-1, -1));
     }
 
     private void showWinDialog(String winningPlayer) {
@@ -178,26 +141,12 @@ public class GameActivity extends Activity implements GameEventHandler, WinDialo
     @Override
     public void sectionSelected(SectionPosition section) {
         saverAndLoader.selectedSectionChanged(section);
-        populateSelectedSection(section);
-        mainGridOwner.selectionSelectedChanged(section);
+        updateGraphicalSelectedSection(section);
     }
 
-    private void populateSelectedSection(SectionPosition section) {
-        MyGrid selectedSectionGrid = (MyGrid) findViewById(R.id.selectedSection);
-        mainSection = new SelectedSectionOwner(section, selectedSectionGrid, this);
-        GridOrganizer.populateGrid(this, board, mainSection, largeBox);
-        updateSelectedSectionMostRecent(section);
-    }
-
-    private void updateSelectedSectionMostRecent(SectionPosition section) {
-        Move mostRecentMove = TicTacToeEngine.getMostRecentMoveOrNull(board);
-        if (mostRecentMove == null)
-            return;
-
-        SectionPosition mostRecentMoveSection = mostRecentMove.getSectionIn();
-        if (mostRecentMoveSection.equals(section)) {
-            mainSection.updateBoxValue(board, mostRecentMove.getPosition(), largeBoxMostRecent);
-        }
+    private void updateGraphicalSelectedSection(SectionPosition section) {
+        SectionOwner mainSection = new SelectedSectionOwner(section, (MyGrid) findViewById(R.id.selectedSection), this);
+        graphicsUpdater.selectedSectionChanged(this, board, mainSection, section);
     }
 
     private long getCurrentTime() {
@@ -210,12 +159,9 @@ public class GameActivity extends Activity implements GameEventHandler, WinDialo
             Move lastMove = board.getAllMoves().peek();
 
             UndoAction.undoLastMove(board);
+
+            graphicsUpdater.redrawBoard(this, board);
             prepareForNextMove(getCurrentTime(), board.getSectionToPlayIn());
-
-            mainGridOwner.updateBoxValue(board, lastMove.getPosition(), regularBox);
-            mainGridOwner.updateWinLine(board);
-
-            updateMostRecentBox();
         }
     }
 
@@ -236,14 +182,6 @@ public class GameActivity extends Activity implements GameEventHandler, WinDialo
         return board.getAllMoves().size() != 0;
     }
 
-    private void updateMostRecentBox() {
-        Move mostRecent = TicTacToeEngine.getMostRecentMoveOrNull(board);
-
-        if (mostRecent != null) {
-            mainGridOwner.updateBoxValue(board, mostRecent.getPosition(), mostRecentBox);
-        }
-    }
-
     @Override
     public void returnToMainMenu() {
         // Need to reset these because they are what will be saved
@@ -260,7 +198,7 @@ public class GameActivity extends Activity implements GameEventHandler, WinDialo
     @Override
     public void runNewGame() {
         board = new BoardStatus();
-        redrawBoard();
+        graphicsUpdater.redrawBoard(this, board);
 
         SectionPosition selectedSection = board.getSectionToPlayIn();
 
