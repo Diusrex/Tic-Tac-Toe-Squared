@@ -4,7 +4,7 @@
     android:id="@+id/selectableFrame"
     android:layout_margin="2dp">
 
-    <com.diusrex.tictactoe.MyGrid
+    <com.diusrex.tictactoe.android.MyGrid
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:columnCount="5"

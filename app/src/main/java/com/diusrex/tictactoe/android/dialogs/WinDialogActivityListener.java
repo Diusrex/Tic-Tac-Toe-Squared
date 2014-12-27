@@ -1,4 +1,4 @@
-package com.diusrex.tictactoe.dialogs;
+package com.diusrex.tictactoe.android.dialogs;
 
 
 public interface WinDialogActivityListener {

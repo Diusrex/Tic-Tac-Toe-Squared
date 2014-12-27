@@ -1,10 +1,11 @@
-package com.diusrex.tictactoe;
+package com.diusrex.tictactoe.android;
 
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.View;
 
+import com.diusrex.tictactoe.R;
 import com.diusrex.tictactoe.dialogs.WinDialogActivityListener;
 import com.diusrex.tictactoe.dialogs.WinDialogFragment;
 import com.diusrex.tictactoe.logic.BoardStatus;

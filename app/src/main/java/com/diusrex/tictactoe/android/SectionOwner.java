@@ -1,4 +1,4 @@
-package com.diusrex.tictactoe;
+package com.diusrex.tictactoe.android;
 
 import android.app.Activity;
 import android.graphics.Color;

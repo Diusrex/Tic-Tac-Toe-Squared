@@ -10,7 +10,7 @@
               android:background="@color/material_blue_grey_900"
               android:orientation="horizontal">
 
-    <com.diusrex.tictactoe.MyGrid
+    <com.diusrex.tictactoe.android.MyGrid
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:columnCount="5"
@@ -31,7 +31,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginStart="30dp">
 
-        <com.diusrex.tictactoe.MyGrid
+        <com.diusrex.tictactoe.android.MyGrid
             android:id="@+id/selectedSection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

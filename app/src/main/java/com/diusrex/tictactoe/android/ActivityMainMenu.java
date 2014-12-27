@@ -1,10 +1,12 @@
-package com.diusrex.tictactoe;
+package com.diusrex.tictactoe.android;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.diusrex.tictactoe.R;
 
 public class ActivityMainMenu extends Activity {
     @Override

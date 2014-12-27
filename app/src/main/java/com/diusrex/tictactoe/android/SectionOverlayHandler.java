@@ -1,9 +1,10 @@
-package com.diusrex.tictactoe;
+package com.diusrex.tictactoe.android;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.widget.FrameLayout;
 
+import com.diusrex.tictactoe.R;
 import com.diusrex.tictactoe.logic.BoardStatus;
 import com.diusrex.tictactoe.logic.BoxPosition;
 import com.diusrex.tictactoe.logic.Line;

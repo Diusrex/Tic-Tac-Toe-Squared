@@ -1,4 +1,4 @@
-package com.diusrex.tictactoe;
+package com.diusrex.tictactoe.android;
 
 import com.diusrex.tictactoe.logic.BoxPosition;
 import com.diusrex.tictactoe.logic.SectionPosition;

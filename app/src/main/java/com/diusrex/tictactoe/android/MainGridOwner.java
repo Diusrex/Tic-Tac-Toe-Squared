@@ -1,4 +1,4 @@
-package com.diusrex.tictactoe;
+package com.diusrex.tictactoe.android;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Space;
 
+import com.diusrex.tictactoe.R;
 import com.diusrex.tictactoe.box_images.BoxImageResourceInfo;
 import com.diusrex.tictactoe.logic.BoardStatus;
 import com.diusrex.tictactoe.logic.BoxPosition;

@@ -1,4 +1,4 @@
-package com.diusrex.tictactoe;
+package com.diusrex.tictactoe.android;
 
 import android.graphics.Color;
 import android.view.View;
