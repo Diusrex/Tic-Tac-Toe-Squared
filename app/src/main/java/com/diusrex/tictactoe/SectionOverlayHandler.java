@@ -32,7 +32,7 @@ public class SectionOverlayHandler {
     }
 
     // This will not crash if given an invalid section
-    public void selectionToPlayInChanged(SectionPosition sectionToPlayIn) {
+    public void sectionToPlayInChanged(SectionPosition sectionToPlayIn) {
         int addedToX = sectionToPlayIn.getX();
         int addedToY = sectionToPlayIn.getY();
 

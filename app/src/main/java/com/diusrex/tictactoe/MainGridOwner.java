@@ -85,8 +85,8 @@ public class MainGridOwner implements GridOwner {
         mainGrid.addView(space);
     }
 
-    public void selectionToPlayInChanged(SectionPosition sectionToPlayIn) {
-        overlayHandler.selectionToPlayInChanged(sectionToPlayIn);
+    public void sectionToPlayInChanged(SectionPosition sectionToPlayIn) {
+        overlayHandler.sectionToPlayInChanged(sectionToPlayIn);
     }
 
     public void selectionSelectedChanged(SectionPosition section) {
