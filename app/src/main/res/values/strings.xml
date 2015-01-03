@@ -7,8 +7,8 @@
     <string name="won">Congrats, you won!</string>
     <string name="undo_move">Undo last move</string>
     <string name="rematch">Rematch</string>
-    <string name="player_1">player one</string>
-    <string name="player_2">player two</string>
+    <string name="current_player_is_1">Player One:</string>
+    <string name="current_player_is_2">Player Two:</string>
     <string name="no_player">no player</string>
     <string name="win_dialog_title">There is a WINNER</string>
     <string name="congratulate_winner" formatted="true">Congratulations %s for winning the game!</string>

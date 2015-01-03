@@ -17,52 +17,58 @@
         android:layout_centerHorizontal="true"
         android:columnCount="5"
         android:id="@+id/mainGrid"
-        android:background="@android:color/holo_red_dark"
+        android:background="@color/main_grid_inner_separator"
+        android:padding="@dimen/main_grid_padding"
         />
-
-    <LinearLayout
-        android:id="@+id/currentPlayerInfo"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/mainGrid"
-        android:layout_marginTop="15dp"
-        android:gravity="center">
-
-        <TextView
-            android:id="@+id/currentPlayerText"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
-
-        <ImageView
-            android:id="@+id/currentPlayerImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/current_player_image_description"/>
-    </LinearLayout>
 
 
     <com.diusrex.tictactoe.android.MyGrid
         android:id="@+id/selectedSection"
-        android:layout_below="@id/currentPlayerInfo"
+        android:layout_below="@id/mainGrid"
         android:layout_marginTop="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:columnCount="5"
         android:layout_centerHorizontal="true"
+        android:background="@color/section_inner_separator"
         />
 
-
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/bottom_info"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/undo_move"
-        android:id="@+id/button"
-        android:layout_below="@id/selectedSection"
-        android:layout_centerHorizontal="true"
-        android:onClick="undoMove"/>
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
 
+        <Space
+            android:layout_height="1dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"/>
 
+        <TextView
+            android:id="@+id/player_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:background="@drawable/current_player_box"
+            android:padding="@dimen/player_info_padding" />
+
+        <Space
+            android:layout_height="1dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/undo_move"
+            android:id="@+id/button"
+            android:onClick="undoMove"/>
+
+        <Space
+            android:layout_height="1dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
 </RelativeLayout>

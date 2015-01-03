@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -10,66 +10,80 @@
                 android:background="@color/material_blue_grey_900"
                 android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/currentPlayerText"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        />
-
-    <ImageView
-        android:id="@+id/currentPlayerImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/current_player_image_description"
-        android:layout_toRightOf="@id/currentPlayerText"
-        android:layout_toEndOf="@id/currentPlayerText"
-        android:layout_alignParentTop="true"/>
-
-
-    <com.diusrex.tictactoe.android.MyGrid
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:columnCount="5"
-        android:id="@+id/mainGrid"
-        android:background="@android:color/holo_red_dark"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        />
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:layout_alignParentTop="true"
-        android:gravity="center"
-        android:layout_toRightOf="@id/mainGrid"
-        android:layout_toEndOf="@id/mainGrid"
-        android:layout_marginLeft="30dp"
-        android:layout_marginStart="30dp">
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
         <com.diusrex.tictactoe.android.MyGrid
-            android:id="@+id/selectedSection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/button"
             android:columnCount="5"
+            android:id="@+id/mainGrid"
+            android:background="@color/main_grid_inner_separator"
+            android:padding="@dimen/main_grid_padding"
+            />
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="bottom"
             android:text="@string/undo_move"
             android:id="@+id/button"
             android:onClick="undoMove"
             />
-    </RelativeLayout>
 
+    </LinearLayout>
 
-</RelativeLayout>
+    <Space
+        android:layout_height="1dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
+
+        <com.diusrex.tictactoe.android.MyGrid
+            android:id="@+id/selectedSection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnCount="5"
+            />
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            />
+
+        <TextView
+            android:id="@+id/player_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:background="@drawable/current_player_box"
+            android:padding="@dimen/player_info_padding"
+            />
+    </LinearLayout>
+
+    <Space
+        android:layout_height="1dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        />
+</LinearLayout>

@@ -3,4 +3,6 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fragment_section_margin">6dp</dimen>
+    <dimen name="main_grid_padding">6dp</dimen>
+    <dimen name="player_info_padding">4dp</dimen>
 </resources>
