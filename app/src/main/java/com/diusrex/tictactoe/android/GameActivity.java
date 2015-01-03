@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.diusrex.tictactoe.R;
@@ -42,9 +41,8 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
         saverAndLoader = new BoardStateSaverAndLoader(this);
 
         MainGridOwner mainGridOwner = new MainGridOwner(this, this, (MyGrid) findViewById(R.id.mainGrid));
-        TextView playerText = (TextView) findViewById(R.id.currentPlayerText);
-        ImageView playerImage = (ImageView) findViewById(R.id.currentPlayerImage);
-        graphicsUpdater = new GameGraphicsUpdater(mainGridOwner, playerText, playerImage);
+        TextView playerInfo = (TextView) findViewById(R.id.player_info);
+        graphicsUpdater = new GameGraphicsUpdater(mainGridOwner, playerInfo);
 
         boolean newGame = getIntent().getBooleanExtra(IS_NEW_GAME, true);
         if (newGame) {
@@ -199,10 +197,10 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
     private String getPlayerAsString() {
         switch (currentPlayer) {
         case Player_1:
-            return getString(R.string.player_1);
+            return getString(R.string.current_player_is_1);
 
         case Player_2:
-            return getString(R.string.player_2);
+            return getString(R.string.current_player_is_2);
 
         default:
             return getString(R.string.no_player);

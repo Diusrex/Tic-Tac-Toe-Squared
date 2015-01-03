@@ -1,7 +1,6 @@
 package com.diusrex.tictactoe.android;
 
 import android.app.Activity;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.diusrex.tictactoe.R;
@@ -17,18 +16,17 @@ import com.diusrex.tictactoe.logic.SectionPosition;
 
 public class GameGraphicsUpdater {
     private final MainGridOwner mainGridOwner;
-    private final TextView playerText;
-    private final ImageView playerImage;
+    private final TextView playerInfo;
 
     private final BoxImageResourceInfo regularBox;
     private final BoxImageResourceInfo mostRecentBox;
     private final BoxImageResourceInfo largeBox;
     private final BoxImageResourceInfo largeBoxMostRecent;
 
-    GameGraphicsUpdater(MainGridOwner mainGridOwner, TextView playerText, ImageView playerImage) {
+    GameGraphicsUpdater(MainGridOwner mainGridOwner, TextView playerInfo) {
         this.mainGridOwner = mainGridOwner;
-        this.playerText = playerText;
-        this.playerImage = playerImage;
+        this.playerInfo = playerInfo;
+        playerInfo.setCompoundDrawablePadding(20);
 
         regularBox = new RegularMove();
         mostRecentBox = new MostRecentMove();
@@ -81,25 +79,30 @@ public class GameGraphicsUpdater {
     }
 
     public void noMovesMayBeMade() {
-        playerText.setText(R.string.game_done);
-        playerImage.setImageResource(android.R.color.transparent);
+        playerInfo.setText(R.string.game_done);
+        setPlayerTextImage(android.R.color.transparent);
     }
 
     public void playerChanged(Player currentPlayer, String playerAsString) {
-        playerText.setText(playerAsString);
+        playerInfo.setText(playerAsString);
 
         switch (currentPlayer) {
         case Player_1:
-            playerImage.setImageResource(regularBox.getPlayerOneImage());
+            setPlayerTextImage(regularBox.getPlayerOneImage());
             break;
 
         case Player_2:
-            playerImage.setImageResource(regularBox.getPlayerTwoImage());
+            setPlayerTextImage(regularBox.getPlayerTwoImage());
             break;
 
         case Unowned:
-            playerImage.setImageResource(regularBox.getUnownedImage());
+            setPlayerTextImage(regularBox.getUnownedImage());
             break;
         }
+    }
+
+    private void setPlayerTextImage(int imageValue) {
+        // Want the image on the right side only
+        playerInfo.setCompoundDrawablesWithIntrinsicBounds(0, 0, imageValue, 0);
     }
 }

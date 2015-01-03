@@ -1,6 +1,5 @@
 package com.diusrex.tictactoe.android;
 
-import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -9,7 +8,6 @@ import com.diusrex.tictactoe.logic.SectionPosition;
 
 public class SelectedSectionOwner extends SectionOwner {
     static private final int GRID_LINE_WIDTH = 30;
-    static private final int GRID_LINE_COLOR = Color.GREEN;
     private final GameEventHandler handler;
 
 
@@ -19,9 +17,8 @@ public class SelectedSectionOwner extends SectionOwner {
     }
 
     @Override
-    protected void setUpGridLines(MyGrid grid) {
-        grid.setLineWidth(GRID_LINE_WIDTH);
-        grid.setLineColor(GRID_LINE_COLOR);
+    protected int getLineWidth() {
+        return GRID_LINE_WIDTH;
     }
 
     @Override

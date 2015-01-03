@@ -1,10 +1,10 @@
 package com.diusrex.tictactoe.android;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.widget.ImageView;
 import android.widget.Space;
 
+import com.diusrex.tictactoe.R;
 import com.diusrex.tictactoe.box_images.BoxImageResourceInfo;
 import com.diusrex.tictactoe.logic.BoardStatus;
 import com.diusrex.tictactoe.logic.BoxPosition;
@@ -14,7 +14,7 @@ import com.diusrex.tictactoe.logic.SectionPosition;
 
 public class SectionOwner implements GridOwner {
     static private final int GRID_LINE_WIDTH = 15;
-    static private final int GRID_LINE_COLOR = Color.GREEN;
+    static private int GRID_LINE_COLOR;
     static private final int SIZE_OF_SPACE = 10;
 
     private final SectionPosition sectionPosition;
@@ -32,9 +32,13 @@ public class SectionOwner implements GridOwner {
         setUpGridLines(this.grid);
     }
 
-    protected void setUpGridLines(MyGrid grid) {
-        grid.setLineWidth(GRID_LINE_WIDTH);
-        grid.setLineColor(GRID_LINE_COLOR);
+    private void setUpGridLines(MyGrid grid) {
+        grid.setLineWidth(getLineWidth());
+        grid.setLineColor(grid.getResources().getColor(R.color.section_win_line));
+    }
+
+    protected int getLineWidth() {
+        return GRID_LINE_WIDTH;
     }
 
     @Override
