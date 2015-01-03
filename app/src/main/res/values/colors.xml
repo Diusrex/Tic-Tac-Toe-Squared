@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="section_color">#FFFFFF</color>
-    <color name="selected_and_play_in">#BBFF00FF</color>
-    <color name="selected">#BB0000EE</color>
-    <color name="play_in">#BBEE0000</color>
+    <color name="selected_and_play_in">#6AEE00EE</color>
+    <color name="selected">#6A0000EE</color>
+    <color name="play_in">#6AEE0000</color>
+    <color name="section_inner_separator">#000000</color>
+    <color name="main_grid_inner_separator">#888899</color>
+    <color name="section_win_line">#990012</color>
+    <color name="current_player_box">#ED1C24</color>
 </resources>

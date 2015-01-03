@@ -9,6 +9,6 @@
         android:layout_height="wrap_content"
         android:columnCount="5"
         android:id="@+id/mainGrid"
-        android:background="@android:color/black" />
+        android:background="@color/section_inner_separator" />
 
 </FrameLayout>
