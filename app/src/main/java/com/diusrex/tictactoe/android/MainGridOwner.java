@@ -1,7 +1,6 @@
 package com.diusrex.tictactoe.android;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Space;
@@ -18,7 +17,6 @@ import com.diusrex.tictactoe.logic.TicTacToeEngine;
 
 public class MainGridOwner implements GridOwner {
     static private final int GRID_LINE_WIDTH = 50;
-    static private final int GRID_LINE_COLOR = Color.RED;
     private static final int SIZE_OF_SPACE = 30;
 
     private final GameEventHandler handler;
@@ -38,7 +36,7 @@ public class MainGridOwner implements GridOwner {
 
     private void setUpMainGridLines() {
         mainGrid.setLineWidth(GRID_LINE_WIDTH);
-        mainGrid.setLineColor(GRID_LINE_COLOR);
+        mainGrid.setLineColor(mainGrid.getResources().getColor(R.color.game_win_line));
     }
 
     @Override

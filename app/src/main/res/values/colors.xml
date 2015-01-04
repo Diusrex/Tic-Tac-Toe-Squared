@@ -7,4 +7,5 @@
     <color name="main_grid_inner_separator">#888899</color>
     <color name="section_win_line">#990012</color>
     <color name="current_player_box">#ED1C24</color>
+    <color name="game_win_line">#990012</color>
 </resources>
