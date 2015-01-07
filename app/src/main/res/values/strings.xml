@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">TicTacToe</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="won">Congrats, you won!</string>
     <string name="undo_move">Undo last move</string>
@@ -22,5 +20,24 @@
     <string name="draw_dialog_title">Draw</string>
     <string name="game_done">Game is finished</string>
     <string name="current_player_image_description">Image for current player</string>
-
+    <string name="how_to_win_title">How To Win</string>
+    <string name="how_to_win_sections_info">The board consists of 9 regular tic tac toe boards, called sections.</string>
+    <string name="how_to_win_a_section">The first person to win 3 boxes in a straight line wins one section.</string>
+    <string name="how_to_win_section_image_description">Player X wins this section.</string>
+    <string name="how_to_win_game_win_explanation">To win the game, one player needs to win 3 sections in a straight line.</string>
+    <string name="how_to_win_game_how_won_one">In this example, Player O has 3 sections in a diagonal line from the top left to the bottom right so they win the game.</string>
+    <string name="how_to_win_game_how_won_two">In this complex example, Player X has 3 sections in a line at the bottom of the game board so they win the game.</string>
+    <string name="board_info_title">Board Info</string>
+    <string name="section_coloring_info">The section in play is shaded in red. while the section that is focused on is blue. If they are in the same section it will be pink.</string>
+    <string name="most_recent_move_info">The most recent move will be green</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
+    <string name="play_rules_first_example_explanation">Since the last move was in the top right of the section the next player will play in the top right section.</string>
+    <string name="play_rules_second_example_explanation">Since the last move was in the bottom middle box the next player will play in the bottom middle section.</string>
+    <string name="play_rules_third_example_explanation">Since the last move was in the top right box the next player will play in the top right section.</string>
+    <string name="play_rules_first_rule">When a player does a move, the other player will then play in the section with the same position as the box.</string>
+    <string name="play_rules_second_rule">If you need to play in a section that is full, you can instead play in any section.</string>
+    <string name="player_rules_title">Play Rules</string>
+    <string name="finish">Finish</string>
+    <string name="cancel">Cancel</string>
 </resources>
