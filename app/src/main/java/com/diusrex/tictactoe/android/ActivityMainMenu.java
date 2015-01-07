@@ -43,6 +43,7 @@ public class ActivityMainMenu extends Activity {
     }
 
     public void showHelpScreen(View v) {
-
+        Intent intent = new Intent(this, HowToPlayActivity.class);
+        startActivity(intent);
     }
 }

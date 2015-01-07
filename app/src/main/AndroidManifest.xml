@@ -21,6 +21,12 @@
             android:name=".android.GameActivity"
             android:label="@string/app_name" >
         </activity>
+
+        <activity
+            android:name=".android.HowToPlayActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>
