@@ -167,23 +167,23 @@ public class EngineTest {
     @Test
     public void testGetNextPlayer() {
         Assert.assertEquals(Player.Player_1, TicTacToeEngine.getNextPlayer(board));
-        
+
         TestUtils.applyMoveToBoard(board, moveP1);
         Assert.assertEquals(Player.Player_2, TicTacToeEngine.getNextPlayer(board));
     }
-    
+
     @Test
     public void testBoardIsNotFullWhenNoMoves() {
         Assert.assertFalse(TicTacToeEngine.boardIsFull(board));
     }
-    
+
     @Test
     public void testBoardIsNotFullWithMultipleMoves() {
         TestUtils.applyMoveToBoard(board, moveP1);
         TestUtils.applyMoveToBoard(board, moveP2);
         Assert.assertFalse(TicTacToeEngine.boardIsFull(board));
     }
-    
+
     @Test
     public void testBoardIsActuallFull() {
         for (int y = 0; y < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++y) {
@@ -193,4 +193,6 @@ public class EngineTest {
         }
         Assert.assertTrue(TicTacToeEngine.boardIsFull(board));
     }
+
+    
 }

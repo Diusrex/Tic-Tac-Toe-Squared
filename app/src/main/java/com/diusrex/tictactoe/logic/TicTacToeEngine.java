@@ -134,13 +134,13 @@ public class TicTacToeEngine {
     }
 
     public static String sectionPositionToString(SectionPosition sectionPosition) {
-        return String.format("%d%d",sectionPosition.getX(), sectionPosition.getY());
+        return String.format("%d%d", sectionPosition.getX(), sectionPosition.getY());
     }
 
     public static SectionPosition stringToSectionPosition(String substring) {
         int totalValue = Integer.parseInt(substring);
         int x = totalValue / 10;
-        int y = totalValue% 10;
+        int y = totalValue % 10;
 
         return SectionPosition.make(x, y);
     }
