@@ -130,6 +130,9 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
 
         if (winnerExists()) {
             handleWin(position);
+        } else if (boardIsFull()){
+            sectionSelected(position.getSectionIn());
+            showDrawDialog();
         } else {
             prepareForNextMove(currentTime, board.getSectionToPlayIn());
         }
