@@ -51,7 +51,7 @@ public abstract class GameEndDialogFragment extends DialogFragment {
     }
 
     private void setUpReturnToGameButton(Button returnToGameButton) {
-
+        returnToGameButton.setText(getStringIdForReturnToGameButton());
         returnToGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,6 +60,8 @@ public abstract class GameEndDialogFragment extends DialogFragment {
             }
         });
     }
+
+    protected abstract int getStringIdForReturnToGameButton();
 
     private void setUpRematchButton(Button rematchButton) {
 

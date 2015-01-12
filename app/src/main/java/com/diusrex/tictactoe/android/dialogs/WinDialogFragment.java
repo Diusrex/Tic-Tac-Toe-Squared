@@ -36,4 +36,9 @@ public class WinDialogFragment extends GameEndDialogFragment {
 
         return builder;
     }
+
+    @Override
+    protected int getStringIdForReturnToGameButton() {
+        return R.string.back_to_game;
+    }
 }

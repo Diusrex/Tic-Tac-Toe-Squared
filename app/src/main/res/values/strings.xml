@@ -39,4 +39,5 @@
     <string name="player_rules_title">Play Rules</string>
     <string name="finish">Finish</string>
     <string name="cancel">Cancel</string>
+    <string name="back_to_game">Back to Game</string>
 </resources>

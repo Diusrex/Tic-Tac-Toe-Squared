@@ -25,5 +25,11 @@ public class DrawDialogFragment extends GameEndDialogFragment {
 
         return builder;
     }
+
+    @Override
+    protected int getStringIdForReturnToGameButton() {
+        return R.string.resume_game;
+    }
+
 }
 

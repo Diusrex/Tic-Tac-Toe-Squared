@@ -9,8 +9,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/returnToGameButton"
         android:layout_gravity="center_horizontal"
-        style="?android:attr/buttonBarButtonStyle"
-        android:text="@string/return_to_game"/>
+        style="?android:attr/buttonBarButtonStyle"/>
     
     <LinearLayout
         android:layout_width="fill_parent"
