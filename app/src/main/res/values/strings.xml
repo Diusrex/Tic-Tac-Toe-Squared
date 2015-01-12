@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">TicTacToe</string>
-    <string name="action_settings">Settings</string>
     <string name="won">Congrats, you won!</string>
     <string name="undo_move">Undo last move</string>
     <string name="rematch">Rematch</string>
