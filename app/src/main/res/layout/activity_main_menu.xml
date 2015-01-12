@@ -5,33 +5,69 @@
               style="@style/ActivityStyle">
 
     <TextView
+        android:text="@string/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/title"
-        android:layout_gravity="center_horizontal"/>
+        style="@style/HowToPlayText.Title"
+        />
+
+    <Space
+        android:layout_height="0dp"
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
+        />
 
     <Button
         android:id="@+id/startNewGameButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/new_game"
-        android:layout_gravity="center_horizontal"
-        android:onClick="startNewGame"/>
+        android:onClick="startNewGame"
+        />
+
+    <Space
+        android:layout_height="0dp"
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
+        />
 
     <Button
         android:id="@+id/continueGameButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/continue_game"
-        android:layout_gravity="center_horizontal"
-        android:onClick="continueGame"/>
+        android:onClick="continueGame"
+        />
+
+    <Space
+        android:layout_height="0dp"
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
+        />
 
     <Button
         android:id="@+id/showHelpScreenButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/how_to_play"
-        android:layout_gravity="center_horizontal"
-        android:onClick="showHelpScreen"/>
+        android:onClick="showHelpScreen"
+        />
+
+    <Space
+        android:layout_height="0dp"
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
+        />
+
+    <ImageView
+        android:src="@drawable/main_menu_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <Space
+        android:layout_height="0dp"
+        android:layout_width="fill_parent"
+        android:layout_weight="2"
+        />
 </LinearLayout>
