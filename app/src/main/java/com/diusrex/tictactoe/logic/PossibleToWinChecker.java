@@ -8,7 +8,7 @@ public class PossibleToWinChecker {
 
     public static boolean isStillPossibleToWin(BoardStatus board) {
         if (TicTacToeEngine.getWinner(board) != Player.Unowned)
-            return false;
+            return true;
 
         // Will search through each line, and check to see if it does not
         // contain different players

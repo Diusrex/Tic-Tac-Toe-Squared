@@ -86,11 +86,11 @@ public class PossibleToWinCheckerTests {
     }
 
     @Test
-    public void testBoardCannotBeWonWhenIsWon() {
+    public void testBoardCanBeWonWhenIsWon() {
         takeOwnershipOfSection(SectionPosition.make(0, 0), Player.Player_1);
         takeOwnershipOfSection(SectionPosition.make(1, 0), Player.Player_1);
         takeOwnershipOfSection(SectionPosition.make(2, 0), Player.Player_1);
-        Assert.assertFalse(PossibleToWinChecker.isStillPossibleToWin(board));
+        Assert.assertTrue(PossibleToWinChecker.isStillPossibleToWin(board));
     }
 
     // 1 2 1
