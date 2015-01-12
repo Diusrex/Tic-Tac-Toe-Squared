@@ -1,50 +1,59 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                tools:context=".MainActivity"
-                android:background="@color/material_blue_grey_900">
-
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              android:paddingTop="@dimen/activity_vertical_margin"
+              android:paddingBottom="@dimen/activity_vertical_margin"
+              tools:context=".MainActivity"
+              android:background="@color/material_blue_grey_900"
+              android:orientation="vertical"
+              android:gravity="center_horizontal">
 
     <com.diusrex.tictactoe.android.MyGrid
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:columnCount="5"
         android:id="@+id/mainGrid"
         android:background="@color/main_grid_inner_separator"
         android:padding="@dimen/main_grid_padding"
         />
 
+    <Space
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
 
     <com.diusrex.tictactoe.android.MyGrid
         android:id="@+id/selectedSection"
-        android:layout_below="@id/mainGrid"
         android:layout_marginTop="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:columnCount="5"
-        android:layout_centerHorizontal="true"
         android:background="@color/section_inner_separator"
+        />
+
+    <Space
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         />
 
     <LinearLayout
         android:id="@+id/bottom_info"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:orientation="horizontal"
-        android:gravity="center_horizontal">
+        android:gravity="center"
+        android:layout_weight="0.5">
 
         <Space
             android:layout_height="1dp"
             android:layout_width="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            />
 
         <TextView
             android:id="@+id/player_info"
@@ -52,23 +61,27 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:background="@drawable/current_player_box"
-            android:padding="@dimen/player_info_padding" />
+            android:padding="@dimen/player_info_padding"
+            />
 
         <Space
             android:layout_height="1dp"
             android:layout_width="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/undo_move"
             android:id="@+id/button"
-            android:onClick="undoMove"/>
+            android:onClick="undoMove"
+            />
 
         <Space
             android:layout_height="1dp"
             android:layout_width="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            />
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>
