@@ -14,6 +14,7 @@ import com.diusrex.tictactoe.logic.BoardStatus;
 import com.diusrex.tictactoe.logic.BoxPosition;
 import com.diusrex.tictactoe.logic.Move;
 import com.diusrex.tictactoe.logic.Player;
+import com.diusrex.tictactoe.logic.PossibleToWinChecker;
 import com.diusrex.tictactoe.logic.SectionPosition;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
 import com.diusrex.tictactoe.logic.UndoAction;
@@ -22,21 +23,29 @@ import java.util.Calendar;
 
 public class GameActivity extends Activity implements GameEventHandler, GameEndActivityListener {
     static public final String IS_NEW_GAME = "IsNewGame";
+    static private final String SHOW_GAME_IS_DRAW = "GameIsDraw";
     static private final long COOLDOWN = 250;
 
-    BoardStatus board;
-    Player currentPlayer;
+    private BoardStatus board;
+    private Player currentPlayer;
 
-    BoardStateSaverAndLoader saverAndLoader;
+    private BoardStateSaverAndLoader saverAndLoader;
 
-    GameGraphicsUpdater graphicsUpdater;
+    private GameGraphicsUpdater graphicsUpdater;
 
-    long previousTime;
+    private long previousTime;
+    private boolean shownGameIsDraw;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        if (savedInstanceState != null) {
+            shownGameIsDraw = savedInstanceState.getBoolean(SHOW_GAME_IS_DRAW);
+        } else {
+            shownGameIsDraw = false;
+        }
 
         saverAndLoader = new BoardStateSaverAndLoader(this);
 
@@ -47,6 +56,7 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
         boolean newGame = getIntent().getBooleanExtra(IS_NEW_GAME, true);
         if (newGame) {
             saverAndLoader.resetBoardState();
+            shownGameIsDraw = false;
 
             // Make sure it does not try this again
             getIntent().putExtra(IS_NEW_GAME, false);
@@ -69,14 +79,17 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
         if (gameStillRunning()) {
             prepareForNextMove(getCurrentTime(), selectedSection);
         } else {
-            // Make it so no player can make a move
             disablePerformingMove();
             sectionSelected(selectedSection);
         }
     }
 
     private boolean gameStillRunning() {
-        return !winnerExists() && !isADraw();
+        return !winnerExists() && !boardIsFull();
+    }
+
+    private boolean boardIsFull() {
+        return TicTacToeEngine.boardIsFull(board);
     }
 
     private void updateCurrentPlayer() {
@@ -89,6 +102,13 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
         super.onPause();
 
         saverAndLoader.saveGameState(board);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBoolean(SHOW_GAME_IS_DRAW, shownGameIsDraw);
     }
 
     @Override
@@ -105,17 +125,18 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
     }
 
     private void handleWinOrPrepareForNextMove(BoxPosition position, long currentTime) {
+        if (isADraw() && !shownGameIsDraw)
+            showDrawDialog();
+
         if (winnerExists()) {
             handleWin(position);
-        } else if (isADraw()) {
-            handleDraw(position);
         } else {
             prepareForNextMove(currentTime, board.getSectionToPlayIn());
         }
     }
 
     private boolean isADraw() {
-        return TicTacToeEngine.boardIsFull(board);
+        return !PossibleToWinChecker.isStillPossibleToWin(board);
     }
 
     private boolean winnerExists() {
@@ -143,13 +164,6 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
         showWinDialog(winningPlayer);
     }
 
-    private void handleDraw(BoxPosition position) {
-        sectionSelected(position.getSectionIn());
-        disablePerformingMove();
-
-        showDrawDialog();
-    }
-
     private void disablePerformingMove() {
         // Will not allow the player unowned to play
         currentPlayer = Player.Unowned;
@@ -167,6 +181,8 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
     private void showDrawDialog() {
         DialogFragment fragment = DrawDialogFragment.newInstance();
         fragment.show(getFragmentManager(), "dialog");
+
+        shownGameIsDraw = true;
     }
 
     @Override
@@ -191,6 +207,14 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
 
             graphicsUpdater.redrawBoard(this, board);
             prepareForNextMove(getCurrentTime(), board.getSectionToPlayIn());
+
+            ensureDrawUpdated();
+        }
+    }
+
+    private void ensureDrawUpdated() {
+        if (shownGameIsDraw && !isADraw()) {
+            shownGameIsDraw = false;
         }
     }
 
