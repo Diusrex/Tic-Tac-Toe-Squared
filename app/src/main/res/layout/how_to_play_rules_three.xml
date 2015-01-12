@@ -7,38 +7,46 @@
 
     <TextView
         android:text="@string/player_rules_title"
-        style="@style/HowToPlayText.Title"/>
+        style="@style/HowToPlayText.Title"
+        />
 
     <Space
         android:layout_width="1dp"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        />
 
     <TextView
         android:text="@string/play_rules_first_rule"
-        style="@style/HowToPlayText"/>
+        style="@style/HowToPlayText"
+        />
 
     <Space
         android:layout_width="1dp"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        />
 
     <ImageView
         android:src="@drawable/play_rules_third_example"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        />
 
     <Space
         android:layout_width="1dp"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        />
 
     <TextView
         android:text="@string/play_rules_third_example_explanation"
-        style="@style/HowToPlayText"/>
+        style="@style/HowToPlayText"
+        />
 
     <Space
         android:layout_width="1dp"
         android:layout_height="0dp"
-        android:layout_weight="5"/>
+        android:layout_weight="5"
+        />
 </LinearLayout>

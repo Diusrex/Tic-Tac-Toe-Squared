@@ -7,7 +7,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_above="@+id/backButton" />
+        android:layout_above="@+id/backButton"
+        />
 
     <Button
         android:id="@+id/backButton"
@@ -15,7 +16,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:onClick="previousScreen" />
+        android:onClick="previousScreen"
+        />
 
     <Button
         android:id="@+id/nextButton"
@@ -23,5 +25,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:onClick="nextScreen" />
+        android:onClick="nextScreen"
+        />
 </RelativeLayout>
