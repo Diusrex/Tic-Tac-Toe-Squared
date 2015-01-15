@@ -6,16 +6,16 @@ public class RegularMove implements BoxImageResourceInfo {
 
     @Override
     public int getPlayerOneImage() {
-        return R.drawable.o_pressed;
+        return R.drawable.game_o;
     }
 
     @Override
     public int getPlayerTwoImage() {
-        return R.drawable.x_pressed;
+        return R.drawable.game_x;
     }
 
     @Override
     public int getUnownedImage() {
-        return R.drawable.blank;
+        return R.drawable.game_blank;
     }
 }

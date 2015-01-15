@@ -5,16 +5,16 @@ import com.diusrex.tictactoe.R;
 public class LargeMove implements BoxImageResourceInfo {
     @Override
     public int getPlayerOneImage() {
-        return R.drawable.o_pressed_large;
+        return R.drawable.game_large_o;
     }
 
     @Override
     public int getPlayerTwoImage() {
-        return R.drawable.x_pressed_large;
+        return R.drawable.game_large_x;
     }
 
     @Override
     public int getUnownedImage() {
-        return R.drawable.blank_large;
+        return R.drawable.game_large_blank;
     }
 }
