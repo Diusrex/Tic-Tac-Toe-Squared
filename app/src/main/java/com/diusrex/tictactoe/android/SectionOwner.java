@@ -14,7 +14,6 @@ import com.diusrex.tictactoe.logic.SectionPosition;
 
 public class SectionOwner implements GridOwner {
     static private final int GRID_LINE_WIDTH = 15;
-    static private int GRID_LINE_COLOR;
     static private final int SIZE_OF_SPACE = 10;
 
     private final SectionPosition sectionPosition;

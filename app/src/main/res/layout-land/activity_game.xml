@@ -19,7 +19,7 @@
         <com.diusrex.tictactoe.android.MyGrid
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:columnCount="5"
+            android:columnCount="@integer/game_board_size"
             android:id="@+id/mainGrid"
             android:background="@color/main_grid_inner_separator"
             android:padding="@dimen/main_grid_padding"
@@ -30,7 +30,7 @@
             android:id="@+id/selectedSection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:columnCount="5"
+            android:columnCount="@integer/game_board_size"
             android:layout_gravity="center"
             />
 
