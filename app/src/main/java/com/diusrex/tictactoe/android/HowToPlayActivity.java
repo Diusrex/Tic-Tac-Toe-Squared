@@ -17,7 +17,7 @@ import java.util.Calendar;
 public class HowToPlayActivity extends Activity {
     static private final String CURRENT_SCREEN_INDEX_SAVE = "CurrentScreenIndex";
     static private final int ANIMATION_LENGTH = 300;
-    static private final int NUMBER_OF_SCREENS = 8;
+    static private final int NUMBER_OF_SCREENS = 9;
 
     ViewFlipper flipper;
     int currentScreenIndex;
@@ -86,7 +86,8 @@ public class HowToPlayActivity extends Activity {
     }
 
     private void addBoardInfo() {
-        addViewIdAndSetCanAnimateNextAndBack(R.layout.how_to_play_board_info, true, true);
+        addViewIdAndSetCanAnimateNextAndBack(R.layout.how_to_play_board_info_one, true, false);
+        addViewIdAndSetCanAnimateNextAndBack(R.layout.how_to_play_board_info_two, false, true);
     }
 
     private void addPlayRules() {

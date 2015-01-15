@@ -27,8 +27,10 @@
     <string name="how_to_win_game_how_won_one">In this example, Player O wins with 3 sections in a diagonal line from the top left to the bottom right.</string>
     <string name="how_to_win_game_how_won_two">In this complex example, Player X wins with 3 sections in a line at the bottom of the game board.</string>
     <string name="board_info_title">Board Info</string>
-    <string name="section_coloring_info">The section highlighted in red shows what section the next move will be played in. The blue highlighted section helps the player enlarge a section. If the highlighted red and highlighted blue are in the section, it will be pink.</string>
-    <string name="most_recent_move_info">The most recent move by the previous player will be green.</string>
+    <string name="section_coloring_red">The section highlighted in red shows what section the next move will be played in.</string>
+    <string name="section_coloring_blue">The blue highlighted section helps the player enlarge a section.</string>
+    <string name="section_coloring_pink">If the highlighted red and highlighted blue are in the section, it will be pink.</string>
+    <string name="section_coloring_most_recent">The most recent move by the previous player will be green.</string>
     <string name="back">Back</string>
     <string name="next">Next</string>
     <string name="play_rules_first_example_explanation">For example, player O choose the top right box of the middle section. Player X can now choose any box in the top right section.</string>

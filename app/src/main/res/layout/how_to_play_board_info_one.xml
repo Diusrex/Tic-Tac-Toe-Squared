@@ -12,30 +12,17 @@
 
     <Space
         android:layout_width="1dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="20dp"
         />
 
     <TextView
-        android:text="@string/section_coloring_info"
+        android:text="@string/section_coloring_most_recent"
         style="@style/HowToPlayText"
         />
 
     <Space
         android:layout_width="1dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        />
-
-    <TextView
-        android:text="@string/most_recent_move_info"
-        style="@style/HowToPlayText"
-        />
-
-    <Space
-        android:layout_width="1dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="20dp"
         />
 
     <ImageView
@@ -46,7 +33,11 @@
 
     <Space
         android:layout_width="1dp"
-        android:layout_height="0dp"
-        android:layout_weight="5"
+        android:layout_height="20dp"
+        />
+
+    <TextView
+        android:text="@string/section_coloring_red"
+        style="@style/HowToPlayText"
         />
 </LinearLayout>
