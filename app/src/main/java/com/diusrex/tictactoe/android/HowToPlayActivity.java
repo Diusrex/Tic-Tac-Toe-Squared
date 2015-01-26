@@ -3,11 +3,13 @@ package com.diusrex.tictactoe.android;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.diusrex.tictactoe.R;
@@ -88,6 +90,19 @@ public class HowToPlayActivity extends Activity {
     private void addBoardInfo() {
         addViewIdAndSetCanAnimateNextAndBack(R.layout.how_to_play_board_info_one, true, false);
         addViewIdAndSetCanAnimateNextAndBack(R.layout.how_to_play_board_info_two, false, true);
+        addColoringsToBoardInfo();
+    }
+
+    private void addColoringsToBoardInfo() {
+        setTextFromHtml(R.id.mini_board_coloring_most_recent, R.string.mini_board_coloring_most_recent);
+        setTextFromHtml(R.id.mini_board_coloring_red, R.string.mini_board_coloring_red);
+        setTextFromHtml(R.id.mini_board_coloring_blue, R.string.mini_board_coloring_blue);
+        setTextFromHtml(R.id.mini_board_coloring_pink, R.string.mini_board_coloring_pink);
+    }
+
+    private void setTextFromHtml(int textViewId, int textId) {
+        TextView v =(TextView) findViewById(textViewId);
+        v.setText(Html.fromHtml(getString(textId)));
     }
 
     private void addPlayRules() {

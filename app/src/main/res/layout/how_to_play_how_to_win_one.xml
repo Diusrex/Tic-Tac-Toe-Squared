@@ -17,7 +17,7 @@
         />
 
     <TextView
-        android:text="@string/how_to_win_sections_info"
+        android:text="@string/how_to_win_mini_board_info"
         style="@style/HowToPlayText"
         />
 
@@ -40,7 +40,7 @@
         />
 
     <TextView
-        android:text="@string/how_to_win_a_section"
+        android:text="@string/how_to_win_a_mini_board"
         style="@style/HowToPlayText"
         />
 
@@ -63,7 +63,7 @@
         />
 
     <TextView
-        android:text="@string/how_to_win_section_image_description"
+        android:text="@string/how_to_win_mini_board_image_description"
         style="@style/HowToPlayText"
         />
 

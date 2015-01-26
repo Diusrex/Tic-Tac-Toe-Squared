@@ -8,4 +8,6 @@
     <color name="section_win_line">#990012</color>
     <color name="current_player_box">#ED1C24</color>
     <color name="game_win_line">#990012</color>
+    <color name="standard_green">#29F950</color>
+    <color name="standard_yellow">#DED421</color>
 </resources>

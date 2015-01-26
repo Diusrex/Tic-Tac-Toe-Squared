@@ -19,24 +19,24 @@
     <string name="game_done">Game is finished</string>
     <string name="current_player_image_description">Image for current player</string>
     <string name="how_to_win_title">How To Win</string>
-    <string name="how_to_win_sections_info">The board consists of 9 regular tic tac toe boards, called sections.</string>
-    <string name="how_to_win_a_section">To win a section, you must be the first player to claim 3 boxes in a straight line.</string>
-    <string name="how_to_win_section_image_description">Player X wins this section.</string>
-    <string name="how_to_win_game_win_explanation">To win the game, one player needs to win 3 sections in a straight line.</string>
-    <string name="how_to_win_game_how_won_one">In this example, Player O wins with 3 sections in a diagonal line from the top left to the bottom right.</string>
-    <string name="how_to_win_game_how_won_two">In this complex example, Player X wins with 3 sections in a line at the bottom of the game board.</string>
-    <string name="board_info_title">Board Info</string>
-    <string name="section_coloring_red">The section highlighted in red shows what section the next move will be played in.</string>
-    <string name="section_coloring_blue">The blue highlighted section helps the player enlarge a section.</string>
-    <string name="section_coloring_pink">If the highlighted red and highlighted blue are in the section, it will be pink.</string>
-    <string name="section_coloring_most_recent">The most recent move by the previous player will be green.</string>
+    <string name="how_to_win_mini_board_info">The board consists of 9 regular tic tac toe boards, called mini boards.</string>
+    <string name="how_to_win_a_mini_board">To win a mini board, you must be the first player to claim 3 boxes in a straight line.</string>
+    <string name="how_to_win_mini_board_image_description">Player X wins this mini board.</string>
+    <string name="how_to_win_game_win_explanation">To win the game, one player needs to win 3 mini boards in a straight line.</string>
+    <string name="how_to_win_game_how_won_one">In this example, Player O wins with 3 mini boards in a diagonal line from the top left to the bottom right.</string>
+    <string name="how_to_win_game_how_won_two">In this complex example, Player X wins with 3 mini boards in a line at the bottom of the game board.</string>
+    <string name="board_info_title">Game Help</string>
+    <string name="mini_board_coloring_red"><![CDATA[The <font color="#EE0000">red mini board</font> shows where the next move will be played in.]]></string>
+    <string name="mini_board_coloring_blue"><![CDATA[The <font color="#3333FF">blue mini board</font> is enlarged of the bottom of the screen. The player may change the enlarged board.]]></string>
+    <string name="mini_board_coloring_pink"><![CDATA[If the mini board to be played in is enlarged, it will be <font color="#EE00EE">pink</font>.]]></string>
+    <string name="mini_board_coloring_most_recent"><![CDATA[The <font color="#29F950">green X</font> shows the last move. It is now Player O\'s turn.]]></string>
     <string name="back">Back</string>
     <string name="next">Next</string>
-    <string name="play_rules_first_example_explanation">For example, player O chose the top right box of the middle section. Player X can now choose any box in the top right section.</string>
-    <string name="play_rules_second_example_explanation">Player X chose the bottom center box of the top right box. Player O may now choose any box in the bottom center section.</string>
-    <string name="play_rules_third_example_explanation">Player O chose the top left box of the bottom center section. Player X may now choose any box in the top left section.</string>
-    <string name="play_rules_first_rule">The section each player plays in matches the position of the box chosen by the previous player.</string>
-    <string name="play_rules_second_rule">If all of the boxes in one section are claimed, the current player may choose any unclaimed box on the whole board.</string>
+    <string name="play_rules_first_example_explanation">For example, player O chose the top right box of the middle mini board. This means Player X must now choose any box in the top right mini board.</string>
+    <string name="play_rules_second_example_explanation">Player X chose the bottom center box of the top right box. Player O must now choose any box in the bottom center mini board.</string>
+    <string name="play_rules_third_example_explanation">Player O chose the top left box of the bottom center mini board. Player X must now choose any box in the top left mini board.</string>
+    <string name="play_rules_first_rule">You send your opponent to the mini board corresponding to the box you played in.</string>
+    <string name="play_rules_second_rule">If all of the boxes in the mini board you must play in are claimed, you can instead choose any unclaimed box on the whole board.</string>
     <string name="player_rules_title">Play Rules</string>
     <string name="finish">Finish</string>
     <string name="cancel">Cancel</string>

@@ -16,7 +16,7 @@
         />
 
     <TextView
-        android:text="@string/section_coloring_blue"
+        android:id="@+id/mini_board_coloring_blue"
         style="@style/HowToPlayText"
         />
 
@@ -37,7 +37,7 @@
         />
 
     <TextView
-        android:text="@string/section_coloring_pink"
+        android:id="@+id/mini_board_coloring_pink"
         style="@style/HowToPlayText"
         />
 </LinearLayout>
