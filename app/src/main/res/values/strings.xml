@@ -26,8 +26,8 @@
     <string name="how_to_win_game_how_won_one">In this example, Player O wins with 3 mini boards in a diagonal line from the top left to the bottom right.</string>
     <string name="how_to_win_game_how_won_two">In this complex example, Player X wins with 3 mini boards in a line at the bottom of the game board.</string>
     <string name="board_info_title">Game Help</string>
-    <string name="mini_board_coloring_red"><![CDATA[The <font color="#EE0000">red mini board</font> shows where the next move will be played in.]]></string>
-    <string name="mini_board_coloring_blue"><![CDATA[The <font color="#3333FF">blue mini board</font> is enlarged of the bottom of the screen. The player may change the enlarged board.]]></string>
+    <string name="mini_board_coloring_red"><![CDATA[The <font color="#EE0000">red mini board</font> shows where the next move will be played.]]></string>
+    <string name="mini_board_coloring_blue"><![CDATA[The <font color="#6060FF">blue mini board</font> is enlarged at the bottom of the screen. The player may change the enlarged board.]]></string>
     <string name="mini_board_coloring_pink"><![CDATA[If the mini board to be played in is enlarged, it will be <font color="#EE00EE">pink</font>.]]></string>
     <string name="mini_board_coloring_most_recent"><![CDATA[The <font color="#29F950">green X</font> shows the last move. It is now Player O\'s turn.]]></string>
     <string name="back">Back</string>
