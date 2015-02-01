@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Tic Tac Toe&#179;</string>
+    <string name="app_name">Tic Tac Toe&#178;</string>
     <string name="won">Congrats, you won!</string>
     <string name="undo_move">Undo last move</string>
     <string name="rematch">Rematch</string>
