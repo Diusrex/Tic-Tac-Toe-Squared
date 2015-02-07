@@ -59,9 +59,23 @@ public class HowToPlayActivity extends Activity {
 
         loadAnimations();
 
+
         backButton = (Button) findViewById(R.id.backButton);
         nextButton = (Button) findViewById(R.id.nextButton);
         flipper = (ViewFlipper) findViewById(R.id.viewFlipper);
+
+        flipper.setOnTouchListener(new OnSwipeTouchListener(this) {
+            @Override
+            public void onSwipeLeft() {
+                nextScreen();
+            }
+
+            @Override
+            public void onSwipeRight() {
+                previousScreen();
+            }
+        });
+
         addAllScreens();
 
         if (savedInstanceState != null) {
@@ -142,6 +156,10 @@ public class HowToPlayActivity extends Activity {
     }
 
     public void nextScreen(View v) {
+        nextScreen();
+    }
+
+    private void nextScreen() {
         if (!canChangeScreens())
             return;
 
@@ -163,6 +181,10 @@ public class HowToPlayActivity extends Activity {
     }
 
     public void previousScreen(View v) {
+        previousScreen();
+    }
+
+    private void previousScreen() {
         if (!canChangeScreens())
             return;
 
