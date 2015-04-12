@@ -17,6 +17,11 @@ package com.diusrex.tictactoe.logic;
 
 import java.util.Stack;
 
+import com.diusrex.tictactoe.data_structures.BoardStatus;
+import com.diusrex.tictactoe.data_structures.Move;
+import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.data_structures.SectionPosition;
+
 
 public class UndoAction {
     public static void undoLastMove(BoardStatus board) {

@@ -8,9 +8,9 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.diusrex.tictactoe.logic.BoxPosition;
+import com.diusrex.tictactoe.data_structures.BoxPosition;
+import com.diusrex.tictactoe.data_structures.Line;
 import com.diusrex.tictactoe.logic.GridLines;
-import com.diusrex.tictactoe.logic.Line;
 
 // There should be 8 lines:
 // 3 horizontal

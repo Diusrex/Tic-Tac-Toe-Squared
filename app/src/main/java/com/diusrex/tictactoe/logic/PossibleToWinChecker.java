@@ -15,6 +15,10 @@
  **/
 package com.diusrex.tictactoe.logic;
 
+import com.diusrex.tictactoe.data_structures.BoardStatus;
+import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.data_structures.SectionPosition;
+
 
 public class PossibleToWinChecker {
     static private final SectionPosition horizontalIncrease = SectionPosition.make(1, 0);

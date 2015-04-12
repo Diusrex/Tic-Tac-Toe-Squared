@@ -13,14 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
-package com.diusrex.tictactoe.logic;
+package com.diusrex.tictactoe.data_structures;
 
-
-public interface Grid {
-    public Player getGridOwner();
+public interface Position {
     
-    public Player getPointOwner(Position pos);
-    
-    public boolean canBeWon();
-
+    // These are relative to the grid they belong to
+    public int getGridX();
+    public int getGridY();
 }

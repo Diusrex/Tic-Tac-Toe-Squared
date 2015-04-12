@@ -17,6 +17,14 @@ package com.diusrex.tictactoe.logic;
 
 import java.util.Stack;
 
+import com.diusrex.tictactoe.data_structures.BoardStatus;
+import com.diusrex.tictactoe.data_structures.BoxPosition;
+import com.diusrex.tictactoe.data_structures.Grid;
+import com.diusrex.tictactoe.data_structures.Line;
+import com.diusrex.tictactoe.data_structures.Move;
+import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.data_structures.SectionPosition;
+
 
 public class TicTacToeEngine {
     enum MoveValidity {

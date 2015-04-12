@@ -5,10 +5,10 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.diusrex.tictactoe.logic.BoardStatus;
-import com.diusrex.tictactoe.logic.Player;
+import com.diusrex.tictactoe.data_structures.BoardStatus;
+import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.data_structures.SectionPosition;
 import com.diusrex.tictactoe.logic.PossibleToWinChecker;
-import com.diusrex.tictactoe.logic.SectionPosition;
 
 public class PossibleToWinCheckerTests {
     BoardStatus board;

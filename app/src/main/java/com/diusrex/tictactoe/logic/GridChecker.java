@@ -17,6 +17,11 @@ package com.diusrex.tictactoe.logic;
 
 import java.util.List;
 
+import com.diusrex.tictactoe.data_structures.Grid;
+import com.diusrex.tictactoe.data_structures.Line;
+import com.diusrex.tictactoe.data_structures.LineIterator;
+import com.diusrex.tictactoe.data_structures.Player;
+
 
 /*
  * GridChecker
