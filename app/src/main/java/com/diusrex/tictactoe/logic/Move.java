@@ -17,24 +17,26 @@ package com.diusrex.tictactoe.logic;
 
 public class Move {
 
-    private final BoxPosition pos;
+    private final SectionPosition section;
+    private final BoxPosition box;
     private final Player player;
 
-    public Move(BoxPosition pos, Player madeBy) {
-        this.pos = pos;
+    public Move(SectionPosition section, BoxPosition box, Player madeBy) {
+        this.section = section;
+        this.box = box;
         this.player = madeBy;
     }
 
-    public BoxPosition getPosition() {
-        return pos;
+    public SectionPosition getSection() {
+        return section;
+    }
+
+    public BoxPosition getBox() {
+        return box;
     }
 
     public Player getPlayer() {
         return player;
-    }
-
-    public SectionPosition getSectionIn() {
-        return pos.getSectionIn();
     }
 
 }

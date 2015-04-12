@@ -15,50 +15,58 @@
  **/
 package com.diusrex.tictactoe.logic;
 
+
 public class LineIterator {
     private final Line line;
     private final BoxPosition increase;
-
-    private BoxPosition currentPosition;
+    private final int lineSize;
 
     public LineIterator(Line line) {
         this.line = line;
         BoxPosition difference = line.getEnd().decreaseBy(line.getStart());
-        
+
         int xChange = 0;
-        if (difference.getX() > 0)
+        if (difference.getGridX() > 0)
             xChange = 1;
-        else if (difference.getX() < 0)
+        else if (difference.getGridX() < 0)
             xChange = -1;
-        
+
         int yChange = 0;
-        if (difference.getY() > 0)
+        if (difference.getGridY() > 0)
             yChange = 1;
-        else if (difference.getY() < 0)
+        else if (difference.getGridY() < 0)
             yChange = -1;
-        
+
         increase = BoxPosition.make(xChange, yChange);
+        lineSize = Math.max((xChange != 0) ? difference.getGridX() / xChange : 0,
+                            (yChange != 0) ? difference.getGridY() / yChange : 0);
     }
 
-    public LineIterator(BoxPosition startPos, BoxPosition increase) {
-        line = new Line(startPos, increase);
+    public LineIterator(BoxPosition startPos, BoxPosition increase, int lineSize) {
+        BoxPosition end = startPos;
+        for (int i = 0; i < lineSize - 1; ++i) {
+            end = end.increaseBy(increase);
+        }
+        
+        line = new Line(startPos, end);
         this.increase = increase;
+        this.lineSize = lineSize;
     }
 
-    public void reset() {
-        currentPosition = line.getStart();
+    public boolean isDone(int iterationNum) {
+        return iterationNum < 0 || iterationNum > lineSize;
     }
 
-    public void next() {
-        currentPosition = currentPosition.increaseBy(increase);
+    public BoxPosition getCurrent(int iterationNum) {
+        BoxPosition toReturn = line.getStart();
+        for (int i = 0; i < iterationNum; ++i) {
+            toReturn = toReturn.increaseBy(increase);
+        }
+        
+        return toReturn;
     }
 
-    public boolean isDone(BoxPosition sizeOfBoard) {
-        return currentPosition.getX() < 0 || currentPosition.getX() >= sizeOfBoard.getX()
-                || currentPosition.getY() < 0 || currentPosition.getY() >= sizeOfBoard.getY();
-    }
-    
-    public BoxPosition getCurrent() {
-        return currentPosition;
+    public Line getLine() {
+        return line;
     }
 }

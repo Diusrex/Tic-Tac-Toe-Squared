@@ -16,7 +16,22 @@
 package com.diusrex.tictactoe.logic;
 
 public enum Player {
-    Unowned("0"), Player_1("1"), Player_2("2");
+    Unowned("0") {
+        @Override
+        public Player opposite() {
+            return Unowned;
+        }
+    }, Player_1("1") {
+        @Override
+        public Player opposite() {
+            return Player_2;
+        }
+    }, Player_2("2") {
+        @Override
+        public Player opposite() {
+            return Player_1;
+        }
+    };
 
     String name;
 
@@ -27,5 +42,16 @@ public enum Player {
     @Override
     public String toString() {
         return name;
+    }
+
+    public abstract Player opposite();
+
+    public static Player fromString(String string) {
+        if (string.equals("0"))
+            return Unowned;
+        else if (string.equals("1"))
+            return Player_1;
+        else
+            return Player_2;
     }
 }

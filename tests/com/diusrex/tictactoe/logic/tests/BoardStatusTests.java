@@ -9,6 +9,7 @@ import com.diusrex.tictactoe.logic.BoardStatus;
 import com.diusrex.tictactoe.logic.BoxPosition;
 import com.diusrex.tictactoe.logic.Move;
 import com.diusrex.tictactoe.logic.Player;
+import com.diusrex.tictactoe.logic.SectionPosition;
 
 public class BoardStatusTests {
     BoardStatus status;
@@ -17,33 +18,65 @@ public class BoardStatusTests {
     public void setup() {
         status = new BoardStatus();
     }
+    
+    @Test
+    public void allPositionsStartAsUnowned() {
+        for (SectionPosition section : SectionPosition.allSections()) {
+            for (BoxPosition box : BoxPosition.allBoxesInSection()) {
+                Assert.assertEquals(Player.Unowned, status.getBoxOwner(section, box));
+            }
+        }
+    }
 
     @Test
-    public void testIsNotInsideBounds() {
-        BoxPosition invalidPos = BoxPosition.make(0, BoardStatus.NUMBER_OF_BOXES_PER_SIDE);
-        Assert.assertFalse(status.isInsideBounds(invalidPos));
-        invalidPos = BoxPosition.make(BoardStatus.NUMBER_OF_BOXES_PER_SIDE, 0);
-        Assert.assertFalse(status.isInsideBounds(invalidPos));
+    public void testIsNotInsideBoundsBox() {
+        SectionPosition validSection = SectionPosition.make(0, 0);
+        BoxPosition invalidPos = BoxPosition.make(0, BoardStatus.SIZE_OF_SECTION);
+        Assert.assertFalse(status.isInsideBounds(validSection, invalidPos));
+        
+        invalidPos = BoxPosition.make(BoardStatus.SIZE_OF_SECTION, 0);
+        Assert.assertFalse(status.isInsideBounds(validSection, invalidPos));
+        
         invalidPos = BoxPosition.make(-1, 0);
-        Assert.assertFalse(status.isInsideBounds(invalidPos));
+        Assert.assertFalse(status.isInsideBounds(validSection, invalidPos));
+        
         invalidPos = BoxPosition.make(0, -1);
-        Assert.assertFalse(status.isInsideBounds(invalidPos));
+        Assert.assertFalse(status.isInsideBounds(validSection, invalidPos));
+    }
+    
+    @Test
+    public void testIsNotInsideBoundsSection() {
+        SectionPosition invalidSection = SectionPosition.make(BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE, 0);
+        BoxPosition validPos = BoxPosition.make(0, 0);
+        Assert.assertFalse(status.isInsideBounds(invalidSection, validPos));
+        
+        invalidSection = SectionPosition.make(0, BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE);
+        Assert.assertFalse(status.isInsideBounds(invalidSection, validPos));
+        
+        invalidSection = SectionPosition.make(-1, 0);
+        Assert.assertFalse(status.isInsideBounds(invalidSection, validPos));
+        
+        invalidSection = SectionPosition.make(0, -1);
+        Assert.assertFalse(status.isInsideBounds(invalidSection, validPos));
     }
 
     @Test
     public void testIsInsideBounds() {
-        BoxPosition validPos = BoxPosition.make(0, 0);
-        Assert.assertTrue(status.isInsideBounds(validPos));
-        validPos = BoxPosition.make(BoardStatus.NUMBER_OF_BOXES_PER_SIDE - 1, BoardStatus.NUMBER_OF_BOXES_PER_SIDE - 1);
-        Assert.assertTrue(status.isInsideBounds(validPos));
+        /* Test all sections */
+        for (SectionPosition section : SectionPosition.allSections()) {
+            for (BoxPosition boxPosition : BoxPosition.allBoxesInSection()) {
+                Assert.assertTrue(status.isInsideBounds(section, boxPosition));
+            }
+        }
     }
 
     @Test
     public void testAddingMovesToStack() {
         Assert.assertEquals(0, getMovesSize());
 
+        SectionPosition sectionPos = SectionPosition.make(0, 0);
         BoxPosition movePos = BoxPosition.make(0, 0);
-        Move move = new Move(movePos, Player.Player_1);
+        Move move = new Move(sectionPos, movePos, Player.Player_1);
 
         status.applyMove(move);
 

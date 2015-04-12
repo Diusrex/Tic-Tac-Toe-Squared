@@ -17,16 +17,37 @@ package com.diusrex.tictactoe.logic;
 
 import java.util.Stack;
 
-public class TicTacToeEngine {
 
+public class TicTacToeEngine {
+    enum MoveValidity {
+        VALID, OUTSIDE_BOUNDS, OUT_OF_ORDER, IN_WRONG_SECTION, IS_OWNED, MOVE_PLAYER_IS_UNOWNED, MOVE_IS_NULL
+    }
+
+    public static MoveValidity getMoveValidity(BoardStatus board, Move move) {
+        if (move == null)
+            return MoveValidity.MOVE_IS_NULL;
+
+        else if (!isInsideBounds(board, move))
+            return MoveValidity.OUTSIDE_BOUNDS;
+
+        else if (!isInOrder(board, move))
+            return MoveValidity.OUT_OF_ORDER;
+
+        else if (!isInCorrectSection(board, move))
+            return MoveValidity.IN_WRONG_SECTION;
+
+        else if (isOwned(board, move))
+            return MoveValidity.IS_OWNED;
+
+        else if (move.getPlayer() == Player.Unowned)
+            return MoveValidity.MOVE_PLAYER_IS_UNOWNED;
+
+        else
+            return MoveValidity.VALID;
+    }
 
     public static boolean isValidMove(BoardStatus board, Move move) {
-        // Should be able to handle this properly
-        if (move == null)
-            return false;
-
-        return isInsideBounds(board, move) && isInOrder(board, move) && isInCorrectSection(board, move)
-                && isNotOwned(board, move) && move.getPlayer() != Player.Unowned;
+        return getMoveValidity(board, move) == MoveValidity.VALID;
     }
 
     public static void applyMoveIfValid(BoardStatus board, Move move) {
@@ -42,41 +63,30 @@ public class TicTacToeEngine {
     }
 
     private static boolean isInsideBounds(BoardStatus board, Move move) {
-        return board.isInsideBounds(move.getPosition());
+        return board.isInsideBounds(move.getSection(), move.getBox());
     }
 
     private static boolean isInOrder(BoardStatus board, Move move) {
-        int p1Count = board.getPlayerCount(Player.Player_1);
-        int p2Count = board.getPlayerCount(Player.Player_2);
-
-        if (move.getPlayer() == Player.Player_1)
-            ++p1Count;
-
-        else
-            ++p2Count;
-
-        return p1Count == p2Count || p1Count == p2Count + 1;
+        return move.getPlayer() == board.getNextPlayer();
     }
 
-    private static boolean isNotOwned(BoardStatus board, Move move) {
-        return board.getBoxOwner(move.getPosition()) == Player.Unowned;
+    private static boolean isOwned(BoardStatus board, Move move) {
+        return board.getBoxOwner(move) != Player.Unowned;
     }
 
     private static boolean isInCorrectSection(BoardStatus board, Move move) {
         SectionPosition requiredSection = board.getSectionToPlayIn();
-        SectionPosition actualSection = move.getSectionIn();
+        SectionPosition actualSection = move.getSection();
 
         // Checks if it is in the correct section
         return requiredSection.equals(actualSection) || sectionIsFull(board, requiredSection);
     }
 
     private static boolean sectionIsFull(BoardStatus board, SectionPosition requiredSection) {
-        BoxPosition offset = requiredSection.getTopLeftPosition();
-
         for (int x = 0; x < 3; ++x) {
             for (int y = 0; y < 3; ++y) {
                 BoxPosition positionInSection = BoxPosition.make(x, y);
-                if (board.getBoxOwner(positionInSection.increaseBy(offset)) == Player.Unowned)
+                if (board.getBoxOwner(requiredSection, positionInSection) == Player.Unowned)
                     return false;
             }
         }
@@ -85,34 +95,32 @@ public class TicTacToeEngine {
     }
 
     private static void updateSectionOwner(BoardStatus board, Move move) {
-        SectionPosition changedSection = move.getSectionIn();
+        SectionPosition changedSection = move.getSection();
         // Cannot take a section from other player
         if (board.getSectionOwner(changedSection) != Player.Unowned)
             return;
 
-        Player detectedSectionOwner = GridChecker.searchForPattern(board.getBoxGrid(), changedSection);
+        Grid sectionGrid = board.getSectionGrid(changedSection);
+        Player detectedSectionOwner = GridChecker.searchForOwner(sectionGrid);
         if (detectedSectionOwner != Player.Unowned) {
-            Line winLine = GridChecker.searchForLineOrGetNull(board.getBoxGrid(), changedSection);
+            Line winLine = GridChecker.searchForLineOrGetNull(sectionGrid);
             board.setSectionOwner(changedSection, winLine, detectedSectionOwner);
         }
     }
 
     public static SectionPosition getSectionToPlayInNext(Move move) {
-        return getSectionToPlayInNext(move.getPosition());
+        return getSectionToPlayInNext(move.getBox());
     }
 
     public static SectionPosition getSectionToPlayInNext(BoxPosition pos) {
-        SectionPosition sectionIn = pos.getSectionIn();
-        pos = pos.decreaseBy(sectionIn.getTopLeftPosition());
-
-        return SectionPosition.make(pos.getX(), pos.getY());
+        return SectionPosition.make(pos.getGridX(), pos.getGridY());
     }
 
     public static Player getWinner(BoardStatus board) {
-        return GridChecker.searchForPattern(board.getOwnerGrid());
+        return GridChecker.searchForOwner(board.getMainGrid());
     }
 
-    static final int SIZE_OF_SAVED_MOVE = 3;
+    static final int SIZE_OF_SAVED_MOVE = 5;
 
     public static String getSaveString(BoardStatus board) {
         Stack<Move> allMoves = board.getAllMoves();
@@ -122,10 +130,6 @@ public class TicTacToeEngine {
         }
 
         return buffer.toString();
-    }
-
-    private static String moveToString(Move m) {
-        return String.format("%d%d%s", m.getPosition().getX(), m.getPosition().getY(), m.getPlayer().toString());
     }
 
     // Will allow any move to be played
@@ -139,44 +143,52 @@ public class TicTacToeEngine {
         return board;
     }
 
-    public static Move stringToMove(String substring) {
-        int totalValue = Integer.parseInt(substring);
-        Player mainPlayer = Player.values()[totalValue % 10];
-        int x = totalValue / 100;
-        int y = (totalValue / 10) % 10;
+    // TODO: Refactor out of engine, most likely into Move/SectionPosition/BoxPosition
+    // Format: [SectionPosX][SectionPosY][BoxPosX][BoxPosY][Player]
+    public static Move stringToMove(String string) {
+        SectionPosition section = stringToSectionPosition(string.substring(0, 2));
+        BoxPosition box = stringToBoxPosition(string.substring(2, 4));
+        Player player = Player.fromString(string.substring(4, 5));
 
-        return new Move(BoxPosition.make(x, y), mainPlayer);
+        return new Move(section, box, player);
+    }
+
+    private static String moveToString(Move m) {
+        return sectionPositionToString(m.getSection()) + boxPositionToString(m.getBox()) + m.getPlayer().toString();
     }
 
     public static String sectionPositionToString(SectionPosition sectionPosition) {
-        return String.format("%d%d", sectionPosition.getX(), sectionPosition.getY());
+        return String.format("%d%d", sectionPosition.getGridX(), sectionPosition.getGridY());
+    }
+    
+    private static String boxPositionToString(BoxPosition box) {
+        return String.format("%d%d", box.getGridX(), box.getGridY());
     }
 
-    public static SectionPosition stringToSectionPosition(String substring) {
-        int totalValue = Integer.parseInt(substring);
+    public static SectionPosition stringToSectionPosition(String string) {
+        int totalValue = Integer.parseInt(string);
         int x = totalValue / 10;
         int y = totalValue % 10;
 
         return SectionPosition.make(x, y);
     }
+    
+    public static BoxPosition stringToBoxPosition(String string) {
+        int totalValue = Integer.parseInt(string);
+        int x = totalValue / 10;
+        int y = totalValue % 10;
 
-    public static Player getNextPlayer(BoardStatus board) {
-        int p1Count = board.getPlayerCount(Player.Player_1);
-        int p2Count = board.getPlayerCount(Player.Player_2);
-
-        if (p1Count == p2Count)
-            return Player.Player_1;
-        else
-            return Player.Player_2;
+        return BoxPosition.make(x, y);
     }
 
     public static boolean boardIsFull(BoardStatus board) {
-        for (int y = 0; y < BoardStatus.NUMBER_OF_BOXES_PER_SIDE; ++y) {
-            for (int x = 0; x < BoardStatus.NUMBER_OF_BOXES_PER_SIDE; ++x) {
-                if (board.getBoxOwner(x, y) == Player.Unowned)
+        for (SectionPosition section : SectionPosition.allSections()) {
+            for (BoxPosition box : BoxPosition.allBoxesInSection()) {
+                if (board.getBoxOwner(section, box) == Player.Unowned)
                     return false;
             }
         }
+
         return true;
     }
 }

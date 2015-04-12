@@ -17,6 +17,7 @@ package com.diusrex.tictactoe.logic;
 
 import java.util.Stack;
 
+
 public class UndoAction {
     public static void undoLastMove(BoardStatus board) {
         Stack<Move> allMoves = board.getAllMoves();
@@ -27,31 +28,31 @@ public class UndoAction {
         // Take out the top move
         Move topMove = allMoves.pop();
 
-        restoreBoxToUnowned(board, topMove.getPosition());
+        restoreBoxToUnowned(board, topMove);
 
         if (moveLostOwnership(board, topMove))
-            board.setSectionOwner(topMove.getSectionIn(), null, Player.Unowned);
+            board.setSectionOwner(topMove.getSection(), null, Player.Unowned);
 
-        restoreSectionToPlayIn(board, allMoves, topMove.getPosition());
+        restoreSectionToPlayIn(board, allMoves, topMove);
     }
 
-    private static void restoreBoxToUnowned(BoardStatus board, BoxPosition pos) {
-        board.setBoxOwner(pos, Player.Unowned);
+    private static void restoreBoxToUnowned(BoardStatus board, Move move) {
+        board.setBoxOwner(move.getSection(), move.getBox(), Player.Unowned);
     }
 
     private static boolean moveLostOwnership(BoardStatus board, Move topMove) {
         // In this case, it is impossible
-        if (topMove.getPlayer() != board.getSectionOwner(topMove.getSectionIn()))
+        if (topMove.getPlayer() != board.getSectionOwner(topMove.getSection()))
             return false;
 
-        SectionPosition sectionIn = topMove.getSectionIn();
-        Player completedWinner = GridChecker.searchForPattern(board.getBoxGrid(), sectionIn);
+        SectionPosition sectionIn = topMove.getSection();
+        Player completedWinner = GridChecker.searchForOwner(board.getSectionGrid(sectionIn));
 
         // If there is no found match, then the grid was lost
         return completedWinner == Player.Unowned;
     }
 
-    private static void restoreSectionToPlayIn(BoardStatus board, Stack<Move> allMoves, BoxPosition topMove) {
+    private static void restoreSectionToPlayIn(BoardStatus board, Stack<Move> allMoves, Move topMove) {
         SectionPosition sectionToRestoreTo;
 
         // If > 0, can get where to play from previous move
@@ -60,7 +61,7 @@ public class UndoAction {
 
             sectionToRestoreTo = TicTacToeEngine.getSectionToPlayInNext(previousMove);
         } else {
-            sectionToRestoreTo = topMove.getSectionIn();
+            sectionToRestoreTo = topMove.getSection();
         }
 
         board.setSectionToPlayIn(sectionToRestoreTo);

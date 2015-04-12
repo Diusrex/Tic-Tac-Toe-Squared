@@ -1,5 +1,7 @@
 package com.diusrex.tictactoe.logic.tests;
 
+import java.util.Stack;
+
 import junit.framework.Assert;
 
 import org.junit.Before;
@@ -12,61 +14,56 @@ import com.diusrex.tictactoe.logic.Player;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
 
 public class SaveStringTests {
-    BoardStatus board;
+    BoardStatus mainBoard;
+    BoardStatus generatedBoard;
     Move playerOneMove;
     Move playerTwoMove;
 
     @Before
     public void setup() {
-        board = new BoardStatus();
-        playerOneMove = new Move(BoxPosition.make(3, 3), Player.Player_1);
-        playerTwoMove = new Move(BoxPosition.make(1, 1), Player.Player_2);
+        mainBoard = new BoardStatus();
+        playerOneMove = new Move(mainBoard.getSectionToPlayIn(), BoxPosition.make(0, 0), Player.Player_1);
+        playerTwoMove = new Move(TicTacToeEngine.getSectionToPlayInNext(playerOneMove.getBox()),
+                BoxPosition.make(1, 1), Player.Player_2);
     }
 
     @Test
     public void testSaveSingleMove() {
-        board.applyMove(playerOneMove);
+        mainBoard.applyMove(playerOneMove);
 
-        String expectedString = moveToString(playerOneMove);
+        String saveString = TicTacToeEngine.getSaveString(mainBoard);
 
-        Assert.assertEquals(expectedString, TicTacToeEngine.getSaveString(board));
+        // Need to make sure it doesn't change the boards state
+        Assert.assertEquals(1, mainBoard.getAllMoves().size());
+
+        generatedBoard = TicTacToeEngine.loadBoardFromString(saveString);
+
+        assertBoardsAreEqual();
     }
 
     @Test
     public void testSaveMultipleMoves() {
-        board.applyMove(playerOneMove);
-        board.applyMove(playerTwoMove);
+        mainBoard.applyMove(playerOneMove);
+        mainBoard.applyMove(playerTwoMove);
 
-        Assert.assertEquals(moveToString(playerOneMove) + moveToString(playerTwoMove), TicTacToeEngine
-                .getSaveString(board));
+        String saveString = TicTacToeEngine.getSaveString(mainBoard);
 
-        // Also need to make sure it doesn't change the boards state
-        Assert.assertEquals(2, board.getAllMoves().size());
+        // Need to make sure it doesn't change the boards state
+        Assert.assertEquals(2, mainBoard.getAllMoves().size());
+
+        generatedBoard = TicTacToeEngine.loadBoardFromString(saveString);
+
+        assertBoardsAreEqual();
     }
 
-    @Test
-    public void testLoadFromString() {
-        TestUtils.applyMoveToBoard(board, playerOneMove);
-
-        String savedBoardStatus = TicTacToeEngine.getSaveString(board);
-
-        BoardStatus actualBoard = TicTacToeEngine.loadBoardFromString(savedBoardStatus);
-        Assert.assertTrue(board.equals(actualBoard));
-    }
-
-    @Test
-    public void testLoadMultipleFromString() {
-        TestUtils.applyMoveToBoard(board, playerOneMove);
-        TestUtils.applyMoveToBoard(board, playerTwoMove);
-
-        String savedBoardStatus = TicTacToeEngine.getSaveString(board);
-
-        BoardStatus actualBoard = TicTacToeEngine.loadBoardFromString(savedBoardStatus);
-        Assert.assertTrue(board.equals(actualBoard));
-    }
-
-    private String moveToString(Move move) {
-        return String.format("%d%d%s", move.getPosition().getX(), move.getPosition().getY(), move.getPlayer()
-                .toString());
+    private void assertBoardsAreEqual() {
+        Stack<Move> expectedMoves = mainBoard.getAllMoves();
+        Stack<Move> acutalMoves = generatedBoard.getAllMoves();
+        
+        Assert.assertEquals(expectedMoves.size(), acutalMoves.size());
+        
+        for (int i = 0; i < expectedMoves.size(); ++i) {
+            TestUtils.assertAreEqual(expectedMoves.get(i), acutalMoves.get(i));
+        }
     }
 }

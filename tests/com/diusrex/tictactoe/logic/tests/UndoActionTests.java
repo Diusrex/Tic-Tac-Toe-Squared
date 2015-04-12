@@ -11,11 +11,12 @@ import com.diusrex.tictactoe.logic.Line;
 import com.diusrex.tictactoe.logic.Move;
 import com.diusrex.tictactoe.logic.Player;
 import com.diusrex.tictactoe.logic.SectionPosition;
+import com.diusrex.tictactoe.logic.TicTacToeEngine;
 import com.diusrex.tictactoe.logic.UndoAction;
-import com.diusrex.tictactoe.logic.tests.TestUtils.BoardStatusNoCount;
+import com.diusrex.tictactoe.logic.tests.TestUtils.MockBoardStatus;
 
 public class UndoActionTests {
-    BoardStatusNoCount board;
+    MockBoardStatus board;
 
     Player mainPlayer;
 
@@ -26,24 +27,24 @@ public class UndoActionTests {
     Player[][] origionalBoxOwners;
     Player[][] origionalSectionOwners;
     Line[][] lines;
-    
+
     SectionPosition mainSection;
     Move appliedMove;
     Move validMove;
 
-
     @Before
     public void setup() {
-        board = new BoardStatusNoCount(SectionPosition.make(0, 0));
+        board = new MockBoardStatus(SectionPosition.make(0, 0));
         mainPlayer = Player.Player_1;
         board.playerToGoNext = mainPlayer;
 
-        mainSection = SectionPosition.make(1, 1);
-        appliedMove = new Move(BoxPosition.make(1, 1), mainPlayer);
+        mainSection = board.getSectionToPlayIn();
+        appliedMove = new Move(mainSection, BoxPosition.make(1, 1), mainPlayer);
 
         TestUtils.applyMoveToBoard(board, appliedMove);
 
-        validMove = new Move(BoxPosition.make(3, 3), mainPlayer);
+        validMove = new Move(TicTacToeEngine.getSectionToPlayInNext(appliedMove.getBox()), BoxPosition.make(0, 0),
+                mainPlayer);
 
         backupBoardState();
     }
@@ -73,12 +74,14 @@ public class UndoActionTests {
     @Test
     public void testUndoMoveSupposedToPlayInFull() {
         SectionPosition fullSection = SectionPosition.make(1, 1);
+        SectionPosition otherSection = SectionPosition.make(0, 0);
         fillSection(fullSection);
 
-        BoxPosition pos = BoxPosition.make(8, 8);
-        Move move = new Move(pos, mainPlayer);
+        BoxPosition pos = BoxPosition.make(0, 0);
+        Move move = new Move(otherSection, pos, mainPlayer);
 
         board.setSectionToPlayIn(fullSection);
+
         backupBoardState();
 
         TestUtils.applyMoveToBoard(board, move);
@@ -109,38 +112,35 @@ public class UndoActionTests {
 
         board.setSectionToPlayIn(sectionToWin);
         BoxPosition moveThatDoesntEffectOwnership = BoxPosition.make(2, 2);
-        TestUtils.applyMoveToBoard(board, new Move(moveThatDoesntEffectOwnership, mainPlayer));
+        TestUtils.applyMoveToBoard(board, new Move(mainSection, moveThatDoesntEffectOwnership, mainPlayer));
 
         UndoAction.undoLastMove(board);
 
         Assert.assertEquals(mainPlayer, board.getSectionOwner(sectionToWin));
-        TestUtils.testLinesAreEqual(new Line(BoxPosition.make(0, 0), BoxPosition.make(2, 0)), board.getLine(sectionToWin));
+        TestUtils.testLinesAreEqual(new Line(BoxPosition.make(0, 0), BoxPosition.make(2, 0)),
+                board.getLine(sectionToWin));
     }
 
     private void fillSection(SectionPosition fullSection) {
-        BoxPosition offset = fullSection.getTopLeftPosition();
-        for (int x = 0; x < 3; ++x) {
-            for (int y = 0; y < 3; ++y) {
-                BoxPosition basePosition = BoxPosition.make(x, y);
-                board.setBoxOwner(basePosition.increaseBy(offset), mainPlayer);
-            }
+        for (BoxPosition box : BoxPosition.allBoxesInSection()) {
+            board.setBoxOwner(fullSection, box, mainPlayer);
         }
     }
 
     private void winSection(SectionPosition section) {
-        BoxPosition current = section.getTopLeftPosition();
+        BoxPosition current = BoxPosition.make(0, 0);
         BoxPosition increase = BoxPosition.make(1, 0);
-        
+
         board.setSectionToPlayIn(section);
-        TestUtils.applyMoveToBoard(board, new Move(current, mainPlayer));
+        TestUtils.applyMoveToBoard(board, new Move(section, current, mainPlayer));
         current = current.increaseBy(increase);
-        
+
         board.setSectionToPlayIn(section);
-        TestUtils.applyMoveToBoard(board, new Move(current, mainPlayer));
+        TestUtils.applyMoveToBoard(board, new Move(section, current, mainPlayer));
         current = current.increaseBy(increase);
-        
+
         board.setSectionToPlayIn(section);
-        TestUtils.applyMoveToBoard(board, new Move(current, mainPlayer));
+        TestUtils.applyMoveToBoard(board, new Move(section, current, mainPlayer));
     }
 
     private void backupBoardState() {
@@ -158,7 +158,7 @@ public class UndoActionTests {
         origionalBoxOwners = new Player[BoardStatus.NUMBER_OF_BOXES_PER_SIDE][BoardStatus.NUMBER_OF_BOXES_PER_SIDE];
         for (int x = 0; x < BoardStatus.NUMBER_OF_BOXES_PER_SIDE; ++x)
             for (int y = 0; y < BoardStatus.NUMBER_OF_BOXES_PER_SIDE; ++y)
-                origionalBoxOwners[x][y] = board.getBoxOwner(BoxPosition.make(x, y));
+                origionalBoxOwners[x][y] = board.getBoxOwner(SectionPosition.make(x / 3, y / 3), BoxPosition.make(x % 3, y % 3));
     }
 
     private void backupSectionOwners() {
@@ -167,7 +167,7 @@ public class UndoActionTests {
             for (int y = 0; y < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++y)
                 origionalSectionOwners[x][y] = board.getSectionOwner(SectionPosition.make(x, y));
     }
-    
+
     private void backupLines() {
         lines = new Line[BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE][BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE];
         for (int x = 0; x < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++x)
@@ -181,7 +181,7 @@ public class UndoActionTests {
 
         for (int x = 0; x < BoardStatus.NUMBER_OF_BOXES_PER_SIDE; ++x)
             for (int y = 0; y < BoardStatus.NUMBER_OF_BOXES_PER_SIDE; ++y)
-                Assert.assertEquals(origionalBoxOwners[x][y], board.getBoxOwner(BoxPosition.make(x, y)));
+                Assert.assertEquals(origionalBoxOwners[x][y], board.getBoxOwner(SectionPosition.make(x / 3, y / 3), BoxPosition.make(x % 3, y % 3)));
 
         for (int x = 0; x < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++x)
             for (int y = 0; y < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++y)

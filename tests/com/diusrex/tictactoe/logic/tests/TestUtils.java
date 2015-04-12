@@ -11,24 +11,27 @@ import com.diusrex.tictactoe.logic.SectionPosition;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
 
 public class TestUtils {
-    public static class BoardStatusNoCount extends BoardStatus {
-        public BoardStatusNoCount(SectionPosition pos) {
+    public static class MockBoardStatus extends BoardStatus {
+        public MockBoardStatus(SectionPosition pos) {
             super(pos);
+        }
+
+        public MockBoardStatus() {
+            super();
         }
 
         public Player playerToGoNext;
 
-        public int getPlayerCount(Player wantedPlayer) {
-            if (playerToGoNext == Player.Player_1) {
-                return 0;
-            } else {
-                return (wantedPlayer == Player.Player_1) ? 1 : 0;
-            }
+        @Override
+        public Player getNextPlayer() {
+            return playerToGoNext;
         }
     }
 
     public static void applyMoveToBoard(BoardStatus board, Move move) {
-        Assert.assertTrue(TicTacToeEngine.isValidMove(board, move));
+        Assert.assertTrue("Reason: " + TicTacToeEngine.getMoveValidity(board, move),
+                TicTacToeEngine.isValidMove(board, move));
+
         TicTacToeEngine.applyMoveIfValid(board, move);
     }
 
@@ -36,36 +39,37 @@ public class TestUtils {
         Assert.assertFalse(TicTacToeEngine.isValidMove(board, move));
         TicTacToeEngine.applyMoveIfValid(board, move);
     }
-
+    
+    public static void assertAreEqual(Move expected, Move actual) {
+        assertAreEqual(expected.getBox(), actual.getBox());
+        assertAreEqual(expected.getSection(), actual.getSection());
+        Assert.assertTrue(expected.getPlayer() == actual.getPlayer());
+    }
+    
     public static void assertAreEqual(SectionPosition expected, SectionPosition actual) {
-        Assert.assertEquals(expected.getX(), actual.getX());
-        Assert.assertEquals(expected.getY(), actual.getY());
+        Assert.assertEquals(expected.getGridX(), actual.getGridX());
+        Assert.assertEquals(expected.getGridY(), actual.getGridY());
     }
 
     public static void assertAreEqual(BoxPosition expected, BoxPosition actual) {
-        Assert.assertEquals(expected.getX(), actual.getX());
-        Assert.assertEquals(expected.getY(), actual.getY());
+        Assert.assertEquals(expected.getGridX(), actual.getGridX());
+        Assert.assertEquals(expected.getGridY(), actual.getGridY());
     }
 
     // WARNING: Will not update who owns the section
     public static void fillSection(BoardStatus board, SectionPosition toFill) {
-        BoxPosition offset = toFill.getTopLeftPosition();
-        Player playerToOwn = Player.Player_1;
-        for (int x = 0; x < 3; ++x) {
-            for (int y = 0; y < 3; ++y) {
-                BoxPosition basePosition = BoxPosition.make(x, y);
-                board.setBoxOwner(basePosition.increaseBy(offset), playerToOwn);
-
-                // Switch players
-                if (playerToOwn == Player.Player_1)
-                    playerToOwn = Player.Player_2;
-                else
-                    playerToOwn = Player.Player_1;
-            }
+        for (BoxPosition pos : BoxPosition.allBoxesInSection()) {
+            board.setBoxOwner(toFill, pos, board.getNextPlayer());
         }
     }
-    
+
     public static void testLinesAreEqual(Line expected, Line actual) {
+        if (expected == null) {
+            Assert.assertTrue(actual == null);
+        } else if (actual == null) {
+            Assert.fail();
+        }
+
         if (expected.getStart().equals(actual.getStart())) {
             TestUtils.assertAreEqual(expected.getEnd(), actual.getEnd());
         }

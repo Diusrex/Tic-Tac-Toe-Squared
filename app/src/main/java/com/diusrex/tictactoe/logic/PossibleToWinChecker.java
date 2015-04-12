@@ -15,6 +15,7 @@
  **/
 package com.diusrex.tictactoe.logic;
 
+
 public class PossibleToWinChecker {
     static private final SectionPosition horizontalIncrease = SectionPosition.make(1, 0);
     static private final SectionPosition verticalIncrease = SectionPosition.make(0, 1);

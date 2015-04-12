@@ -15,9 +15,30 @@
  **/
 package com.diusrex.tictactoe.logic;
 
-public class SectionPosition {
+import java.util.ArrayList;
+import java.util.List;
+
+public class SectionPosition implements Position {
     static private final SectionPosition[][] standardPositions = new SectionPosition[BoardStatus.SIZE_OF_SECTION][BoardStatus.SIZE_OF_SECTION];
+
     static private boolean initialized = false;
+
+    static private List<SectionPosition> allSections;
+
+    // TODO: Refactor this out of here
+    public static List<SectionPosition> allSections() {
+        if (allSections == null) {
+            allSections = new ArrayList<SectionPosition>();
+
+            for (int x = 0; x < BoardStatus.SIZE_OF_SECTION; ++x) {
+                for (int y = 0; y < BoardStatus.SIZE_OF_SECTION; ++y) {
+                    allSections.add(SectionPosition.make(x, y));
+                }
+            }
+        }
+
+        return allSections;
+    }
 
     public static SectionPosition make(int x, int y) {
         if (!initialized) {
@@ -48,11 +69,11 @@ public class SectionPosition {
         this.y = y;
     }
 
-    public int getX() {
+    public int getGridX() {
         return x;
     }
 
-    public int getY() {
+    public int getGridY() {
         return y;
     }
 
@@ -68,10 +89,6 @@ public class SectionPosition {
         if (y != other.y)
             return false;
         return true;
-    }
-
-    public BoxPosition getTopLeftPosition() {
-        return BoxPosition.make(x * BoardStatus.SIZE_OF_SECTION, y * BoardStatus.SIZE_OF_SECTION);
     }
 
     public SectionPosition increaseBy(SectionPosition increase) {

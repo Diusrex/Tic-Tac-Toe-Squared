@@ -11,6 +11,9 @@ import com.diusrex.tictactoe.logic.Line;
 import com.diusrex.tictactoe.logic.LineIterator;
 
 public class LineIteratorTests {
+    private static final int ORIGIONAL_POSITION = 0;
+    private static final int ORITIONAL_POSITION_PLUS_INCREASE = 1;
+
     private BoxPosition boardSize;
     private BoxPosition start;
     private BoxPosition increase;
@@ -42,37 +45,34 @@ public class LineIteratorTests {
 
         BoxPosition allPositions[] = { BoxPosition.make(0, 0), BoxPosition.make(1, 1), BoxPosition.make(2, 2) };
 
-        for (int i = 0; i < boardSize(); ++i) {
-            assertTrue(!iter.isDone(boardSize));
-            
-            assertEquals(allPositions[i], iter.getCurrent());
-            iter.next();
-        }
-        
-        assertTrue(iter.isDone(boardSize));
+        ensureIteratesProperly(allPositions);
     }
-    
+
     @Test
     public void iterateThroughAllMovesNegative() {
         setUpWithNegativeSlope();
 
         BoxPosition allPositions[] = { BoxPosition.make(2, 2), BoxPosition.make(1, 1), BoxPosition.make(0, 0) };
 
-        for (int i = 0; i < boardSize(); ++i) {
-            assertTrue(!iter.isDone(boardSize));
-            
-            assertEquals(allPositions[i], iter.getCurrent());
-            iter.next();
+        ensureIteratesProperly(allPositions);
+    }
+
+    private void ensureIteratesProperly(BoxPosition[] allPositions) {
+        int posInIter = 0;
+
+        for (; posInIter < boardSize(); ++posInIter) {
+            assertTrue(!iter.isDone(posInIter));
+
+            assertEquals(allPositions[posInIter], iter.getCurrent(posInIter));
         }
-        
-        assertTrue(iter.isDone(boardSize));
+
+        assertTrue(iter.isDone(posInIter));
     }
 
     private void testSlope() {
-        assertEquals("Current should be at start", start, iter.getCurrent());
+        assertEquals("Current should be at start", start, iter.getCurrent(ORIGIONAL_POSITION));
 
-        iter.next();
-        assertEquals(start.increaseBy(increase), iter.getCurrent());
+        assertEquals(start.increaseBy(increase), iter.getCurrent(ORITIONAL_POSITION_PLUS_INCREASE));
     }
 
     private BoxPosition getEnd(BoxPosition start, BoxPosition increase, int size) {
@@ -103,11 +103,10 @@ public class LineIteratorTests {
         Line line = new Line(start, end);
 
         iter = new LineIterator(line);
-        iter.reset();
     }
 
     private int boardSize() {
-        return boardSize.getX();
+        return boardSize.getGridX();
     }
 
     private void setUpEnd() {

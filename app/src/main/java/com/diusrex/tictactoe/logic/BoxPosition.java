@@ -15,11 +15,30 @@
  **/
 package com.diusrex.tictactoe.logic;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 // Immutable data structure
-public class BoxPosition {
+public class BoxPosition implements Position {
     static private final BoxPosition[][] standardPositions = new BoxPosition[BoardStatus.NUMBER_OF_BOXES_PER_SIDE][BoardStatus.NUMBER_OF_BOXES_PER_SIDE];
     static private boolean initialized = false;
-
+    
+    static private List<BoxPosition> allBoxesInSection;
+    // TODO: Refactor this out of here
+    public static List<BoxPosition> allBoxesInSection() {
+        if (allBoxesInSection == null) {
+            allBoxesInSection = new ArrayList<BoxPosition>();
+            
+            for (int x = 0; x < BoardStatus.SIZE_OF_SECTION; ++x) {
+                for (int y = 0; y < BoardStatus.SIZE_OF_SECTION; ++y) {
+                    allBoxesInSection.add(BoxPosition.make(x, y));
+                }
+            }
+        }
+        
+        return allBoxesInSection;
+    }
     public static BoxPosition make(int x, int y) {
         if (!initialized) {
             initialize();
@@ -49,11 +68,11 @@ public class BoxPosition {
         this.y = y;
     }
 
-    public int getX() {
+    public int getGridX() {
         return x;
     }
 
-    public int getY() {
+    public int getGridY() {
         return y;
     }
 
@@ -85,12 +104,5 @@ public class BoxPosition {
         if (y != other.y)
             return false;
         return true;
-    }
-
-    public SectionPosition getSectionIn() {
-        int sectionX = x / BoardStatus.SIZE_OF_SECTION;
-        int sectionY = y / BoardStatus.SIZE_OF_SECTION;
-
-        return SectionPosition.make(sectionX, sectionY);
     }
 }

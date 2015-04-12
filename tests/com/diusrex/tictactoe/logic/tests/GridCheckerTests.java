@@ -7,89 +7,61 @@ import org.junit.Test;
 
 import com.diusrex.tictactoe.logic.BoardStatus;
 import com.diusrex.tictactoe.logic.BoxPosition;
+import com.diusrex.tictactoe.logic.Grid;
 import com.diusrex.tictactoe.logic.GridChecker;
 import com.diusrex.tictactoe.logic.Line;
 import com.diusrex.tictactoe.logic.Player;
-import com.diusrex.tictactoe.logic.SectionPosition;
+import com.diusrex.tictactoe.logic.Position;
 
 public class GridCheckerTests {
     static final int SIZE = 9;
-    Player[][] grid;
 
     static final BoxPosition horizontalIncrease = BoxPosition.make(1, 0);
     static final BoxPosition verticalIncrease = BoxPosition.make(0, 1);
 
+    private MockGrid grid;
+
     @Before
     public void setUp() {
-        grid = new Player[SIZE][SIZE];
-
-        resetGrid();
-    }
-
-    private void resetGrid() {
-        for (int y = 0; y < grid.length; ++y) {
-            for (int x = 0; x < grid.length; ++x) {
-                grid[x][y] = Player.Unowned;
-            }
-        }
+        grid = new MockGrid();
     }
 
     @Test
     public void testNoPattern() {
-        Assert.assertEquals(Player.Unowned, GridChecker.searchForPattern(grid, SectionPosition.make(0, 0)));
+        Assert.assertEquals(Player.Unowned, GridChecker.searchForOwner(grid));
     }
 
     @Test
     public void testNullGridGiven() {
-        GridChecker.searchForPattern(null, SectionPosition.make(0, 0));
-    }
-
-    // These are all invalid positions for the given grid
-    @Test
-    public void testSectionOutside() {
-        final int NUMBER_OF_SECTIONS_IN_GRID = 1;
-        grid = new Player[NUMBER_OF_SECTIONS_IN_GRID * BoardStatus.SIZE_OF_SECTION][NUMBER_OF_SECTIONS_IN_GRID
-                * BoardStatus.SIZE_OF_SECTION];
-
-        SectionPosition sectionIn = SectionPosition.make(-1, 0);
-        GridChecker.searchForPattern(grid, sectionIn);
-
-        sectionIn = SectionPosition.make(NUMBER_OF_SECTIONS_IN_GRID, 0);
-        GridChecker.searchForPattern(grid, sectionIn);
-
-        sectionIn = SectionPosition.make(0, -1);
-        GridChecker.searchForPattern(grid, sectionIn);
-
-        sectionIn = SectionPosition.make(0, NUMBER_OF_SECTIONS_IN_GRID);
-        GridChecker.searchForPattern(grid, sectionIn);
+        // Just tests to see if it
+        Assert.assertEquals(Player.Unowned, GridChecker.searchForOwner(null));
     }
 
     @Test
-    public void testHorizontalPatterns() {
+    public void testHorizontalOwner() {
         BoxPosition startPos = BoxPosition.make(0, 0);
         BoxPosition finalPos = BoxPosition.make(2, 0);
-        SectionPosition sectionIn = startPos.getSectionIn();
 
         Player currentPlayer = Player.Player_1;
 
         for (int i = 0; i < 3; ++i, startPos = startPos.increaseBy(verticalIncrease), finalPos = finalPos
                 .increaseBy(verticalIncrease)) {
+
             // Will not completely fill the line
             fillLine(startPos, horizontalIncrease, currentPlayer, 2);
-            Assert.assertEquals(Player.Unowned, GridChecker.searchForPattern(grid, sectionIn));
+            Assert.assertEquals(Player.Unowned, GridChecker.searchForOwner(grid));
 
             setGridPlayer(finalPos, currentPlayer);
 
-            Assert.assertEquals(currentPlayer, GridChecker.searchForPattern(grid, sectionIn));
-            resetGrid();
+            Assert.assertEquals(currentPlayer, GridChecker.searchForOwner(grid));
+            grid.reset();
         }
     }
 
     @Test
-    public void testVerticalPatterns() {
-        BoxPosition startPos = BoxPosition.make(3, 6);
-        BoxPosition finalPos = BoxPosition.make(3, 8);
-        SectionPosition sectionIn = startPos.getSectionIn();
+    public void testVerticalOwner() {
+        BoxPosition startPos = BoxPosition.make(0, 0);
+        BoxPosition finalPos = BoxPosition.make(0, 2);
 
         Player currentPlayer = Player.Player_1;
 
@@ -97,20 +69,19 @@ public class GridCheckerTests {
                 .increaseBy(horizontalIncrease)) {
             // Will not completely fill the line
             fillLine(startPos, verticalIncrease, currentPlayer, 2);
-            Assert.assertEquals(Player.Unowned, GridChecker.searchForPattern(grid, sectionIn));
+            Assert.assertEquals(Player.Unowned, GridChecker.searchForOwner(grid));
 
             setGridPlayer(finalPos, currentPlayer);
 
-            Assert.assertEquals(currentPlayer, GridChecker.searchForPattern(grid, sectionIn));
-            resetGrid();
+            Assert.assertEquals(currentPlayer, GridChecker.searchForOwner(grid));
+            grid.reset();
         }
     }
 
     @Test
-    public void testDiagonalPatternOne() {
-        BoxPosition startPos = BoxPosition.make(3, 3);
-        BoxPosition finalPos = BoxPosition.make(5, 5);
-        SectionPosition sectionIn = startPos.getSectionIn();
+    public void testDiagonalOneOwner() {
+        BoxPosition startPos = BoxPosition.make(0, 0);
+        BoxPosition finalPos = BoxPosition.make(2, 2);
 
         Player currentPlayer = Player.Player_2;
 
@@ -118,18 +89,17 @@ public class GridCheckerTests {
 
         fillLine(startPos, diagonalIncrease, currentPlayer, 2);
 
-        Assert.assertEquals(Player.Unowned, GridChecker.searchForPattern(grid, sectionIn));
+        Assert.assertEquals(Player.Unowned, GridChecker.searchForOwner(grid));
 
         setGridPlayer(finalPos, currentPlayer);
 
-        Assert.assertEquals(currentPlayer, GridChecker.searchForPattern(grid, sectionIn));
+        Assert.assertEquals(currentPlayer, GridChecker.searchForOwner(grid));
     }
 
     @Test
-    public void testDiagonalPatternTwo() {
-        BoxPosition startPos = BoxPosition.make(3, 5);
-        BoxPosition finalPos = BoxPosition.make(5, 3);
-        SectionPosition sectionIn = startPos.getSectionIn();
+    public void testDiagonalTwoOwner() {
+        BoxPosition startPos = BoxPosition.make(0, 2);
+        BoxPosition finalPos = BoxPosition.make(2, 0);
 
         Player currentPlayer = Player.Player_2;
 
@@ -137,18 +107,17 @@ public class GridCheckerTests {
 
         fillLine(startPos, diagonalIncrease, currentPlayer, 2);
 
-        Assert.assertEquals(Player.Unowned, GridChecker.searchForPattern(grid, sectionIn));
+        Assert.assertEquals(Player.Unowned, GridChecker.searchForOwner(grid));
 
         setGridPlayer(finalPos, currentPlayer);
 
-        Assert.assertEquals(currentPlayer, GridChecker.searchForPattern(grid, sectionIn));
+        Assert.assertEquals(currentPlayer, GridChecker.searchForOwner(grid));
     }
 
     @Test
     public void testHorizontalLine() {
         BoxPosition startPos = BoxPosition.make(0, 0);
         BoxPosition finalPos = BoxPosition.make(2, 0);
-        SectionPosition sectionIn = startPos.getSectionIn();
 
         Player currentPlayer = Player.Player_1;
 
@@ -156,23 +125,22 @@ public class GridCheckerTests {
                 .increaseBy(verticalIncrease)) {
             // Will not completely fill the line
             fillLine(startPos, horizontalIncrease, currentPlayer, 2);
-            Assert.assertEquals(null, GridChecker.searchForLineOrGetNull(grid, sectionIn));
+            Assert.assertEquals(null, GridChecker.searchForLineOrGetNull(grid));
 
             setGridPlayer(finalPos, currentPlayer);
 
-            Line foundLine = GridChecker.searchForLineOrGetNull(grid, sectionIn);
+            Line foundLine = GridChecker.searchForLineOrGetNull(grid);
 
             TestUtils.testLinesAreEqual(new Line(startPos, finalPos), foundLine);
 
-            resetGrid();
+            grid.reset();
         }
     }
 
     @Test
     public void testVerticalLine() {
-        BoxPosition startPos = BoxPosition.make(3, 6);
-        BoxPosition finalPos = BoxPosition.make(3, 8);
-        SectionPosition sectionIn = startPos.getSectionIn();
+        BoxPosition startPos = BoxPosition.make(0, 0);
+        BoxPosition finalPos = BoxPosition.make(0, 2);
 
         Player currentPlayer = Player.Player_1;
 
@@ -180,21 +148,21 @@ public class GridCheckerTests {
                 .increaseBy(horizontalIncrease)) {
             // Will not completely fill the line
             fillLine(startPos, verticalIncrease, currentPlayer, 2);
+            Assert.assertEquals(null, GridChecker.searchForLineOrGetNull(grid));
 
             setGridPlayer(finalPos, currentPlayer);
 
-            Line foundLine = GridChecker.searchForLineOrGetNull(grid, sectionIn);
+            Line foundLine = GridChecker.searchForLineOrGetNull(grid);
 
             TestUtils.testLinesAreEqual(new Line(startPos, finalPos), foundLine);
-            resetGrid();
+            grid.reset();
         }
     }
 
     @Test
     public void testDiagonalLineOne() {
-        BoxPosition startPos = BoxPosition.make(3, 3);
-        BoxPosition finalPos = BoxPosition.make(5, 5);
-        SectionPosition sectionIn = startPos.getSectionIn();
+        BoxPosition startPos = BoxPosition.make(0, 0);
+        BoxPosition finalPos = BoxPosition.make(2, 2);
 
         Player currentPlayer = Player.Player_2;
 
@@ -202,18 +170,17 @@ public class GridCheckerTests {
 
         fillLine(startPos, diagonalIncrease, currentPlayer, 2);
 
-        Assert.assertEquals(null, GridChecker.searchForLineOrGetNull(grid, sectionIn));
+        Assert.assertEquals(null, GridChecker.searchForLineOrGetNull(grid));
 
         setGridPlayer(finalPos, currentPlayer);
 
-        TestUtils.testLinesAreEqual(new Line(startPos, finalPos), GridChecker.searchForLineOrGetNull(grid, sectionIn));
+        TestUtils.testLinesAreEqual(new Line(startPos, finalPos), GridChecker.searchForLineOrGetNull(grid));
     }
 
     @Test
     public void testDiagonalLineTwo() {
-        BoxPosition startPos = BoxPosition.make(3, 5);
-        BoxPosition finalPos = BoxPosition.make(5, 3);
-        SectionPosition sectionIn = startPos.getSectionIn();
+        BoxPosition startPos = BoxPosition.make(0, 2);
+        BoxPosition finalPos = BoxPosition.make(2, 0);
 
         Player currentPlayer = Player.Player_2;
 
@@ -221,11 +188,11 @@ public class GridCheckerTests {
 
         fillLine(startPos, diagonalIncrease, currentPlayer, 2);
 
-        Assert.assertEquals(Player.Unowned, GridChecker.searchForPattern(grid, sectionIn));
+        Assert.assertEquals(Player.Unowned, GridChecker.searchForOwner(grid));
 
         setGridPlayer(finalPos, currentPlayer);
 
-        TestUtils.testLinesAreEqual(new Line(startPos, finalPos), GridChecker.searchForLineOrGetNull(grid, sectionIn));
+        TestUtils.testLinesAreEqual(new Line(startPos, finalPos), GridChecker.searchForLineOrGetNull(grid));
     }
 
     private void fillLine(BoxPosition startPos, BoxPosition increase, Player player, int length) {
@@ -235,8 +202,42 @@ public class GridCheckerTests {
     }
 
     private void setGridPlayer(BoxPosition pos, Player player) {
-        grid[pos.getX()][pos.getY()] = player;
+        grid.grid[pos.getGridX()][pos.getGridY()] = player;
     }
 
-    
+    private class MockGrid implements Grid {
+        public Player grid[][];
+        public Player owner;
+
+        public MockGrid() {
+            grid = new Player[BoardStatus.SIZE_OF_SECTION][BoardStatus.SIZE_OF_SECTION];
+
+            reset();
+        }
+
+        public void reset() {
+            for (int y = 0; y < grid.length; ++y) {
+                for (int x = 0; x < grid.length; ++x) {
+                    grid[x][y] = Player.Unowned;
+                }
+            }
+        }
+
+        @Override
+        public boolean canBeWon() {
+            return false;
+        }
+
+        @Override
+        public Player getGridOwner() {
+            return owner;
+        }
+
+        @Override
+        public Player getPointOwner(Position pos) {
+            return grid[pos.getGridX()][pos.getGridY()];
+        }
+
+    }
+
 }

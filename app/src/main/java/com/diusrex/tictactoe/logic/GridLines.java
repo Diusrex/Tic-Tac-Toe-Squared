@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+
 public class GridLines {
     private static List<LineIterator> allLineIterators;
     private static List<Line> allLines;

@@ -1,4 +1,4 @@
-package com.diusrex.tictactoe.logic.tests;
+package com.diusrex.tictactoe.data_structures.tests;
 
 import junit.framework.Assert;
 
@@ -41,30 +41,4 @@ public class PositionTests {
             }
         }
     }
-    
-    @Test
-    public void testPositionToSection() {
-        BoxPosition boxPos = BoxPosition.make(0, 0);
-        TestUtils.assertAreEqual(SectionPosition.make(0, 0),
-                boxPos.getSectionIn());
-
-        boxPos = BoxPosition.make(3, 8);
-        TestUtils.assertAreEqual(SectionPosition.make(1, 2),
-                boxPos.getSectionIn());
-
-        boxPos = BoxPosition.make(5, 1);
-        TestUtils.assertAreEqual(SectionPosition.make(1, 0),
-                boxPos.getSectionIn());
-    }
-
-    @Test
-    public void testSectionToPosition() {
-        SectionPosition sectionPos = SectionPosition.make(0, 0);
-        TestUtils.assertAreEqual(BoxPosition.make(0, 0),
-                sectionPos.getTopLeftPosition());
-
-        sectionPos = SectionPosition.make(1, 2);
-        TestUtils.assertAreEqual(BoxPosition.make(3, 6), sectionPos.getTopLeftPosition());
-    }
-
 }

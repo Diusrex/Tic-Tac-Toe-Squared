@@ -15,6 +15,7 @@
  **/
 package com.diusrex.tictactoe.logic;
 
+
 public class Line {
     private final BoxPosition start;
     private final BoxPosition end;
