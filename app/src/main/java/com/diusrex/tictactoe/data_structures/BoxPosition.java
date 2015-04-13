@@ -15,12 +15,14 @@
  **/
 package com.diusrex.tictactoe.data_structures;
 
+import com.diusrex.tictactoe.logic.GridConstants;
+
 
 
 
 // Immutable data structure
 public class BoxPosition implements Position {
-    static private final BoxPosition[][] standardPositions = new BoxPosition[BoardStatus.NUMBER_OF_BOXES_PER_SIDE][BoardStatus.NUMBER_OF_BOXES_PER_SIDE];
+    static private final BoxPosition[][] standardPositions = new BoxPosition[GridConstants.NUMBER_OF_BOXES_PER_SIDE][GridConstants.NUMBER_OF_BOXES_PER_SIDE];
     static private boolean initialized = false;
     
     public static BoxPosition make(int x, int y) {
@@ -29,7 +31,7 @@ public class BoxPosition implements Position {
             initialized = true;
         }
 
-        if (x >= 0 && x < BoardStatus.NUMBER_OF_BOXES_PER_SIDE && y >= 0 && y < BoardStatus.NUMBER_OF_BOXES_PER_SIDE)
+        if (x >= 0 && x < GridConstants.NUMBER_OF_BOXES_PER_SIDE && y >= 0 && y < GridConstants.NUMBER_OF_BOXES_PER_SIDE)
             return standardPositions[x][y];
 
         else
@@ -37,8 +39,8 @@ public class BoxPosition implements Position {
     }
 
     private static void initialize() {
-        for (int y = 0; y < BoardStatus.NUMBER_OF_BOXES_PER_SIDE; ++y) {
-            for (int x = 0; x < BoardStatus.NUMBER_OF_BOXES_PER_SIDE; ++x) {
+        for (int y = 0; y < GridConstants.NUMBER_OF_BOXES_PER_SIDE; ++y) {
+            for (int x = 0; x < GridConstants.NUMBER_OF_BOXES_PER_SIDE; ++x) {
                 standardPositions[x][y] = new BoxPosition(x, y);
             }
         }

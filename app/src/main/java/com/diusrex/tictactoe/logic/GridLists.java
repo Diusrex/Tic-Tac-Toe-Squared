@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.BoxPosition;
 import com.diusrex.tictactoe.data_structures.Line;
 import com.diusrex.tictactoe.data_structures.LineIterator;
@@ -41,8 +40,8 @@ public class GridLists {
         if (allBoxesInSection == null) {
             allBoxesInSection = new ArrayList<BoxPosition>();
 
-            for (int x = 0; x < BoardStatus.SIZE_OF_SECTION; ++x) {
-                for (int y = 0; y < BoardStatus.SIZE_OF_SECTION; ++y) {
+            for (int x = 0; x < GridConstants.SIZE_OF_SECTION; ++x) {
+                for (int y = 0; y < GridConstants.SIZE_OF_SECTION; ++y) {
                     allBoxesInSection.add(BoxPosition.make(x, y));
                 }
             }
@@ -55,8 +54,8 @@ public class GridLists {
         if (allSections == null) {
             allSections = new ArrayList<SectionPosition>();
 
-            for (int x = 0; x < BoardStatus.SIZE_OF_SECTION; ++x) {
-                for (int y = 0; y < BoardStatus.SIZE_OF_SECTION; ++y) {
+            for (int x = 0; x < GridConstants.SIZE_OF_SECTION; ++x) {
+                for (int y = 0; y < GridConstants.SIZE_OF_SECTION; ++y) {
                     allSections.add(SectionPosition.make(x, y));
                 }
             }

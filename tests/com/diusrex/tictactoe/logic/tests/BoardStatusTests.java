@@ -10,6 +10,7 @@ import com.diusrex.tictactoe.data_structures.BoxPosition;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.SectionPosition;
+import com.diusrex.tictactoe.logic.GridConstants;
 import com.diusrex.tictactoe.logic.GridLists;
 
 public class BoardStatusTests {
@@ -41,10 +42,10 @@ public class BoardStatusTests {
     @Test
     public void testIsNotInsideBoundsBox() {
         SectionPosition validSection = SectionPosition.make(0, 0);
-        BoxPosition invalidPos = BoxPosition.make(0, BoardStatus.SIZE_OF_SECTION);
+        BoxPosition invalidPos = BoxPosition.make(0, GridConstants.SIZE_OF_SECTION);
         Assert.assertFalse(board.isInsideBounds(validSection, invalidPos));
 
-        invalidPos = BoxPosition.make(BoardStatus.SIZE_OF_SECTION, 0);
+        invalidPos = BoxPosition.make(GridConstants.SIZE_OF_SECTION, 0);
         Assert.assertFalse(board.isInsideBounds(validSection, invalidPos));
 
         invalidPos = BoxPosition.make(-1, 0);
@@ -56,11 +57,11 @@ public class BoardStatusTests {
 
     @Test
     public void testIsNotInsideBoundsSection() {
-        SectionPosition invalidSection = SectionPosition.make(BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE, 0);
+        SectionPosition invalidSection = SectionPosition.make(GridConstants.NUMBER_OF_SECTIONS_PER_SIDE, 0);
         BoxPosition validPos = BoxPosition.make(0, 0);
         Assert.assertFalse(board.isInsideBounds(invalidSection, validPos));
 
-        invalidSection = SectionPosition.make(0, BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE);
+        invalidSection = SectionPosition.make(0, GridConstants.NUMBER_OF_SECTIONS_PER_SIDE);
         Assert.assertFalse(board.isInsideBounds(invalidSection, validPos));
 
         invalidSection = SectionPosition.make(-1, 0);

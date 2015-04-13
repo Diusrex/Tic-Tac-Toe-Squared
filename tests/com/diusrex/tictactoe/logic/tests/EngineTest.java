@@ -5,11 +5,11 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.BoxPosition;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.SectionPosition;
+import com.diusrex.tictactoe.logic.GridConstants;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
 import com.diusrex.tictactoe.logic.tests.TestUtils.MockBoardStatus;
 
@@ -178,8 +178,8 @@ public class EngineTest {
 
     @Test
     public void testBoardIsActuallFull() {
-        for (int y = 0; y < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++y) {
-            for (int x = 0; x < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++x) {
+        for (int y = 0; y < GridConstants.NUMBER_OF_SECTIONS_PER_SIDE; ++y) {
+            for (int x = 0; x < GridConstants.NUMBER_OF_SECTIONS_PER_SIDE; ++x) {
                 TestUtils.fillSection(board, SectionPosition.make(x, y));
             }
         }

@@ -5,13 +5,13 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.BoxPosition;
 import com.diusrex.tictactoe.data_structures.Grid;
 import com.diusrex.tictactoe.data_structures.Line;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.Position;
 import com.diusrex.tictactoe.logic.GridChecker;
+import com.diusrex.tictactoe.logic.GridConstants;
 
 public class GridCheckerTests {
     static final int SIZE = 9;
@@ -204,7 +204,7 @@ public class GridCheckerTests {
         public Player owner;
 
         public MockGrid() {
-            grid = new Player[BoardStatus.SIZE_OF_SECTION][BoardStatus.SIZE_OF_SECTION];
+            grid = new Player[GridConstants.SIZE_OF_SECTION][GridConstants.SIZE_OF_SECTION];
 
             reset();
         }

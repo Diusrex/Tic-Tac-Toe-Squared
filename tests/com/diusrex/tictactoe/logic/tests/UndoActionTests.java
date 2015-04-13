@@ -5,12 +5,12 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.BoxPosition;
 import com.diusrex.tictactoe.data_structures.Line;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.SectionPosition;
+import com.diusrex.tictactoe.logic.GridConstants;
 import com.diusrex.tictactoe.logic.GridLists;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
 import com.diusrex.tictactoe.logic.tests.TestUtils.MockBoardStatus;
@@ -154,23 +154,23 @@ public class UndoActionTests {
     }
 
     private void backupBoxOwners() {
-        origionalBoxOwners = new Player[BoardStatus.NUMBER_OF_BOXES_PER_SIDE][BoardStatus.NUMBER_OF_BOXES_PER_SIDE];
-        for (int x = 0; x < BoardStatus.NUMBER_OF_BOXES_PER_SIDE; ++x)
-            for (int y = 0; y < BoardStatus.NUMBER_OF_BOXES_PER_SIDE; ++y)
+        origionalBoxOwners = new Player[GridConstants.NUMBER_OF_BOXES_PER_SIDE][GridConstants.NUMBER_OF_BOXES_PER_SIDE];
+        for (int x = 0; x < GridConstants.NUMBER_OF_BOXES_PER_SIDE; ++x)
+            for (int y = 0; y < GridConstants.NUMBER_OF_BOXES_PER_SIDE; ++y)
                 origionalBoxOwners[x][y] = board.getBoxOwner(SectionPosition.make(x / 3, y / 3), BoxPosition.make(x % 3, y % 3));
     }
 
     private void backupSectionOwners() {
-        origionalSectionOwners = new Player[BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE][BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE];
-        for (int x = 0; x < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++x)
-            for (int y = 0; y < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++y)
+        origionalSectionOwners = new Player[GridConstants.NUMBER_OF_SECTIONS_PER_SIDE][GridConstants.NUMBER_OF_SECTIONS_PER_SIDE];
+        for (int x = 0; x < GridConstants.NUMBER_OF_SECTIONS_PER_SIDE; ++x)
+            for (int y = 0; y < GridConstants.NUMBER_OF_SECTIONS_PER_SIDE; ++y)
                 origionalSectionOwners[x][y] = board.getSectionOwner(SectionPosition.make(x, y));
     }
 
     private void backupLines() {
-        lines = new Line[BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE][BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE];
-        for (int x = 0; x < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++x)
-            for (int y = 0; y < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++y)
+        lines = new Line[GridConstants.NUMBER_OF_SECTIONS_PER_SIDE][GridConstants.NUMBER_OF_SECTIONS_PER_SIDE];
+        for (int x = 0; x < GridConstants.NUMBER_OF_SECTIONS_PER_SIDE; ++x)
+            for (int y = 0; y < GridConstants.NUMBER_OF_SECTIONS_PER_SIDE; ++y)
                 lines[x][y] = board.getLine(SectionPosition.make(x, y));
     }
 
@@ -178,16 +178,16 @@ public class UndoActionTests {
         Assert.assertEquals(stackSize, board.getAllMoves().size());
         TestUtils.assertAreEqual(origionalSectionToPlayIn, board.getSectionToPlayIn());
 
-        for (int x = 0; x < BoardStatus.NUMBER_OF_BOXES_PER_SIDE; ++x)
-            for (int y = 0; y < BoardStatus.NUMBER_OF_BOXES_PER_SIDE; ++y)
+        for (int x = 0; x < GridConstants.NUMBER_OF_BOXES_PER_SIDE; ++x)
+            for (int y = 0; y < GridConstants.NUMBER_OF_BOXES_PER_SIDE; ++y)
                 Assert.assertEquals(origionalBoxOwners[x][y], board.getBoxOwner(SectionPosition.make(x / 3, y / 3), BoxPosition.make(x % 3, y % 3)));
 
-        for (int x = 0; x < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++x)
-            for (int y = 0; y < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++y)
+        for (int x = 0; x < GridConstants.NUMBER_OF_SECTIONS_PER_SIDE; ++x)
+            for (int y = 0; y < GridConstants.NUMBER_OF_SECTIONS_PER_SIDE; ++y)
                 Assert.assertEquals(origionalSectionOwners[x][y], board.getSectionOwner(SectionPosition.make(x, y)));
 
-        for (int x = 0; x < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++x)
-            for (int y = 0; y < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++y)
+        for (int x = 0; x < GridConstants.NUMBER_OF_SECTIONS_PER_SIDE; ++x)
+            for (int y = 0; y < GridConstants.NUMBER_OF_SECTIONS_PER_SIDE; ++y)
                 Assert.assertEquals(lines[x][y], board.getLine(SectionPosition.make(x, y)));
     }
 }

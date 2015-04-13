@@ -11,10 +11,10 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.BoxPosition;
 import com.diusrex.tictactoe.data_structures.Line;
 import com.diusrex.tictactoe.data_structures.SectionPosition;
+import com.diusrex.tictactoe.logic.GridConstants;
 import com.diusrex.tictactoe.logic.GridLists;
 
 // There should be 8 lines:
@@ -43,8 +43,8 @@ public class GridLinesTests {
     public void ensureContainsAllSections() {
         Assert.assertEquals(NUMBER_SECTIONS, allSectionPositions.size());
 
-        for (int x = 0; x < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++x) {
-            for (int y = 0; y < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++y) {
+        for (int x = 0; x < GridConstants.NUMBER_OF_SECTIONS_PER_SIDE; ++x) {
+            for (int y = 0; y < GridConstants.NUMBER_OF_SECTIONS_PER_SIDE; ++y) {
                 allSectionPositions.contains(SectionPosition.make(x, y));
             }
         }
@@ -54,8 +54,8 @@ public class GridLinesTests {
     public void ensureContainsAllBoxPositions() {
         Assert.assertEquals(NUMBER_BOX_POSITIONS, allBoxPositions.size());
 
-        for (int x = 0; x < BoardStatus.SIZE_OF_SECTION; ++x) {
-            for (int y = 0; y < BoardStatus.SIZE_OF_SECTION; ++y) {
+        for (int x = 0; x < GridConstants.SIZE_OF_SECTION; ++x) {
+            for (int y = 0; y < GridConstants.SIZE_OF_SECTION; ++y) {
                 allBoxPositions.contains(BoxPosition.make(x, y));
             }
         }
