@@ -51,14 +51,13 @@ public class UndoActionTests {
 
     @Test
     public void testUndoWithNoMovesLeft() {
-        // This will be fine
-        UndoAction.undoLastMove(board);
+        board.undoLastMove();
 
         // This should not throw
         try {
-            UndoAction.undoLastMove(board);
+            board.undoLastMove();
         } catch (Exception e) {
-            Assert.assertTrue(false);
+            Assert.fail();
         }
     }
 
@@ -66,7 +65,7 @@ public class UndoActionTests {
     public void testUndoMove() {
         TestUtils.applyMoveToBoard(board, validMove);
 
-        UndoAction.undoLastMove(board);
+        board.undoLastMove();
 
         assertBoardStateUnchanged();
     }
@@ -80,13 +79,13 @@ public class UndoActionTests {
         BoxPosition pos = BoxPosition.make(0, 0);
         Move move = new Move(otherSection, pos, mainPlayer);
 
-        board.setSectionToPlayIn(fullSection);
+        board.fakedSectionToPlayIn = fullSection;
 
         backupBoardState();
 
         TestUtils.applyMoveToBoard(board, move);
 
-        UndoAction.undoLastMove(board);
+        board.undoLastMove();
 
         assertBoardStateUnchanged();
     }
@@ -97,7 +96,7 @@ public class UndoActionTests {
         winSection(sectionToWin);
 
         Assert.assertEquals(mainPlayer, board.getSectionOwner(sectionToWin));
-        UndoAction.undoLastMove(board);
+        board.undoLastMove();
 
         Assert.assertEquals(Player.Unowned, board.getSectionOwner(sectionToWin));
         Assert.assertEquals(null, board.getLine(sectionToWin));
@@ -110,11 +109,11 @@ public class UndoActionTests {
 
         Assert.assertEquals(mainPlayer, board.getSectionOwner(sectionToWin));
 
-        board.setSectionToPlayIn(sectionToWin);
+        board.fakedSectionToPlayIn = sectionToWin;
         BoxPosition moveThatDoesntEffectOwnership = BoxPosition.make(2, 2);
         TestUtils.applyMoveToBoard(board, new Move(mainSection, moveThatDoesntEffectOwnership, mainPlayer));
 
-        UndoAction.undoLastMove(board);
+        board.undoLastMove();
 
         Assert.assertEquals(mainPlayer, board.getSectionOwner(sectionToWin));
         TestUtils.testLinesAreEqual(new Line(BoxPosition.make(0, 0), BoxPosition.make(2, 0)),
@@ -131,15 +130,15 @@ public class UndoActionTests {
         BoxPosition current = BoxPosition.make(0, 0);
         BoxPosition increase = BoxPosition.make(1, 0);
 
-        board.setSectionToPlayIn(section);
+        board.fakedSectionToPlayIn = section;
         TestUtils.applyMoveToBoard(board, new Move(section, current, mainPlayer));
         current = current.increaseBy(increase);
 
-        board.setSectionToPlayIn(section);
+        board.fakedSectionToPlayIn = section;
         TestUtils.applyMoveToBoard(board, new Move(section, current, mainPlayer));
         current = current.increaseBy(increase);
 
-        board.setSectionToPlayIn(section);
+        board.fakedSectionToPlayIn = section;
         TestUtils.applyMoveToBoard(board, new Move(section, current, mainPlayer));
     }
 

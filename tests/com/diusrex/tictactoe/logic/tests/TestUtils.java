@@ -12,6 +12,8 @@ import com.diusrex.tictactoe.logic.TicTacToeEngine;
 
 public class TestUtils {
     public static class MockBoardStatus extends BoardStatus {
+
+        // TODO: This constructor not be needed
         public MockBoardStatus(SectionPosition pos) {
             super(pos);
         }
@@ -21,10 +23,26 @@ public class TestUtils {
         }
 
         public Player playerToGoNext;
+        public SectionPosition fakedSectionToPlayIn;
 
         @Override
         public Player getNextPlayer() {
-            return playerToGoNext;
+            if (playerToGoNext != null)
+                return playerToGoNext;
+            
+            return super.getNextPlayer();
+        }
+
+        @Override
+        public SectionPosition getSectionToPlayIn() {
+            if (fakedSectionToPlayIn != null)
+                return fakedSectionToPlayIn;
+            
+            return super.getSectionToPlayIn();
+        }
+        
+        public void useDefaultSection() {
+            fakedSectionToPlayIn = null;
         }
     }
 

@@ -11,9 +11,10 @@ import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.SectionPosition;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
+import com.diusrex.tictactoe.logic.tests.TestUtils.MockBoardStatus;
 
 public class EngineTest {
-    BoardStatus board;
+    MockBoardStatus board;
     Move moveP1;
     Move moveP1_2;
     Move moveP2SameAsMoveP1;
@@ -25,7 +26,7 @@ public class EngineTest {
 
     @Before
     public void setup() {
-        board = new BoardStatus();
+        board = new MockBoardStatus();
         SectionPosition mainSection = board.getSectionToPlayIn();
         SectionPosition wrongSection = board.getSectionToPlayIn().increaseBy(SectionPosition.make(1, 1));
         
@@ -156,20 +157,11 @@ public class EngineTest {
         TestUtils.fillSection(board, fullSection);
 
         // Need to make it so the player must play inside that section
-        board.setSectionToPlayIn(fullSection);
+        board.fakedSectionToPlayIn = fullSection;
 
         BoxPosition untakenPosition = BoxPosition.make(0, 0);
 
         TestUtils.applyMoveToBoard(board, new Move(otherSection, untakenPosition, board.getNextPlayer()));
-    }
-
-    // TODO: This doesn't belong here
-    @Test
-    public void testGetNextPlayer() {
-        Assert.assertEquals(Player.Player_1, board.getNextPlayer());
-
-        TestUtils.applyMoveToBoard(board, moveP1);
-        Assert.assertEquals(Player.Player_2, board.getNextPlayer());
     }
 
     @Test
