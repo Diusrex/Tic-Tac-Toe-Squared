@@ -66,7 +66,6 @@ public class TicTacToeEngine {
 
     private static void applyMove(BoardStatus board, Move move) {
         board.applyMove(move);
-        board.setSectionToPlayIn(getSectionToPlayInNext(move));
         updateSectionOwner(board, move);
     }
 

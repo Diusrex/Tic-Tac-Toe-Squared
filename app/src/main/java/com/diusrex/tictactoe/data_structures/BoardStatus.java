@@ -18,6 +18,9 @@ package com.diusrex.tictactoe.data_structures;
 import java.util.Arrays;
 import java.util.Stack;
 
+import com.diusrex.tictactoe.logic.TicTacToeEngine;
+import com.diusrex.tictactoe.logic.UndoAction;
+
 
 
 public class BoardStatus {
@@ -53,6 +56,22 @@ public class BoardStatus {
 
         allMoves = new Stack<Move>();
     }
+    
+    public void undoLastMove() {
+        // Cannot do anything in this case
+        if (allMoves.size() == 0)
+            return;
+        
+        Move undoneTopMove = allMoves.pop();
+        
+        setBoxOwner(undoneTopMove.getSection(), undoneTopMove.getBox(), Player.Unowned);
+        
+        if (UndoAction.moveLostOwnership(getSection(undoneTopMove.getSection()), undoneTopMove)) {
+            setSectionOwner(undoneTopMove.getSection(), null, Player.Unowned);
+        }
+        
+        sectionToPlayIn = UndoAction.getSectionToPlayIn(allMoves, undoneTopMove);
+    }
 
     public SectionPosition getSectionToPlayIn() {
         return sectionToPlayIn;
@@ -67,6 +86,9 @@ public class BoardStatus {
 
     public void applyMove(Move move) {
         allMoves.push(move);
+        
+        sectionToPlayIn = TicTacToeEngine.getSectionToPlayInNext(move);
+        
         setBoxOwner(move);
         nextPlayer = move.getPlayer().opposite();
     }
@@ -78,10 +100,6 @@ public class BoardStatus {
     public void setBoxOwner(SectionPosition sectionPos, BoxPosition pos, Player newOwner) {
         SectionGrid section = getSection(sectionPos);
         section.setPointOwner(pos, newOwner);
-    }
-
-    public void setSectionToPlayIn(SectionPosition pos) {
-        sectionToPlayIn = pos;
     }
 
     public Player getBoxOwner(Move move) {
