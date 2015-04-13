@@ -37,6 +37,14 @@ public class BoxPosition implements Position {
         else
             return new BoxPosition(x, y);
     }
+    
+    public static BoxPosition fromString(String string) {
+        int totalValue = Integer.parseInt(string);
+        int x = totalValue / 10;
+        int y = totalValue % 10;
+
+        return BoxPosition.make(x, y);
+    }
 
     private static void initialize() {
         for (int y = 0; y < GridConstants.NUMBER_OF_BOXES_PER_SIDE; ++y) {
@@ -76,5 +84,10 @@ public class BoxPosition implements Position {
 
     public BoxPosition decreaseBy(int x, int y) {
         return increaseBy(-x, -y);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%d%d", x, y);
     }
 }

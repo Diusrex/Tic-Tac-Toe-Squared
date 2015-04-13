@@ -36,6 +36,14 @@ public class SectionPosition implements Position {
             return new SectionPosition(x, y);
     }
 
+    public static SectionPosition fromString(String string) {
+        int totalValue = Integer.parseInt(string);
+        int x = totalValue / 10;
+        int y = totalValue % 10;
+
+        return SectionPosition.make(x, y);
+    }
+    
     private static void initialize() {
         for (int y = 0; y < GridConstants.SIZE_OF_SECTION; ++y) {
             for (int x = 0; x < GridConstants.SIZE_OF_SECTION; ++x) {
@@ -62,5 +70,10 @@ public class SectionPosition implements Position {
 
     public SectionPosition increaseBy(SectionPosition increase) {
         return make(x + increase.x, y + increase.y);
+    }
+    
+    @Override
+    public String toString() {
+        return String.format("%d%d", x, y);
     }
 }

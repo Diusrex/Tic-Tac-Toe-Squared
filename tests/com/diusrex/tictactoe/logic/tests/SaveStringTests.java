@@ -23,6 +23,7 @@ public class SaveStringTests {
     @Before
     public void setup() {
         mainBoard = new BoardStatus();
+        generatedBoard = new BoardStatus();
         playerOneMove = new Move(mainBoard.getSectionToPlayIn(), BoxPosition.make(0, 0), Player.Player_1);
         playerTwoMove = new Move(TicTacToeEngine.getSectionToPlayInNext(playerOneMove.getBox()),
                 BoxPosition.make(1, 1), Player.Player_2);
@@ -37,7 +38,7 @@ public class SaveStringTests {
         // Need to make sure it doesn't change the boards state
         Assert.assertEquals(1, mainBoard.getAllMoves().size());
 
-        generatedBoard = StringSaver.loadBoardFromString(saveString);
+        generatedBoard = StringSaver.loadBoardFromString(generatedBoard, saveString);
 
         assertBoardsAreEqual();
     }
@@ -52,7 +53,7 @@ public class SaveStringTests {
         // Need to make sure it doesn't change the boards state
         Assert.assertEquals(2, mainBoard.getAllMoves().size());
 
-        generatedBoard = StringSaver.loadBoardFromString(saveString);
+        generatedBoard = StringSaver.loadBoardFromString(generatedBoard, saveString);
 
         assertBoardsAreEqual();
     }

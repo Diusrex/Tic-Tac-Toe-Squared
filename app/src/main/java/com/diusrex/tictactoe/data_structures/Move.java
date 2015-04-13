@@ -15,12 +15,22 @@
  **/
 package com.diusrex.tictactoe.data_structures;
 
-
 public class Move {
+    public static final int SIZE_OF_SAVED_MOVE = 5;
+    private static final int START_OF_BOX_POSITION = 2;
+    private static final int START_OF_PLAYER = 4;
 
     private final SectionPosition section;
     private final BoxPosition box;
     private final Player player;
+
+    public static Move fromString(String string) {
+        SectionPosition section = SectionPosition.fromString(string.substring(0, START_OF_BOX_POSITION));
+        BoxPosition box = BoxPosition.fromString(string.substring(START_OF_BOX_POSITION, START_OF_PLAYER));
+        Player player = Player.fromString(string.substring(START_OF_PLAYER, SIZE_OF_SAVED_MOVE));
+
+        return new Move(section, box, player);
+    }
 
     public Move(SectionPosition section, BoxPosition box, Player madeBy) {
         this.section = section;
@@ -40,4 +50,8 @@ public class Move {
         return player;
     }
 
+    @Override
+    public String toString() {
+        return section.toString() + box.toString() + player.toString();
+    }
 }
