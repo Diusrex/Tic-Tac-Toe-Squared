@@ -11,6 +11,7 @@ import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.BoxPosition;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.logic.StringSaver;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
 
 public class SaveStringTests {
@@ -31,12 +32,12 @@ public class SaveStringTests {
     public void testSaveSingleMove() {
         mainBoard.applyMove(playerOneMove);
 
-        String saveString = TicTacToeEngine.getSaveString(mainBoard);
+        String saveString = StringSaver.getSaveString(mainBoard);
 
         // Need to make sure it doesn't change the boards state
         Assert.assertEquals(1, mainBoard.getAllMoves().size());
 
-        generatedBoard = TicTacToeEngine.loadBoardFromString(saveString);
+        generatedBoard = StringSaver.loadBoardFromString(saveString);
 
         assertBoardsAreEqual();
     }
@@ -46,12 +47,12 @@ public class SaveStringTests {
         mainBoard.applyMove(playerOneMove);
         mainBoard.applyMove(playerTwoMove);
 
-        String saveString = TicTacToeEngine.getSaveString(mainBoard);
+        String saveString = StringSaver.getSaveString(mainBoard);
 
         // Need to make sure it doesn't change the boards state
         Assert.assertEquals(2, mainBoard.getAllMoves().size());
 
-        generatedBoard = TicTacToeEngine.loadBoardFromString(saveString);
+        generatedBoard = StringSaver.loadBoardFromString(saveString);
 
         assertBoardsAreEqual();
     }

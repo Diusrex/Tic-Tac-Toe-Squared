@@ -15,8 +15,6 @@
  **/
 package com.diusrex.tictactoe.logic;
 
-import java.util.Stack;
-
 import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.BoxPosition;
 import com.diusrex.tictactoe.data_structures.Grid;
@@ -125,67 +123,6 @@ public class TicTacToeEngine {
 
     public static Player getWinner(BoardStatus board) {
         return GridChecker.searchForOwner(board.getMainGrid());
-    }
-
-    static final int SIZE_OF_SAVED_MOVE = 5;
-
-    public static String getSaveString(BoardStatus board) {
-        Stack<Move> allMoves = board.getAllMoves();
-        StringBuffer buffer = new StringBuffer();
-        for (Move move : allMoves) {
-            buffer.append(moveToString(move));
-        }
-
-        return buffer.toString();
-    }
-
-    // Will allow any move to be played
-    public static BoardStatus loadBoardFromString(String savedBoardStatus) {
-        BoardStatus board = new BoardStatus();
-        for (int i = 0; i + SIZE_OF_SAVED_MOVE - 2 < savedBoardStatus.length(); i += SIZE_OF_SAVED_MOVE) {
-            Move move = stringToMove(savedBoardStatus.substring(i, i + SIZE_OF_SAVED_MOVE));
-            applyMove(board, move);
-        }
-
-        return board;
-    }
-
-    // TODO: Refactor out of engine, most likely into Move/SectionPosition/BoxPosition
-    // Format: [SectionPosX][SectionPosY][BoxPosX][BoxPosY][Player]
-    public static Move stringToMove(String string) {
-        SectionPosition section = stringToSectionPosition(string.substring(0, 2));
-        BoxPosition box = stringToBoxPosition(string.substring(2, 4));
-        Player player = Player.fromString(string.substring(4, 5));
-
-        return new Move(section, box, player);
-    }
-
-    private static String moveToString(Move m) {
-        return sectionPositionToString(m.getSection()) + boxPositionToString(m.getBox()) + m.getPlayer().toString();
-    }
-
-    public static String sectionPositionToString(SectionPosition sectionPosition) {
-        return String.format("%d%d", sectionPosition.getGridX(), sectionPosition.getGridY());
-    }
-    
-    private static String boxPositionToString(BoxPosition box) {
-        return String.format("%d%d", box.getGridX(), box.getGridY());
-    }
-
-    public static SectionPosition stringToSectionPosition(String string) {
-        int totalValue = Integer.parseInt(string);
-        int x = totalValue / 10;
-        int y = totalValue % 10;
-
-        return SectionPosition.make(x, y);
-    }
-
-    public static BoxPosition stringToBoxPosition(String string) {
-        int totalValue = Integer.parseInt(string);
-        int x = totalValue / 10;
-        int y = totalValue % 10;
-
-        return BoxPosition.make(x, y);
     }
 
     public static boolean boardIsFull(BoardStatus board) {
