@@ -189,8 +189,8 @@ public class TicTacToeEngine {
     }
 
     public static boolean boardIsFull(BoardStatus board) {
-        for (SectionPosition section : GridLines.getAllStandardSections()) {
-            for (BoxPosition box : GridLines.getAllStandardBoxPositions()) {
+        for (SectionPosition section : GridLists.getAllStandardSections()) {
+            for (BoxPosition box : GridLists.getAllStandardBoxPositions()) {
                 if (board.getBoxOwner(section, box) == Player.Unowned)
                     return false;
             }

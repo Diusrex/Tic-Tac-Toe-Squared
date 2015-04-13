@@ -39,7 +39,7 @@ public class GridChecker {
     }
 
     private static boolean searchForUnownedLine(Grid grid) {
-        List<LineIterator> allIterators = GridLines.getAllLineIterators();
+        List<LineIterator> allIterators = GridLists.getAllLineIterators();
 
         for (LineIterator iter : allIterators) {
             if (lineEmptyOrOwnedBySinglePlayer(grid, iter))
@@ -60,7 +60,7 @@ public class GridChecker {
     }
 
     public static Line searchForWinLineOrGetNull(Grid grid) {
-        List<LineIterator> allIterators = GridLines.getAllLineIterators();
+        List<LineIterator> allIterators = GridLists.getAllLineIterators();
 
         for (LineIterator iter : allIterators) {
             if (ownedByOnePlayer(grid, iter)) {

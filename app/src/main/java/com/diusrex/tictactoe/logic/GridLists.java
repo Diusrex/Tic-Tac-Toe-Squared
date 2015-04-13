@@ -25,8 +25,7 @@ import com.diusrex.tictactoe.data_structures.Line;
 import com.diusrex.tictactoe.data_structures.LineIterator;
 import com.diusrex.tictactoe.data_structures.SectionPosition;
 
-
-public class GridLines {
+public class GridLists {
     private static List<BoxPosition> allBoxesInSection;
     static private List<SectionPosition> allSections;
     private static List<LineIterator> allLineIterators;
@@ -35,20 +34,20 @@ public class GridLines {
     private static final int NUM_LINES_PER_SIDE = 3;
     private static final int LINE_SIZE = 3;
 
-    private GridLines() {
+    private GridLists() {
     }
-    
+
     public static List<BoxPosition> getAllStandardBoxPositions() {
         if (allBoxesInSection == null) {
             allBoxesInSection = new ArrayList<BoxPosition>();
-            
+
             for (int x = 0; x < BoardStatus.SIZE_OF_SECTION; ++x) {
                 for (int y = 0; y < BoardStatus.SIZE_OF_SECTION; ++y) {
                     allBoxesInSection.add(BoxPosition.make(x, y));
                 }
             }
         }
-        
+
         return Collections.unmodifiableList(allBoxesInSection);
     }
 

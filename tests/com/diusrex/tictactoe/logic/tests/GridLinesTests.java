@@ -15,7 +15,7 @@ import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.BoxPosition;
 import com.diusrex.tictactoe.data_structures.Line;
 import com.diusrex.tictactoe.data_structures.SectionPosition;
-import com.diusrex.tictactoe.logic.GridLines;
+import com.diusrex.tictactoe.logic.GridLists;
 
 // There should be 8 lines:
 // 3 horizontal
@@ -34,9 +34,9 @@ public class GridLinesTests {
 
     @Before
     public void setup() {
-        allLines = GridLines.getAllLines();
-        allSectionPositions = GridLines.getAllStandardSections();
-        allBoxPositions = GridLines.getAllStandardBoxPositions();
+        allLines = GridLists.getAllLines();
+        allSectionPositions = GridLists.getAllStandardSections();
+        allBoxPositions = GridLists.getAllStandardBoxPositions();
     }
 
     @Test
