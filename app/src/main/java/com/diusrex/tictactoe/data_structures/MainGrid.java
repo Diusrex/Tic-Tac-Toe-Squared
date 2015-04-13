@@ -15,6 +15,8 @@
  **/
 package com.diusrex.tictactoe.data_structures;
 
+import com.diusrex.tictactoe.logic.GridChecker;
+
 
 
 public class MainGrid implements Grid {
@@ -49,8 +51,7 @@ public class MainGrid implements Grid {
 
     @Override
     public boolean canBeWon() {
-        // TODO Auto-generated method stub
-        return false;
+        return GridChecker.possibleToWin(this);
     }
 
     public void setOwner(SectionPosition pos, Player owner) {

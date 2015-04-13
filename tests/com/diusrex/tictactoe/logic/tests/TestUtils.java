@@ -8,6 +8,7 @@ import com.diusrex.tictactoe.data_structures.Line;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.SectionPosition;
+import com.diusrex.tictactoe.logic.GridLines;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
 
 public class TestUtils {
@@ -76,7 +77,7 @@ public class TestUtils {
 
     // WARNING: Will not update who owns the section
     public static void fillSection(BoardStatus board, SectionPosition toFill) {
-        for (BoxPosition pos : BoxPosition.allBoxesInSection()) {
+        for (BoxPosition pos : GridLines.getAllStandardBoxPositions()) {
             board.setBoxOwner(toFill, pos, board.getNextPlayer());
         }
     }

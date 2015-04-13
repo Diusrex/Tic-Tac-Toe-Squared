@@ -10,6 +10,7 @@ import com.diusrex.tictactoe.data_structures.BoxPosition;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.SectionPosition;
+import com.diusrex.tictactoe.logic.GridLines;
 
 public class BoardStatusTests {
     BoardStatus board;
@@ -30,8 +31,8 @@ public class BoardStatusTests {
 
     @Test
     public void allPositionsStartAsUnowned() {
-        for (SectionPosition section : SectionPosition.allSections()) {
-            for (BoxPosition box : BoxPosition.allBoxesInSection()) {
+        for (SectionPosition section : GridLines.getAllStandardSections()) {
+            for (BoxPosition box : GridLines.getAllStandardBoxPositions()) {
                 Assert.assertEquals(Player.Unowned, board.getBoxOwner(section, box));
             }
         }
@@ -72,8 +73,8 @@ public class BoardStatusTests {
     @Test
     public void testIsInsideBounds() {
         /* Test all sections */
-        for (SectionPosition section : SectionPosition.allSections()) {
-            for (BoxPosition boxPosition : BoxPosition.allBoxesInSection()) {
+        for (SectionPosition section : GridLines.getAllStandardSections()) {
+            for (BoxPosition boxPosition : GridLines.getAllStandardBoxPositions()) {
                 Assert.assertTrue(board.isInsideBounds(section, boxPosition));
             }
         }

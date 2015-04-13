@@ -15,8 +15,6 @@
  **/
 package com.diusrex.tictactoe.data_structures;
 
-import java.util.ArrayList;
-import java.util.List;
 
 
 
@@ -25,21 +23,6 @@ public class BoxPosition implements Position {
     static private final BoxPosition[][] standardPositions = new BoxPosition[BoardStatus.NUMBER_OF_BOXES_PER_SIDE][BoardStatus.NUMBER_OF_BOXES_PER_SIDE];
     static private boolean initialized = false;
     
-    static private List<BoxPosition> allBoxesInSection;
-    // TODO: Refactor this out of here
-    public static List<BoxPosition> allBoxesInSection() {
-        if (allBoxesInSection == null) {
-            allBoxesInSection = new ArrayList<BoxPosition>();
-            
-            for (int x = 0; x < BoardStatus.SIZE_OF_SECTION; ++x) {
-                for (int y = 0; y < BoardStatus.SIZE_OF_SECTION; ++y) {
-                    allBoxesInSection.add(BoxPosition.make(x, y));
-                }
-            }
-        }
-        
-        return allBoxesInSection;
-    }
     public static BoxPosition make(int x, int y) {
         if (!initialized) {
             initialize();

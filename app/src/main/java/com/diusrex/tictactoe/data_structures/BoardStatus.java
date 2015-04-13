@@ -21,21 +21,18 @@ import java.util.Stack;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
 import com.diusrex.tictactoe.logic.UndoAction;
 
-
-
 public class BoardStatus {
     public static final int NUMBER_OF_BOXES_PER_SIDE = 9;
     public static final int NUMBER_OF_SECTIONS_PER_SIDE = 3;
     public static final int SIZE_OF_SECTION = NUMBER_OF_BOXES_PER_SIDE / NUMBER_OF_SECTIONS_PER_SIDE;
-    
+
     private static final SectionPosition DEFAULT_STARTING_SECTION_TO_PLAY_IN = SectionPosition.make(1, 1);
 
+    private SectionPosition sectionToPlayIn;
     private Player nextPlayer;
 
     private MainGrid sectionsOwnersGrid;
     private SectionGrid[][] sections;
-
-    private SectionPosition sectionToPlayIn;
 
     private Stack<Move> allMoves;
 
@@ -58,20 +55,20 @@ public class BoardStatus {
 
         allMoves = new Stack<Move>();
     }
-    
+
     public void undoLastMove() {
         // Cannot do anything in this case
         if (allMoves.size() == 0)
             return;
-        
+
         Move undoneTopMove = allMoves.pop();
-        
+
         setBoxOwner(undoneTopMove.getSection(), undoneTopMove.getBox(), Player.Unowned);
-        
+
         if (UndoAction.moveLostOwnership(getSection(undoneTopMove.getSection()), undoneTopMove)) {
             setSectionOwner(undoneTopMove.getSection(), null, Player.Unowned);
         }
-        
+
         sectionToPlayIn = UndoAction.getSectionToPlayIn(allMoves, undoneTopMove);
     }
 
@@ -88,7 +85,7 @@ public class BoardStatus {
 
     public void applyMove(Move move) {
         allMoves.push(move);
-        
+
         sectionToPlayIn = TicTacToeEngine.getSectionToPlayInNext(move);
 
         setBoxOwner(move);

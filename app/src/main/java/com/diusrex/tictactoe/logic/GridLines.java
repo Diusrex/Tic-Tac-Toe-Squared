@@ -19,12 +19,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.BoxPosition;
 import com.diusrex.tictactoe.data_structures.Line;
 import com.diusrex.tictactoe.data_structures.LineIterator;
+import com.diusrex.tictactoe.data_structures.SectionPosition;
 
 
 public class GridLines {
+    private static List<BoxPosition> allBoxesInSection;
+    static private List<SectionPosition> allSections;
     private static List<LineIterator> allLineIterators;
     private static List<Line> allLines;
 
@@ -32,6 +36,34 @@ public class GridLines {
     private static final int LINE_SIZE = 3;
 
     private GridLines() {
+    }
+    
+    public static List<BoxPosition> getAllStandardBoxPositions() {
+        if (allBoxesInSection == null) {
+            allBoxesInSection = new ArrayList<BoxPosition>();
+            
+            for (int x = 0; x < BoardStatus.SIZE_OF_SECTION; ++x) {
+                for (int y = 0; y < BoardStatus.SIZE_OF_SECTION; ++y) {
+                    allBoxesInSection.add(BoxPosition.make(x, y));
+                }
+            }
+        }
+        
+        return Collections.unmodifiableList(allBoxesInSection);
+    }
+
+    public static List<SectionPosition> getAllStandardSections() {
+        if (allSections == null) {
+            allSections = new ArrayList<SectionPosition>();
+
+            for (int x = 0; x < BoardStatus.SIZE_OF_SECTION; ++x) {
+                for (int y = 0; y < BoardStatus.SIZE_OF_SECTION; ++y) {
+                    allSections.add(SectionPosition.make(x, y));
+                }
+            }
+        }
+
+        return Collections.unmodifiableList(allSections);
     }
 
     public static List<LineIterator> getAllLineIterators() {
@@ -44,7 +76,7 @@ public class GridLines {
             }
         }
 
-        return allLineIterators;
+        return Collections.unmodifiableList(allLineIterators);
     }
 
     public static List<Line> getAllLines() {

@@ -11,6 +11,7 @@ import com.diusrex.tictactoe.data_structures.Line;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.SectionPosition;
+import com.diusrex.tictactoe.logic.GridLines;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
 import com.diusrex.tictactoe.logic.tests.TestUtils.MockBoardStatus;
 
@@ -120,7 +121,7 @@ public class UndoActionTests {
     }
 
     private void fillSection(SectionPosition fullSection) {
-        for (BoxPosition box : BoxPosition.allBoxesInSection()) {
+        for (BoxPosition box : GridLines.getAllStandardBoxPositions()) {
             board.setBoxOwner(fullSection, box, mainPlayer);
         }
     }

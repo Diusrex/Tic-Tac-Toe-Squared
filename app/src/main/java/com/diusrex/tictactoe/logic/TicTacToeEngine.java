@@ -179,7 +179,7 @@ public class TicTacToeEngine {
 
         return SectionPosition.make(x, y);
     }
-    
+
     public static BoxPosition stringToBoxPosition(String string) {
         int totalValue = Integer.parseInt(string);
         int x = totalValue / 10;
@@ -189,8 +189,8 @@ public class TicTacToeEngine {
     }
 
     public static boolean boardIsFull(BoardStatus board) {
-        for (SectionPosition section : SectionPosition.allSections()) {
-            for (BoxPosition box : BoxPosition.allBoxesInSection()) {
+        for (SectionPosition section : GridLines.getAllStandardSections()) {
+            for (BoxPosition box : GridLines.getAllStandardBoxPositions()) {
                 if (board.getBoxOwner(section, box) == Player.Unowned)
                     return false;
             }

@@ -15,6 +15,8 @@
  **/
 package com.diusrex.tictactoe.data_structures;
 
+import com.diusrex.tictactoe.logic.GridChecker;
+
 public class SectionGrid implements Grid {
     static private final int SECTION_SIZE = 3;
 
@@ -59,8 +61,7 @@ public class SectionGrid implements Grid {
 
     @Override
     public boolean canBeWon() {
-        // TODO Auto-generated method stub
-        return false;
+        return GridChecker.possibleToWin(this);
     }
 
     public Line getLine() {
