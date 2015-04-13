@@ -15,9 +15,11 @@
  **/
 package com.diusrex.tictactoe.data_structures;
 
+import com.diusrex.tictactoe.logic.GridConstants;
+
 
 public class SectionPosition implements Position {
-    static private final SectionPosition[][] standardPositions = new SectionPosition[BoardStatus.SIZE_OF_SECTION][BoardStatus.SIZE_OF_SECTION];
+    static private final SectionPosition[][] standardPositions = new SectionPosition[GridConstants.SIZE_OF_SECTION][GridConstants.SIZE_OF_SECTION];
 
     static private boolean initialized = false;
 
@@ -27,7 +29,7 @@ public class SectionPosition implements Position {
             initialized = true;
         }
 
-        if (x >= 0 && x < BoardStatus.SIZE_OF_SECTION && y >= 0 && y < BoardStatus.SIZE_OF_SECTION)
+        if (x >= 0 && x < GridConstants.SIZE_OF_SECTION && y >= 0 && y < GridConstants.SIZE_OF_SECTION)
             return standardPositions[x][y];
 
         else
@@ -35,8 +37,8 @@ public class SectionPosition implements Position {
     }
 
     private static void initialize() {
-        for (int y = 0; y < BoardStatus.SIZE_OF_SECTION; ++y) {
-            for (int x = 0; x < BoardStatus.SIZE_OF_SECTION; ++x) {
+        for (int y = 0; y < GridConstants.SIZE_OF_SECTION; ++y) {
+            for (int x = 0; x < GridConstants.SIZE_OF_SECTION; ++x) {
                 standardPositions[x][y] = new SectionPosition(x, y);
             }
         }

@@ -16,19 +16,20 @@
 package com.diusrex.tictactoe.data_structures;
 
 import com.diusrex.tictactoe.logic.GridChecker;
+import com.diusrex.tictactoe.logic.GridConstants;
 
 
 
 public class MainGrid implements Grid {
     private Player owner;
-    private Player[][] boardOwners;
+    private SectionGrid[][] sections;
 
     MainGrid() {
-        boardOwners = new Player[BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE][BoardStatus.NUMBER_OF_BOXES_PER_SIDE];
+        sections = new SectionGrid[GridConstants.NUMBER_OF_SECTIONS_PER_SIDE][GridConstants.NUMBER_OF_BOXES_PER_SIDE];
 
-        for (int x = 0; x < boardOwners.length; ++x) {
-            for (int y = 0; y < boardOwners.length; ++y) {
-                boardOwners[x][y] = Player.Unowned;
+        for (int x = 0; x < sections.length; ++x) {
+            for (int y = 0; y < sections.length; ++y) {
+                sections[x][y] = new SectionGrid();
             }
         }
 
@@ -42,11 +43,7 @@ public class MainGrid implements Grid {
 
     @Override
     public Player getPointOwner(Position pos) {
-        return getOwner(pos.getGridX(), pos.getGridY());
-    }
-
-    private Player getOwner(int x, int y) {
-        return boardOwners[x][y];
+        return getSectionGrid(pos).getGridOwner();
     }
 
     @Override
@@ -54,8 +51,35 @@ public class MainGrid implements Grid {
         return GridChecker.possibleToWin(this);
     }
 
-    public void setOwner(SectionPosition pos, Player owner) {
-        boardOwners[pos.getGridX()][pos.getGridY()] = owner;
+    public void setBoxOwner(SectionPosition sectionPos, BoxPosition pos, Player newOwner) {
+        getSectionGrid(sectionPos).setPointOwner(pos, newOwner);
+    }
+    
+    public Player getBoxOwner(SectionPosition section, BoxPosition pos) {
+        return getSectionGrid(section).getPointOwner(pos);
+    }
+    
+    public void setOwner(SectionPosition pos, Line winningLine, Player owner) {
+        getSectionGrid(pos).setSectionOwner(owner, winningLine);
     }
 
+    public SectionGrid getSectionGrid(SectionPosition pos) {
+        return getSectionGrid((Position) pos);
+    }
+    
+    private SectionGrid getSectionGrid(Position pos) {
+        return sections[pos.getGridX()][pos.getGridY()];
+    }
+
+    public boolean isInsideBounds(SectionPosition sectionPosition, BoxPosition pos) {
+        if (sectionPosition.getGridX() < 0 || sectionPosition.getGridX() >= GridConstants.NUMBER_OF_SECTIONS_PER_SIDE
+                || sectionPosition.getGridY() < 0 || sectionPosition.getGridY() >= GridConstants.NUMBER_OF_SECTIONS_PER_SIDE)
+            return false;
+
+        return getSectionGrid(sectionPosition).isInsideBounds(pos);
+    }
+
+    public Line getLine(SectionPosition sectionPosition) {
+        return getSectionGrid(sectionPosition).getLine();
+    }
 }

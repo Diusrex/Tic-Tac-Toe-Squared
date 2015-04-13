@@ -15,7 +15,6 @@
  **/
 package com.diusrex.tictactoe.data_structures;
 
-import java.util.Arrays;
 import java.util.Stack;
 
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
@@ -28,7 +27,6 @@ public class BoardStatus {
     private Player nextPlayer;
 
     private MainGrid sectionsOwnersGrid;
-    private SectionGrid[][] sections;
 
     private Stack<Move> allMoves;
 
@@ -40,12 +38,6 @@ public class BoardStatus {
         nextPlayer = Player.Player_1;
 
         sectionsOwnersGrid = new MainGrid();
-        sections = new SectionGrid[NUMBER_OF_SECTIONS_PER_SIDE][NUMBER_OF_SECTIONS_PER_SIDE];
-        for (int x = 0; x < NUMBER_OF_SECTIONS_PER_SIDE; ++x) {
-            for (int y = 0; y < NUMBER_OF_SECTIONS_PER_SIDE; ++y) {
-                sections[x][y] = new SectionGrid();
-            }
-        }
 
         sectionToPlayIn = startingSection;
 
@@ -61,7 +53,7 @@ public class BoardStatus {
 
         setBoxOwner(undoneTopMove.getSection(), undoneTopMove.getBox(), Player.Unowned);
 
-        if (UndoAction.moveLostOwnership(getSection(undoneTopMove.getSection()), undoneTopMove)) {
+        if (UndoAction.moveLostOwnership(getSectionGrid(undoneTopMove.getSection()), undoneTopMove)) {
             setSectionOwner(undoneTopMove.getSection(), null, Player.Unowned);
         }
 
@@ -73,10 +65,7 @@ public class BoardStatus {
     }
 
     public void setSectionOwner(SectionPosition changedSection, Line line, Player owner) {
-        sectionsOwnersGrid.setOwner(changedSection, owner);
-
-        SectionGrid section = getSection(changedSection);
-        section.setSectionOwner(owner, line);
+        sectionsOwnersGrid.setOwner(changedSection, line, owner);
     }
 
     public void applyMove(Move move) {
@@ -93,8 +82,7 @@ public class BoardStatus {
     }
 
     public void setBoxOwner(SectionPosition sectionPos, BoxPosition pos, Player newOwner) {
-        SectionGrid section = getSection(sectionPos);
-        section.setPointOwner(pos, newOwner);
+        sectionsOwnersGrid.setBoxOwner(sectionPos, pos, newOwner);
     }
 
     public Player getBoxOwner(Move move) {
@@ -102,15 +90,11 @@ public class BoardStatus {
     }
 
     public Player getBoxOwner(SectionPosition section, BoxPosition pos) {
-        return getSection(section).getPointOwner(pos);
-    }
-
-    private SectionGrid getSection(SectionPosition section) {
-        return sections[section.getGridX()][section.getGridY()];
+        return sectionsOwnersGrid.getBoxOwner(section, pos);
     }
 
     public Player getSectionOwner(SectionPosition changedSection) {
-        return getSection(changedSection).getGridOwner();
+        return sectionsOwnersGrid.getPointOwner(changedSection);
     }
 
     public Player getNextPlayer() {
@@ -118,15 +102,11 @@ public class BoardStatus {
     }
 
     public boolean isInsideBounds(SectionPosition sectionPosition, BoxPosition pos) {
-        if (sectionPosition.getGridX() < 0 || sectionPosition.getGridX() >= NUMBER_OF_SECTIONS_PER_SIDE
-                || sectionPosition.getGridY() < 0 || sectionPosition.getGridY() >= NUMBER_OF_SECTIONS_PER_SIDE)
-            return false;
-
-        return getSection(sectionPosition).isInsideBounds(pos);
+        return sectionsOwnersGrid.isInsideBounds(sectionPosition, pos);
     }
 
-    public Grid getSectionGrid(SectionPosition section) {
-        return sections[section.getGridX()][section.getGridY()];
+    public SectionGrid getSectionGrid(SectionPosition section) {
+        return sectionsOwnersGrid.getSectionGrid(section);
     }
 
     public Grid getOwnerGrid() {
@@ -138,8 +118,7 @@ public class BoardStatus {
     }
 
     public Line getLine(SectionPosition sectionPosition) {
-        SectionGrid section = getSection(sectionPosition);
-        return section.getLine();
+        return sectionsOwnersGrid.getLine(sectionPosition);
     }
 
     public Grid getMainGrid() {
@@ -161,8 +140,6 @@ public class BoardStatus {
         } else if (allMoves.size() != other.allMoves.size())
             return false;
         if (!sectionsOwnersGrid.equals(other.sectionsOwnersGrid))
-            return false;
-        if (!Arrays.deepEquals(sections, other.sections))
             return false;
         if (sectionToPlayIn == null) {
             if (other.sectionToPlayIn != null)
