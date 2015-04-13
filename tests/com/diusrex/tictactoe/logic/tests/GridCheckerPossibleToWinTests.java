@@ -10,7 +10,7 @@ import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.SectionPosition;
 import com.diusrex.tictactoe.logic.GridChecker;
 
-public class PossibleToWinCheckerTests {
+public class GridCheckerPossibleToWinTests {
     BoardStatus board;
 
     @Before
