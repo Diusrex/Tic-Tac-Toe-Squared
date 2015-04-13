@@ -124,28 +124,4 @@ public class BoardStatus {
     public Grid getMainGrid() {
         return sectionsOwnersGrid;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        BoardStatus other = (BoardStatus) obj;
-        if (allMoves == null) {
-            if (other.allMoves != null)
-                return false;
-        } else if (allMoves.size() != other.allMoves.size())
-            return false;
-        if (!sectionsOwnersGrid.equals(other.sectionsOwnersGrid))
-            return false;
-        if (sectionToPlayIn == null) {
-            if (other.sectionToPlayIn != null)
-                return false;
-        } else if (!sectionToPlayIn.equals(other.sectionToPlayIn))
-            return false;
-        return true;
-    }
 }

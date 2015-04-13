@@ -60,20 +60,6 @@ public class SectionPosition implements Position {
         return y;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        SectionPosition other = (SectionPosition) obj;
-        if (x != other.x)
-            return false;
-        if (y != other.y)
-            return false;
-        return true;
-    }
-
     public SectionPosition increaseBy(SectionPosition increase) {
         return make(x + increase.x, y + increase.y);
     }

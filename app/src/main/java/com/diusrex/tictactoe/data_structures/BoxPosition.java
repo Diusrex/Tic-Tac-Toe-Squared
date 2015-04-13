@@ -77,18 +77,4 @@ public class BoxPosition implements Position {
     public BoxPosition decreaseBy(int x, int y) {
         return increaseBy(-x, -y);
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        BoxPosition other = (BoxPosition) obj;
-        if (x != other.x)
-            return false;
-        if (y != other.y)
-            return false;
-        return true;
-    }
 }
