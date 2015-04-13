@@ -30,6 +30,25 @@ import com.diusrex.tictactoe.data_structures.Player;
 public class GridChecker {
     static final int LINE_LENGTH = 3;
 
+    public static boolean possibleToWin(Grid grid) {
+        if (grid.getGridOwner() == Player.Unowned) {
+            return searchForUnownedLine(grid);
+        }
+
+        return false;
+    }
+
+    private static boolean searchForUnownedLine(Grid grid) {
+        List<LineIterator> allIterators = GridLines.getAllLineIterators();
+
+        for (LineIterator iter : allIterators) {
+            if (lineEmptyOrOwnedBySinglePlayer(grid, iter))
+                return true;
+        }
+
+        return false;
+    }
+
     public static Player searchForOwner(Grid grid) {
         Line foundLine = searchForWinLineOrGetNull(grid);
 
@@ -70,5 +89,28 @@ public class GridChecker {
         }
 
         return true;
+    }
+
+    private static boolean lineEmptyOrOwnedBySinglePlayer(Grid grid, LineIterator iter) {
+        boolean containsPlayerOne = false;
+        boolean containsPlayerTwo = false;
+        boolean empty = true;
+
+        int posInIter = 0;
+
+        for (; !iter.isDone(posInIter); ++posInIter) {
+            final Player currentPlayer = grid.getPointOwner(iter.getCurrent(posInIter));
+
+            if (currentPlayer != Player.Unowned) {
+                empty = false;
+
+                if (currentPlayer == Player.Player_1)
+                    containsPlayerOne = true;
+                else
+                    containsPlayerTwo = true;
+            }
+        }
+
+        return (containsPlayerOne ^ containsPlayerTwo) || empty;
     }
 }
