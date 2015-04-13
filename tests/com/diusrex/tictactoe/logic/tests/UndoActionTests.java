@@ -12,7 +12,6 @@ import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.SectionPosition;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
-import com.diusrex.tictactoe.logic.UndoAction;
 import com.diusrex.tictactoe.logic.tests.TestUtils.MockBoardStatus;
 
 public class UndoActionTests {

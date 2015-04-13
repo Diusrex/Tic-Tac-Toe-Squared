@@ -15,10 +15,9 @@
  **/
 package com.diusrex.tictactoe.data_structures;
 
-
-
 public class SectionGrid implements Grid {
     static private final int SECTION_SIZE = 3;
+
     private Player[][] owners;
     private Player owner;
 
@@ -39,12 +38,12 @@ public class SectionGrid implements Grid {
         this.owner = owner;
         this.winningLine = winningLine;
     }
-    
+
     @Override
     public Player getGridOwner() {
         return owner;
     }
-    
+
     public void setPointOwner(BoxPosition pos, Player newOwner) {
         owners[pos.getGridX()][pos.getGridY()] = newOwner;
     }

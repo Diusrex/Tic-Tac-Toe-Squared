@@ -27,6 +27,8 @@ public class BoardStatus {
     public static final int NUMBER_OF_BOXES_PER_SIDE = 9;
     public static final int NUMBER_OF_SECTIONS_PER_SIDE = 3;
     public static final int SIZE_OF_SECTION = NUMBER_OF_BOXES_PER_SIDE / NUMBER_OF_SECTIONS_PER_SIDE;
+    
+    private static final SectionPosition DEFAULT_STARTING_SECTION_TO_PLAY_IN = SectionPosition.make(1, 1);
 
     private Player nextPlayer;
 
@@ -38,7 +40,7 @@ public class BoardStatus {
     private Stack<Move> allMoves;
 
     public BoardStatus() {
-        this(SectionPosition.make(1, 1));
+        this(DEFAULT_STARTING_SECTION_TO_PLAY_IN);
     }
 
     public BoardStatus(SectionPosition startingSection) {
@@ -88,7 +90,7 @@ public class BoardStatus {
         allMoves.push(move);
         
         sectionToPlayIn = TicTacToeEngine.getSectionToPlayInNext(move);
-        
+
         setBoxOwner(move);
         nextPlayer = move.getPlayer().opposite();
     }

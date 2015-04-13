@@ -32,12 +32,6 @@ public class GridCheckerTests {
     }
 
     @Test
-    public void testNullGridGiven() {
-        // Just tests to see if it
-        Assert.assertEquals(Player.Unowned, GridChecker.searchForOwner(null));
-    }
-
-    @Test
     public void testHorizontalOwner() {
         BoxPosition startPos = BoxPosition.make(0, 0);
         BoxPosition finalPos = BoxPosition.make(2, 0);
@@ -125,11 +119,11 @@ public class GridCheckerTests {
                 .increaseBy(verticalIncrease)) {
             // Will not completely fill the line
             fillLine(startPos, horizontalIncrease, currentPlayer, 2);
-            Assert.assertEquals(null, GridChecker.searchForLineOrGetNull(grid));
+            Assert.assertEquals(null, GridChecker.searchForWinLineOrGetNull(grid));
 
             setGridPlayer(finalPos, currentPlayer);
 
-            Line foundLine = GridChecker.searchForLineOrGetNull(grid);
+            Line foundLine = GridChecker.searchForWinLineOrGetNull(grid);
 
             TestUtils.testLinesAreEqual(new Line(startPos, finalPos), foundLine);
 
@@ -148,11 +142,11 @@ public class GridCheckerTests {
                 .increaseBy(horizontalIncrease)) {
             // Will not completely fill the line
             fillLine(startPos, verticalIncrease, currentPlayer, 2);
-            Assert.assertEquals(null, GridChecker.searchForLineOrGetNull(grid));
+            Assert.assertEquals(null, GridChecker.searchForWinLineOrGetNull(grid));
 
             setGridPlayer(finalPos, currentPlayer);
 
-            Line foundLine = GridChecker.searchForLineOrGetNull(grid);
+            Line foundLine = GridChecker.searchForWinLineOrGetNull(grid);
 
             TestUtils.testLinesAreEqual(new Line(startPos, finalPos), foundLine);
             grid.reset();
@@ -170,11 +164,11 @@ public class GridCheckerTests {
 
         fillLine(startPos, diagonalIncrease, currentPlayer, 2);
 
-        Assert.assertEquals(null, GridChecker.searchForLineOrGetNull(grid));
+        Assert.assertEquals(null, GridChecker.searchForWinLineOrGetNull(grid));
 
         setGridPlayer(finalPos, currentPlayer);
 
-        TestUtils.testLinesAreEqual(new Line(startPos, finalPos), GridChecker.searchForLineOrGetNull(grid));
+        TestUtils.testLinesAreEqual(new Line(startPos, finalPos), GridChecker.searchForWinLineOrGetNull(grid));
     }
 
     @Test
@@ -192,7 +186,7 @@ public class GridCheckerTests {
 
         setGridPlayer(finalPos, currentPlayer);
 
-        TestUtils.testLinesAreEqual(new Line(startPos, finalPos), GridChecker.searchForLineOrGetNull(grid));
+        TestUtils.testLinesAreEqual(new Line(startPos, finalPos), GridChecker.searchForWinLineOrGetNull(grid));
     }
 
     private void fillLine(BoxPosition startPos, BoxPosition increase, Player player, int length) {

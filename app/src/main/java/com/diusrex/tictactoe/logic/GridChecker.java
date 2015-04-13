@@ -22,7 +22,6 @@ import com.diusrex.tictactoe.data_structures.Line;
 import com.diusrex.tictactoe.data_structures.LineIterator;
 import com.diusrex.tictactoe.data_structures.Player;
 
-
 /*
  * GridChecker
  * This class is built around checking to see if a player has made a pattern of 3 inside of the given grid, or optionally inside of the
@@ -32,7 +31,7 @@ public class GridChecker {
     static final int LINE_LENGTH = 3;
 
     public static Player searchForOwner(Grid grid) {
-        Line foundLine = searchForLineOrGetNull(grid);
+        Line foundLine = searchForWinLineOrGetNull(grid);
 
         if (foundLine != null) {
             return grid.getPointOwner(foundLine.getStart());
@@ -41,11 +40,7 @@ public class GridChecker {
         return Player.Unowned;
     }
 
-    public static Line searchForLineOrGetNull(Grid grid) {
-        if (grid == null) {
-            return null;
-        }
-
+    public static Line searchForWinLineOrGetNull(Grid grid) {
         List<LineIterator> allIterators = GridLines.getAllLineIterators();
 
         for (LineIterator iter : allIterators) {

@@ -110,7 +110,7 @@ public class TicTacToeEngine {
         Grid sectionGrid = board.getSectionGrid(changedSection);
         Player detectedSectionOwner = GridChecker.searchForOwner(sectionGrid);
         if (detectedSectionOwner != Player.Unowned) {
-            Line winLine = GridChecker.searchForLineOrGetNull(sectionGrid);
+            Line winLine = GridChecker.searchForWinLineOrGetNull(sectionGrid);
             board.setSectionOwner(changedSection, winLine, detectedSectionOwner);
         }
     }
