@@ -32,7 +32,7 @@ public class SaveStringTests {
 
     @Test
     public void testSaveSingleMove() {
-        mainBoard.applyMove(playerOneMove);
+        TestUtils.applyMoveToBoard(mainBoard, playerOneMove);
 
         String saveString = StringSaver.getSaveString(mainBoard);
 
@@ -46,8 +46,8 @@ public class SaveStringTests {
 
     @Test
     public void testSaveMultipleMoves() {
-        mainBoard.applyMove(playerOneMove);
-        mainBoard.applyMove(playerTwoMove);
+        TestUtils.applyMoveToBoard(mainBoard, playerOneMove);
+        TestUtils.applyMoveToBoard(mainBoard, playerTwoMove);
 
         String saveString = StringSaver.getSaveString(mainBoard);
 

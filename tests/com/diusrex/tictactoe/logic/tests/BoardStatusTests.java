@@ -86,11 +86,11 @@ public class BoardStatusTests {
     public void testAddingMovesToStack() {
         Assert.assertEquals(0, getMovesSize());
 
-        SectionPosition sectionPos = SectionPosition.make(0, 0);
+        SectionPosition sectionPos = board.getSectionToPlayIn();
         BoxPosition movePos = BoxPosition.make(0, 0);
-        Move move = new Move(sectionPos, movePos, Player.Player_1);
+        Move move = new Move(sectionPos, movePos, board.getNextPlayer());
 
-        board.applyMove(move);
+        TestUtils.applyMoveToBoard(board, move);
 
         Assert.assertEquals(1, getMovesSize());
         Assert.assertEquals(move, board.getAllMoves().peek());

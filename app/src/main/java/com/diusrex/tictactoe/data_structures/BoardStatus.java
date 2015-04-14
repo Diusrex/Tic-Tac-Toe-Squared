@@ -43,7 +43,7 @@ public class BoardStatus {
 
         allMoves = new Stack<Move>();
     }
-    
+
     public boolean possibleToWin() {
         return engine.possibleToWin(sectionsOwnersGrid);
     }
@@ -71,21 +71,21 @@ public class BoardStatus {
     public void setSectionOwner(SectionPosition changedSection, Line line, Player owner) {
         sectionsOwnersGrid.setOwner(changedSection, line, owner);
     }
-    
+
     public Player getWinner() {
         return engine.getWinner(sectionsOwnersGrid);
     }
-    
+
     public void applyMoveIfValid(Move move) {
         if (GeneralTicTacToeLogic.isValidMove(this, move)) {
             applyMove(move);
-            
+
             engine.updateSectionOwner(getSectionGrid(move.getSection()), move);
         }
     }
 
     // TODO: Private?
-    public void applyMove(Move move) {
+    private void applyMove(Move move) {
         allMoves.push(move);
 
         sectionToPlayIn = GeneralTicTacToeLogic.getSectionToPlayInNext(move);
@@ -122,15 +122,6 @@ public class BoardStatus {
         return sectionsOwnersGrid.isInsideBounds(sectionPosition, pos);
     }
 
-    public SectionGrid getSectionGrid(SectionPosition section) {
-        return sectionsOwnersGrid.getSectionGrid(section);
-    }
-
-    // TODO: This is probably unneeded now
-    public Grid getOwnerGrid() {
-        return sectionsOwnersGrid;
-    }
-
     public Stack<Move> getAllMoves() {
         return allMoves;
     }
@@ -139,9 +130,7 @@ public class BoardStatus {
         return sectionsOwnersGrid.getLine(sectionPosition);
     }
 
-    public Grid getMainGrid() {
-        return sectionsOwnersGrid;
+    private SectionGrid getSectionGrid(SectionPosition section) {
+        return sectionsOwnersGrid.getSectionGrid(section);
     }
-
-    
 }

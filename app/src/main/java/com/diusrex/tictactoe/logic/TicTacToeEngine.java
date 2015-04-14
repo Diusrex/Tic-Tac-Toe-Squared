@@ -24,7 +24,7 @@ import com.diusrex.tictactoe.data_structures.SectionGrid;
 public abstract class TicTacToeEngine {
     private GridChecker gridChecker;
 
-    TicTacToeEngine(GridChecker gridChecker) {
+    protected TicTacToeEngine(GridChecker gridChecker) {
         this.gridChecker = gridChecker;
     }
 
