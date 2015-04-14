@@ -37,11 +37,15 @@ public class BoardStatus {
 
         nextPlayer = Player.Player_1;
 
-        sectionsOwnersGrid = new MainGrid();
+        sectionsOwnersGrid = new MainGrid(engine);
 
         sectionToPlayIn = DEFAULT_STARTING_SECTION_TO_PLAY_IN;
 
         allMoves = new Stack<Move>();
+    }
+    
+    public boolean possibleToWin() {
+        return engine.possibleToWin(sectionsOwnersGrid);
     }
 
     public void undoLastMove() {
@@ -53,7 +57,7 @@ public class BoardStatus {
 
         setBoxOwner(undoneTopMove.getSection(), undoneTopMove.getBox(), Player.Unowned);
 
-        if (UndoAction.moveLostOwnership(getSectionGrid(undoneTopMove.getSection()), undoneTopMove)) {
+        if (UndoAction.moveLostOwnership(engine, getSectionGrid(undoneTopMove.getSection()), undoneTopMove)) {
             setSectionOwner(undoneTopMove.getSection(), null, Player.Unowned);
         }
 
@@ -122,6 +126,7 @@ public class BoardStatus {
         return sectionsOwnersGrid.getSectionGrid(section);
     }
 
+    // TODO: This is probably unneeded now
     public Grid getOwnerGrid() {
         return sectionsOwnersGrid;
     }

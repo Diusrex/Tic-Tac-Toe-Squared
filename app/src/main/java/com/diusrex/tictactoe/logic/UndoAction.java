@@ -24,12 +24,12 @@ import com.diusrex.tictactoe.data_structures.SectionPosition;
 
 
 public class UndoAction {
-    public static boolean moveLostOwnership(SectionGrid undoneMovesSection, Move topMove) {
+    public static boolean moveLostOwnership(TicTacToeEngine usedEngine, SectionGrid undoneMovesSection, Move topMove) {
         // In this case, it is impossible
         if (topMove.getPlayer() != undoneMovesSection.getGridOwner())
             return false;
 
-        Player completedWinner = GridChecker.searchForOwner(undoneMovesSection);
+        Player completedWinner = usedEngine.searchForOwner(undoneMovesSection);
 
         // If there is no found match, then the grid was lost
         return completedWinner == Player.Unowned;

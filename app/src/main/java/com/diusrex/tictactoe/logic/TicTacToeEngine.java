@@ -16,12 +16,31 @@
 package com.diusrex.tictactoe.logic;
 
 import com.diusrex.tictactoe.data_structures.Grid;
+import com.diusrex.tictactoe.data_structures.Line;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.SectionGrid;
 
 public abstract class TicTacToeEngine {
+    private GridChecker gridChecker;
+
+    TicTacToeEngine(GridChecker gridChecker) {
+        this.gridChecker = gridChecker;
+    }
+
     public abstract void updateSectionOwner(SectionGrid section, Move move);
-    
+
     public abstract Player getWinner(Grid grid);
+
+    public boolean possibleToWin(Grid grid) {
+        return gridChecker.possibleToWin(grid);
+    }
+
+    public Player searchForOwner(Grid grid) {
+        return gridChecker.searchForOwner(grid);
+    }
+
+    public Line searchForWinLineOrGetNull(Grid grid) {
+        return gridChecker.searchForWinLineOrGetNull(grid);
+    }
 }

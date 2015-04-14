@@ -23,21 +23,25 @@ import com.diusrex.tictactoe.data_structures.SectionGrid;
 
 
 public class StandardTicTacToeEngine extends TicTacToeEngine {
+    public StandardTicTacToeEngine() {
+        super(new StandardGridChecker());
+    }
+
     @Override
     public void updateSectionOwner(SectionGrid section, Move move) {
         // Cannot take a section from other player
         if (section.getGridOwner() != Player.Unowned)
             return;
 
-        Player detectedSectionOwner = GridChecker.searchForOwner(section);
+        Player detectedSectionOwner = searchForOwner(section);
         if (detectedSectionOwner != Player.Unowned) {
-            Line winLine = GridChecker.searchForWinLineOrGetNull(section);
+            Line winLine = searchForWinLineOrGetNull(section);
             section.setSectionOwner(detectedSectionOwner, winLine);
         }
     }
 
     @Override
     public Player getWinner(Grid grid) {
-        return GridChecker.searchForOwner(grid);
+        return searchForOwner(grid);
     }
 }

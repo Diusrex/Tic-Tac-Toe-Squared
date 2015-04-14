@@ -15,21 +15,25 @@
  **/
 package com.diusrex.tictactoe.data_structures;
 
-import com.diusrex.tictactoe.logic.GridChecker;
 import com.diusrex.tictactoe.logic.GridConstants;
+import com.diusrex.tictactoe.logic.TicTacToeEngine;
 
 
 
 public class MainGrid implements Grid {
     private Player owner;
     private SectionGrid[][] sections;
+    
+    // TODO: Maybe not the best method
+    private final TicTacToeEngine engine;
 
-    MainGrid() {
+    public MainGrid(TicTacToeEngine engine) {
+        this.engine = engine;
         sections = new SectionGrid[GridConstants.NUMBER_OF_SECTIONS_PER_SIDE][GridConstants.NUMBER_OF_BOXES_PER_SIDE];
 
         for (int x = 0; x < sections.length; ++x) {
             for (int y = 0; y < sections.length; ++y) {
-                sections[x][y] = new SectionGrid();
+                sections[x][y] = new SectionGrid(engine);
             }
         }
 
@@ -48,7 +52,7 @@ public class MainGrid implements Grid {
 
     @Override
     public boolean canBeWon() {
-        return GridChecker.possibleToWin(this);
+        return engine.possibleToWin(this);
     }
 
     public void setBoxOwner(SectionPosition sectionPos, BoxPosition pos, Player newOwner) {

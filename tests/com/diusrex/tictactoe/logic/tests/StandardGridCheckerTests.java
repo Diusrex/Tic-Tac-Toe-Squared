@@ -10,25 +10,27 @@ import com.diusrex.tictactoe.data_structures.Grid;
 import com.diusrex.tictactoe.data_structures.Line;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.Position;
-import com.diusrex.tictactoe.logic.GridChecker;
 import com.diusrex.tictactoe.logic.GridConstants;
+import com.diusrex.tictactoe.logic.StandardGridChecker;
 
-public class GridCheckerTests {
+public class StandardGridCheckerTests {
     static final int SIZE = 9;
 
     static final BoxPosition horizontalIncrease = BoxPosition.make(1, 0);
     static final BoxPosition verticalIncrease = BoxPosition.make(0, 1);
 
     private MockGrid grid;
+    private StandardGridChecker checker;
 
     @Before
     public void setUp() {
         grid = new MockGrid();
+        checker = new StandardGridChecker();
     }
 
     @Test
     public void testNoPattern() {
-        Assert.assertEquals(Player.Unowned, GridChecker.searchForOwner(grid));
+        Assert.assertEquals(Player.Unowned, checker.searchForOwner(grid));
     }
 
     @Test
@@ -43,11 +45,11 @@ public class GridCheckerTests {
 
             // Will not completely fill the line
             fillLine(startPos, horizontalIncrease, currentPlayer, 2);
-            Assert.assertEquals(Player.Unowned, GridChecker.searchForOwner(grid));
+            Assert.assertEquals(Player.Unowned, checker.searchForOwner(grid));
 
             setGridPlayer(finalPos, currentPlayer);
 
-            Assert.assertEquals(currentPlayer, GridChecker.searchForOwner(grid));
+            Assert.assertEquals(currentPlayer, checker.searchForOwner(grid));
             grid.reset();
         }
     }
@@ -63,11 +65,11 @@ public class GridCheckerTests {
                 .increaseBy(horizontalIncrease)) {
             // Will not completely fill the line
             fillLine(startPos, verticalIncrease, currentPlayer, 2);
-            Assert.assertEquals(Player.Unowned, GridChecker.searchForOwner(grid));
+            Assert.assertEquals(Player.Unowned, checker.searchForOwner(grid));
 
             setGridPlayer(finalPos, currentPlayer);
 
-            Assert.assertEquals(currentPlayer, GridChecker.searchForOwner(grid));
+            Assert.assertEquals(currentPlayer, checker.searchForOwner(grid));
             grid.reset();
         }
     }
@@ -83,11 +85,11 @@ public class GridCheckerTests {
 
         fillLine(startPos, diagonalIncrease, currentPlayer, 2);
 
-        Assert.assertEquals(Player.Unowned, GridChecker.searchForOwner(grid));
+        Assert.assertEquals(Player.Unowned, checker.searchForOwner(grid));
 
         setGridPlayer(finalPos, currentPlayer);
 
-        Assert.assertEquals(currentPlayer, GridChecker.searchForOwner(grid));
+        Assert.assertEquals(currentPlayer, checker.searchForOwner(grid));
     }
 
     @Test
@@ -101,11 +103,11 @@ public class GridCheckerTests {
 
         fillLine(startPos, diagonalIncrease, currentPlayer, 2);
 
-        Assert.assertEquals(Player.Unowned, GridChecker.searchForOwner(grid));
+        Assert.assertEquals(Player.Unowned, checker.searchForOwner(grid));
 
         setGridPlayer(finalPos, currentPlayer);
 
-        Assert.assertEquals(currentPlayer, GridChecker.searchForOwner(grid));
+        Assert.assertEquals(currentPlayer, checker.searchForOwner(grid));
     }
 
     @Test
@@ -119,11 +121,11 @@ public class GridCheckerTests {
                 .increaseBy(verticalIncrease)) {
             // Will not completely fill the line
             fillLine(startPos, horizontalIncrease, currentPlayer, 2);
-            Assert.assertEquals(null, GridChecker.searchForWinLineOrGetNull(grid));
+            Assert.assertEquals(null, checker.searchForWinLineOrGetNull(grid));
 
             setGridPlayer(finalPos, currentPlayer);
 
-            Line foundLine = GridChecker.searchForWinLineOrGetNull(grid);
+            Line foundLine = checker.searchForWinLineOrGetNull(grid);
 
             TestUtils.testLinesAreEqual(new Line(startPos, finalPos), foundLine);
 
@@ -142,11 +144,11 @@ public class GridCheckerTests {
                 .increaseBy(horizontalIncrease)) {
             // Will not completely fill the line
             fillLine(startPos, verticalIncrease, currentPlayer, 2);
-            Assert.assertEquals(null, GridChecker.searchForWinLineOrGetNull(grid));
+            Assert.assertEquals(null, checker.searchForWinLineOrGetNull(grid));
 
             setGridPlayer(finalPos, currentPlayer);
 
-            Line foundLine = GridChecker.searchForWinLineOrGetNull(grid);
+            Line foundLine = checker.searchForWinLineOrGetNull(grid);
 
             TestUtils.testLinesAreEqual(new Line(startPos, finalPos), foundLine);
             grid.reset();
@@ -164,11 +166,11 @@ public class GridCheckerTests {
 
         fillLine(startPos, diagonalIncrease, currentPlayer, 2);
 
-        Assert.assertEquals(null, GridChecker.searchForWinLineOrGetNull(grid));
+        Assert.assertEquals(null, checker.searchForWinLineOrGetNull(grid));
 
         setGridPlayer(finalPos, currentPlayer);
 
-        TestUtils.testLinesAreEqual(new Line(startPos, finalPos), GridChecker.searchForWinLineOrGetNull(grid));
+        TestUtils.testLinesAreEqual(new Line(startPos, finalPos), checker.searchForWinLineOrGetNull(grid));
     }
 
     @Test
@@ -182,11 +184,11 @@ public class GridCheckerTests {
 
         fillLine(startPos, diagonalIncrease, currentPlayer, 2);
 
-        Assert.assertEquals(Player.Unowned, GridChecker.searchForOwner(grid));
+        Assert.assertEquals(Player.Unowned, checker.searchForOwner(grid));
 
         setGridPlayer(finalPos, currentPlayer);
 
-        TestUtils.testLinesAreEqual(new Line(startPos, finalPos), GridChecker.searchForWinLineOrGetNull(grid));
+        TestUtils.testLinesAreEqual(new Line(startPos, finalPos), checker.searchForWinLineOrGetNull(grid));
     }
 
     private void fillLine(BoxPosition startPos, BoxPosition increase, Player player, int length) {

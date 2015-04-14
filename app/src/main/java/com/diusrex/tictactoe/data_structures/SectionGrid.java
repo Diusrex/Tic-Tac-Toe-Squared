@@ -15,7 +15,7 @@
  **/
 package com.diusrex.tictactoe.data_structures;
 
-import com.diusrex.tictactoe.logic.GridChecker;
+import com.diusrex.tictactoe.logic.TicTacToeEngine;
 
 public class SectionGrid implements Grid {
     static private final int SECTION_SIZE = 3;
@@ -25,7 +25,12 @@ public class SectionGrid implements Grid {
 
     private Line winningLine;
 
-    SectionGrid() {
+    // TODO: Alternative methods?
+    private final TicTacToeEngine engine;
+
+    public SectionGrid(TicTacToeEngine engine) {
+        this.engine = engine;
+
         owners = new Player[SECTION_SIZE][SECTION_SIZE];
         owner = Player.Unowned;
 
@@ -61,7 +66,7 @@ public class SectionGrid implements Grid {
 
     @Override
     public boolean canBeWon() {
-        return GridChecker.possibleToWin(this);
+        return engine.possibleToWin(this);
     }
 
     public Line getLine() {
@@ -69,7 +74,7 @@ public class SectionGrid implements Grid {
     }
 
     public boolean isInsideBounds(BoxPosition pos) {
-        return pos.getGridX() >= 0 && pos.getGridX() < SECTION_SIZE
-                && pos.getGridY() >= 0 && pos.getGridY() < SECTION_SIZE;
+        return pos.getGridX() >= 0 && pos.getGridX() < SECTION_SIZE && pos.getGridY() >= 0
+                && pos.getGridY() < SECTION_SIZE;
     }
 }
