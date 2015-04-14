@@ -13,21 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
-package com.diusrex.tictactoe.logic;
+package com.diusrex.tictactoe.data_structures;
 
-import com.diusrex.tictactoe.data_structures.Grid;
-import com.diusrex.tictactoe.data_structures.Line;
-import com.diusrex.tictactoe.data_structures.Player;
 
-/*
- * GridChecker
- * This class is built around checking to see if a player has made a pattern of 3 inside of the given grid, or optionally inside of the
- * section within the grid
- */
-public interface GridChecker {
-    public boolean possibleToWin(Grid grid);
 
-    public Player searchForOwner(Grid grid);
+public interface Grid {
+    public Player getGridOwner();
+    
+    public Player getPointOwner(Position pos);
+    
+    public boolean canBeWon();
 
-    public Line searchForWinLineOrGetNull(Grid grid);
 }

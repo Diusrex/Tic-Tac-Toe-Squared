@@ -1,0 +1,123 @@
+package com.diusrex.tictactoe.logic.tests;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.List;
+
+import junit.framework.Assert;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import com.diusrex.tictactoe.data_structures.BoxPosition;
+import com.diusrex.tictactoe.data_structures.Line;
+import com.diusrex.tictactoe.data_structures.SectionPosition;
+import com.diusrex.tictactoe.logic.GridConstants;
+import com.diusrex.tictactoe.logic.GridLists;
+
+// There should be 8 lines:
+// 3 horizontal
+// 3 vertical
+// 2 diagonal
+// Should be 9 SectionPositions and 9 BoxPositions
+public class GridLinesTests {
+    static private final int NUMBER_LINES = 8;
+    static private final int NUMBER_SECTIONS = 9;
+    static private final int NUMBER_BOX_POSITIONS = 9;
+    static private final BoxPosition fakePosition = BoxPosition.make(0, 0);
+
+    private List<Line> allLines;
+    private List<SectionPosition> allSectionPositions;
+    private List<BoxPosition> allBoxPositions;
+
+    @Before
+    public void setup() {
+        allLines = GridLists.getAllLines();
+        allSectionPositions = GridLists.getAllStandardSections();
+        allBoxPositions = GridLists.getAllStandardBoxPositions();
+    }
+
+    @Test
+    public void ensureContainsAllSections() {
+        Assert.assertEquals(NUMBER_SECTIONS, allSectionPositions.size());
+
+        for (int x = 0; x < GridConstants.NUMBER_OF_SECTIONS_PER_SIDE; ++x) {
+            for (int y = 0; y < GridConstants.NUMBER_OF_SECTIONS_PER_SIDE; ++y) {
+                allSectionPositions.contains(SectionPosition.make(x, y));
+            }
+        }
+    }
+
+    @Test
+    public void ensureContainsAllBoxPositions() {
+        Assert.assertEquals(NUMBER_BOX_POSITIONS, allBoxPositions.size());
+
+        for (int x = 0; x < GridConstants.SIZE_OF_SECTION; ++x) {
+            for (int y = 0; y < GridConstants.SIZE_OF_SECTION; ++y) {
+                allBoxPositions.contains(BoxPosition.make(x, y));
+            }
+        }
+    }
+
+    @Test
+    public void ensureContainsAllLines() {
+
+        assertHasAllHorizontalLines();
+        assertHasAllVerticalLines();
+        assertHasAllDiagonalLines();
+
+        assertEquals(NUMBER_LINES, allLines.size());
+    }
+
+    private void assertHasAllHorizontalLines() {
+        hasLineWithCoordinates(BoxPosition.make(0, 0), BoxPosition.make(2, 0));
+        hasLineWithCoordinates(BoxPosition.make(0, 1), BoxPosition.make(2, 1));
+        hasLineWithCoordinates(BoxPosition.make(0, 2), BoxPosition.make(2, 2));
+    }
+
+    private void assertHasAllVerticalLines() {
+        hasLineWithCoordinates(BoxPosition.make(0, 0), BoxPosition.make(2, 0));
+        hasLineWithCoordinates(BoxPosition.make(0, 1), BoxPosition.make(2, 1));
+        hasLineWithCoordinates(BoxPosition.make(0, 2), BoxPosition.make(2, 2));
+    }
+
+    private void assertHasAllDiagonalLines() {
+        hasLineWithCoordinates(BoxPosition.make(0, 0), BoxPosition.make(0, 2));
+        hasLineWithCoordinates(BoxPosition.make(1, 0), BoxPosition.make(1, 2));
+        hasLineWithCoordinates(BoxPosition.make(2, 0), BoxPosition.make(2, 2));
+    }
+
+    @Test
+    public void givesImmutableLists() {
+        try {
+            allLines.add(new Line(fakePosition, fakePosition));
+            fail(); // Should have thrown an exception
+        } catch (UnsupportedOperationException e) {
+            // Success
+        }
+
+        try {
+            allSectionPositions.add(SectionPosition.make(0, 0));
+            fail(); // Should have thrown an exception
+        } catch (UnsupportedOperationException e) {
+            // Success
+        }
+
+        try {
+            allBoxPositions.add(BoxPosition.make(0, 0));
+            fail(); // Should have thrown an exception
+        } catch (UnsupportedOperationException e) {
+            // Success
+        }
+    }
+
+    private void hasLineWithCoordinates(BoxPosition start, BoxPosition end) {
+        // The actual order of start/end does not matter
+        Line lineOne = new Line(start, end);
+        Line lineTwo = new Line(end, start);
+
+        assertTrue(allLines.contains(lineOne) || allLines.contains(lineTwo));
+    }
+}

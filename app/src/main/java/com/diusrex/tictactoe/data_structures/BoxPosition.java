@@ -13,29 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
-package com.diusrex.tictactoe.logic;
+package com.diusrex.tictactoe.data_structures;
+
+import com.diusrex.tictactoe.logic.GridConstants;
+
+
+
 
 // Immutable data structure
-public class BoxPosition {
-    static private final BoxPosition[][] standardPositions = new BoxPosition[BoardStatus.NUMBER_OF_BOXES_PER_SIDE][BoardStatus.NUMBER_OF_BOXES_PER_SIDE];
+public class BoxPosition implements Position {
+    static private final BoxPosition[][] standardPositions = new BoxPosition[GridConstants.NUMBER_OF_BOXES_PER_SIDE][GridConstants.NUMBER_OF_BOXES_PER_SIDE];
     static private boolean initialized = false;
-
+    
     public static BoxPosition make(int x, int y) {
         if (!initialized) {
             initialize();
             initialized = true;
         }
 
-        if (x >= 0 && x < BoardStatus.NUMBER_OF_BOXES_PER_SIDE && y >= 0 && y < BoardStatus.NUMBER_OF_BOXES_PER_SIDE)
+        if (x >= 0 && x < GridConstants.NUMBER_OF_BOXES_PER_SIDE && y >= 0 && y < GridConstants.NUMBER_OF_BOXES_PER_SIDE)
             return standardPositions[x][y];
 
         else
             return new BoxPosition(x, y);
     }
+    
+    public static BoxPosition fromString(String string) {
+        int totalValue = Integer.parseInt(string);
+        int x = totalValue / 10;
+        int y = totalValue % 10;
+
+        return BoxPosition.make(x, y);
+    }
 
     private static void initialize() {
-        for (int y = 0; y < BoardStatus.NUMBER_OF_BOXES_PER_SIDE; ++y) {
-            for (int x = 0; x < BoardStatus.NUMBER_OF_BOXES_PER_SIDE; ++x) {
+        for (int y = 0; y < GridConstants.NUMBER_OF_BOXES_PER_SIDE; ++y) {
+            for (int x = 0; x < GridConstants.NUMBER_OF_BOXES_PER_SIDE; ++x) {
                 standardPositions[x][y] = new BoxPosition(x, y);
             }
         }
@@ -49,11 +62,11 @@ public class BoxPosition {
         this.y = y;
     }
 
-    public int getX() {
+    public int getGridX() {
         return x;
     }
 
-    public int getY() {
+    public int getGridY() {
         return y;
     }
 
@@ -74,23 +87,7 @@ public class BoxPosition {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        BoxPosition other = (BoxPosition) obj;
-        if (x != other.x)
-            return false;
-        if (y != other.y)
-            return false;
-        return true;
-    }
-
-    public SectionPosition getSectionIn() {
-        int sectionX = x / BoardStatus.SIZE_OF_SECTION;
-        int sectionY = y / BoardStatus.SIZE_OF_SECTION;
-
-        return SectionPosition.make(sectionX, sectionY);
+    public String toString() {
+        return String.format("%d%d", x, y);
     }
 }

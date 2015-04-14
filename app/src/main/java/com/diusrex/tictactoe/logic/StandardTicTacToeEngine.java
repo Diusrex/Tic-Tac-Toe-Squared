@@ -21,26 +21,27 @@ import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.SectionGrid;
 
-public abstract class TicTacToeEngine {
-    private GridChecker gridChecker;
 
-    protected TicTacToeEngine(GridChecker gridChecker) {
-        this.gridChecker = gridChecker;
+public class StandardTicTacToeEngine extends TicTacToeEngine {
+    public StandardTicTacToeEngine() {
+        super(new StandardGridChecker());
     }
 
-    public abstract void updateSectionOwner(SectionGrid section, Move move);
+    @Override
+    public void updateSectionOwner(SectionGrid section, Move move) {
+        // Cannot take a section from other player
+        if (section.getGridOwner() != Player.Unowned)
+            return;
 
-    public abstract Player getWinner(Grid grid);
-
-    public boolean possibleToWin(Grid grid) {
-        return gridChecker.possibleToWin(grid);
+        Player detectedSectionOwner = searchForOwner(section);
+        if (detectedSectionOwner != Player.Unowned) {
+            Line winLine = searchForWinLineOrGetNull(section);
+            section.setSectionOwner(detectedSectionOwner, winLine);
+        }
     }
 
-    public Player searchForOwner(Grid grid) {
-        return gridChecker.searchForOwner(grid);
-    }
-
-    public Line searchForWinLineOrGetNull(Grid grid) {
-        return gridChecker.searchForWinLineOrGetNull(grid);
+    @Override
+    public Player getWinner(Grid grid) {
+        return searchForOwner(grid);
     }
 }

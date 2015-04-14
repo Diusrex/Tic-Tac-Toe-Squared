@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
-package com.diusrex.tictactoe.logic;
+package com.diusrex.tictactoe.data_structures;
+
+
 
 public class Line {
     private final BoxPosition start;
@@ -30,5 +32,21 @@ public class Line {
 
     public BoxPosition getEnd() {
         return end;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Line other = (Line) obj;
+
+        if (start != null && !start.equals(other.start))
+            return false;
+        if (end != null && !end.equals(other.end))
+            return false;
+
+        return true;
     }
 }

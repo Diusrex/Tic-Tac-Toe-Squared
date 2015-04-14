@@ -13,10 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
-package com.diusrex.tictactoe.logic;
+package com.diusrex.tictactoe.data_structures;
 
-public class SectionPosition {
-    static private final SectionPosition[][] standardPositions = new SectionPosition[BoardStatus.SIZE_OF_SECTION][BoardStatus.SIZE_OF_SECTION];
+import com.diusrex.tictactoe.logic.GridConstants;
+
+
+public class SectionPosition implements Position {
+    static private final SectionPosition[][] standardPositions = new SectionPosition[GridConstants.SIZE_OF_SECTION][GridConstants.SIZE_OF_SECTION];
+
     static private boolean initialized = false;
 
     public static SectionPosition make(int x, int y) {
@@ -25,16 +29,24 @@ public class SectionPosition {
             initialized = true;
         }
 
-        if (x >= 0 && x < BoardStatus.SIZE_OF_SECTION && y >= 0 && y < BoardStatus.SIZE_OF_SECTION)
+        if (x >= 0 && x < GridConstants.SIZE_OF_SECTION && y >= 0 && y < GridConstants.SIZE_OF_SECTION)
             return standardPositions[x][y];
 
         else
             return new SectionPosition(x, y);
     }
 
+    public static SectionPosition fromString(String string) {
+        int totalValue = Integer.parseInt(string);
+        int x = totalValue / 10;
+        int y = totalValue % 10;
+
+        return SectionPosition.make(x, y);
+    }
+    
     private static void initialize() {
-        for (int y = 0; y < BoardStatus.SIZE_OF_SECTION; ++y) {
-            for (int x = 0; x < BoardStatus.SIZE_OF_SECTION; ++x) {
+        for (int y = 0; y < GridConstants.SIZE_OF_SECTION; ++y) {
+            for (int x = 0; x < GridConstants.SIZE_OF_SECTION; ++x) {
                 standardPositions[x][y] = new SectionPosition(x, y);
             }
         }
@@ -48,33 +60,20 @@ public class SectionPosition {
         this.y = y;
     }
 
-    public int getX() {
+    public int getGridX() {
         return x;
     }
 
-    public int getY() {
+    public int getGridY() {
         return y;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        SectionPosition other = (SectionPosition) obj;
-        if (x != other.x)
-            return false;
-        if (y != other.y)
-            return false;
-        return true;
-    }
-
-    public BoxPosition getTopLeftPosition() {
-        return BoxPosition.make(x * BoardStatus.SIZE_OF_SECTION, y * BoardStatus.SIZE_OF_SECTION);
     }
 
     public SectionPosition increaseBy(SectionPosition increase) {
         return make(x + increase.x, y + increase.y);
+    }
+    
+    @Override
+    public String toString() {
+        return String.format("%d%d", x, y);
     }
 }
