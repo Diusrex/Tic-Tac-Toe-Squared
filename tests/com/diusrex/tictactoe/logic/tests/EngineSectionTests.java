@@ -10,7 +10,6 @@ import com.diusrex.tictactoe.data_structures.Line;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.SectionPosition;
-import com.diusrex.tictactoe.logic.TicTacToeEngine;
 import com.diusrex.tictactoe.logic.tests.TestUtils.MockBoardStatus;
 
 public class EngineSectionTests {
@@ -26,7 +25,7 @@ public class EngineSectionTests {
     }
 
     private void resetBoard() {
-        board = new MockBoardStatus(SectionPosition.make(0, 0));
+        board = new MockBoardStatus();
     }
 
     private void winSection(SectionPosition section, Player mainPlayer) {
@@ -167,7 +166,7 @@ public class EngineSectionTests {
 
     private void winBoardWithLine(SectionPosition increase, SectionPosition start) {
         resetBoard();
-        Assert.assertEquals(Player.Unowned, TicTacToeEngine.getWinner(board));
+        Assert.assertEquals(Player.Unowned, board.getWinner());
         
         SectionPosition secondSection = start.increaseBy(increase);
         SectionPosition thirdSection = secondSection.increaseBy(increase);
@@ -175,12 +174,12 @@ public class EngineSectionTests {
 
         board.playerToGoNext = mainPlayer;
         winSection(start, mainPlayer);
-        Assert.assertEquals(Player.Unowned, TicTacToeEngine.getWinner(board));
+        Assert.assertEquals(Player.Unowned, board.getWinner());
 
         winSection(secondSection, mainPlayer);
-        Assert.assertEquals(Player.Unowned, TicTacToeEngine.getWinner(board));
+        Assert.assertEquals(Player.Unowned, board.getWinner());
 
         winSection(thirdSection, mainPlayer);
-        Assert.assertEquals(mainPlayer, TicTacToeEngine.getWinner(board));
+        Assert.assertEquals(mainPlayer, board.getWinner());
     }
 }

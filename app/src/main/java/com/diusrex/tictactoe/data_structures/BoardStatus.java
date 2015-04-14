@@ -17,12 +17,14 @@ package com.diusrex.tictactoe.data_structures;
 
 import java.util.Stack;
 
+import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
 import com.diusrex.tictactoe.logic.UndoAction;
 
 public class BoardStatus {
     private static final SectionPosition DEFAULT_STARTING_SECTION_TO_PLAY_IN = SectionPosition.make(1, 1);
 
+    private final TicTacToeEngine engine;
     private SectionPosition sectionToPlayIn;
     private Player nextPlayer;
 
@@ -30,16 +32,14 @@ public class BoardStatus {
 
     private Stack<Move> allMoves;
 
-    public BoardStatus() {
-        this(DEFAULT_STARTING_SECTION_TO_PLAY_IN);
-    }
+    public BoardStatus(TicTacToeEngine engine) {
+        this.engine = engine;
 
-    public BoardStatus(SectionPosition startingSection) {
         nextPlayer = Player.Player_1;
 
         sectionsOwnersGrid = new MainGrid();
 
-        sectionToPlayIn = startingSection;
+        sectionToPlayIn = DEFAULT_STARTING_SECTION_TO_PLAY_IN;
 
         allMoves = new Stack<Move>();
     }
@@ -67,11 +67,24 @@ public class BoardStatus {
     public void setSectionOwner(SectionPosition changedSection, Line line, Player owner) {
         sectionsOwnersGrid.setOwner(changedSection, line, owner);
     }
+    
+    public Player getWinner() {
+        return engine.getWinner(sectionsOwnersGrid);
+    }
+    
+    public void applyMoveIfValid(Move move) {
+        if (GeneralTicTacToeLogic.isValidMove(this, move)) {
+            applyMove(move);
+            
+            engine.updateSectionOwner(getSectionGrid(move.getSection()), move);
+        }
+    }
 
+    // TODO: Private?
     public void applyMove(Move move) {
         allMoves.push(move);
 
-        sectionToPlayIn = TicTacToeEngine.getSectionToPlayInNext(move);
+        sectionToPlayIn = GeneralTicTacToeLogic.getSectionToPlayInNext(move);
 
         setBoxOwner(move);
         nextPlayer = move.getPlayer().opposite();
@@ -124,4 +137,6 @@ public class BoardStatus {
     public Grid getMainGrid() {
         return sectionsOwnersGrid;
     }
+
+    
 }

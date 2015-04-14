@@ -10,9 +10,9 @@ import com.diusrex.tictactoe.data_structures.Line;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.SectionPosition;
+import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
 import com.diusrex.tictactoe.logic.GridConstants;
 import com.diusrex.tictactoe.logic.GridLists;
-import com.diusrex.tictactoe.logic.TicTacToeEngine;
 import com.diusrex.tictactoe.logic.tests.TestUtils.MockBoardStatus;
 
 public class UndoActionTests {
@@ -34,7 +34,7 @@ public class UndoActionTests {
 
     @Before
     public void setup() {
-        board = new MockBoardStatus(SectionPosition.make(0, 0));
+        board = new MockBoardStatus();
         mainPlayer = Player.Player_1;
         board.playerToGoNext = mainPlayer;
 
@@ -43,7 +43,7 @@ public class UndoActionTests {
 
         TestUtils.applyMoveToBoard(board, appliedMove);
 
-        validMove = new Move(TicTacToeEngine.getSectionToPlayInNext(appliedMove.getBox()), BoxPosition.make(0, 0),
+        validMove = new Move(GeneralTicTacToeLogic.getSectionToPlayInNext(appliedMove.getBox()), BoxPosition.make(0, 0),
                 mainPlayer);
 
         backupBoardState();
@@ -111,7 +111,7 @@ public class UndoActionTests {
 
         board.fakedSectionToPlayIn = sectionToWin;
         BoxPosition moveThatDoesntEffectOwnership = BoxPosition.make(2, 2);
-        TestUtils.applyMoveToBoard(board, new Move(mainSection, moveThatDoesntEffectOwnership, mainPlayer));
+        TestUtils.applyMoveToBoard(board, new Move(sectionToWin, moveThatDoesntEffectOwnership, mainPlayer));
 
         board.undoLastMove();
 

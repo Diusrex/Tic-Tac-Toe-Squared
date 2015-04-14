@@ -16,12 +16,28 @@
 package com.diusrex.tictactoe.logic;
 
 import com.diusrex.tictactoe.data_structures.Grid;
+import com.diusrex.tictactoe.data_structures.Line;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.SectionGrid;
 
-public abstract class TicTacToeEngine {
-    public abstract void updateSectionOwner(SectionGrid section, Move move);
-    
-    public abstract Player getWinner(Grid grid);
+
+public class StandardTicTacToeEngine extends TicTacToeEngine {
+    @Override
+    public void updateSectionOwner(SectionGrid section, Move move) {
+        // Cannot take a section from other player
+        if (section.getGridOwner() != Player.Unowned)
+            return;
+
+        Player detectedSectionOwner = GridChecker.searchForOwner(section);
+        if (detectedSectionOwner != Player.Unowned) {
+            Line winLine = GridChecker.searchForWinLineOrGetNull(section);
+            section.setSectionOwner(detectedSectionOwner, winLine);
+        }
+    }
+
+    @Override
+    public Player getWinner(Grid grid) {
+        return GridChecker.searchForOwner(grid);
+    }
 }

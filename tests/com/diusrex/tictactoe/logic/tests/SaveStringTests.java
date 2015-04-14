@@ -11,8 +11,9 @@ import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.BoxPosition;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
 import com.diusrex.tictactoe.logic.StringSaver;
-import com.diusrex.tictactoe.logic.TicTacToeEngine;
+import com.diusrex.tictactoe.logic.StandardTicTacToeEngine;
 
 public class SaveStringTests {
     BoardStatus mainBoard;
@@ -22,10 +23,10 @@ public class SaveStringTests {
 
     @Before
     public void setup() {
-        mainBoard = new BoardStatus();
-        generatedBoard = new BoardStatus();
+        mainBoard = new BoardStatus(new StandardTicTacToeEngine());
+        generatedBoard = new BoardStatus(new StandardTicTacToeEngine());
         playerOneMove = new Move(mainBoard.getSectionToPlayIn(), BoxPosition.make(0, 0), Player.Player_1);
-        playerTwoMove = new Move(TicTacToeEngine.getSectionToPlayInNext(playerOneMove.getBox()),
+        playerTwoMove = new Move(GeneralTicTacToeLogic.getSectionToPlayInNext(playerOneMove.getBox()),
                 BoxPosition.make(1, 1), Player.Player_2);
     }
 

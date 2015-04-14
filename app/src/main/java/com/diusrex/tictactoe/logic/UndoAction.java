@@ -40,7 +40,7 @@ public class UndoAction {
         if (allMoves.size() > 0) {
             Move previousMove = allMoves.peek();
 
-            return TicTacToeEngine.getSectionToPlayInNext(previousMove);
+            return GeneralTicTacToeLogic.getSectionToPlayInNext(previousMove);
         } else {
             return undoneTopMove.getSection();
         }

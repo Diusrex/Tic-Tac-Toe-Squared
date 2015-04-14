@@ -5,6 +5,10 @@ import java.util.Stack;
 import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.Move;
 
+/*
+ * Is to be used to save/load the state of the board from a string.
+ * Will work with any special board, so long as the given board for loadBoardFromString has the same Engine as the one used for getSaveString.
+ */
 public class StringSaver {
     private StringSaver() {
     }
@@ -28,7 +32,8 @@ public class StringSaver {
         // Is <= because i + Move.SIZE_OF_SAVED_MOVE is not inclusive on the end
         for (int i = 0; i + Move.SIZE_OF_SAVED_MOVE <= savedBoardStatus.length(); i += Move.SIZE_OF_SAVED_MOVE) {
             Move move = Move.fromString(savedBoardStatus.substring(i, i + Move.SIZE_OF_SAVED_MOVE));
-            TicTacToeEngine.applyMoveIfValid(board, move);
+            
+            board.applyMoveIfValid(move);
         }
 
         return board;

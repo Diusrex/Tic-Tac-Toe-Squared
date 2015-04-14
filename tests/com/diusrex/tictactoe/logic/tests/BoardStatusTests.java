@@ -12,13 +12,14 @@ import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.SectionPosition;
 import com.diusrex.tictactoe.logic.GridConstants;
 import com.diusrex.tictactoe.logic.GridLists;
+import com.diusrex.tictactoe.logic.StandardTicTacToeEngine;
 
 public class BoardStatusTests {
     BoardStatus board;
 
     @Before
     public void setup() {
-        board = new BoardStatus();
+        board = new BoardStatus(new StandardTicTacToeEngine());
     }
 
     @Test

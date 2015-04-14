@@ -9,13 +9,14 @@ import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.SectionPosition;
 import com.diusrex.tictactoe.logic.GridChecker;
+import com.diusrex.tictactoe.logic.StandardTicTacToeEngine;
 
 public class GridCheckerPossibleToWinTests {
     BoardStatus board;
 
     @Before
     public void setup() {
-        board = new BoardStatus(SectionPosition.make(0, 0));
+        board = new BoardStatus(new StandardTicTacToeEngine());
     }
 
     @Test
