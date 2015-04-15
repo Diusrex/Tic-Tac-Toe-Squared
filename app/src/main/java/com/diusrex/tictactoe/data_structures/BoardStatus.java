@@ -50,7 +50,7 @@ public class BoardStatus {
 
     public void undoLastMove() {
         // Cannot do anything in this case
-        if (allMoves.size() == 0)
+        if (!ableToUndoLastMove())
             return;
 
         Move undoneTopMove = allMoves.pop();
@@ -62,6 +62,10 @@ public class BoardStatus {
         }
 
         sectionToPlayIn = UndoAction.getSectionToPlayIn(allMoves, undoneTopMove);
+    }
+
+    public boolean ableToUndoLastMove() {
+        return allMoves.size() != 0;
     }
 
     public SectionPosition getSectionToPlayIn() {

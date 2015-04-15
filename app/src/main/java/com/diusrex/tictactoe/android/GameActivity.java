@@ -20,6 +20,7 @@ import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.diusrex.tictactoe.R;
@@ -41,6 +42,8 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
     static private final String SHOW_GAME_IS_DRAW = "GameIsDraw";
     static private final long COOLDOWN = 250;
 
+    private Button undoButton;
+
     private BoardStatus board;
     private Player currentPlayer;
 
@@ -55,6 +58,8 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        undoButton = (Button) findViewById(R.id.undoButton);
 
         shownGameIsDraw = savedInstanceState != null && savedInstanceState.getBoolean(SHOW_GAME_IS_DRAW);
 
@@ -93,6 +98,8 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
             disablePerformingMove();
             sectionSelected(selectedSection);
         }
+
+        undoButton.setEnabled(board.ableToUndoLastMove());
     }
 
     private boolean gameStillRunning() {
@@ -132,6 +139,7 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
             graphicsUpdater.redrawBoard(this, board);
 
             handleWinOrPrepareForNextMove(sectionPosition, currentTime);
+            undoButton.setEnabled(board.ableToUndoLastMove());
         }
     }
 
@@ -146,7 +154,7 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
         if (winnerExists()) {
             sectionSelected(sectionPosition);
             handleWin();
-        } else if (boardIsFull()){
+        } else if (boardIsFull()) {
             sectionSelected(sectionPosition);
             showDrawDialog();
         } else {
@@ -226,6 +234,7 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
             prepareForNextMove(getCurrentTime(), board.getSectionToPlayIn());
 
             ensureDrawUpdated();
+            undoButton.setEnabled(board.ableToUndoLastMove());
         }
     }
 
