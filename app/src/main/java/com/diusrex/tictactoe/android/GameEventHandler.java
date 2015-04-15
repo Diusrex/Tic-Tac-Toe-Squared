@@ -15,11 +15,11 @@
  **/
 package com.diusrex.tictactoe.android;
 
-import com.diusrex.tictactoe.logic.BoxPosition;
-import com.diusrex.tictactoe.logic.SectionPosition;
+import com.diusrex.tictactoe.data_structures.BoxPosition;
+import com.diusrex.tictactoe.data_structures.SectionPosition;
 
 public interface GameEventHandler {
     void sectionSelected(SectionPosition position);
 
-    void boxSelected(BoxPosition position);
+    void boxSelected(SectionPosition sectionPosition, BoxPosition position);
 }

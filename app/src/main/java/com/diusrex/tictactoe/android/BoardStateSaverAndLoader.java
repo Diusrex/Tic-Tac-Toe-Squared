@@ -18,9 +18,10 @@ package com.diusrex.tictactoe.android;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.diusrex.tictactoe.logic.BoardStatus;
-import com.diusrex.tictactoe.logic.SectionPosition;
-import com.diusrex.tictactoe.logic.TicTacToeEngine;
+import com.diusrex.tictactoe.data_structures.BoardStatus;
+import com.diusrex.tictactoe.data_structures.SectionPosition;
+import com.diusrex.tictactoe.logic.BoardStatusFactory;
+import com.diusrex.tictactoe.logic.StringSaver;
 
 public class BoardStateSaverAndLoader {
     static private final String SAVED_BOARD_PREFERENCE_FILE = "PreferenceFile";
@@ -34,9 +35,9 @@ public class BoardStateSaverAndLoader {
     }
 
     public boolean saveGameExists() {
-        BoardStatus savedBoard = loadBoard();
+        BoardStatus savedBoard = loadBoard(BoardStatusFactory.createStandardBoard());
 
-        return !savedBoard.equals(new BoardStatus());
+        return savedBoard.getAllMoves().size() > 0;
     }
 
     public void resetBoardState() {
@@ -46,31 +47,31 @@ public class BoardStateSaverAndLoader {
         editor.apply();
     }
 
-    public BoardStatus loadBoard() {
+    public void saveGameState(BoardStatus board) {
+        String saveGameString = StringSaver.getSaveString(board);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(SAVED_BOARD_STATE, saveGameString);
+        editor.apply();
+    }
+
+    public BoardStatus loadBoard(BoardStatus board) {
         String boardString = prefs.getString(SAVED_BOARD_STATE, "");
-        return TicTacToeEngine.loadBoardFromString(boardString);
+        return StringSaver.loadBoardFromString(board, boardString);
     }
 
     public SectionPosition loadSelectedSection(BoardStatus board) {
         SectionPosition defaultSection = board.getSectionToPlayIn();
-        String defaultSectionString = TicTacToeEngine.sectionPositionToString(defaultSection);
+        String defaultSectionString = defaultSection.toString();
 
         // This defaultSectionString would only be used if there is no previously saved section
         String selectedSection = prefs.getString(SAVED_SELECTED_SECTION, defaultSectionString);
-        return TicTacToeEngine.stringToSectionPosition(selectedSection);
+        return SectionPosition.fromString(selectedSection);
     }
 
     public void selectedSectionChanged(SectionPosition selectedSection) {
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(SAVED_SELECTED_SECTION, TicTacToeEngine.sectionPositionToString(selectedSection));
-        editor.apply();
-    }
-
-    public void saveGameState(BoardStatus board) {
-        String saveGameString = TicTacToeEngine.getSaveString(board);
-
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(SAVED_BOARD_STATE, saveGameString);
+        editor.putString(SAVED_SELECTED_SECTION, selectedSection.toString());
         editor.apply();
     }
 }

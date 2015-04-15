@@ -59,7 +59,6 @@ public class HowToPlayActivity extends Activity {
 
         loadAnimations();
 
-
         backButton = (Button) findViewById(R.id.backButton);
         nextButton = (Button) findViewById(R.id.nextButton);
         flipper = (ViewFlipper) findViewById(R.id.viewFlipper);
@@ -67,12 +66,12 @@ public class HowToPlayActivity extends Activity {
         flipper.setOnTouchListener(new OnSwipeTouchListener(this) {
             @Override
             public void onSwipeLeft() {
-                nextScreen();
+                nextScreenAlwaysAnimate();
             }
 
             @Override
             public void onSwipeRight() {
-                previousScreen();
+                previousScreenAlwaysAnimate();
             }
         });
 
@@ -130,7 +129,7 @@ public class HowToPlayActivity extends Activity {
     }
 
     private void setTextFromHtml(int textViewId, int textId) {
-        TextView v =(TextView) findViewById(textViewId);
+        TextView v = (TextView) findViewById(textViewId);
         v.setText(Html.fromHtml(getString(textId)));
     }
 
@@ -156,10 +155,6 @@ public class HowToPlayActivity extends Activity {
     }
 
     public void nextScreen(View v) {
-        nextScreen();
-    }
-
-    private void nextScreen() {
         if (!canChangeScreens())
             return;
 
@@ -171,8 +166,7 @@ public class HowToPlayActivity extends Activity {
         }
 
         if (shouldAnimateNextScreen()) {
-            flipper.setInAnimation(toLeftIn);
-            flipper.setOutAnimation(toLeftOut);
+            useGoToNextAnimation();
         } else {
             disableAnimations();
         }
@@ -180,11 +174,28 @@ public class HowToPlayActivity extends Activity {
         updateDisplay();
     }
 
-    public void previousScreen(View v) {
-        previousScreen();
+    private void nextScreenAlwaysAnimate() {
+        if (!canChangeScreens())
+            return;
+
+        ++currentScreenIndex;
+
+        if (currentScreenIndex == NUMBER_OF_SCREENS) {
+            finish();
+            return;
+        }
+
+        useGoToNextAnimation();
+
+        updateDisplay();
     }
 
-    private void previousScreen() {
+    private void useGoToNextAnimation() {
+        flipper.setInAnimation(toLeftIn);
+        flipper.setOutAnimation(toLeftOut);
+    }
+
+    public void previousScreen(View v) {
         if (!canChangeScreens())
             return;
 
@@ -196,12 +207,33 @@ public class HowToPlayActivity extends Activity {
         }
 
         if (shouldAnimateBackScreen()) {
-            flipper.setInAnimation(toRightIn);
-            flipper.setOutAnimation(toRightOut);
+            useGoBackAnimation();
         } else {
             disableAnimations();
         }
+
         updateDisplay();
+    }
+
+    private void previousScreenAlwaysAnimate() {
+        if (!canChangeScreens())
+            return;
+
+        --currentScreenIndex;
+
+        if (currentScreenIndex < 0) {
+            finish();
+            return;
+        }
+
+        useGoBackAnimation();
+
+        updateDisplay();
+    }
+
+    private void useGoBackAnimation() {
+        flipper.setInAnimation(toRightIn);
+        flipper.setOutAnimation(toRightOut);
     }
 
     private void disableAnimations() {

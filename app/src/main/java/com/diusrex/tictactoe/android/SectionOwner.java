@@ -21,32 +21,32 @@ import android.widget.Space;
 
 import com.diusrex.tictactoe.R;
 import com.diusrex.tictactoe.box_images.BoxImageResourceInfo;
-import com.diusrex.tictactoe.logic.BoardStatus;
-import com.diusrex.tictactoe.logic.BoxPosition;
-import com.diusrex.tictactoe.logic.Line;
-import com.diusrex.tictactoe.logic.Player;
-import com.diusrex.tictactoe.logic.SectionPosition;
+import com.diusrex.tictactoe.data_structures.BoardStatus;
+import com.diusrex.tictactoe.data_structures.BoxPosition;
+import com.diusrex.tictactoe.data_structures.Line;
+import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.data_structures.Position;
+import com.diusrex.tictactoe.data_structures.SectionPosition;
+import com.diusrex.tictactoe.logic.GridConstants;
 
 public class SectionOwner implements GridOwner {
     static private final int GRID_LINE_WIDTH = 15;
     static private final int SIZE_OF_SPACE = 10;
 
     private final SectionPosition sectionPosition;
-    private final BoxPosition boxOffset;
-    private final MyGrid grid;
+    private final MyGridLayout gridLayout;
 
     private final ImageView allBoxes[][];
 
-    SectionOwner(SectionPosition sectionPosition, MyGrid grid) {
+    SectionOwner(SectionPosition sectionPosition, MyGridLayout gridLayout) {
         this.sectionPosition = sectionPosition;
-        this.boxOffset = sectionPosition.getTopLeftPosition();
-        this.grid = grid;
-        this.allBoxes = new ImageView[BoardStatus.SIZE_OF_SECTION][BoardStatus.SIZE_OF_SECTION];
+        this.gridLayout = gridLayout;
+        this.allBoxes = new ImageView[GridConstants.SIZE_OF_SECTION][GridConstants.SIZE_OF_SECTION];
 
-        setUpGridLines(this.grid);
+        setUpGridLines(this.gridLayout);
     }
 
-    private void setUpGridLines(MyGrid grid) {
+    private void setUpGridLines(MyGridLayout grid) {
         grid.setLineWidth(getLineWidth());
         grid.setLineColor(grid.getResources().getColor(R.color.section_win_line));
     }
@@ -57,17 +57,17 @@ public class SectionOwner implements GridOwner {
 
     @Override
     public void removeAllViews() {
-        grid.removeAllViews();
+        gridLayout.removeAllViews();
     }
 
     @Override
     public void addGridItem(Activity activity, BoardStatus board, int x, int y, BoxImageResourceInfo boxImageType) {
-        BoxPosition posInBoard = boxOffset.increaseBy(x, y);
-        allBoxes[x][y] = generateBox(board.getBoxOwner(posInBoard), activity, boxImageType);
+        BoxPosition pos = BoxPosition.make(x, y);
+        allBoxes[pos.getGridX()][pos.getGridY()] = generateBox(board.getBoxOwner(sectionPosition, pos), activity, boxImageType);
 
-        setUpSpecialInformation(allBoxes[x][y], posInBoard);
+        setUpSpecialInformation(allBoxes[x][y], pos);
 
-        grid.addView(allBoxes[x][y]);
+        gridLayout.addView(allBoxes[x][y]);
     }
 
     protected void setUpSpecialInformation(ImageView imageView, BoxPosition posInBoard) {
@@ -85,23 +85,23 @@ public class SectionOwner implements GridOwner {
     public void addSingleHorizontalSpace(Activity activity) {
         Space space = new Space(activity);
         space.setMinimumWidth(SIZE_OF_SPACE);
-        grid.addView(space);
+        gridLayout.addView(space);
     }
 
     @Override
     public void addSingleVerticalSpace(Activity activity) {
         Space space = new Space(activity);
         space.setMinimumHeight(SIZE_OF_SPACE);
-        grid.addView(space);
+        gridLayout.addView(space);
     }
 
     @Override
     public void updateWinLine(BoardStatus board) {
-        Line winLine = board.getLine(sectionPosition);
+        Line winLine = board.getSectionWinLine(sectionPosition);
         if (shouldDrawWinLine(winLine)) {
             drawWinLine(winLine);
         } else if (shouldRemoveWinLineFromGrid(winLine)) {
-            grid.removeLine();
+            gridLayout.removeLine();
         }
     }
 
@@ -110,19 +110,15 @@ public class SectionOwner implements GridOwner {
     }
 
     private boolean shouldRemoveWinLineFromGrid(Line winLine) {
-        return winLine == null && grid.hasLine();
+        return winLine == null && gridLayout.hasLine();
     }
 
     private void drawWinLine(Line winLine) {
-        BoxPosition startPos = convertPositionToSectionRelative(winLine.getStart());
-        BoxPosition endPos = convertPositionToSectionRelative(winLine.getEnd());
-        grid.setLine(getBox(startPos), getBox(endPos));
+        gridLayout.setLine(getBox(winLine.getStart()), getBox(winLine.getEnd()));
     }
 
     public void updateBoxValue(BoardStatus board, BoxPosition positionInBoard, BoxImageResourceInfo boxImageType) {
-        BoxPosition positionInOwnBoxes = convertPositionToSectionRelative(positionInBoard);
-
-        setBoxImage(board.getBoxOwner(positionInBoard), getBox(positionInOwnBoxes), boxImageType);
+        setBoxImage(board.getBoxOwner(sectionPosition, positionInBoard), getBox(positionInBoard), boxImageType);
 
         updateWinLine(board);
     }
@@ -143,12 +139,8 @@ public class SectionOwner implements GridOwner {
         }
     }
 
-    private BoxPosition convertPositionToSectionRelative(BoxPosition pos) {
-        return pos.decreaseBy(boxOffset);
-    }
-
-    private ImageView getBox(BoxPosition pos) {
-        return allBoxes[pos.getX()][pos.getY()];
+    private ImageView getBox(Position pos) {
+        return allBoxes[pos.getGridX()][pos.getGridY()];
     }
 
 }

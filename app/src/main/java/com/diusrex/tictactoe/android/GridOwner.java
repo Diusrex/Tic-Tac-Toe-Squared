@@ -18,12 +18,12 @@ package com.diusrex.tictactoe.android;
 import android.app.Activity;
 
 import com.diusrex.tictactoe.box_images.BoxImageResourceInfo;
-import com.diusrex.tictactoe.logic.BoardStatus;
+import com.diusrex.tictactoe.data_structures.BoardStatus;
 
 public interface GridOwner {
-    public void updateWinLine(BoardStatus board);
+    void updateWinLine(BoardStatus board);
 
-    public void removeAllViews();
+    void removeAllViews();
 
     void addGridItem(Activity activity, BoardStatus board, int x, int y, BoxImageResourceInfo boxImageType);
 

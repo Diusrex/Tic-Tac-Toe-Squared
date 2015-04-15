@@ -19,10 +19,11 @@ import android.app.Activity;
 
 import com.diusrex.tictactoe.R;
 import com.diusrex.tictactoe.box_images.BoxImageResourceInfo;
-import com.diusrex.tictactoe.logic.BoardStatus;
+import com.diusrex.tictactoe.data_structures.BoardStatus;
+import com.diusrex.tictactoe.logic.GridConstants;
 
 public class GridOrganizer {
-    private static final int SIZE_OF_GRID = BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE;
+    private static final int SIZE_OF_GRID = GridConstants.NUMBER_OF_SECTIONS_PER_SIDE;
     private static final int LAST_ELEMENT_POS_IN_GRID = SIZE_OF_GRID - 1;
 
     private GridOrganizer() {

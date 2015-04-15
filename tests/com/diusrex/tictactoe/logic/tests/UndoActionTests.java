@@ -99,7 +99,7 @@ public class UndoActionTests {
         board.undoLastMove();
 
         Assert.assertEquals(Player.Unowned, board.getSectionOwner(sectionToWin));
-        Assert.assertEquals(null, board.getLine(sectionToWin));
+        Assert.assertEquals(null, board.getSectionWinLine(sectionToWin));
     }
 
     @Test
@@ -117,7 +117,7 @@ public class UndoActionTests {
 
         Assert.assertEquals(mainPlayer, board.getSectionOwner(sectionToWin));
         TestUtils.testLinesAreEqual(new Line(BoxPosition.make(0, 0), BoxPosition.make(2, 0)),
-                board.getLine(sectionToWin));
+                board.getSectionWinLine(sectionToWin));
     }
 
     private void fillSection(SectionPosition fullSection) {
@@ -171,7 +171,7 @@ public class UndoActionTests {
         lines = new Line[GridConstants.NUMBER_OF_SECTIONS_PER_SIDE][GridConstants.NUMBER_OF_SECTIONS_PER_SIDE];
         for (int x = 0; x < GridConstants.NUMBER_OF_SECTIONS_PER_SIDE; ++x)
             for (int y = 0; y < GridConstants.NUMBER_OF_SECTIONS_PER_SIDE; ++y)
-                lines[x][y] = board.getLine(SectionPosition.make(x, y));
+                lines[x][y] = board.getSectionWinLine(SectionPosition.make(x, y));
     }
 
     private void assertBoardStateUnchanged() {
@@ -188,6 +188,6 @@ public class UndoActionTests {
 
         for (int x = 0; x < GridConstants.NUMBER_OF_SECTIONS_PER_SIDE; ++x)
             for (int y = 0; y < GridConstants.NUMBER_OF_SECTIONS_PER_SIDE; ++y)
-                Assert.assertEquals(lines[x][y], board.getLine(SectionPosition.make(x, y)));
+                Assert.assertEquals(lines[x][y], board.getSectionWinLine(SectionPosition.make(x, y)));
     }
 }

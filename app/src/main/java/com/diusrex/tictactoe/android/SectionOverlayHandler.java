@@ -20,10 +20,12 @@ import android.graphics.drawable.Drawable;
 import android.widget.FrameLayout;
 
 import com.diusrex.tictactoe.R;
-import com.diusrex.tictactoe.logic.BoardStatus;
-import com.diusrex.tictactoe.logic.BoxPosition;
-import com.diusrex.tictactoe.logic.Line;
-import com.diusrex.tictactoe.logic.SectionPosition;
+import com.diusrex.tictactoe.data_structures.BoxPosition;
+import com.diusrex.tictactoe.data_structures.Line;
+import com.diusrex.tictactoe.data_structures.Position;
+import com.diusrex.tictactoe.data_structures.SectionPosition;
+import com.diusrex.tictactoe.logic.GridConstants;
+import com.diusrex.tictactoe.logic.GridLists;
 
 public class SectionOverlayHandler {
     private final FrameLayout[][] frames;
@@ -39,7 +41,7 @@ public class SectionOverlayHandler {
         currentlySelected = activity.getResources().getDrawable(R.color.selected);
         regularForeground = activity.getResources().getDrawable(android.R.color.transparent);
 
-        frames = new FrameLayout[BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE][BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE];
+        frames = new FrameLayout[GridConstants.NUMBER_OF_SECTIONS_PER_SIDE][GridConstants.NUMBER_OF_SECTIONS_PER_SIDE];
     }
 
     public void setSectionFrame(FrameLayout frame, int x, int y) {
@@ -49,31 +51,27 @@ public class SectionOverlayHandler {
 
     // This will not crash if given an invalid section
     public void sectionToPlayInChanged(SectionPosition sectionToPlayIn) {
-        int addedToX = sectionToPlayIn.getX();
-        int addedToY = sectionToPlayIn.getY();
+        int addedToX = sectionToPlayIn.getGridX();
+        int addedToY = sectionToPlayIn.getGridY();
 
-        for (int y = 0; y < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++y) {
-            for (int x = 0; x < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++x) {
-                if (x == addedToX && y == addedToY)
-                    addPlayInToForeground(frames[x][y]);
-                else
-                    removePlayInFromForeground(frames[x][y]);
-            }
+        for (Position pos : GridLists.getAllStandardPositions()) {
+            if (pos.getGridX() == addedToX && pos.getGridY() == addedToY)
+                addPlayInToForeground(frames[pos.getGridX()][pos.getGridY()]);
+            else
+                removePlayInFromForeground(frames[pos.getGridX()][pos.getGridY()]);
         }
     }
 
     // This will not crash if given an invalid section
     public void selectionSelectedChanged(SectionPosition section) {
-        int addedToX = section.getX();
-        int addedToY = section.getY();
+        int addedToX = section.getGridX();
+        int addedToY = section.getGridY();
 
-        for (int y = 0; y < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++y) {
-            for (int x = 0; x < BoardStatus.NUMBER_OF_SECTIONS_PER_SIDE; ++x) {
-                if (x == addedToX && y == addedToY)
-                    addSelectedToForeground(frames[x][y]);
-                else
-                    removeSelectedFromForeground(frames[x][y]);
-            }
+        for (Position pos : GridLists.getAllStandardPositions()) {
+            if (pos.getGridX() == addedToX && pos.getGridY() == addedToY)
+                addSelectedToForeground(frames[pos.getGridX()][pos.getGridY()]);
+            else
+                removeSelectedFromForeground(frames[pos.getGridX()][pos.getGridY()]);
         }
     }
 
@@ -105,15 +103,15 @@ public class SectionOverlayHandler {
             frameLayout.setForeground(currentlySelected);
     }
 
-    public void setWinLine(MyGrid grid, Line line) {
+    public void setWinLine(MyGridLayout grid, Line line) {
         grid.setLine(getFrame(line.getStart()), getFrame(line.getEnd()));
     }
 
     private FrameLayout getFrame(BoxPosition pos) {
-        return frames[pos.getX()][pos.getY()];
+        return frames[pos.getGridX()][pos.getGridY()];
     }
 
-    public void removeWinLine(MyGrid grid) {
+    public void removeWinLine(MyGridLayout grid) {
         if (grid.hasLine()) {
             grid.removeLine();
         }

@@ -18,16 +18,18 @@ package com.diusrex.tictactoe.android;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.diusrex.tictactoe.logic.BoxPosition;
-import com.diusrex.tictactoe.logic.SectionPosition;
+import com.diusrex.tictactoe.data_structures.BoxPosition;
+import com.diusrex.tictactoe.data_structures.SectionPosition;
 
 public class SelectedSectionOwner extends SectionOwner {
     static private final int GRID_LINE_WIDTH = 30;
     private final GameEventHandler handler;
+    private final SectionPosition sectionPosition;
 
 
-    SelectedSectionOwner(SectionPosition sectionPosition, MyGrid grid, GameEventHandler handler) {
+    SelectedSectionOwner(SectionPosition sectionPosition, MyGridLayout grid, GameEventHandler handler) {
         super(sectionPosition, grid);
+        this.sectionPosition = sectionPosition;
         this.handler = handler;
     }
 
@@ -37,12 +39,12 @@ public class SelectedSectionOwner extends SectionOwner {
     }
 
     @Override
-    protected void setUpSpecialInformation(ImageView imageView, BoxPosition posInBoard) {
-        imageView.setTag(posInBoard);
+    protected void setUpSpecialInformation(ImageView imageView, BoxPosition posInSection) {
+        imageView.setTag(posInSection);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                handler.boxSelected((BoxPosition) v.getTag());
+                handler.boxSelected(sectionPosition, (BoxPosition) v.getTag());
             }
         });
     }

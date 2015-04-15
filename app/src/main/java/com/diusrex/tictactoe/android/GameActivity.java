@@ -18,6 +18,7 @@ package com.diusrex.tictactoe.android;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.TextView;
 
@@ -25,14 +26,13 @@ import com.diusrex.tictactoe.R;
 import com.diusrex.tictactoe.android.dialogs.DrawDialogFragment;
 import com.diusrex.tictactoe.android.dialogs.GameEndActivityListener;
 import com.diusrex.tictactoe.android.dialogs.WinDialogFragment;
-import com.diusrex.tictactoe.logic.BoardStatus;
-import com.diusrex.tictactoe.logic.BoxPosition;
-import com.diusrex.tictactoe.logic.Move;
-import com.diusrex.tictactoe.logic.Player;
-import com.diusrex.tictactoe.logic.PossibleToWinChecker;
-import com.diusrex.tictactoe.logic.SectionPosition;
-import com.diusrex.tictactoe.logic.TicTacToeEngine;
-import com.diusrex.tictactoe.logic.UndoAction;
+import com.diusrex.tictactoe.data_structures.BoardStatus;
+import com.diusrex.tictactoe.data_structures.BoxPosition;
+import com.diusrex.tictactoe.data_structures.Move;
+import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.data_structures.SectionPosition;
+import com.diusrex.tictactoe.logic.BoardStatusFactory;
+import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
 
 import java.util.Calendar;
 
@@ -56,15 +56,11 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        if (savedInstanceState != null) {
-            shownGameIsDraw = savedInstanceState.getBoolean(SHOW_GAME_IS_DRAW);
-        } else {
-            shownGameIsDraw = false;
-        }
+        shownGameIsDraw = savedInstanceState != null && savedInstanceState.getBoolean(SHOW_GAME_IS_DRAW);
 
         saverAndLoader = new BoardStateSaverAndLoader(this);
 
-        MainGridOwner mainGridOwner = new MainGridOwner(this, this, (MyGrid) findViewById(R.id.mainGrid));
+        MainGridOwner mainGridOwner = new MainGridOwner(this, this, (MyGridLayout) findViewById(R.id.mainGrid));
         TextView playerInfo = (TextView) findViewById(R.id.player_info);
         graphicsUpdater = new GameGraphicsUpdater(mainGridOwner, playerInfo);
 
@@ -81,7 +77,7 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
     @Override
     protected void onResume() {
         super.onResume();
-        board = saverAndLoader.loadBoard();
+        board = saverAndLoader.loadBoard(BoardStatusFactory.createStandardBoard());
         updateCurrentPlayer();
 
         graphicsUpdater.redrawBoard(this, board);
@@ -104,11 +100,11 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
     }
 
     private boolean boardIsFull() {
-        return TicTacToeEngine.boardIsFull(board);
+        return GeneralTicTacToeLogic.boardIsFull(board);
     }
 
     private void updateCurrentPlayer() {
-        currentPlayer = TicTacToeEngine.getNextPlayer(board);
+        currentPlayer = board.getNextPlayer();
         graphicsUpdater.playerChanged(currentPlayer, getPlayerAsString());
     }
 
@@ -120,33 +116,38 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
         outState.putBoolean(SHOW_GAME_IS_DRAW, shownGameIsDraw);
     }
 
     @Override
-    public void boxSelected(BoxPosition position) {
-        Move move = new Move(position, currentPlayer);
+    public void boxSelected(SectionPosition sectionPosition, BoxPosition position) {
+        Move move = new Move(sectionPosition, position, currentPlayer);
 
         long currentTime = getCurrentTime();
-        if (TicTacToeEngine.isValidMove(board, move) && currentTime - previousTime > COOLDOWN) {
-            TicTacToeEngine.applyMoveIfValid(board, move);
+        if (isValidMove(move, currentTime)) {
+            board.applyMoveIfValid(move);
             graphicsUpdater.redrawBoard(this, board);
 
-            handleWinOrPrepareForNextMove(position, currentTime);
+            handleWinOrPrepareForNextMove(sectionPosition, currentTime);
         }
     }
 
-    private void handleWinOrPrepareForNextMove(BoxPosition position, long currentTime) {
+    private boolean isValidMove(Move move, long currentTime) {
+        return board.isValidMove(move) && currentTime - previousTime > COOLDOWN;
+    }
+
+    private void handleWinOrPrepareForNextMove(SectionPosition sectionPosition, long currentTime) {
         if (isADraw() && !shownGameIsDraw)
             showDrawDialog();
 
         if (winnerExists()) {
-            handleWin(position);
+            sectionSelected(sectionPosition);
+            handleWin();
         } else if (boardIsFull()){
-            sectionSelected(position.getSectionIn());
+            sectionSelected(sectionPosition);
             showDrawDialog();
         } else {
             prepareForNextMove(currentTime, board.getSectionToPlayIn());
@@ -154,11 +155,11 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
     }
 
     private boolean isADraw() {
-        return !PossibleToWinChecker.isStillPossibleToWin(board);
+        return !board.possibleToWin();
     }
 
     private boolean winnerExists() {
-        return TicTacToeEngine.getWinner(board) != Player.Unowned;
+        return board.getWinner() != Player.Unowned;
     }
 
     private void prepareForNextMove(long currentTime, SectionPosition selectedSection) {
@@ -171,10 +172,8 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
         previousTime = currentTime;
     }
 
-    private void handleWin(BoxPosition position) {
+    private void handleWin() {
         graphicsUpdater.updateWinLine(board);
-
-        sectionSelected(position.getSectionIn());
 
         String winningPlayer = getPlayerAsString();
         disablePerformingMove();
@@ -210,7 +209,7 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
     }
 
     private void updateGraphicalSelectedSection(SectionPosition section) {
-        SectionOwner mainSection = new SelectedSectionOwner(section, (MyGrid) findViewById(R.id.selectedSection), this);
+        SectionOwner mainSection = new SelectedSectionOwner(section, (MyGridLayout) findViewById(R.id.selectedSection), this);
         graphicsUpdater.selectedSectionChanged(this, board, mainSection, section);
     }
 
@@ -221,7 +220,7 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
 
     public void undoMove(View v) {
         if (canUndoLastMove()) {
-            UndoAction.undoLastMove(board);
+            board.undoLastMove();
 
             graphicsUpdater.redrawBoard(this, board);
             prepareForNextMove(getCurrentTime(), board.getSectionToPlayIn());
@@ -256,7 +255,7 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
     @Override
     public void returnToMainMenu() {
         // Need to reset these because they are what will be saved
-        board = new BoardStatus();
+        board = BoardStatusFactory.createStandardBoard();
         saverAndLoader.selectedSectionChanged(board.getSectionToPlayIn());
         finish();
     }
@@ -268,7 +267,7 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
 
     @Override
     public void runNewGame() {
-        board = new BoardStatus();
+        board = BoardStatusFactory.createStandardBoard();
         graphicsUpdater.redrawBoard(this, board);
 
         SectionPosition selectedSection = board.getSectionToPlayIn();

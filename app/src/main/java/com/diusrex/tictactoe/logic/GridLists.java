@@ -15,18 +15,24 @@
  **/
 package com.diusrex.tictactoe.logic;
 
+import com.diusrex.tictactoe.data_structures.BasicPosition;
+import com.diusrex.tictactoe.data_structures.BoxPosition;
+import com.diusrex.tictactoe.data_structures.Line;
+import com.diusrex.tictactoe.data_structures.LineIterator;
+import com.diusrex.tictactoe.data_structures.Position;
+import com.diusrex.tictactoe.data_structures.SectionPosition;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.diusrex.tictactoe.data_structures.BoxPosition;
-import com.diusrex.tictactoe.data_structures.Line;
-import com.diusrex.tictactoe.data_structures.LineIterator;
-import com.diusrex.tictactoe.data_structures.SectionPosition;
-
+/*
+ *  All non line Lists go emulate going through with x in inner for loop
+ */
 public class GridLists {
+    private static List<Position> allPositions;
     private static List<BoxPosition> allBoxesInSection;
-    static private List<SectionPosition> allSections;
+    private static List<SectionPosition> allSections;
     private static List<LineIterator> allLineIterators;
     private static List<Line> allLines;
 
@@ -36,12 +42,26 @@ public class GridLists {
     private GridLists() {
     }
 
+    public static List<Position> getAllStandardPositions() {
+        if (allPositions == null) {
+            allPositions = new ArrayList<>();
+
+            for (int y = 0; y < GridConstants.SIZE_OF_SECTION; ++y) {
+                for (int x = 0; x < GridConstants.SIZE_OF_SECTION; ++x) {
+                    allPositions.add(new BasicPosition(x, y));
+                }
+            }
+        }
+
+        return Collections.unmodifiableList(allPositions);
+    }
+
     public static List<BoxPosition> getAllStandardBoxPositions() {
         if (allBoxesInSection == null) {
-            allBoxesInSection = new ArrayList<BoxPosition>();
+            allBoxesInSection = new ArrayList<>();
 
-            for (int x = 0; x < GridConstants.SIZE_OF_SECTION; ++x) {
-                for (int y = 0; y < GridConstants.SIZE_OF_SECTION; ++y) {
+            for (int y = 0; y < GridConstants.SIZE_OF_SECTION; ++y) {
+                for (int x = 0; x < GridConstants.SIZE_OF_SECTION; ++x) {
                     allBoxesInSection.add(BoxPosition.make(x, y));
                 }
             }
@@ -52,10 +72,10 @@ public class GridLists {
 
     public static List<SectionPosition> getAllStandardSections() {
         if (allSections == null) {
-            allSections = new ArrayList<SectionPosition>();
+            allSections = new ArrayList<>();
 
-            for (int x = 0; x < GridConstants.SIZE_OF_SECTION; ++x) {
-                for (int y = 0; y < GridConstants.SIZE_OF_SECTION; ++y) {
+            for (int y = 0; y < GridConstants.SIZE_OF_SECTION; ++y) {
+                for (int x = 0; x < GridConstants.SIZE_OF_SECTION; ++x) {
                     allSections.add(SectionPosition.make(x, y));
                 }
             }
@@ -67,7 +87,7 @@ public class GridLists {
     public static List<LineIterator> getAllLineIterators() {
         if (allLineIterators == null) {
             List<Line> allLines = getAllLines();
-            allLineIterators = new ArrayList<LineIterator>();
+            allLineIterators = new ArrayList<>();
 
             for (Line line : allLines) {
                 allLineIterators.add(new LineIterator(line));
@@ -79,7 +99,7 @@ public class GridLists {
 
     public static List<Line> getAllLines() {
         if (allLines == null) {
-            allLines = new ArrayList<Line>();
+            allLines = new ArrayList<>();
 
             setUpHorizontalLines();
             setUpVerticalLines();

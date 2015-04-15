@@ -22,22 +22,22 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.GridLayout;
 
-public class MyGrid extends GridLayout {
+public class MyGridLayout extends GridLayout {
     View lineStart;
     View lineEnd;
     Paint paint;
 
-    public MyGrid(Context context) {
+    public MyGridLayout(Context context) {
         super(context);
         paint = new Paint();
     }
 
-    public MyGrid(Context context, AttributeSet attrs) {
+    public MyGridLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         paint = new Paint();
     }
 
-    public MyGrid(Context context, AttributeSet attrs, int defStyleAttr) {
+    public MyGridLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

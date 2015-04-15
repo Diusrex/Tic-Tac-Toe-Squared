@@ -61,7 +61,7 @@ public class EngineSectionTests {
         Assert.assertEquals(currentPlayer, board.getSectionOwner(player1Section));
         
         BoxPosition lineEnd = player1PositionStart.increaseBy(HORIZONTAL_INCREASE).increaseBy(HORIZONTAL_INCREASE);
-        TestUtils.testLinesAreEqual(new Line(player1PositionStart, lineEnd), board.getLine(player1Section));
+        TestUtils.testLinesAreEqual(new Line(player1PositionStart, lineEnd), board.getSectionWinLine(player1Section));
     }
 
     @Test

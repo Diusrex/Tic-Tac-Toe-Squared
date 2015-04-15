@@ -24,10 +24,10 @@ import com.diusrex.tictactoe.box_images.LargeMove;
 import com.diusrex.tictactoe.box_images.LargeMoveMostRecent;
 import com.diusrex.tictactoe.box_images.MostRecentMove;
 import com.diusrex.tictactoe.box_images.RegularMove;
-import com.diusrex.tictactoe.logic.BoardStatus;
-import com.diusrex.tictactoe.logic.Move;
-import com.diusrex.tictactoe.logic.Player;
-import com.diusrex.tictactoe.logic.SectionPosition;
+import com.diusrex.tictactoe.data_structures.BoardStatus;
+import com.diusrex.tictactoe.data_structures.Move;
+import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.data_structures.SectionPosition;
 
 public class GameGraphicsUpdater {
     private final MainGridOwner mainGridOwner;
@@ -58,7 +58,7 @@ public class GameGraphicsUpdater {
         Move mostRecent = getMostRecentMoveOrNull(board);
 
         if (mostRecent != null)
-            mainGridOwner.updateBoxValue(board, mostRecent.getPosition(), mostRecentBox);
+            mainGridOwner.updateBoxValue(board, mostRecent.getSection(), mostRecent.getBox(), mostRecentBox);
     }
 
     private static Move getMostRecentMoveOrNull(BoardStatus board) {
@@ -88,9 +88,9 @@ public class GameGraphicsUpdater {
         if (mostRecentMove == null)
             return;
 
-        SectionPosition mostRecentMoveSection = mostRecentMove.getSectionIn();
+        SectionPosition mostRecentMoveSection = mostRecentMove.getSection();
         if (mostRecentMoveSection.equals(section))
-            mainSection.updateBoxValue(board, mostRecentMove.getPosition(), largeBoxMostRecent);
+            mainSection.updateBoxValue(board, mostRecentMove.getBox(), largeBoxMostRecent);
     }
 
     public void noMovesMayBeMade() {

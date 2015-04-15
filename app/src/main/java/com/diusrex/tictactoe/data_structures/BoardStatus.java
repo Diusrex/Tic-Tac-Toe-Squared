@@ -15,11 +15,11 @@
  **/
 package com.diusrex.tictactoe.data_structures;
 
-import java.util.Stack;
-
 import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
 import com.diusrex.tictactoe.logic.UndoAction;
+
+import java.util.Stack;
 
 public class BoardStatus {
     private static final SectionPosition DEFAULT_STARTING_SECTION_TO_PLAY_IN = SectionPosition.make(1, 1);
@@ -76,15 +76,18 @@ public class BoardStatus {
         return engine.getWinner(sectionsOwnersGrid);
     }
 
+    public boolean isValidMove(Move move) {
+        return GeneralTicTacToeLogic.isValidMove(this, move);
+    }
+
     public void applyMoveIfValid(Move move) {
-        if (GeneralTicTacToeLogic.isValidMove(this, move)) {
+        if (isValidMove(move)) {
             applyMove(move);
 
             engine.updateSectionOwner(getSectionGrid(move.getSection()), move);
         }
     }
 
-    // TODO: Private?
     private void applyMove(Move move) {
         allMoves.push(move);
 
@@ -126,11 +129,15 @@ public class BoardStatus {
         return allMoves;
     }
 
-    public Line getLine(SectionPosition sectionPosition) {
+    public Line getSectionWinLine(SectionPosition sectionPosition) {
         return sectionsOwnersGrid.getLine(sectionPosition);
     }
 
     private SectionGrid getSectionGrid(SectionPosition section) {
         return sectionsOwnersGrid.getSectionGrid(section);
+    }
+
+    public Line getWinLine() {
+        return engine.searchForWinLineOrGetNull(sectionsOwnersGrid);
     }
 }
