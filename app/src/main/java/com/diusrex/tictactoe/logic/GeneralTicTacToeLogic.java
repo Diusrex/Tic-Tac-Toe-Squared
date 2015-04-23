@@ -77,7 +77,7 @@ public class GeneralTicTacToeLogic {
         return requiredSection.equals(actualSection) || sectionIsFull(board, requiredSection);
     }
 
-    private static boolean sectionIsFull(BoardStatus board, SectionPosition requiredSection) {
+    public static boolean sectionIsFull(BoardStatus board, SectionPosition requiredSection) {
         for (BoxPosition pos : GridLists.getAllStandardBoxPositions()) {
             if (board.getBoxOwner(requiredSection, pos) == Player.Unowned)
                 return false;

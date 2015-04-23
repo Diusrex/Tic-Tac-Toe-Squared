@@ -44,6 +44,18 @@ public class BoardStatus {
         allMoves = new Stack<Move>();
     }
 
+    public BoardStatus(BoardStatus board) {
+        this.engine = board.engine;
+
+        nextPlayer = Player.Player_1;
+
+        sectionsOwnersGrid = new MainGrid(engine);
+
+        sectionToPlayIn = DEFAULT_STARTING_SECTION_TO_PLAY_IN;
+
+        allMoves = new Stack<Move>();
+    }
+
     public boolean possibleToWin() {
         return engine.possibleToWin(sectionsOwnersGrid);
     }
@@ -101,6 +113,14 @@ public class BoardStatus {
         nextPlayer = move.getPlayer().opposite();
     }
 
+    public Grid getMainGrid() {
+        return sectionsOwnersGrid;
+    }
+
+    public SectionGrid getSectionGrid(SectionPosition section) {
+        return sectionsOwnersGrid.getSectionGrid(section);
+    }
+
     public void setBoxOwner(Move move) {
         setBoxOwner(move.getSection(), move.getBox(), move.getPlayer());
     }
@@ -137,11 +157,8 @@ public class BoardStatus {
         return sectionsOwnersGrid.getLine(sectionPosition);
     }
 
-    private SectionGrid getSectionGrid(SectionPosition section) {
-        return sectionsOwnersGrid.getSectionGrid(section);
-    }
-
     public Line getWinLine() {
         return engine.searchForWinLineOrGetNull(sectionsOwnersGrid);
     }
+
 }
