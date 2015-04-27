@@ -13,7 +13,7 @@ import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
 import com.diusrex.tictactoe.logic.GridConstants;
 import com.diusrex.tictactoe.logic.tests.TestUtils.MockBoardStatus;
 
-public class EngineTest {
+public class StandardEngineTest {
     MockBoardStatus board;
     Move moveP1;
     Move moveP1_2;
