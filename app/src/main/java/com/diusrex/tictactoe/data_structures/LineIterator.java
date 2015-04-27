@@ -58,7 +58,7 @@ public class LineIterator {
         return iterationNum < 0 || iterationNum > lineSize;
     }
 
-    public BoxPosition getCurrent(int iterationNum) {
+    public Position getCurrent(int iterationNum) {
         BoxPosition toReturn = line.getStart();
         for (int i = 0; i < iterationNum; ++i) {
             toReturn = toReturn.increaseBy(increase);
