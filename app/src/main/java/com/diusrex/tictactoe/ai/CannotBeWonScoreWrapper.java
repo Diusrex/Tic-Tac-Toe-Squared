@@ -5,9 +5,15 @@ import com.diusrex.tictactoe.data_structures.Grid;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.logic.GridLists;
 
-// Basic idea is, punish moves that were lost due to the section being won.
-// So the actual score for a won section is won - 3 * scoringFunction.getCannotWinPoint()
-public class CannotBeWonScoreWrapper implements ScoreCalculator {
+/*
+ * Should be used when:
+ * 
+ * 1) Unable to win the current section
+ * 2) Unable to use the section to win the game
+ * 
+ * Basic idea is, punish moves that are unimportant
+ */
+public class CannotBeWonScoreWrapper implements PlayerScoreCalculator {
 
     @Override
     public int calculateSetupScore(Player currentPlayer, Grid grid, ScoringFunction scoringFunction) {
@@ -25,10 +31,7 @@ public class CannotBeWonScoreWrapper implements ScoreCalculator {
 
     private int getPointScore(Player pointOwner, Player currentPlayer, ScoringFunction scoringFunction, BoxPosition box) {
         if (pointOwner == currentPlayer)
-            return scoringFunction.getCannotWinPointScore(box);
-
-        else if (pointOwner != Player.Unowned)
-            return -scoringFunction.getCannotWinPointScore(box);
+            return scoringFunction.getCannotWinPointScore();
 
         else
             return 0;
