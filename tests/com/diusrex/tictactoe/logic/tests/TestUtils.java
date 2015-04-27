@@ -21,6 +21,10 @@ public class TestUtils {
 
         public Player playerToGoNext;
         public SectionPosition fakedSectionToPlayIn;
+        
+        public Player getActualPlayer() {
+            return super.getNextPlayer();
+        }
 
         @Override
         public Player getNextPlayer() {

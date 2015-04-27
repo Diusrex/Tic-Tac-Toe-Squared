@@ -66,6 +66,7 @@ public class BoardStatus {
             return;
 
         Move undoneTopMove = allMoves.pop();
+        nextPlayer = nextPlayer.opposite();
 
         setBoxOwner(undoneTopMove.getSection(), undoneTopMove.getBox(), Player.Unowned);
 
@@ -110,7 +111,7 @@ public class BoardStatus {
         sectionToPlayIn = GeneralTicTacToeLogic.getSectionToPlayInNext(move);
 
         setBoxOwner(move);
-        nextPlayer = move.getPlayer().opposite();
+        nextPlayer = nextPlayer.opposite();
     }
 
     public Grid getMainGrid() {

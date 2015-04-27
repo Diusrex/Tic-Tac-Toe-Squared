@@ -22,7 +22,7 @@ public class UndoActionTests {
 
     // Backup state
     int stackSize;
-    Player expectedPlayer;
+    Player nextPlayer;
     SectionPosition origionalSectionToPlayIn;
     Player[][] origionalBoxOwners;
     Player[][] origionalSectionOwners;
@@ -109,6 +109,8 @@ public class UndoActionTests {
 
         Assert.assertEquals(mainPlayer, board.getSectionOwner(sectionToWin));
 
+        backupBoardState();
+
         board.fakedSectionToPlayIn = sectionToWin;
         BoxPosition moveThatDoesntEffectOwnership = BoxPosition.make(2, 2);
         TestUtils.applyMoveToBoard(board, new Move(sectionToWin, moveThatDoesntEffectOwnership, mainPlayer));
@@ -118,6 +120,8 @@ public class UndoActionTests {
         Assert.assertEquals(mainPlayer, board.getSectionOwner(sectionToWin));
         TestUtils.testLinesAreEqual(new Line(BoxPosition.make(0, 0), BoxPosition.make(2, 0)),
                 board.getSectionWinLine(sectionToWin));
+        
+        assertBoardStateUnchanged();
     }
 
     private void fillSection(SectionPosition fullSection) {
@@ -143,6 +147,7 @@ public class UndoActionTests {
     }
 
     private void backupBoardState() {
+        nextPlayer = board.getActualPlayer();
         stackSize = board.getAllMoves().size();
         origionalSectionToPlayIn = board.getSectionToPlayIn();
 
@@ -175,6 +180,7 @@ public class UndoActionTests {
     }
 
     private void assertBoardStateUnchanged() {
+        Assert.assertEquals(nextPlayer, board.getActualPlayer());
         Assert.assertEquals(stackSize, board.getAllMoves().size());
         TestUtils.assertAreEqual(origionalSectionToPlayIn, board.getSectionToPlayIn());
 
