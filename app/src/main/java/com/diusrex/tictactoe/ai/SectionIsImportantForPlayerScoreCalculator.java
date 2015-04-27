@@ -6,7 +6,7 @@ import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.Position;
 import com.diusrex.tictactoe.logic.GridLists;
 
-public class CanBeWonScoreCalculator implements PlayerScoreCalculator {
+public class SectionIsImportantForPlayerScoreCalculator implements PlayerScoreCalculator {
 
     @Override
     public int calculateSetupScore(Player currentPlayer, Grid grid, ScoringFunction scoringFunction) {

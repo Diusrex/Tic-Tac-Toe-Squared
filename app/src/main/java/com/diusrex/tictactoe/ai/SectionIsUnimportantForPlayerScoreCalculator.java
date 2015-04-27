@@ -13,7 +13,7 @@ import com.diusrex.tictactoe.logic.GridLists;
  * 
  * Basic idea is, punish moves that are unimportant
  */
-public class CannotBeWonScoreWrapper implements PlayerScoreCalculator {
+public class SectionIsUnimportantForPlayerScoreCalculator implements PlayerScoreCalculator {
 
     @Override
     public int calculateSetupScore(Player currentPlayer, Grid grid, ScoringFunction scoringFunction) {
