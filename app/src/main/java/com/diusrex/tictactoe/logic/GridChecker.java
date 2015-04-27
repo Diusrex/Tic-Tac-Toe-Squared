@@ -18,6 +18,7 @@ package com.diusrex.tictactoe.logic;
 import com.diusrex.tictactoe.data_structures.Grid;
 import com.diusrex.tictactoe.data_structures.Line;
 import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.data_structures.Position;
 
 /*
  * GridChecker
@@ -30,4 +31,6 @@ public interface GridChecker {
     public Player searchForOwner(Grid grid);
 
     public Line searchForWinLineOrGetNull(Grid grid);
+
+    public boolean possibleToWinGridForPlayerUsingPosition(Grid grid, Position position, Player player);
 }

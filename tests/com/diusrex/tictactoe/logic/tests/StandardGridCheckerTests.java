@@ -5,6 +5,7 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.diusrex.tictactoe.data_structures.BasicPosition;
 import com.diusrex.tictactoe.data_structures.BoxPosition;
 import com.diusrex.tictactoe.data_structures.Grid;
 import com.diusrex.tictactoe.data_structures.Line;
@@ -189,6 +190,31 @@ public class StandardGridCheckerTests {
         setGridPlayer(finalPos, currentPlayer);
 
         TestUtils.testLinesAreEqual(new Line(startPos, finalPos), checker.searchForWinLineOrGetNull(grid));
+    }
+
+    @Test
+    public void testPossibleToWinGridForPlayerUsingPositionEmptyGrid() {
+        Assert.assertTrue(checker.possibleToWinGridForPlayerUsingPosition(grid, new BasicPosition(0, 0),
+                Player.Player_1));
+        Assert.assertTrue(checker.possibleToWinGridForPlayerUsingPosition(grid, new BasicPosition(1, 1),
+                Player.Player_1));
+    }
+
+    @Test
+    public void testPossibleToWinGridForPlayerUsingPositionAllLinesCoveredByOther() {
+        Player testedPlayer = Player.Player_1;
+        Player otherPlayer = testedPlayer.opposite();
+
+        grid.grid[1][1] = grid.grid[1][0] = grid.grid[0][1] = otherPlayer;
+        Assert.assertFalse(checker.possibleToWinGridForPlayerUsingPosition(grid, new BasicPosition(0, 0), testedPlayer));
+    }
+
+    @Test
+    public void testPossibleToWinGridForPlayerUsingPositionAllLinesOwnedBySelf() {
+        Player testedPlayer = Player.Player_1;
+
+        grid.grid[1][1] = grid.grid[1][0] = grid.grid[0][1] = testedPlayer;
+        Assert.assertTrue(checker.possibleToWinGridForPlayerUsingPosition(grid, new BasicPosition(0, 0), testedPlayer));
     }
 
     private void fillLine(BoxPosition startPos, BoxPosition increase, Player player, int length) {

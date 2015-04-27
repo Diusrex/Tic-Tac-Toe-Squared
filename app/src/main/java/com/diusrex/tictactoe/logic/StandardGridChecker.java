@@ -6,6 +6,7 @@ import com.diusrex.tictactoe.data_structures.Grid;
 import com.diusrex.tictactoe.data_structures.Line;
 import com.diusrex.tictactoe.data_structures.LineIterator;
 import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.data_structures.Position;
 
 public class StandardGridChecker implements GridChecker {
     @Override
@@ -93,5 +94,28 @@ public class StandardGridChecker implements GridChecker {
         }
 
         return (containsPlayerOne ^ containsPlayerTwo) || empty;
+    }
+
+    @Override
+    public boolean possibleToWinGridForPlayerUsingPosition(Grid grid, Position position, Player player) {
+        Player other = player.opposite();
+        for (LineIterator lineIter : GridLists.getAllLineIterators()) {
+            boolean contains = false, hasOtherPlayer = false;
+
+            for (int index = 0; !lineIter.isDone(index); ++index) {
+                Position pos = lineIter.getCurrent(index);
+
+                if (pos.getGridX() == position.getGridX() && pos.getGridY() == position.getGridY())
+                    contains = true;
+
+                if (grid.getPointOwner(pos) == other)
+                    hasOtherPlayer = true;
+            }
+
+            if (contains && !hasOtherPlayer)
+                return true;
+        }
+
+        return false;
     }
 }
