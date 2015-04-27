@@ -15,7 +15,7 @@ public class MiniMaxPlayer extends AIPlayer {
     private final Scorer scorer;
     private int maxDepth;
 
-    MiniMaxPlayer(ScoringValues scoringInfo, int maxDepth) {
+    public MiniMaxPlayer(ScoringValues scoringInfo, int maxDepth) {
         this.scorer = new Scorer(scoringInfo);
         this.maxDepth = maxDepth;
     }
@@ -27,9 +27,9 @@ public class MiniMaxPlayer extends AIPlayer {
 
     private MoveScore getBestMoveAndItsScore(BoardStatus board, int depth, int multiplier) {
         if (canPlayInAnySection(board)) {
-            return getBestMoveScoreInRequredSection(board, depth, multiplier);
-        } else {
             return getBestMoveScoreInAnySection(board, depth, multiplier);
+        } else {
+            return getBestMoveScoreInRequredSection(board, depth, multiplier);
         }
     }
 
@@ -63,11 +63,13 @@ public class MiniMaxPlayer extends AIPlayer {
             if (board.isValidMove(move)) {
                 board.applyMoveIfValid(move);
                 int score = calculateScore(board, depth - 1) * multiplier;
-                board.undoLastMove();
                 if (bestMove == null || score > bestMove.score) {
                     bestMove = new MoveScore(move, score);
                 }
+                
+                board.undoLastMove();
             }
+
         }
 
         return bestMove;
@@ -81,8 +83,7 @@ public class MiniMaxPlayer extends AIPlayer {
         } else if (depth == 0) {
             return scorer.calculateScore(board.getNextPlayer(), board);
         }
-        MoveScore bestMove = getBestMoveAndItsScore(board, depth - 1, OTHER_PLAYER_SCORE_MULTIPLIER);
-
+        MoveScore bestMove = getBestMoveAndItsScore(board, depth, OTHER_PLAYER_SCORE_MULTIPLIER);
         return bestMove.score;
     }
 }

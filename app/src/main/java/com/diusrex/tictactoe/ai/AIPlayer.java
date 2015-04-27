@@ -4,9 +4,10 @@ import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
 import com.diusrex.tictactoe.logic.StringSaver;
+import com.diusrex.tictactoe.textbased.PlayerController;
 
-public abstract class AIPlayer {
-    public Move play(BoardStatus board) {
+public abstract class AIPlayer implements PlayerController {
+    public Move getPositionToPlay(BoardStatus board) {
         String copyString = StringSaver.getSaveString(board);
 
         BoardStatus newBoard = new BoardStatus(board);
@@ -27,5 +28,11 @@ public abstract class AIPlayer {
             this.move = move;
             this.score = score;
         }
+    }
+    
+    @Override
+    public void alertInvalidMove() {
+        // Should never happen
+        throw new RuntimeException("Got invalid move");
     }
 }

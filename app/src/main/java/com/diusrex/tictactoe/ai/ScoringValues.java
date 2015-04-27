@@ -3,12 +3,10 @@ package com.diusrex.tictactoe.ai;
 import com.diusrex.tictactoe.data_structures.SectionPosition;
 
 public class ScoringValues {
-    private final int mainGridMultiplier;
     private final ScoringFunction mainScoring;
     private final ScoringFunction sectionScoring;
 
-    public ScoringValues(int mainGridMultiplier, ScoringFunction mainScoring, ScoringFunction sectionScoring) {
-        this.mainGridMultiplier = mainGridMultiplier;
+    public ScoringValues(ScoringFunction mainScoring, ScoringFunction sectionScoring) {
         this.mainScoring = mainScoring;
         this.sectionScoring = sectionScoring;
     }
@@ -19,10 +17,6 @@ public class ScoringValues {
 
     public ScoringFunction getSectionScoring() {
         return sectionScoring;
-    }
-
-    public int getMainGridMultiplier() {
-        return mainGridMultiplier;
     }
 
     public int getSectionGridMultiplier(SectionPosition section) {

@@ -162,4 +162,8 @@ public class BoardStatus {
         return engine.searchForWinLineOrGetNull(sectionsOwnersGrid);
     }
 
+    public boolean sectionIsImportantToPlayer(SectionPosition section, Player player) {
+        return engine.positionIsImportantToPlayer(sectionsOwnersGrid, section, player);
+    }
+
 }

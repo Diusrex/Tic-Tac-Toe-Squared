@@ -23,17 +23,21 @@ public class ScoringFunction {
             ownsBothTakenInLineScore = blockedPlayerInLineScore = DEFAULT_SCORE;
         }
 
-        public void SetMultiplier(int middleMultiplier, int cornerMultiplier, int outerCenterMultiplier) {
+        public Builder setMultiplier(int middleMultiplier, int cornerMultiplier, int outerCenterMultiplier) {
             this.middleMultiplier = middleMultiplier;
             this.cornerMultiplier = cornerMultiplier;
             this.outerCenterMultiplier = outerCenterMultiplier;
+            
+            return this;
         }
 
-        public void SetScoreValues(int cannotWinPointScore, int ownsOnlyTakenInLineScore, int ownsBothTakenInLineScore, int blockedPlayerInLineScore) {
+        public Builder setScoreValues(int cannotWinPointScore, int ownsOnlyTakenInLineScore, int ownsBothTakenInLineScore, int blockedPlayerInLineScore) {
             this.cannotWinPointScore = cannotWinPointScore;
             this.ownsOnlyTakenInLineScore = ownsOnlyTakenInLineScore;
             this.ownsBothTakenInLineScore = ownsBothTakenInLineScore;
             this.blockedPlayerInLineScore = blockedPlayerInLineScore;
+            
+            return this;
         }
         
         public ScoringFunction build() {
@@ -64,7 +68,7 @@ public class ScoringFunction {
             return outerCenterMultiplier;
     }
 
-    public int getCannotWinPointScore(Position box) {
+    public int getCannotWinPointScore() {
         return cannotWinPointScore;
     }
 

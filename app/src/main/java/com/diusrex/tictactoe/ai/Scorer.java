@@ -7,37 +7,61 @@ import com.diusrex.tictactoe.data_structures.SectionPosition;
 import com.diusrex.tictactoe.logic.GridLists;
 
 public class Scorer {
-    private static final ScoreCalculator canWinWrapper = new CanBeWonScoreCalculator();
-    private static final ScoreCalculator cannotWinWrapper = new CannotBeWonScoreWrapper();
+    private static final PlayerScoreCalculator SectionImportantWrapper = new SectionIsImportantForPlayerScoreCalculator();
+    private static final PlayerScoreCalculator SectionUnimportantWrapper = new SectionIsUnimportantForPlayerScoreCalculator();
     private final ScoringValues scoring;
 
     public Scorer(ScoringValues scoring) {
         this.scoring = scoring;
     }
 
-    public int calculateScore(Player currentPlayer, BoardStatus board) {
-        int score = calculateGridOwnedPartsScore(currentPlayer, board.getMainGrid(), scoring.getMainScoring())
-                * scoring.getMainGridMultiplier();
+    public int calculateScore(Player positivePlayer, BoardStatus board) {
+        int score = calculateGridScoreWinningGridIsImportantForBothPlayers(positivePlayer, board.getMainGrid(),
+                scoring.getMainScoring());
 
         for (SectionPosition section : GridLists.getAllStandardSections()) {
-            score += calculateGridOwnedPartsScore(currentPlayer, board.getSectionGrid(section),
-                    scoring.getSectionScoring())
-                    * scoring.getSectionGridMultiplier(section);
+            score += calculateSectionScore(positivePlayer, board, section) * scoring.getSectionGridMultiplier(section);
         }
 
         return score;
     }
 
-    private int calculateGridOwnedPartsScore(Player currentPlayer, Grid grid, ScoringFunction scoringFunction) {
-        // Owning the grid itself doesn't matter here
-        ScoreCalculator wrapper;
+    private int calculateSectionScore(Player positivePlayer, BoardStatus board, SectionPosition section) {
+        Player negativePlayer = positivePlayer.opposite();
+        
+        ScoringFunction scoringFunction = scoring.getSectionScoring();
+        Grid sectionGrid = board.getSectionGrid(section);
+        if (!sectionGrid.canBeWon()) {
+            return SectionUnimportantWrapper.calculateSetupScore(positivePlayer, sectionGrid, scoringFunction)
+                    - SectionUnimportantWrapper.calculateSetupScore(negativePlayer, sectionGrid, scoringFunction);
+        }
 
-        if (grid.canBeWon())
-            wrapper = canWinWrapper;
-        else
-            wrapper = cannotWinWrapper;
+        int score = 0;
+        if (board.sectionIsImportantToPlayer(section, positivePlayer)) {
+            score += SectionImportantWrapper.calculateSetupScore(positivePlayer, sectionGrid, scoringFunction);
+        } else {
+            score += SectionUnimportantWrapper.calculateSetupScore(positivePlayer, sectionGrid, scoringFunction);
+        }
+        
+        if (board.sectionIsImportantToPlayer(section, negativePlayer)) {
+            score -= SectionImportantWrapper.calculateSetupScore(negativePlayer, sectionGrid, scoringFunction);
+        } else {
+            score -= SectionUnimportantWrapper.calculateSetupScore(negativePlayer, sectionGrid, scoringFunction);
+        }
+        
+        return score;
+    }
 
-        return wrapper.calculateSetupScore(currentPlayer, grid, scoringFunction);
+    private int calculateGridScoreWinningGridIsImportantForBothPlayers(Player positivePlayer, Grid grid,
+            ScoringFunction scoringFunction) {
+        Player negativePlayer = positivePlayer.opposite();
+        if (!grid.canBeWon()) {
+            return SectionUnimportantWrapper.calculateSetupScore(positivePlayer, grid, scoringFunction)
+                    - SectionUnimportantWrapper.calculateSetupScore(negativePlayer, grid, scoringFunction);
+        }
+
+        return SectionImportantWrapper.calculateSetupScore(positivePlayer, grid, scoringFunction)
+                - SectionImportantWrapper.calculateSetupScore(negativePlayer, grid, scoringFunction);
     }
 
     public int getTieScore() {
