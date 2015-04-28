@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
-package com.diusrex.tictactoe.box_images;
+package com.diusrex.tictactoe.android.box_images;
 
 public interface BoxImageResourceInfo {
     public int getPlayerOneImage();

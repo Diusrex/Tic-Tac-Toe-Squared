@@ -18,7 +18,7 @@ package com.diusrex.tictactoe.android;
 import android.app.Activity;
 
 import com.diusrex.tictactoe.R;
-import com.diusrex.tictactoe.box_images.BoxImageResourceInfo;
+import com.diusrex.tictactoe.android.box_images.BoxImageResourceInfo;
 import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.logic.GridConstants;
 

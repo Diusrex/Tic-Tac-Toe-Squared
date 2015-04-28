@@ -19,11 +19,11 @@ import android.app.Activity;
 import android.widget.TextView;
 
 import com.diusrex.tictactoe.R;
-import com.diusrex.tictactoe.box_images.BoxImageResourceInfo;
-import com.diusrex.tictactoe.box_images.LargeMove;
-import com.diusrex.tictactoe.box_images.LargeMoveMostRecent;
-import com.diusrex.tictactoe.box_images.MostRecentMove;
-import com.diusrex.tictactoe.box_images.RegularMove;
+import com.diusrex.tictactoe.android.box_images.BoxImageResourceInfo;
+import com.diusrex.tictactoe.android.box_images.LargeMove;
+import com.diusrex.tictactoe.android.box_images.LargeMoveMostRecent;
+import com.diusrex.tictactoe.android.box_images.MostRecentMove;
+import com.diusrex.tictactoe.android.box_images.RegularMove;
 import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;

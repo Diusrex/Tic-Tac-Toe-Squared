@@ -13,23 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
-package com.diusrex.tictactoe.box_images;
+package com.diusrex.tictactoe.android.box_images;
 
 import com.diusrex.tictactoe.R;
 
-public class LargeMove implements BoxImageResourceInfo {
+public class RegularMove implements BoxImageResourceInfo {
+
     @Override
     public int getPlayerOneImage() {
-        return R.drawable.game_large_o;
+        return R.drawable.game_o;
     }
 
     @Override
     public int getPlayerTwoImage() {
-        return R.drawable.game_large_x;
+        return R.drawable.game_x;
     }
 
     @Override
     public int getUnownedImage() {
-        return R.drawable.game_large_blank;
+        return R.drawable.game_blank;
     }
 }

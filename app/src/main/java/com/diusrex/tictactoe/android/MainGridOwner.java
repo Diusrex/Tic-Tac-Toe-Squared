@@ -21,7 +21,7 @@ import android.widget.FrameLayout;
 import android.widget.Space;
 
 import com.diusrex.tictactoe.R;
-import com.diusrex.tictactoe.box_images.BoxImageResourceInfo;
+import com.diusrex.tictactoe.android.box_images.BoxImageResourceInfo;
 import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.BoxPosition;
 import com.diusrex.tictactoe.data_structures.Line;
