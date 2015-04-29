@@ -28,7 +28,7 @@ public class Scorer {
 
     private int calculateSectionScore(Player positivePlayer, BoardStatus board, SectionPosition section) {
         Player negativePlayer = positivePlayer.opposite();
-        
+
         ScoringFunction scoringFunction = scoring.getSectionScoring();
         Grid sectionGrid = board.getSectionGrid(section);
         if (!sectionGrid.canBeWon()) {
@@ -42,13 +42,13 @@ public class Scorer {
         } else {
             score += SectionUnimportantWrapper.calculateSetupScore(positivePlayer, sectionGrid, scoringFunction);
         }
-        
+
         if (board.sectionIsImportantToPlayer(section, negativePlayer)) {
             score -= SectionImportantWrapper.calculateSetupScore(negativePlayer, sectionGrid, scoringFunction);
         } else {
             score -= SectionUnimportantWrapper.calculateSetupScore(negativePlayer, sectionGrid, scoringFunction);
         }
-        
+
         return score;
     }
 

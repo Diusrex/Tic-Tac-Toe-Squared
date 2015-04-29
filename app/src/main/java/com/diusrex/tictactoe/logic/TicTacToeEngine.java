@@ -19,6 +19,7 @@ import com.diusrex.tictactoe.data_structures.Grid;
 import com.diusrex.tictactoe.data_structures.Line;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.data_structures.Position;
 import com.diusrex.tictactoe.data_structures.SectionGrid;
 
 public abstract class TicTacToeEngine {
@@ -42,5 +43,9 @@ public abstract class TicTacToeEngine {
 
     public Line searchForWinLineOrGetNull(Grid grid) {
         return gridChecker.searchForWinLineOrGetNull(grid);
+    }
+
+    public boolean positionIsImportantToPlayer(Grid grid, Position position, Player player) {
+        return gridChecker.possibleToWinGridForPlayerUsingPosition(grid, position, player);
     }
 }

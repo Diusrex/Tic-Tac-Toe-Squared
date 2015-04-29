@@ -9,8 +9,6 @@ import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
 import com.diusrex.tictactoe.logic.GridLists;
 
 public class MiniMaxPlayer extends AIPlayer {
-    private static final int OWN_PLAYER_MULTIPLIER = 1;
-    private static final int OTHER_PLAYER_SCORE_MULTIPLIER = -1;
     private final int WIN_SCORE = 10000;
     private final Scorer scorer;
     private int maxDepth;
@@ -22,29 +20,29 @@ public class MiniMaxPlayer extends AIPlayer {
 
     @Override
     protected Move choosePosition(BoardStatus board) {
-        return getBestMoveAndItsScore(board, maxDepth, OWN_PLAYER_MULTIPLIER).move;
+        return getBestMoveAndItsScore(board, maxDepth).move;
     }
 
-    private MoveScore getBestMoveAndItsScore(BoardStatus board, int depth, int multiplier) {
+    private MoveScore getBestMoveAndItsScore(BoardStatus board, int depth) {
         if (canPlayInAnySection(board)) {
-            return getBestMoveScoreInAnySection(board, depth, multiplier);
+            return getBestMoveScoreInAnySection(board, depth);
         } else {
-            return getBestMoveScoreInRequredSection(board, depth, multiplier);
+            return getBestMoveScoreInRequiredSection(board, depth);
         }
     }
 
-    private MoveScore getBestMoveScoreInRequredSection(BoardStatus board, int depth, int multiplier) {
+    private MoveScore getBestMoveScoreInRequiredSection(BoardStatus board, int depth) {
         SectionPosition section = board.getSectionToPlayIn();
-        MoveScore bestMove = getBestMoveInSection(board, section, depth, multiplier);
+        MoveScore bestMove = getBestMoveInSection(board, section, depth);
 
         return bestMove;
     }
 
-    private MoveScore getBestMoveScoreInAnySection(BoardStatus board, int depth, int multiplier) {
+    private MoveScore getBestMoveScoreInAnySection(BoardStatus board, int depth) {
         MoveScore bestMove = null;
 
         for (SectionPosition section : GridLists.getAllStandardSections()) {
-            MoveScore bestMoveInSection = getBestMoveInSection(board, section, depth, multiplier);
+            MoveScore bestMoveInSection = getBestMoveInSection(board, section, depth);
 
             if (bestMoveInSection != null && (bestMove == null || bestMove.score > bestMove.score)) {
                 bestMove = bestMoveInSection;
@@ -54,7 +52,7 @@ public class MiniMaxPlayer extends AIPlayer {
         return bestMove;
     }
 
-    private MoveScore getBestMoveInSection(BoardStatus board, SectionPosition section, int depth, int multiplier) {
+    private MoveScore getBestMoveInSection(BoardStatus board, SectionPosition section, int depth) {
         MoveScore bestMove = null;
 
         for (BoxPosition pos : GridLists.getAllStandardBoxPositions()) {
@@ -62,11 +60,12 @@ public class MiniMaxPlayer extends AIPlayer {
 
             if (board.isValidMove(move)) {
                 board.applyMoveIfValid(move);
-                int score = calculateScore(board, depth - 1) * multiplier;
+                // The score calculated is always for the other player
+                int score = calculateScore(board, depth - 1) * -1;
                 if (bestMove == null || score > bestMove.score) {
                     bestMove = new MoveScore(move, score);
                 }
-                
+
                 board.undoLastMove();
             }
 
@@ -83,7 +82,7 @@ public class MiniMaxPlayer extends AIPlayer {
         } else if (depth == 0) {
             return scorer.calculateScore(board.getNextPlayer(), board);
         }
-        MoveScore bestMove = getBestMoveAndItsScore(board, depth, OTHER_PLAYER_SCORE_MULTIPLIER);
+        MoveScore bestMove = getBestMoveAndItsScore(board, depth);
         return bestMove.score;
     }
 }
