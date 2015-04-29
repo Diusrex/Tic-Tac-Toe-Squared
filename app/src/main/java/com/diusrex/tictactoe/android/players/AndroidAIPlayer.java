@@ -16,13 +16,13 @@
 
 package com.diusrex.tictactoe.android.players;
 
-import com.diusrex.tictactoe.textbased.PlayerController;
+import com.diusrex.tictactoe.ai.AIPlayer;
 
 public class AndroidAIPlayer implements AndroidPlayerController {
-    private final PlayerController AIPlayer;
+    private final AIPlayer aiPlayer;
 
-    public AndroidAIPlayer(PlayerController AIPlayer) {
-        this.AIPlayer = AIPlayer;
+    public AndroidAIPlayer(AIPlayer aiPlayer) {
+        this.aiPlayer = aiPlayer;
     }
 
     @Override
