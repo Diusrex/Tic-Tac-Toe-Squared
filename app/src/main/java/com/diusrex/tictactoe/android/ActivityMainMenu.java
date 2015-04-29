@@ -22,8 +22,11 @@ import android.view.View;
 import android.widget.Button;
 
 import com.diusrex.tictactoe.R;
+import com.diusrex.tictactoe.android.dialogs.SelectAIDifficultyDialogFragment;
+import com.diusrex.tictactoe.android.dialogs.SelectAIDifficultyListener;
+import com.diusrex.tictactoe.logic.PlayerFactory;
 
-public class ActivityMainMenu extends Activity {
+public class ActivityMainMenu extends Activity implements SelectAIDifficultyListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,9 +47,24 @@ public class ActivityMainMenu extends Activity {
         continueGameButton.setEnabled(loader.saveGameExists());
     }
 
-    public void startNewGame(View v) {
+    public void startNewGameSinglePlayer(View view) {
+        startNewGame(PlayerFactory.WantedPlayer.Human);
+    }
+
+    public void selectAIDifficulty(View view) {
+        SelectAIDifficultyDialogFragment selectAIDifficulty = SelectAIDifficultyDialogFragment.newInstance();
+        selectAIDifficulty.show(getFragmentManager(), "dialog");
+    }
+
+    @Override
+    public void difficultySelected(PlayerFactory.WantedPlayer player) {
+        startNewGame(player);
+    }
+
+    public void startNewGame(PlayerFactory.WantedPlayer wantedPlayer) {
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra(GameActivity.IS_NEW_GAME, true);
+        intent.putExtra(GameActivity.SECOND_PLAYER_TYPE, wantedPlayer);
         startActivity(intent);
     }
 
@@ -60,4 +78,6 @@ public class ActivityMainMenu extends Activity {
         Intent intent = new Intent(this, HowToPlayActivity.class);
         startActivity(intent);
     }
+
+
 }

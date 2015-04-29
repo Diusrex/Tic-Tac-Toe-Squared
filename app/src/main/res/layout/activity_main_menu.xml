@@ -18,11 +18,23 @@
         />
 
     <Button
-        android:id="@+id/startNewGameButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/new_game"
-        android:onClick="startNewGame"
+        android:text="@string/new_game_two_players"
+        android:onClick="startNewGameSinglePlayer"
+        />
+
+    <Space
+        android:layout_height="0dp"
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/new_game_one_player"
+        android:onClick="selectAIDifficulty"
         />
 
     <Space

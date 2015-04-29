@@ -10,7 +10,8 @@
     <string name="win_dialog_title">There is a WINNER</string>
     <string name="congratulate_winner" formatted="true">Congratulations %s for winning the game!</string>
     <string name="resume_game">Resume game</string>
-    <string name="new_game">New Game</string>
+    <string name="new_game_two_players">Two Players</string>
+    <string name="new_game_one_player">One Player</string>
     <string name="return_to_menu">To Main Menu</string>
     <string name="continue_game">Continue Game</string>
     <string name="how_to_play">How to Play</string>
@@ -41,4 +42,8 @@
     <string name="finish">Finish</string>
     <string name="cancel">Cancel</string>
     <string name="back_to_game">Back to Game</string>
+    <string name="play_hard_ai">Hard</string>
+    <string name="play_easy_ai">Easy</string>
+    <string name="play_medium_ai">Medium</string>
+    <string name="choose_ai_difficulty">Choose Difficulty</string>
 </resources>
