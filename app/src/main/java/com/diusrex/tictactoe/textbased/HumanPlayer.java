@@ -15,79 +15,130 @@
  **/
 package com.diusrex.tictactoe.textbased;
 
-import com.diusrex.tictactoe.logic.BoardStatus;
-import com.diusrex.tictactoe.logic.BoxPosition;
-import com.diusrex.tictactoe.logic.Player;
-
 import java.util.Scanner;
 
+import com.diusrex.tictactoe.data_structures.BoardStatus;
+import com.diusrex.tictactoe.data_structures.BoxPosition;
+import com.diusrex.tictactoe.data_structures.Move;
+import com.diusrex.tictactoe.data_structures.SectionPosition;
+import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
+import com.diusrex.tictactoe.logic.GridConstants;
+
 public class HumanPlayer implements PlayerController {
-    Player whoIs;
     Scanner scanner;
 
-    HumanPlayer(Player whoIs, Scanner scanner) {
-        this.whoIs = whoIs;
+    HumanPlayer(Scanner scanner) {
         this.scanner = scanner;
     }
 
     @Override
-    public BoxPosition getPositionToPlay(BoardStatus board) {
-        printOutInformation(board);
+    public Move getPositionToPlay(BoardStatus board) {
+        printOutBoard(board);
+        
+        System.out.println("If you want to cancel your input, use -1 for any integer value.\n\n");
 
-        System.out.print("What x position do you want to play in? ");
+        if (canPlayInAnySection(board)) {
+            return getMoveInAnySection(board);
+        } else {
+            return getMoveInRequiredSection(board);
+        }
+    }
+
+    private Move getMoveInRequiredSection(BoardStatus board) {
+        SectionPosition requiredSection = board.getSectionToPlayIn();
+
+        BoxPosition pos = null;
+
+        while (pos == null) {
+            System.out.println("You must play in the section at (" + requiredSection.getGridX() + ", "
+                    + requiredSection.getGridY() + ")");
+
+            pos = getWantedBoxPosition();
+        }
+
+        return new Move(requiredSection, pos, board.getNextPlayer());
+    }
+
+    private Move getMoveInAnySection(BoardStatus board) {
+        SectionPosition section = null;
+        BoxPosition pos = null;
+
+        while (section == null || pos == null) {
+            section = getWantedSection();
+            pos = getWantedBoxPosition();
+        }
+
+        return new Move(section, pos, board.getNextPlayer());
+    }
+
+    private SectionPosition getWantedSection() {
+        System.out.println("You can play in any section in the range [0, 2]");
+        System.out.println("What section do you want to play in?");
+
+        System.out.print("X: ");
+        int sectionX = scanner.nextInt();
+        System.out.print("Y: ");
+        int sectionY = scanner.nextInt();
+        
+        return SectionPosition.make(sectionX, sectionY);
+    }
+
+    private BoxPosition getWantedBoxPosition() {
+        System.out.println("The box you play in must be in the range [0, 2]");
+        System.out.print("X: ");
         int x = scanner.nextInt();
-
-        System.out.print("What y position do you want to play in? ");
+        System.out.print("Y: ");
         int y = scanner.nextInt();
 
         return BoxPosition.make(x, y);
     }
 
-    private void printOutInformation(BoardStatus board) {
-        System.out.print("The board is:\n");
+    private boolean canPlayInAnySection(BoardStatus board) {
+        return GeneralTicTacToeLogic.sectionIsFull(board, board.getSectionToPlayIn());
+    }
 
-        for (int x = 0; x < BoardStatus.NUMBER_OF_BOXES_PER_SIDE; ++x) {
+    private void printOutBoard(BoardStatus board) {
+        System.out.print("The board is:\n");
+        
+        for (int x = 0; x < GridConstants.NUMBER_OF_BOXES_PER_SIDE; ++x) {
             if (x % 3 == 0)
                 System.out.print("  ");
             System.out.print(" " + x);
         }
-        System.out.print("\n");
-        
-        for (int y = 0; y < BoardStatus.NUMBER_OF_BOXES_PER_SIDE; ++y) {
+        System.out.println("");
+
+        for (int y = 0; y < GridConstants.NUMBER_OF_BOXES_PER_SIDE; ++y) {
             if (y % 3 == 0)
                 printHorizontalLine();
-            
+
             System.out.print(y);
-            for (int x = 0; x < BoardStatus.NUMBER_OF_BOXES_PER_SIDE; ++x) {
+            
+            for (int x = 0; x < GridConstants.NUMBER_OF_BOXES_PER_SIDE; ++x) {
                 if (x % 3 == 0)
                     System.out.print("| ");
-                System.out.print(board.getBoxOwner(x, y) + " ");
+                
+                SectionPosition section = SectionPosition.make(x / GridConstants.SIZE_OF_SECTION, y / GridConstants.SIZE_OF_SECTION);
+                BoxPosition pos = BoxPosition.make(x % GridConstants.SIZE_OF_SECTION, y % GridConstants.SIZE_OF_SECTION);
+                
+                System.out.print(board.getBoxOwner(section, pos) + " ");
             }
+            
             System.out.println("|");
         }
         printHorizontalLine();
-        
-        BoxPosition validSpot = board.getSectionToPlayIn().getTopLeftPosition();
-        System.out.println("Valid x range: (" + validSpot.getX() + ", " + (validSpot.getX() + 2) + ")");
-        System.out.println("Valid y range: (" + validSpot.getY() + ", " + (validSpot.getY() + 2) + ")");
     }
 
     private void printHorizontalLine() {
         System.out.print(" ");
-        for (int x = 0; x < BoardStatus.NUMBER_OF_BOXES_PER_SIDE; ++x) {
+        for (int x = 0; x < GridConstants.NUMBER_OF_BOXES_PER_SIDE; ++x) {
             if (x % 3 == 0)
                 System.out.print("+-");
-            if (x + 1 != BoardStatus.NUMBER_OF_BOXES_PER_SIDE)
+            if (x + 1 != GridConstants.NUMBER_OF_BOXES_PER_SIDE)
                 System.out.print("--");
             else
                 System.out.print("--+");
         }
         System.out.println("");
-    }
-
-    @Override
-    public Player getWhichPlayer() {
-        return whoIs;
     }
 
     @Override

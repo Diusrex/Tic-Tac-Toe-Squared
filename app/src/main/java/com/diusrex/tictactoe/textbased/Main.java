@@ -15,11 +15,12 @@
  **/
 package com.diusrex.tictactoe.textbased;
 
-import com.diusrex.tictactoe.logic.BoardStatus;
-import com.diusrex.tictactoe.logic.BoxPosition;
-import com.diusrex.tictactoe.logic.Move;
-import com.diusrex.tictactoe.logic.Player;
-import com.diusrex.tictactoe.logic.TicTacToeEngine;
+import com.diusrex.tictactoe.data_structures.BoardStatus;
+import com.diusrex.tictactoe.data_structures.Move;
+import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.logic.BoardStatusFactory;
+import com.diusrex.tictactoe.logic.PlayerFactory;
+import com.diusrex.tictactoe.logic.PlayerFactory.WantedPlayer;
 
 import java.util.Scanner;
 
@@ -27,38 +28,64 @@ public class Main {
     static PlayerController[] players = new PlayerController[2];
     static int currentPlayer;
     static BoardStatus board;
-    
+
     static Scanner scanner;
-    
+
     static public void main(String[] args) {
         scanner = new Scanner(System.in);
         runGame();
     }
 
     private static void runGame() {
-        players[0] = new HumanPlayer(Player.Player_1, scanner);
-        players[1] = new HumanPlayer(Player.Player_2, scanner);
-        board = new BoardStatus();
+        players[0] = new HumanPlayer(scanner);
+
+        PlayerFactory.WantedPlayer wantedPlayer = getWantedPlayer();
+        if (wantedPlayer == PlayerFactory.WantedPlayer.Human) {
+            players[1] = new HumanPlayer(scanner);
+        } else {
+            players[1] = new AIPlayerController(PlayerFactory.createAIPlayer(wantedPlayer));
+        }
+        board = BoardStatusFactory.createStandardBoard();
 
         currentPlayer = 0;
-        
-        while (TicTacToeEngine.getWinner(board) == Player.Unowned) {
+
+        while (board.getWinner() == Player.Unowned) {
             Move nextMove = getCurrentPlayersMove();
-            
-            while (!TicTacToeEngine.isValidMove(board, nextMove)) {
+
+            while (!board.isValidMove(nextMove)) {
                 players[currentPlayer].alertInvalidMove();
-                
+
                 nextMove = getCurrentPlayersMove();
             }
-            TicTacToeEngine.applyMoveIfValid(board, nextMove);
-            
+            board.applyMoveIfValid(nextMove);
+
             currentPlayer = (currentPlayer + 1) % 2;
         }
         
+        System.out.println("The winner is Player " + board.getWinner());
+    }
+
+    private static WantedPlayer getWantedPlayer() {
+        while (true) {
+            System.out.println("Do you want to play against a 'human', or an 'easy', 'medium', or 'hard' bot?");
+            
+            String wanted = scanner.next();
+            switch (wanted) {
+            case "human":
+                return WantedPlayer.Human;
+            case "easy":
+                return WantedPlayer.Easy;
+            case "medium":
+                return WantedPlayer.Medium;
+            case "hard":
+                return WantedPlayer.Hard;
+            }
+
+            System.out.println("\nPlease enter a valid input.\n");
+        }
     }
 
     private static Move getCurrentPlayersMove() {
-        BoxPosition chosenPos = players[currentPlayer].getPositionToPlay(board);
-        return new Move(chosenPos, players[currentPlayer].getWhichPlayer());
+        return players[currentPlayer].getPositionToPlay(board);
     }
 }

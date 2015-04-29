@@ -15,14 +15,11 @@
  **/
 package com.diusrex.tictactoe.textbased;
 
-import com.diusrex.tictactoe.logic.BoardStatus;
-import com.diusrex.tictactoe.logic.BoxPosition;
-import com.diusrex.tictactoe.logic.Player;
+import com.diusrex.tictactoe.data_structures.BoardStatus;
+import com.diusrex.tictactoe.data_structures.Move;
 
 public interface PlayerController {
-    public BoxPosition getPositionToPlay(BoardStatus board);
-    
-    public Player getWhichPlayer();
+    public Move getPositionToPlay(BoardStatus board);
 
     public void alertInvalidMove();
 }
