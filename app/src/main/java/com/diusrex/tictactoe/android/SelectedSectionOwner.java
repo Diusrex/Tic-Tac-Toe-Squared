@@ -19,33 +19,54 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.diusrex.tictactoe.data_structures.BoxPosition;
+import com.diusrex.tictactoe.data_structures.Move;
+import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.SectionPosition;
+import com.diusrex.tictactoe.logic.GridLists;
 
-public class SelectedSectionOwner extends SectionOwner {
-    static private final int GRID_LINE_WIDTH = 30;
+public class SelectedSectionOwner {
     private final GameEventHandler handler;
-    private final SectionPosition sectionPosition;
+    private SectionOwner sectionOwner;
+    private SectionPosition sectionPosition;
+    private BoxPositionSelectedListener currentListener;
 
-
-    SelectedSectionOwner(SectionPosition sectionPosition, MyGridLayout grid, GameEventHandler handler) {
-        super(sectionPosition, grid);
-        this.sectionPosition = sectionPosition;
+    SelectedSectionOwner(GameEventHandler handler) {
         this.handler = handler;
     }
 
-    @Override
-    protected int getLineWidth() {
-        return GRID_LINE_WIDTH;
+    public void selectedSectionChanged(SectionOwner newSectionOwner, SectionPosition newSectionPosition) {
+        sectionOwner = newSectionOwner;
+        sectionPosition = newSectionPosition;
+
+        updateSectionOwnerOnClick();
     }
 
-    @Override
-    protected void setUpSpecialInformation(ImageView imageView, BoxPosition posInSection) {
-        imageView.setTag(posInSection);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handler.boxSelected(sectionPosition, (BoxPosition) v.getTag());
-            }
-        });
+    //@Override
+    public void setUpOnClick(final Player currentPlayer) {
+        currentListener = new BoxPositionSelectedListener(currentPlayer);
+
+        updateSectionOwnerOnClick();
+    }
+
+    public void updateSectionOwnerOnClick() {
+        for (BoxPosition position : GridLists.getAllStandardBoxPositions()) {
+            ImageView imageView = sectionOwner.getBox(position);
+            imageView.setTag(position);
+            imageView.setOnClickListener(currentListener);
+        }
+    }
+
+    class BoxPositionSelectedListener implements View.OnClickListener {
+        private final Player player;
+
+        BoxPositionSelectedListener(Player player) {
+            this.player = player;
+        }
+
+        @Override
+        public void onClick(View v) {
+            Move move = new Move(sectionPosition, (BoxPosition) v.getTag(), player);
+            handler.moveChosen(move);
+        }
     }
 }

@@ -30,18 +30,22 @@ import com.diusrex.tictactoe.data_structures.SectionPosition;
 import com.diusrex.tictactoe.logic.GridConstants;
 
 public class SectionOwner implements GridOwner {
-    static private final int GRID_LINE_WIDTH = 15;
+    static public final int GRID_LINE_WIDTH_SMALL = 15;
+    static public final int GRID_LINE_WIDTH_LARGE = 30;
     static private final int SIZE_OF_SPACE = 10;
+
+    private final int gridLineWidth;
 
     private final SectionPosition sectionPosition;
     private final MyGridLayout gridLayout;
 
     private final ImageView allBoxes[][];
 
-    SectionOwner(SectionPosition sectionPosition, MyGridLayout gridLayout) {
+    SectionOwner(SectionPosition sectionPosition, MyGridLayout gridLayout, int gridLineWidth) {
         this.sectionPosition = sectionPosition;
         this.gridLayout = gridLayout;
         this.allBoxes = new ImageView[GridConstants.SIZE_OF_SECTION][GridConstants.SIZE_OF_SECTION];
+        this.gridLineWidth = gridLineWidth;
 
         setUpGridLines(this.gridLayout);
     }
@@ -52,7 +56,7 @@ public class SectionOwner implements GridOwner {
     }
 
     protected int getLineWidth() {
-        return GRID_LINE_WIDTH;
+        return gridLineWidth;
     }
 
     @Override
@@ -65,12 +69,7 @@ public class SectionOwner implements GridOwner {
         BoxPosition pos = BoxPosition.make(x, y);
         allBoxes[pos.getGridX()][pos.getGridY()] = generateBox(board.getBoxOwner(sectionPosition, pos), activity, boxImageType);
 
-        setUpSpecialInformation(allBoxes[x][y], pos);
-
         gridLayout.addView(allBoxes[x][y]);
-    }
-
-    protected void setUpSpecialInformation(ImageView imageView, BoxPosition posInBoard) {
     }
 
     protected ImageView generateBox(Player owner, Activity activity, BoxImageResourceInfo boxImageType) {
@@ -139,7 +138,7 @@ public class SectionOwner implements GridOwner {
         }
     }
 
-    private ImageView getBox(Position pos) {
+    public ImageView getBox(Position pos) {
         return allBoxes[pos.getGridX()][pos.getGridY()];
     }
 

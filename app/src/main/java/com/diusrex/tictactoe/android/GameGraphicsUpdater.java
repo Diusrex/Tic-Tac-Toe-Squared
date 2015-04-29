@@ -33,15 +33,19 @@ public class GameGraphicsUpdater {
     private final MainGridOwner mainGridOwner;
     private final TextView playerInfo;
 
+    private final SelectedSectionOwner selectedSectionOwner;
+
     private final BoxImageResourceInfo regularBox;
     private final BoxImageResourceInfo mostRecentBox;
     private final BoxImageResourceInfo largeBox;
     private final BoxImageResourceInfo largeBoxMostRecent;
 
-    GameGraphicsUpdater(MainGridOwner mainGridOwner, TextView playerInfo) {
+    GameGraphicsUpdater(SelectedSectionOwner selectedSectionOwner, MainGridOwner mainGridOwner, TextView playerInfo) {
         this.mainGridOwner = mainGridOwner;
         this.playerInfo = playerInfo;
         playerInfo.setCompoundDrawablePadding(20);
+
+        this.selectedSectionOwner = selectedSectionOwner;
 
         regularBox = new RegularMove();
         mostRecentBox = new MostRecentMove();
@@ -78,6 +82,8 @@ public class GameGraphicsUpdater {
 
     public void selectedSectionChanged(Activity activity, BoardStatus board, SectionOwner mainSection, SectionPosition selectedSection) {
         GridOrganizer.populateGrid(activity, board, mainSection, largeBox);
+        selectedSectionOwner.selectedSectionChanged(mainSection, selectedSection);
+
         updateSelectedSectionMostRecent(board, mainSection, selectedSection);
 
         mainGridOwner.selectionSelectedChanged(selectedSection);
@@ -94,6 +100,8 @@ public class GameGraphicsUpdater {
     }
 
     public void noMovesMayBeMade() {
+        selectedSectionOwner.setUpOnClick(Player.Unowned);
+
         playerInfo.setText(R.string.game_done);
         setPlayerTextImage(android.R.color.transparent);
     }
@@ -119,5 +127,9 @@ public class GameGraphicsUpdater {
     private void setPlayerTextImage(int imageValue) {
         // Want the image on the right side only
         playerInfo.setCompoundDrawablesWithIntrinsicBounds(0, 0, imageValue, 0);
+    }
+
+    public SelectedSectionOwner getSelectedSectionOwner() {
+        return selectedSectionOwner;
     }
 }
