@@ -16,8 +16,10 @@
 
 package com.diusrex.tictactoe.android.players;
 
+import com.diusrex.tictactoe.data_structures.BoardStatus;
+
 public interface AndroidPlayerController {
-    void promptForMove(final MoveListener listener);
+    void promptForMove(BoardStatus board, MoveListener listener);
 
     // Mostly to allow the AI player to cancel their action
     void undoWasPressed();

@@ -17,22 +17,42 @@
 package com.diusrex.tictactoe.android.players;
 
 import com.diusrex.tictactoe.ai.AIPlayer;
+import com.diusrex.tictactoe.android.GameActivity;
+import com.diusrex.tictactoe.data_structures.BoardStatus;
+import com.diusrex.tictactoe.data_structures.Move;
 
 public class AndroidAIPlayer implements AndroidPlayerController {
     private final AIPlayer aiPlayer;
+    private Thread thread;
 
     public AndroidAIPlayer(AIPlayer aiPlayer) {
         this.aiPlayer = aiPlayer;
     }
 
     @Override
-    public void promptForMove(MoveListener listener) {
+    public void promptForMove(final BoardStatus board, final MoveListener listener) {
+        final long timeStarted = GameActivity.getCurrentTime();
 
+        thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Move wantedMove = aiPlayer.getPositionToPlay(board);
+
+                final long timeTaken = GameActivity.getCurrentTime() - timeStarted;
+                if (timeTaken < GameActivity.COOLDOWN) {
+                    android.os.SystemClock.sleep(GameActivity.COOLDOWN - timeTaken);
+                }
+
+                listener.moveChosen(wantedMove);
+            }
+        });
+
+        thread.start();
     }
 
     @Override
     public void undoWasPressed() {
-
+        thread.interrupt();
     }
 
     @Override

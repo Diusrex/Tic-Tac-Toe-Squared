@@ -17,6 +17,7 @@
 package com.diusrex.tictactoe.android.players;
 
 import com.diusrex.tictactoe.android.SelectedSectionOwner;
+import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.Player;
 
 public class HumanAndroidPlayer implements AndroidPlayerController {
@@ -29,7 +30,7 @@ public class HumanAndroidPlayer implements AndroidPlayerController {
     }
 
     @Override
-    public void promptForMove(MoveListener listener) {
+    public void promptForMove(BoardStatus board, MoveListener listener) {
         selectedSectionOwner.setUpOnClick(currentPlayer);
     }
 

@@ -19,7 +19,6 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -45,7 +44,7 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
     static public final String IS_NEW_GAME = "IsNewGame";
     static public final String SECOND_PLAYER_TYPE = "SecondPlayer";
     static private final String SHOW_GAME_IS_DRAW = "GameIsDraw";
-    static private final long COOLDOWN = 250;
+    static public final long COOLDOWN = 250;
 
     private Button undoButton;
 
@@ -129,7 +128,7 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
     private void updateCurrentPlayer() {
         updatePlayerIndex();
         graphicsUpdater.playerChanged(board.getNextPlayer(), getPlayerAsString());
-        players[currentPlayerIndex].promptForMove(this);
+        players[currentPlayerIndex].promptForMove(board, this);
     }
 
     private void updatePlayerIndex() {
@@ -155,11 +154,17 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
     }
 
     @Override
-    public void moveChosen(Move move) {
-        Log.e("GameActivity", "Made it here " + move.toString());
-        long currentTime = getCurrentTime();
+    public void moveChosen(final Move move) {
+        final long currentTime = getCurrentTime();
         if (isValidTiming(currentTime) && board.isValidMove(move)) {
-            updateBoardWithMove(currentTime, move);
+
+            // Ensure that there will not be any problems
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    updateBoardWithMove(currentTime, move);
+                }
+            });
         }
     }
 
@@ -246,7 +251,7 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
         graphicsUpdater.selectedSectionChanged(this, board, mainSection, section);
     }
 
-    private long getCurrentTime() {
+    public static long getCurrentTime() {
         Calendar c = Calendar.getInstance();
         return c.getTimeInMillis();
     }
