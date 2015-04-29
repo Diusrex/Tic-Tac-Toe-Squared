@@ -19,6 +19,7 @@ import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.logic.BoardStatusFactory;
+import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
 import com.diusrex.tictactoe.logic.PlayerFactory;
 import com.diusrex.tictactoe.logic.PlayerFactory.WantedPlayer;
 
@@ -49,7 +50,7 @@ public class Main {
 
         currentPlayer = 0;
 
-        while (board.getWinner() == Player.Unowned) {
+        while (board.getWinner() == Player.Unowned && !GeneralTicTacToeLogic.boardIsFull(board)) {
             Move nextMove = getCurrentPlayersMove();
 
             while (!board.isValidMove(nextMove)) {
@@ -61,8 +62,12 @@ public class Main {
 
             currentPlayer = (currentPlayer + 1) % 2;
         }
-        
-        System.out.println("The winner is Player " + board.getWinner());
+
+        if (board.getWinner() != Player.Unowned) {
+            System.out.println("The winner is Player " + board.getWinner());
+        } else {
+            System.out.println("There was a tie");
+        }
     }
 
     private static WantedPlayer getWantedPlayer() {
