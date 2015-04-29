@@ -18,15 +18,21 @@ package com.diusrex.tictactoe.android;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.diusrex.tictactoe.android.players.AndroidAIPlayer;
+import com.diusrex.tictactoe.android.players.AndroidPlayerController;
+import com.diusrex.tictactoe.android.players.HumanAndroidPlayer;
 import com.diusrex.tictactoe.data_structures.BoardStatus;
+import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.SectionPosition;
 import com.diusrex.tictactoe.logic.BoardStatusFactory;
+import com.diusrex.tictactoe.logic.PlayerFactory;
 import com.diusrex.tictactoe.logic.StringSaver;
 
 public class BoardStateSaverAndLoader {
     static private final String SAVED_BOARD_PREFERENCE_FILE = "PreferenceFile";
     static private final String SAVED_BOARD_STATE = "SavedBoardState";
     static private final String SAVED_SELECTED_SECTION = "SavedSelectedSection";
+    static private final String SAVED_SECOND_PLAYER = "SavedSecondPlayer";
 
     SharedPreferences prefs;
 
@@ -74,4 +80,21 @@ public class BoardStateSaverAndLoader {
         editor.putString(SAVED_SELECTED_SECTION, selectedSection.toString());
         editor.apply();
     }
+
+    public void setSecondPlayer(PlayerFactory.WantedPlayer secondPlayer) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(SAVED_SECOND_PLAYER, secondPlayer.toString());
+        editor.apply();
+    }
+
+    public AndroidPlayerController loadSecondPlayer(SelectedSectionOwner selectedSectionOwner) {
+        String secondPlayerStr = prefs.getString(SAVED_SECOND_PLAYER, PlayerFactory.WantedPlayer.Human.toString());
+        PlayerFactory.WantedPlayer player = PlayerFactory.WantedPlayer.valueOf(secondPlayerStr);
+        if (player == PlayerFactory.WantedPlayer.Human)
+            return new HumanAndroidPlayer(selectedSectionOwner, Player.Player_2);
+
+        return new AndroidAIPlayer(PlayerFactory.createAIPlayer(player));
+    }
+
+
 }

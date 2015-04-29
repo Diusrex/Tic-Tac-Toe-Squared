@@ -67,7 +67,7 @@ public class MainGridOwner implements GridOwner {
         setUpSelectingSection(frame, pos);
 
         MyGridLayout currentGrid = (MyGridLayout) frame.findViewById(R.id.mainGrid);
-        sections[x][y] = new SectionOwner(pos, currentGrid);
+        sections[x][y] = new SectionOwner(pos, currentGrid, SectionOwner.GRID_LINE_WIDTH_SMALL);
 
         mainGrid.addView(frame);
 

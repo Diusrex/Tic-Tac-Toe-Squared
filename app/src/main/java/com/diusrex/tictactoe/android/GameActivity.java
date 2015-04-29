@@ -19,6 +19,7 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -27,27 +28,32 @@ import com.diusrex.tictactoe.R;
 import com.diusrex.tictactoe.android.dialogs.DrawDialogFragment;
 import com.diusrex.tictactoe.android.dialogs.GameEndActivityListener;
 import com.diusrex.tictactoe.android.dialogs.WinDialogFragment;
+import com.diusrex.tictactoe.android.players.AndroidPlayerController;
+import com.diusrex.tictactoe.android.players.HumanAndroidPlayer;
+import com.diusrex.tictactoe.android.players.MoveListener;
 import com.diusrex.tictactoe.data_structures.BoardStatus;
-import com.diusrex.tictactoe.data_structures.BoxPosition;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.SectionPosition;
 import com.diusrex.tictactoe.logic.BoardStatusFactory;
 import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
+import com.diusrex.tictactoe.logic.PlayerFactory;
 
 import java.util.Calendar;
 
-public class GameActivity extends Activity implements GameEventHandler, GameEndActivityListener {
+public class GameActivity extends Activity implements GameEventHandler, GameEndActivityListener, MoveListener {
     static public final String IS_NEW_GAME = "IsNewGame";
+    static public final String SECOND_PLAYER_TYPE = "SecondPlayer";
     static private final String SHOW_GAME_IS_DRAW = "GameIsDraw";
     static private final long COOLDOWN = 250;
 
     private Button undoButton;
 
     private BoardStatus board;
-    private Player currentPlayer;
 
     private BoardStateSaverAndLoader saverAndLoader;
+    private int currentPlayerIndex;
+    private AndroidPlayerController[] players = new AndroidPlayerController[2];
 
     private GameGraphicsUpdater graphicsUpdater;
 
@@ -67,11 +73,18 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
 
         MainGridOwner mainGridOwner = new MainGridOwner(this, this, (MyGridLayout) findViewById(R.id.mainGrid));
         TextView playerInfo = (TextView) findViewById(R.id.player_info);
-        graphicsUpdater = new GameGraphicsUpdater(mainGridOwner, playerInfo);
+        graphicsUpdater = new GameGraphicsUpdater(new SelectedSectionOwner(this), mainGridOwner, playerInfo);
 
         boolean newGame = getIntent().getBooleanExtra(IS_NEW_GAME, true);
         if (newGame) {
+            PlayerFactory.WantedPlayer secondPlayer = (PlayerFactory.WantedPlayer) getIntent().getSerializableExtra(SECOND_PLAYER_TYPE);
             saverAndLoader.resetBoardState();
+
+            if (secondPlayer == null) {
+                secondPlayer = PlayerFactory.WantedPlayer.Human;
+            }
+            saverAndLoader.setSecondPlayer(secondPlayer);
+
             shownGameIsDraw = false;
 
             // Make sure it does not try this again
@@ -83,7 +96,9 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
     protected void onResume() {
         super.onResume();
         board = saverAndLoader.loadBoard(BoardStatusFactory.createStandardBoard());
-        updateCurrentPlayer();
+
+        players[0] = new HumanAndroidPlayer(graphicsUpdater.getSelectedSectionOwner(), Player.Player_1);
+        players[1] = saverAndLoader.loadSecondPlayer(graphicsUpdater.getSelectedSectionOwner());
 
         graphicsUpdater.redrawBoard(this, board);
 
@@ -92,6 +107,7 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
 
     private void resumeGame() {
         SectionPosition selectedSection = saverAndLoader.loadSelectedSection(board);
+
         if (gameStillRunning()) {
             prepareForNextMove(getCurrentTime(), selectedSection);
         } else {
@@ -111,8 +127,17 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
     }
 
     private void updateCurrentPlayer() {
-        currentPlayer = board.getNextPlayer();
-        graphicsUpdater.playerChanged(currentPlayer, getPlayerAsString());
+        updatePlayerIndex();
+        graphicsUpdater.playerChanged(board.getNextPlayer(), getPlayerAsString());
+        players[currentPlayerIndex].promptForMove(this);
+    }
+
+    private void updatePlayerIndex() {
+        if (board.getNextPlayer() == Player.Player_1) {
+            currentPlayerIndex = 0;
+        } else {
+            currentPlayerIndex = 1;
+        }
     }
 
     @Override
@@ -130,21 +155,24 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
     }
 
     @Override
-    public void boxSelected(SectionPosition sectionPosition, BoxPosition position) {
-        Move move = new Move(sectionPosition, position, currentPlayer);
-
+    public void moveChosen(Move move) {
+        Log.e("GameActivity", "Made it here " + move.toString());
         long currentTime = getCurrentTime();
-        if (isValidMove(move, currentTime)) {
-            board.applyMoveIfValid(move);
-            graphicsUpdater.redrawBoard(this, board);
-
-            handleWinOrPrepareForNextMove(sectionPosition, currentTime);
-            undoButton.setEnabled(board.ableToUndoLastMove());
+        if (isValidTiming(currentTime) && board.isValidMove(move)) {
+            updateBoardWithMove(currentTime, move);
         }
     }
 
-    private boolean isValidMove(Move move, long currentTime) {
-        return board.isValidMove(move) && currentTime - previousTime > COOLDOWN;
+    public void updateBoardWithMove(long currentTime, Move move) {
+        board.applyMoveIfValid(move);
+        graphicsUpdater.redrawBoard(this, board);
+
+        handleWinOrPrepareForNextMove(move.getSection(), currentTime);
+        undoButton.setEnabled(board.ableToUndoLastMove());
+    }
+
+    private boolean isValidTiming(long currentTime) {
+        return currentTime - previousTime > COOLDOWN;
     }
 
     private void handleWinOrPrepareForNextMove(SectionPosition sectionPosition, long currentTime) {
@@ -171,9 +199,9 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
     }
 
     private void prepareForNextMove(long currentTime, SectionPosition selectedSection) {
-        updateCurrentPlayer();
-
         sectionSelected(selectedSection);
+
+        updateCurrentPlayer();
 
         graphicsUpdater.sectionToPlayInChanged(board.getSectionToPlayIn());
 
@@ -190,9 +218,6 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
     }
 
     private void disablePerformingMove() {
-        // Will not allow the player unowned to play
-        currentPlayer = Player.Unowned;
-
         // There is no section to play into
         graphicsUpdater.sectionToPlayInChanged(SectionPosition.make(-1, -1));
         graphicsUpdater.noMovesMayBeMade();
@@ -217,7 +242,7 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
     }
 
     private void updateGraphicalSelectedSection(SectionPosition section) {
-        SectionOwner mainSection = new SelectedSectionOwner(section, (MyGridLayout) findViewById(R.id.selectedSection), this);
+        SectionOwner mainSection = new SectionOwner(section, (MyGridLayout) findViewById(R.id.selectedSection), SectionOwner.GRID_LINE_WIDTH_LARGE);
         graphicsUpdater.selectedSectionChanged(this, board, mainSection, section);
     }
 
@@ -228,7 +253,14 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
 
     public void undoMove(View v) {
         if (canUndoLastMove()) {
+            players[currentPlayerIndex].undoWasPressed();
             board.undoLastMove();
+
+            updatePlayerIndex();
+
+            if (!players[currentPlayerIndex].mayUndo()) {
+                board.undoLastMove();
+            }
 
             graphicsUpdater.redrawBoard(this, board);
             prepareForNextMove(getCurrentTime(), board.getSectionToPlayIn());
@@ -245,7 +277,7 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
     }
 
     private String getPlayerAsString() {
-        switch (currentPlayer) {
+        switch (board.getNextPlayer()) {
         case Player_1:
             return getString(R.string.current_player_is_1);
 
