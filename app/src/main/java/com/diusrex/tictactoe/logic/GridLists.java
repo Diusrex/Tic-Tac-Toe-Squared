@@ -51,9 +51,11 @@ public class GridLists {
                     allPositions.add(new BasicPosition(x, y));
                 }
             }
+            
+            allPositions = Collections.unmodifiableList(allPositions);
         }
 
-        return Collections.unmodifiableList(allPositions);
+        return allPositions;
     }
 
     public static List<BoxPosition> getAllStandardBoxPositions() {
@@ -65,9 +67,11 @@ public class GridLists {
                     allBoxesInSection.add(BoxPosition.make(x, y));
                 }
             }
+            
+            allBoxesInSection = Collections.unmodifiableList(allBoxesInSection);
         }
 
-        return Collections.unmodifiableList(allBoxesInSection);
+        return allBoxesInSection;
     }
 
     public static List<SectionPosition> getAllStandardSections() {
@@ -79,9 +83,11 @@ public class GridLists {
                     allSections.add(SectionPosition.make(x, y));
                 }
             }
+            
+            allSections = Collections.unmodifiableList(allSections);
         }
 
-        return Collections.unmodifiableList(allSections);
+        return allSections;
     }
 
     public static List<LineIterator> getAllLineIterators() {
@@ -92,9 +98,11 @@ public class GridLists {
             for (Line line : allLines) {
                 allLineIterators.add(new LineIterator(line));
             }
+            
+            allLineIterators = Collections.unmodifiableList(allLineIterators);
         }
 
-        return Collections.unmodifiableList(allLineIterators);
+        return allLineIterators;
     }
 
     public static List<Line> getAllLines() {
@@ -104,9 +112,11 @@ public class GridLists {
             setUpHorizontalLines();
             setUpVerticalLines();
             setUpDiagonalLines();
+            
+            allLines = Collections.unmodifiableList(allLines);
         }
 
-        return Collections.unmodifiableList(allLines);
+        return allLines;
     }
 
     private static void setUpHorizontalLines() {

@@ -19,7 +19,7 @@ package com.diusrex.tictactoe.data_structures;
 
 public class LineIterator {
     private final Line line;
-    private final BoxPosition increase;
+    private final BoxPosition[] allPositions;
     private final int lineSize;
 
     public LineIterator(Line line) {
@@ -38,33 +38,29 @@ public class LineIterator {
         else if (difference.getGridY() < 0)
             yChange = -1;
 
-        increase = BoxPosition.make(xChange, yChange);
-        lineSize = Math.max((xChange != 0) ? difference.getGridX() / xChange : 0,
+        BoxPosition increase = BoxPosition.make(xChange, yChange);
+        lineSize = 1 + Math.max((xChange != 0) ? difference.getGridX() / xChange : 0,
                             (yChange != 0) ? difference.getGridY() / yChange : 0);
-    }
-
-    public LineIterator(BoxPosition startPos, BoxPosition increase, int lineSize) {
-        BoxPosition end = startPos;
-        for (int i = 0; i < lineSize - 1; ++i) {
-            end = end.increaseBy(increase);
-        }
         
-        line = new Line(startPos, end);
-        this.increase = increase;
-        this.lineSize = lineSize;
+        allPositions = new BoxPosition[lineSize];
+        
+        setUpPositions(increase);
+        
     }
-
+    
+    private void setUpPositions(BoxPosition increase) {
+        allPositions[0] = line.getStart();
+        for (int i = 1; i < lineSize; ++i) {
+            allPositions[i] = allPositions[i - 1].increaseBy(increase);
+        }
+    }
+    
     public boolean isDone(int iterationNum) {
-        return iterationNum < 0 || iterationNum > lineSize;
+        return iterationNum >= lineSize;
     }
 
     public Position getCurrent(int iterationNum) {
-        BoxPosition toReturn = line.getStart();
-        for (int i = 0; i < iterationNum; ++i) {
-            toReturn = toReturn.increaseBy(increase);
-        }
-        
-        return toReturn;
+        return allPositions[iterationNum];
     }
 
     public Line getLine() {

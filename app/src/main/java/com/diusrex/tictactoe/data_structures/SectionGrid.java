@@ -57,11 +57,7 @@ public class SectionGrid implements Grid {
 
     @Override
     public Player getPointOwner(Position pos) {
-        return getPointOwner(pos.getGridX(), pos.getGridY());
-    }
-
-    private Player getPointOwner(int x, int y) {
-        return owners[x][y];
+        return owners[pos.getGridX()][pos.getGridY()];
     }
 
     @Override
