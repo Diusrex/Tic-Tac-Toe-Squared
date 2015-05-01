@@ -12,10 +12,11 @@ import java.util.Set;
 import com.diusrex.tictactoe.logic.GridLists;
 
 public class AITournament {
-    public static final int NUMBER_OF_UNIQUE_AIS = 5;
-    public static final int NUMBER_OF_AIS = NUMBER_OF_UNIQUE_AIS;
-    public static final int NUMBER_OF_THREADS = 5;
-    private static final int NUMBER_OF_RESULTS_KEPT = 2;
+    private static final int NUMBER_OF_UNIQUE_AIS = 40;
+    private static final int NUMBER_OF_AIS = NUMBER_OF_UNIQUE_AIS;
+    private static final int NUMBER_OF_THREADS = 8;
+
+    private static final int NUMBER_OF_RESULTS_KEPT = 8;
 
     private static Thread[] allThreads = new Thread[NUMBER_OF_THREADS];
 
@@ -45,7 +46,7 @@ public class AITournament {
     private static void addToBestResults(List<ScoringValuesTestResults> results,
             List<ScoringValuesTestResults> bestResults) {
         for (int i = 0; i < NUMBER_OF_RESULTS_KEPT; ++i) {
-            ScoringValuesTestResults result = results.get(0);
+            ScoringValuesTestResults result = results.get(i);
             result.reset();
             bestResults.add(result);
         }
