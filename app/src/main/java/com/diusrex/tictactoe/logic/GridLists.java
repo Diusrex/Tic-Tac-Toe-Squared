@@ -42,6 +42,14 @@ public class GridLists {
     private GridLists() {
     }
 
+    public static void initialize() {
+        getAllStandardPositions();
+        getAllStandardBoxPositions();
+        getAllStandardSections();
+        getAllLineIterators();
+        getAllLines();
+    }
+
     public static List<Position> getAllStandardPositions() {
         if (allPositions == null) {
             allPositions = new ArrayList<>();
@@ -51,7 +59,7 @@ public class GridLists {
                     allPositions.add(new BasicPosition(x, y));
                 }
             }
-            
+
             allPositions = Collections.unmodifiableList(allPositions);
         }
 
@@ -67,7 +75,7 @@ public class GridLists {
                     allBoxesInSection.add(BoxPosition.make(x, y));
                 }
             }
-            
+
             allBoxesInSection = Collections.unmodifiableList(allBoxesInSection);
         }
 
@@ -83,7 +91,7 @@ public class GridLists {
                     allSections.add(SectionPosition.make(x, y));
                 }
             }
-            
+
             allSections = Collections.unmodifiableList(allSections);
         }
 
@@ -98,7 +106,7 @@ public class GridLists {
             for (Line line : allLines) {
                 allLineIterators.add(new LineIterator(line));
             }
-            
+
             allLineIterators = Collections.unmodifiableList(allLineIterators);
         }
 
@@ -112,7 +120,7 @@ public class GridLists {
             setUpHorizontalLines();
             setUpVerticalLines();
             setUpDiagonalLines();
-            
+
             allLines = Collections.unmodifiableList(allLines);
         }
 
