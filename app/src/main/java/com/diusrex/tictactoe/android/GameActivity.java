@@ -118,7 +118,7 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
     }
 
     private boolean gameStillRunning() {
-        return !winnerExists() && !boardIsFull();
+        return !winnerExists() && !boardIsFull() && !isADraw();
     }
 
     private boolean boardIsFull() {
