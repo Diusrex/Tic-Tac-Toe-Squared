@@ -9,25 +9,36 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.logic.GridLists;
 
 public class AITournament {
-    private static final int NUMBER_OF_UNIQUE_AIS = 40;
-    private static final int NUMBER_OF_AIS = NUMBER_OF_UNIQUE_AIS;
-    private static final int NUMBER_OF_THREADS = 8;
+    private static int NUMBER_OF_UNIQUE_AI_ARG_POS = 1;
+    private static int NUMBER_OF_THREADS_ARG_POS = 2;
+    private static int NUMBER_OF_RESULTS_KEPT_ARG_POS = 3;
+    private static int numberOfUniqueAI;
+    private static int numberOfThreads;
 
-    private static final int NUMBER_OF_RESULTS_KEPT = 8;
+    private static int numberOfResultsKept;
 
-    private static Thread[] allThreads = new Thread[NUMBER_OF_THREADS];
+    private static Thread[] allThreads;
 
+    // Args -> numberAI numberThreads numberKept
     static public void main(String[] args) {
+        numberOfUniqueAI = Integer.parseInt(args[NUMBER_OF_UNIQUE_AI_ARG_POS]);
+        numberOfThreads = Integer.parseInt(args[NUMBER_OF_THREADS_ARG_POS]);
+        numberOfResultsKept = Integer.parseInt(args[NUMBER_OF_RESULTS_KEPT_ARG_POS]);
+        
+        allThreads = new Thread[numberOfThreads];
+        
         List<ScoringValuesTestResults> bestResults = new ArrayList<>();
 
         setUpStaticObjects();
 
         long totalStartTime = getCurrentTime();
 
-        for (int i = 0; i < 5; ++i) {
+        // Will run as many times as needed to ensure the final one is full
+        for (int i = 0; i < numberOfUniqueAI / numberOfResultsKept; ++i) {
             List<ScoringValuesTestResults> results = new ArrayList<>();
             generateAIScorings(results);
             runAllTests(results);
@@ -45,7 +56,7 @@ public class AITournament {
 
     private static void addToBestResults(List<ScoringValuesTestResults> results,
             List<ScoringValuesTestResults> bestResults) {
-        for (int i = 0; i < NUMBER_OF_RESULTS_KEPT; ++i) {
+        for (int i = 0; i < numberOfResultsKept; ++i) {
             ScoringValuesTestResults result = results.get(i);
             result.reset();
             bestResults.add(result);
@@ -57,7 +68,7 @@ public class AITournament {
 
         Random random = new Random();
 
-        while (allValues.size() < NUMBER_OF_UNIQUE_AIS) {
+        while (allValues.size() < numberOfUniqueAI) {
             // It makes no sense to give a better score for having one in a row
             // compared to two in a row
             int mainTwoInRowScore = random.nextInt(99) + 1;
@@ -76,14 +87,14 @@ public class AITournament {
 
     private static void runAllTests(List<ScoringValuesTestResults> resultsToRun) {
         long totalStartTime = getCurrentTime();
-        int numberPerThread = resultsToRun.size() / NUMBER_OF_THREADS;
+        int numberPerThread = resultsToRun.size() / numberOfThreads;
 
-        for (int i = 0; i < NUMBER_OF_THREADS; ++i) {
+        for (int i = 0; i < numberOfThreads; ++i) {
             int start = i * numberPerThread;
             int exclusiveEnd = start + numberPerThread;
 
             // In the case where not divisible evenly
-            if (i == NUMBER_OF_THREADS - 1)
+            if (i == numberOfThreads - 1)
                 exclusiveEnd = resultsToRun.size();
 
             TestRunner runner = new TestRunner(resultsToRun, start, exclusiveEnd);
@@ -92,7 +103,7 @@ public class AITournament {
         }
 
         // Need all threads to be finished first
-        for (int i = 0; i < NUMBER_OF_THREADS; ++i) {
+        for (int i = 0; i < numberOfThreads; ++i) {
             try {
                 allThreads[i].join();
             } catch (InterruptedException e) {
@@ -105,6 +116,7 @@ public class AITournament {
 
     private static void setUpStaticObjects() {
         GridLists.initialize();
+        Move.init();
     }
 
     private static long getCurrentTime() {
@@ -130,7 +142,6 @@ public class AITournament {
             ScoringValuesTestResults result = results.get(i);
             result.printOut(printStream);
             printStream.println("\n");
-
         }
 
         if (printStream != System.out) {
