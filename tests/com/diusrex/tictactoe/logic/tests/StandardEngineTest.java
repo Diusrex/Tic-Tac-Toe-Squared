@@ -34,15 +34,15 @@ public class StandardEngineTest {
         BoxPosition duplicatedPosition = validPosition;
         BoxPosition validPositionForSecond = BoxPosition.make(2, 2);
         
-        moveP1 = new Move(mainSection, validPosition, Player.Player_1); // Position 0, 0
-        moveP1_2 = new Move(mainSection, validPositionForSecond, Player.Player_1);
-        moveP2SameAsMoveP1 = new Move(mainSection, duplicatedPosition, Player.Player_2);
-        moveP2 = new Move(mainSection, validPositionForSecond, Player.Player_2);
+        moveP1 = Move.make(mainSection, validPosition, Player.Player_1); // Position 0, 0
+        moveP1_2 = Move.make(mainSection, validPositionForSecond, Player.Player_1);
+        moveP2SameAsMoveP1 = Move.make(mainSection, duplicatedPosition, Player.Player_2);
+        moveP2 = Move.make(mainSection, validPositionForSecond, Player.Player_2);
 
-        moveP2_WrongSectionToP1 = new Move(wrongSection, BoxPosition.make(0, 0), Player.Player_2);
+        moveP2_WrongSectionToP1 = Move.make(wrongSection, BoxPosition.make(0, 0), Player.Player_2);
 
-        invalidPosition = new Move(mainSection, BoxPosition.make(-1, -1), Player.Player_1);
-        invalidPlayer = new Move(mainSection, validPosition, Player.Unowned);
+        invalidPosition = Move.make(mainSection, BoxPosition.make(-1, -1), Player.Player_1);
+        invalidPlayer = Move.make(mainSection, validPosition, Player.Unowned);
     }
 
     @Test
@@ -139,13 +139,13 @@ public class StandardEngineTest {
         SectionPosition secondSection = SectionPosition.make(2, 2);
         
         Player player = Player.Player_1;
-        Move move = new Move(expectedSection, pos, player);
+        Move move = Move.make(expectedSection, pos, player);
         TestUtils.applyMoveToBoard(board, move);
         Assert.assertEquals(GeneralTicTacToeLogic.getSectionToPlayInNext(pos), board.getSectionToPlayIn());
 
         pos = BoxPosition.make(0, 0);
         player = Player.Player_2;
-        move = new Move(secondSection, pos, player);
+        move = Move.make(secondSection, pos, player);
         TestUtils.applyMoveToBoard(board, move);
         Assert.assertEquals(GeneralTicTacToeLogic.getSectionToPlayInNext(pos), board.getSectionToPlayIn());
     }
@@ -161,7 +161,7 @@ public class StandardEngineTest {
 
         BoxPosition untakenPosition = BoxPosition.make(0, 0);
 
-        TestUtils.applyMoveToBoard(board, new Move(otherSection, untakenPosition, board.getNextPlayer()));
+        TestUtils.applyMoveToBoard(board, Move.make(otherSection, untakenPosition, board.getNextPlayer()));
     }
 
     @Test

@@ -2,6 +2,7 @@ package com.diusrex.tictactoe.ai;
 
 import java.io.PrintStream;
 
+
 public class ScoringValuesTestResults implements Comparable<ScoringValuesTestResults> {
     private final ScoringValues ownValue;
     private final int depth;

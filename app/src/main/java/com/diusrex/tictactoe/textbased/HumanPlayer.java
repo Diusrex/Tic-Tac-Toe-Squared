@@ -56,7 +56,7 @@ public class HumanPlayer implements PlayerController {
             pos = getWantedBoxPosition();
         }
 
-        return new Move(requiredSection, pos, board.getNextPlayer());
+        return Move.make(requiredSection, pos, board.getNextPlayer());
     }
 
     private Move getMoveInAnySection(BoardStatus board) {
@@ -68,7 +68,7 @@ public class HumanPlayer implements PlayerController {
             pos = getWantedBoxPosition();
         }
 
-        return new Move(section, pos, board.getNextPlayer());
+        return Move.make(section, pos, board.getNextPlayer());
     }
 
     private SectionPosition getWantedSection() {

@@ -15,10 +15,15 @@
  **/
 package com.diusrex.tictactoe.data_structures;
 
+import com.diusrex.tictactoe.logic.GridConstants;
+import com.diusrex.tictactoe.logic.GridLists;
+
 public class Move {
     public static final int SIZE_OF_SAVED_MOVE = 5;
     private static final int START_OF_BOX_POSITION = 2;
     private static final int START_OF_PLAYER = 4;
+    
+    private static Move[][][][][] allPossibleMoves;
 
     private final SectionPosition section;
     private final BoxPosition box;
@@ -29,10 +34,45 @@ public class Move {
         BoxPosition box = BoxPosition.fromString(string.substring(START_OF_BOX_POSITION, START_OF_PLAYER));
         Player player = Player.fromString(string.substring(START_OF_PLAYER, SIZE_OF_SAVED_MOVE));
 
+        return make(section, box, player);
+    }
+    
+    public static void init() {
+        int secSize = GridConstants.NUMBER_OF_SECTIONS_PER_SIDE;
+        int boxSize = GridConstants.SIZE_OF_SECTION;
+        allPossibleMoves = new Move[secSize][secSize][boxSize][boxSize][2];
+        
+        for (SectionPosition section : GridLists.getAllStandardSections()) {
+            Move[][][] currentSectionMoves = allPossibleMoves[section.getGridX()][section.getGridY()];
+            
+            for (BoxPosition box : GridLists.getAllStandardBoxPositions()) {
+                Move[] currentBoxMoves = currentSectionMoves[box.getGridX()][box.getGridY()];
+                
+                currentBoxMoves[0] = new Move(section, box, Player.Player_1);
+                currentBoxMoves[1] = new Move(section, box, Player.Player_2);
+            }
+        }
+    }
+    
+    public static Move make(SectionPosition section, BoxPosition box, Player player) {
+        if (allPossibleMoves == null) {
+            init();
+        }
+        
+        if (isInBounds(section, GridConstants.NUMBER_OF_SECTIONS_PER_SIDE) &&
+                isInBounds(box, GridConstants.SIZE_OF_SECTION) &&
+                player != Player.Unowned)
+            return allPossibleMoves[section.getGridX()][section.getGridY()][box.getGridX()][box.getGridY()][(player == Player.Player_1) ? 0 : 1];
+        
         return new Move(section, box, player);
     }
 
-    public Move(SectionPosition section, BoxPosition box, Player madeBy) {
+    private static boolean isInBounds(Position pos, int sizeForPos) {
+        return pos.getGridX() >= 0 && pos.getGridX() < sizeForPos
+                && pos.getGridY() >= 0 && pos.getGridY() < sizeForPos;
+    }
+
+    private Move(SectionPosition section, BoxPosition box, Player madeBy) {
         this.section = section;
         this.box = box;
         this.player = madeBy;

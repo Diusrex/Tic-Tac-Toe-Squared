@@ -45,7 +45,7 @@ public class EngineSectionTests {
     private void takeLineInBoard(SectionPosition section, BoxPosition start, BoxPosition increase, int count, Player player) {
         for (int i = 0; i < count; ++i, start = start.increaseBy(increase)) {
             board.fakedSectionToPlayIn = section;
-            TestUtils.applyMoveToBoard(board, new Move(section, start, player));
+            TestUtils.applyMoveToBoard(board, Move.make(section, start, player));
         }
     }
 
@@ -101,7 +101,7 @@ public class EngineSectionTests {
 
         // Take the final spot
         board.fakedSectionToPlayIn = section;
-        TestUtils.applyMoveToBoard(board, new Move(section, winningPos, mainPlayer));
+        TestUtils.applyMoveToBoard(board, Move.make(section, winningPos, mainPlayer));
 
         Assert.assertEquals(mainPlayer, board.getSectionOwner(section));
     }
@@ -122,7 +122,7 @@ public class EngineSectionTests {
 
         // Take the final spot
         board.fakedSectionToPlayIn = section;
-        TestUtils.applyMoveToBoard(board, new Move(section, winningPos, currentPlayer));
+        TestUtils.applyMoveToBoard(board, Move.make(section, winningPos, currentPlayer));
 
         Assert.assertEquals(currentPlayer, board.getSectionOwner(section));
     }

@@ -26,7 +26,7 @@ public class BoardStatusTests {
     public void testGetNextPlayer() {
         Assert.assertEquals(Player.Player_1, board.getNextPlayer());
 
-        TestUtils.applyMoveToBoard(board, new Move(board.getSectionToPlayIn(), BoxPosition.make(1, 1), Player.Player_1));
+        TestUtils.applyMoveToBoard(board, Move.make(board.getSectionToPlayIn(), BoxPosition.make(1, 1), Player.Player_1));
 
         Assert.assertEquals(Player.Player_2, board.getNextPlayer());
     }
@@ -88,7 +88,7 @@ public class BoardStatusTests {
 
         SectionPosition sectionPos = board.getSectionToPlayIn();
         BoxPosition movePos = BoxPosition.make(0, 0);
-        Move move = new Move(sectionPos, movePos, board.getNextPlayer());
+        Move move = Move.make(sectionPos, movePos, board.getNextPlayer());
 
         TestUtils.applyMoveToBoard(board, move);
 

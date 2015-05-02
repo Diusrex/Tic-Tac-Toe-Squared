@@ -25,8 +25,8 @@ public class SaveStringTests {
     public void setup() {
         mainBoard = new BoardStatus(new StandardTicTacToeEngine());
         generatedBoard = new BoardStatus(new StandardTicTacToeEngine());
-        playerOneMove = new Move(mainBoard.getSectionToPlayIn(), BoxPosition.make(0, 0), Player.Player_1);
-        playerTwoMove = new Move(GeneralTicTacToeLogic.getSectionToPlayInNext(playerOneMove.getBox()),
+        playerOneMove = Move.make(mainBoard.getSectionToPlayIn(), BoxPosition.make(0, 0), Player.Player_1);
+        playerTwoMove = Move.make(GeneralTicTacToeLogic.getSectionToPlayInNext(playerOneMove.getBox()),
                 BoxPosition.make(1, 1), Player.Player_2);
     }
 

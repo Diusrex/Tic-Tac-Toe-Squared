@@ -56,7 +56,7 @@ public class MiniMaxPlayer extends AIPlayer {
         MoveScore bestMove = null;
 
         for (BoxPosition pos : GridLists.getAllStandardBoxPositions()) {
-            Move move = new Move(section, pos, board.getNextPlayer());
+            Move move = Move.make(section, pos, board.getNextPlayer());
 
             if (board.isValidMove(move)) {
                 board.applyMoveIfValid(move);
