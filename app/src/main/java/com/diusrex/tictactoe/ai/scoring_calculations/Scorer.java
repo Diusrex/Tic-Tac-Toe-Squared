@@ -1,4 +1,4 @@
-package com.diusrex.tictactoe.ai;
+package com.diusrex.tictactoe.ai.scoring_calculations;
 
 import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.Grid;

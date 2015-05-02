@@ -1,4 +1,4 @@
-package com.diusrex.tictactoe.ai;
+package com.diusrex.tictactoe.ai.tournament;
 
 import java.util.List;
 

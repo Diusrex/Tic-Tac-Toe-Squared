@@ -1,6 +1,10 @@
-package com.diusrex.tictactoe.ai;
+package com.diusrex.tictactoe.ai.tournament;
 
 import java.io.PrintStream;
+
+import com.diusrex.tictactoe.ai.MiniMaxPlayer;
+import com.diusrex.tictactoe.ai.scoring_calculations.ScoringFunction;
+import com.diusrex.tictactoe.ai.scoring_calculations.ScoringValues;
 
 
 public class ScoringValuesTestResults implements Comparable<ScoringValuesTestResults> {

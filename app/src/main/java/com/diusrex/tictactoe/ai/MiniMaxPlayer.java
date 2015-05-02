@@ -1,5 +1,7 @@
 package com.diusrex.tictactoe.ai;
 
+import com.diusrex.tictactoe.ai.scoring_calculations.Scorer;
+import com.diusrex.tictactoe.ai.scoring_calculations.ScoringValues;
 import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.BoxPosition;
 import com.diusrex.tictactoe.data_structures.Move;

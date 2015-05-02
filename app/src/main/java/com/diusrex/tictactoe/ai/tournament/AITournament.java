@@ -1,4 +1,4 @@
-package com.diusrex.tictactoe.ai;
+package com.diusrex.tictactoe.ai.tournament;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import com.diusrex.tictactoe.ai.scoring_calculations.ScoringFunction;
+import com.diusrex.tictactoe.ai.scoring_calculations.ScoringValues;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.logic.GridLists;
 

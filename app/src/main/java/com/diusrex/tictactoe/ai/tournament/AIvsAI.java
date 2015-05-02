@@ -1,5 +1,6 @@
-package com.diusrex.tictactoe.ai;
+package com.diusrex.tictactoe.ai.tournament;
 
+import com.diusrex.tictactoe.ai.AIPlayer;
 import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.logic.BoardStatusFactory;

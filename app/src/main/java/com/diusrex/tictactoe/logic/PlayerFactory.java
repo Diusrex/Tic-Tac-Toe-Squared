@@ -2,8 +2,8 @@ package com.diusrex.tictactoe.logic;
 
 import com.diusrex.tictactoe.ai.AIPlayer;
 import com.diusrex.tictactoe.ai.MiniMaxPlayer;
-import com.diusrex.tictactoe.ai.ScoringFunction;
-import com.diusrex.tictactoe.ai.ScoringValues;
+import com.diusrex.tictactoe.ai.scoring_calculations.ScoringFunction;
+import com.diusrex.tictactoe.ai.scoring_calculations.ScoringValues;
 
 public class PlayerFactory {
     public enum WantedPlayer {
