@@ -1,35 +1,47 @@
 package com.diusrex.tictactoe.ai.tournament;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.Scanner;
 
-import com.diusrex.tictactoe.ai.scoring_calculations.ScoringFunction;
-import com.diusrex.tictactoe.ai.scoring_calculations.ScoringValues;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.logic.GridLists;
 
 public class AITournament {
-    private static int NUMBER_OF_UNIQUE_AI_ARG_POS = 1;
-    private static int NUMBER_OF_THREADS_ARG_POS = 2;
-    private static int NUMBER_OF_RESULTS_KEPT_ARG_POS = 3;
+    private static int NUMBER_OF_UNIQUE_AI_ARG_POS = 0;
+    private static int NUMBER_OF_THREADS_ARG_POS = 1;
+    private static int NUMBER_OF_RESULTS_KEPT_ARG_POS = 2;
+    private static int FILE_TO_LOAD_FROM_ARG_POS = 3;
     private static int numberOfUniqueAI;
     private static int numberOfThreads;
 
     private static int numberOfResultsKept;
+    
+    private static Scanner fileScanner;
 
     private static Thread[] allThreads;
 
     // Args -> numberAI numberThreads numberKept
     static public void main(String[] args) {
+        for (String arg : args) {
+            System.out.println(arg);
+        }
         numberOfUniqueAI = Integer.parseInt(args[NUMBER_OF_UNIQUE_AI_ARG_POS]);
         numberOfThreads = Integer.parseInt(args[NUMBER_OF_THREADS_ARG_POS]);
         numberOfResultsKept = Integer.parseInt(args[NUMBER_OF_RESULTS_KEPT_ARG_POS]);
+        
+        if (args.length > FILE_TO_LOAD_FROM_ARG_POS) {
+            try {
+                fileScanner = new Scanner(new File(args[FILE_TO_LOAD_FROM_ARG_POS]));
+            } catch (FileNotFoundException e) {
+                System.out.println("Loading file scanner failed. Will just randomly generate instead");
+            }
+        }
         
         allThreads = new Thread[numberOfThreads];
         
@@ -38,22 +50,38 @@ public class AITournament {
         setUpStaticObjects();
 
         long totalStartTime = getCurrentTime();
-
-        // Will run as many times as needed to ensure the final one is full
-        for (int i = 0; i < numberOfUniqueAI / numberOfResultsKept; ++i) {
-            List<ScoringValuesTestResults> results = new ArrayList<>();
-            generateAIScorings(results);
-            runAllTests(results);
-
-            System.out.println("Completed " + i);
-            printOutResult(results, "Results " + i + ".txt");
-            addToBestResults(results, bestResults);
+        if (numberOfResultsKept < numberOfUniqueAI) {
+            // Will run as many times as needed to ensure the final one is full
+            for (int i = 0; i < numberOfUniqueAI / numberOfResultsKept; ++i) {
+                List<ScoringValuesTestResults> results = new ArrayList<>();
+                generateAIScorings(results);
+                runAllTests(results);
+    
+                System.out.println("Completed " + i);
+                printOutResult(results, "Results " + i + ".txt");
+                addToBestResults(results, bestResults);
+            }
+        } else {
+            generateAIScorings(bestResults);
         }
+        
+        System.out.println("Running best results");
 
         runAllTests(bestResults);
         printOutResult(bestResults, "Best Results.txt");
 
         System.out.println("Completed after " + (getCurrentTime() - totalStartTime));
+    }
+
+    private static void generateAIScorings(List<ScoringValuesTestResults> results) {
+        if (fileScanner == null) {
+            System.out.println("Randomly generating");
+            RandomScoringsGenerator.generateAIScorings(results, numberOfUniqueAI);
+        } else {
+            System.out.println("Loading from file");
+            ScoringsFromFile.loadAIScorings(fileScanner, results, numberOfUniqueAI);
+        }
+        
     }
 
     private static void addToBestResults(List<ScoringValuesTestResults> results,
@@ -62,28 +90,6 @@ public class AITournament {
             ScoringValuesTestResults result = results.get(i);
             result.reset();
             bestResults.add(result);
-        }
-    }
-
-    private static void generateAIScorings(List<ScoringValuesTestResults> results) {
-        Set<ScoringValues> allValues = new HashSet<ScoringValues>();
-
-        Random random = new Random();
-
-        while (allValues.size() < numberOfUniqueAI) {
-            // It makes no sense to give a better score for having one in a row
-            // compared to two in a row
-            int mainTwoInRowScore = random.nextInt(99) + 1;
-            ScoringFunction mainFunction = new ScoringFunction.Builder().setScoreValues(0,
-                    random.nextInt(mainTwoInRowScore), mainTwoInRowScore, random.nextInt(100)).build();
-            int secondaryTwoInRowScore = random.nextInt(49) + 1;
-            ScoringFunction sectionsFunction = new ScoringFunction.Builder().setScoreValues(random.nextInt(20) - 20,
-                    random.nextInt(secondaryTwoInRowScore), secondaryTwoInRowScore, random.nextInt(50)).build();
-            allValues.add(new ScoringValues(mainFunction, sectionsFunction));
-        }
-
-        for (ScoringValues value : allValues) {
-            results.add(new ScoringValuesTestResults(value, 4));
         }
     }
 
@@ -121,12 +127,12 @@ public class AITournament {
         Move.init();
     }
 
-    private static long getCurrentTime() {
+    public static long getCurrentTime() {
         Calendar c = Calendar.getInstance();
         return c.getTimeInMillis();
     }
 
-    private static void printOutResult(List<ScoringValuesTestResults> results, String file) {
+    public static void printOutResult(List<ScoringValuesTestResults> results, String file) {
         Collections.sort(results);
         Collections.reverse(results);
 
