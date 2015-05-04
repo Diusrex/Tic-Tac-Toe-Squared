@@ -16,7 +16,7 @@ import com.diusrex.tictactoe.logic.GridLists;
  *  and then calculating the score based on how it is for self
  */
 public class MiniMaxPlayer extends AIPlayer {
-    private final int WIN_SCORE = 10000000;
+    private static final int WIN_SCORE = 10000000;
     private final Scorer scorer;
     private int maxDepth;
 
