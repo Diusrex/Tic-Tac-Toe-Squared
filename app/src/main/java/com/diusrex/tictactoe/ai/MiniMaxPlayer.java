@@ -10,6 +10,11 @@ import com.diusrex.tictactoe.data_structures.SectionPosition;
 import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
 import com.diusrex.tictactoe.logic.GridLists;
 
+/*
+ *  This is actually Negamax, it works the same way, but it multiplies the score by -1,
+ *  rather than having two different states -> One for self, one for opponent,
+ *  and then calculating the score based on how it is for self
+ */
 public class MiniMaxPlayer extends AIPlayer {
     private final int WIN_SCORE = 10000000;
     private final Scorer scorer;
@@ -79,7 +84,9 @@ public class MiniMaxPlayer extends AIPlayer {
     private int calculateScore(BoardStatus board, int depth) {
         if (board.getWinner() != Player.Unowned) {
             // The previous player won, but this scoring is for the current player
-            return -WIN_SCORE;
+            // Multiplies by depth to prefer (mostly) winning sooner
+            // Adds one to ensure that the score wouldn't be 0 if depth is 0
+            return -WIN_SCORE * (depth + 1);
         } else if (GeneralTicTacToeLogic.boardIsFull(board)) {
             return scorer.getTieScore();
         } else if (depth == 0) {
