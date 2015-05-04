@@ -1,0 +1,600 @@
+At 1 wins: 124 draw: 23 loss: 51
+Depth: 4
+MainScoring: 0 27 94 56
+SectionScoring: -14 0 11 4
+
+
+At 2 wins: 107 draw: 29 loss: 62
+Depth: 4
+MainScoring: 0 34 76 61
+SectionScoring: -10 3 16 15
+
+
+At 3 wins: 102 draw: 37 loss: 59
+Depth: 4
+MainScoring: 0 36 72 53
+SectionScoring: -14 0 1 31
+
+
+At 4 wins: 101 draw: 28 loss: 69
+Depth: 4
+MainScoring: 0 40 93 32
+SectionScoring: -15 0 3 18
+
+
+At 5 wins: 101 draw: 21 loss: 76
+Depth: 4
+MainScoring: 0 45 97 60
+SectionScoring: -16 1 20 27
+
+
+At 6 wins: 100 draw: 28 loss: 70
+Depth: 4
+MainScoring: 0 53 93 53
+SectionScoring: -10 10 29 13
+
+
+At 7 wins: 99 draw: 32 loss: 67
+Depth: 4
+MainScoring: 0 27 49 36
+SectionScoring: -7 0 4 15
+
+
+At 8 wins: 99 draw: 29 loss: 70
+Depth: 4
+MainScoring: 0 59 80 63
+SectionScoring: -15 5 15 27
+
+
+At 9 wins: 99 draw: 19 loss: 80
+Depth: 4
+MainScoring: 0 30 66 17
+SectionScoring: -12 4 7 0
+
+
+At 10 wins: 98 draw: 38 loss: 62
+Depth: 4
+MainScoring: 0 0 83 14
+SectionScoring: -10 23 24 7
+
+
+At 11 wins: 97 draw: 35 loss: 66
+Depth: 4
+MainScoring: 0 10 33 26
+SectionScoring: -9 0 1 9
+
+
+At 12 wins: 97 draw: 35 loss: 66
+Depth: 4
+MainScoring: 0 36 82 37
+SectionScoring: -18 0 2 33
+
+
+At 13 wins: 97 draw: 29 loss: 72
+Depth: 4
+MainScoring: 0 21 62 7
+SectionScoring: -17 9 25 17
+
+
+At 14 wins: 97 draw: 21 loss: 80
+Depth: 4
+MainScoring: 0 47 89 99
+SectionScoring: -11 12 14 10
+
+
+At 15 wins: 97 draw: 19 loss: 82
+Depth: 4
+MainScoring: 0 33 95 87
+SectionScoring: -13 1 9 31
+
+
+At 16 wins: 96 draw: 37 loss: 65
+Depth: 4
+MainScoring: 0 33 71 65
+SectionScoring: -7 0 10 17
+
+
+At 17 wins: 95 draw: 17 loss: 86
+Depth: 4
+MainScoring: 0 9 20 85
+SectionScoring: -9 22 26 11
+
+
+At 18 wins: 94 draw: 30 loss: 74
+Depth: 4
+MainScoring: 0 47 73 12
+SectionScoring: -4 3 13 9
+
+
+At 19 wins: 94 draw: 29 loss: 75
+Depth: 4
+MainScoring: 0 69 73 70
+SectionScoring: -16 5 23 19
+
+
+At 20 wins: 94 draw: 28 loss: 76
+Depth: 4
+MainScoring: 0 82 90 25
+SectionScoring: -17 4 31 32
+
+
+At 21 wins: 94 draw: 26 loss: 78
+Depth: 4
+MainScoring: 0 55 73 85
+SectionScoring: -18 2 19 35
+
+
+At 22 wins: 93 draw: 36 loss: 69
+Depth: 4
+MainScoring: 0 52 98 74
+SectionScoring: -14 0 11 18
+
+
+At 23 wins: 93 draw: 34 loss: 71
+Depth: 4
+MainScoring: 0 42 83 81
+SectionScoring: -17 0 3 21
+
+
+At 24 wins: 93 draw: 33 loss: 72
+Depth: 4
+MainScoring: 0 56 94 64
+SectionScoring: -13 5 14 21
+
+
+At 25 wins: 92 draw: 23 loss: 83
+Depth: 4
+MainScoring: 0 27 94 14
+SectionScoring: -1 3 17 30
+
+
+At 26 wins: 92 draw: 21 loss: 85
+Depth: 4
+MainScoring: 0 26 96 38
+SectionScoring: -5 1 15 49
+
+
+At 27 wins: 90 draw: 29 loss: 79
+Depth: 4
+MainScoring: 0 36 47 55
+SectionScoring: -4 4 16 13
+
+
+At 28 wins: 90 draw: 27 loss: 81
+Depth: 4
+MainScoring: 0 64 70 54
+SectionScoring: -15 1 9 31
+
+
+At 29 wins: 90 draw: 26 loss: 82
+Depth: 4
+MainScoring: 0 57 92 25
+SectionScoring: -20 1 19 47
+
+
+At 30 wins: 89 draw: 39 loss: 70
+Depth: 4
+MainScoring: 0 4 99 79
+SectionScoring: -1 4 14 1
+
+
+At 31 wins: 89 draw: 38 loss: 71
+Depth: 4
+MainScoring: 0 31 90 21
+SectionScoring: -16 1 7 25
+
+
+At 32 wins: 89 draw: 29 loss: 80
+Depth: 4
+MainScoring: 0 39 68 62
+SectionScoring: -3 10 16 33
+
+
+At 33 wins: 89 draw: 26 loss: 83
+Depth: 4
+MainScoring: 0 40 46 22
+SectionScoring: -11 2 9 15
+
+
+At 34 wins: 89 draw: 24 loss: 85
+Depth: 4
+MainScoring: 0 28 42 52
+SectionScoring: -4 43 49 26
+
+
+At 35 wins: 88 draw: 37 loss: 73
+Depth: 4
+MainScoring: 0 43 70 85
+SectionScoring: -4 20 22 11
+
+
+At 36 wins: 88 draw: 29 loss: 81
+Depth: 4
+MainScoring: 0 25 99 45
+SectionScoring: -16 1 6 22
+
+
+At 37 wins: 88 draw: 23 loss: 87
+Depth: 4
+MainScoring: 0 37 90 73
+SectionScoring: -3 1 18 33
+
+
+At 38 wins: 87 draw: 38 loss: 73
+Depth: 4
+MainScoring: 0 24 53 57
+SectionScoring: -17 11 13 6
+
+
+At 39 wins: 87 draw: 28 loss: 83
+Depth: 4
+MainScoring: 0 51 66 56
+SectionScoring: -10 1 7 7
+
+
+At 40 wins: 87 draw: 28 loss: 83
+Depth: 4
+MainScoring: 0 33 91 5
+SectionScoring: -15 2 19 19
+
+
+At 41 wins: 86 draw: 48 loss: 64
+Depth: 4
+MainScoring: 0 19 65 6
+SectionScoring: -2 12 14 1
+
+
+At 42 wins: 86 draw: 38 loss: 74
+Depth: 4
+MainScoring: 0 25 64 24
+SectionScoring: -13 9 26 15
+
+
+At 43 wins: 86 draw: 23 loss: 89
+Depth: 4
+MainScoring: 0 15 34 71
+SectionScoring: -1 2 9 2
+
+
+At 44 wins: 85 draw: 44 loss: 69
+Depth: 4
+MainScoring: 0 57 81 35
+SectionScoring: -18 0 1 40
+
+
+At 45 wins: 85 draw: 36 loss: 77
+Depth: 4
+MainScoring: 0 26 91 35
+SectionScoring: -16 1 16 6
+
+
+At 46 wins: 85 draw: 29 loss: 84
+Depth: 4
+MainScoring: 0 35 38 74
+SectionScoring: -10 1 14 13
+
+
+At 47 wins: 85 draw: 16 loss: 97
+Depth: 4
+MainScoring: 0 27 40 3
+SectionScoring: -10 29 33 11
+
+
+At 48 wins: 84 draw: 46 loss: 68
+Depth: 4
+MainScoring: 0 28 81 95
+SectionScoring: -2 7 11 6
+
+
+At 49 wins: 84 draw: 30 loss: 84
+Depth: 4
+MainScoring: 0 10 59 10
+SectionScoring: -5 7 10 13
+
+
+At 50 wins: 84 draw: 28 loss: 86
+Depth: 4
+MainScoring: 0 71 84 78
+SectionScoring: -3 0 1 32
+
+
+At 51 wins: 84 draw: 27 loss: 87
+Depth: 4
+MainScoring: 0 48 80 72
+SectionScoring: -12 6 19 5
+
+
+At 52 wins: 84 draw: 21 loss: 93
+Depth: 4
+MainScoring: 0 46 86 63
+SectionScoring: -3 20 42 4
+
+
+At 53 wins: 83 draw: 27 loss: 88
+Depth: 4
+MainScoring: 0 28 33 29
+SectionScoring: -3 26 33 7
+
+
+At 54 wins: 83 draw: 26 loss: 89
+Depth: 4
+MainScoring: 0 23 93 85
+SectionScoring: -19 0 2 48
+
+
+At 55 wins: 81 draw: 34 loss: 83
+Depth: 4
+MainScoring: 0 48 71 52
+SectionScoring: -6 18 40 3
+
+
+At 56 wins: 81 draw: 31 loss: 86
+Depth: 4
+MainScoring: 0 75 92 81
+SectionScoring: -3 0 2 5
+
+
+At 57 wins: 80 draw: 49 loss: 69
+Depth: 4
+MainScoring: 0 1 67 48
+SectionScoring: -5 12 27 2
+
+
+At 58 wins: 80 draw: 44 loss: 74
+Depth: 4
+MainScoring: 0 10 92 32
+SectionScoring: -10 7 8 4
+
+
+At 59 wins: 80 draw: 40 loss: 78
+Depth: 4
+MainScoring: 0 78 93 96
+SectionScoring: -11 1 14 34
+
+
+At 60 wins: 80 draw: 38 loss: 80
+Depth: 4
+MainScoring: 0 22 38 40
+SectionScoring: -3 6 10 14
+
+
+At 61 wins: 79 draw: 33 loss: 86
+Depth: 4
+MainScoring: 0 26 42 31
+SectionScoring: -6 5 8 11
+
+
+At 62 wins: 79 draw: 33 loss: 86
+Depth: 4
+MainScoring: 0 13 96 32
+SectionScoring: -13 0 10 25
+
+
+At 63 wins: 79 draw: 31 loss: 88
+Depth: 4
+MainScoring: 0 59 82 79
+SectionScoring: -14 0 34 1
+
+
+At 64 wins: 78 draw: 39 loss: 81
+Depth: 4
+MainScoring: 0 74 93 62
+SectionScoring: -16 23 29 15
+
+
+At 65 wins: 78 draw: 37 loss: 83
+Depth: 4
+MainScoring: 0 12 98 12
+SectionScoring: -4 32 37 25
+
+
+At 66 wins: 78 draw: 37 loss: 83
+Depth: 4
+MainScoring: 0 58 70 29
+SectionScoring: -6 25 38 8
+
+
+At 67 wins: 78 draw: 36 loss: 84
+Depth: 4
+MainScoring: 0 38 68 87
+SectionScoring: -11 3 18 12
+
+
+At 68 wins: 78 draw: 36 loss: 84
+Depth: 4
+MainScoring: 0 18 86 22
+SectionScoring: -4 8 27 29
+
+
+At 69 wins: 78 draw: 34 loss: 86
+Depth: 4
+MainScoring: 0 43 82 74
+SectionScoring: -2 28 39 8
+
+
+At 70 wins: 77 draw: 38 loss: 83
+Depth: 4
+MainScoring: 0 1 55 1
+SectionScoring: -1 20 24 6
+
+
+At 71 wins: 77 draw: 34 loss: 87
+Depth: 4
+MainScoring: 0 13 26 96
+SectionScoring: -8 4 10 0
+
+
+At 72 wins: 77 draw: 29 loss: 92
+Depth: 4
+MainScoring: 0 35 62 18
+SectionScoring: -4 0 27 2
+
+
+At 73 wins: 76 draw: 44 loss: 78
+Depth: 4
+MainScoring: 0 28 52 43
+SectionScoring: -6 1 15 2
+
+
+At 74 wins: 75 draw: 46 loss: 77
+Depth: 4
+MainScoring: 0 18 34 6
+SectionScoring: -2 4 7 5
+
+
+At 75 wins: 75 draw: 24 loss: 99
+Depth: 4
+MainScoring: 0 9 90 42
+SectionScoring: -14 5 6 31
+
+
+At 76 wins: 74 draw: 41 loss: 83
+Depth: 4
+MainScoring: 0 28 49 73
+SectionScoring: -20 0 2 5
+
+
+At 77 wins: 74 draw: 32 loss: 92
+Depth: 4
+MainScoring: 0 11 98 42
+SectionScoring: -8 27 35 6
+
+
+At 78 wins: 73 draw: 32 loss: 93
+Depth: 4
+MainScoring: 0 7 82 26
+SectionScoring: -14 31 37 20
+
+
+At 79 wins: 73 draw: 30 loss: 95
+Depth: 4
+MainScoring: 0 65 67 84
+SectionScoring: -8 25 41 4
+
+
+At 80 wins: 72 draw: 25 loss: 101
+Depth: 4
+MainScoring: 0 12 93 1
+SectionScoring: -20 0 7 39
+
+
+At 81 wins: 71 draw: 42 loss: 85
+Depth: 4
+MainScoring: 0 61 89 51
+SectionScoring: -14 7 28 32
+
+
+At 82 wins: 71 draw: 22 loss: 105
+Depth: 4
+MainScoring: 0 9 74 24
+SectionScoring: -8 4 6 35
+
+
+At 83 wins: 70 draw: 37 loss: 91
+Depth: 4
+MainScoring: 0 60 86 57
+SectionScoring: -10 36 45 27
+
+
+At 84 wins: 70 draw: 28 loss: 100
+Depth: 4
+MainScoring: 0 22 42 82
+SectionScoring: -18 12 23 0
+
+
+At 85 wins: 69 draw: 43 loss: 86
+Depth: 4
+MainScoring: 0 55 60 6
+SectionScoring: -9 18 30 11
+
+
+At 86 wins: 69 draw: 39 loss: 90
+Depth: 4
+MainScoring: 0 46 71 68
+SectionScoring: -4 39 47 9
+
+
+At 87 wins: 68 draw: 53 loss: 77
+Depth: 4
+MainScoring: 0 1 95 46
+SectionScoring: -12 15 30 3
+
+
+At 88 wins: 68 draw: 36 loss: 94
+Depth: 4
+MainScoring: 0 4 41 75
+SectionScoring: -3 11 13 16
+
+
+At 89 wins: 68 draw: 31 loss: 99
+Depth: 4
+MainScoring: 0 42 67 69
+SectionScoring: -11 15 18 18
+
+
+At 90 wins: 67 draw: 47 loss: 84
+Depth: 4
+MainScoring: 0 12 88 18
+SectionScoring: -7 9 10 17
+
+
+At 91 wins: 66 draw: 41 loss: 91
+Depth: 4
+MainScoring: 0 56 99 54
+SectionScoring: -5 10 42 47
+
+
+At 92 wins: 65 draw: 36 loss: 97
+Depth: 4
+MainScoring: 0 18 57 65
+SectionScoring: -5 22 32 6
+
+
+At 93 wins: 65 draw: 23 loss: 110
+Depth: 4
+MainScoring: 0 60 89 30
+SectionScoring: -4 20 37 40
+
+
+At 94 wins: 64 draw: 33 loss: 101
+Depth: 4
+MainScoring: 0 26 57 12
+SectionScoring: -1 8 15 22
+
+
+At 95 wins: 62 draw: 42 loss: 94
+Depth: 4
+MainScoring: 0 42 80 49
+SectionScoring: -2 31 44 6
+
+
+At 96 wins: 61 draw: 36 loss: 101
+Depth: 4
+MainScoring: 0 63 71 67
+SectionScoring: -12 22 34 15
+
+
+At 97 wins: 60 draw: 34 loss: 104
+Depth: 4
+MainScoring: 0 39 60 5
+SectionScoring: -17 23 26 12
+
+
+At 98 wins: 55 draw: 35 loss: 108
+Depth: 4
+MainScoring: 0 27 60 70
+SectionScoring: -4 28 35 7
+
+
+At 99 wins: 55 draw: 34 loss: 109
+Depth: 4
+MainScoring: 0 68 77 46
+SectionScoring: -7 32 38 28
+
+
+At 100 wins: 52 draw: 34 loss: 112
+Depth: 4
+MainScoring: 0 5 30 10
+SectionScoring: -1 0 6 22
+
+

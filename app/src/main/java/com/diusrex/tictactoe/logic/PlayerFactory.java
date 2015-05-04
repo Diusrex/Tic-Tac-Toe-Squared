@@ -43,7 +43,10 @@ public class PlayerFactory {
     }
 
     private static AIPlayer createHardPlayer() {
-        // TODO Auto-generated method stub
-        return createMediumPlayer();
+        ScoringFunction.Builder scoringBuilder = new ScoringFunction.Builder();
+        ScoringFunction mainFunction = scoringBuilder.setScoreValues(0, 27, 94, 56).build();
+        ScoringFunction sectionsFunction = scoringBuilder.setScoreValues(-14, 0, 11, 4).build();
+        ScoringValues hardValues = new ScoringValues(mainFunction, sectionsFunction);
+        return new MiniMaxPlayer(hardValues, 4);
     }
 }

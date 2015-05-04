@@ -1,0 +1,39 @@
+To come up with a "good" AI for the MiniMaxPlayer, I did the following:
+    Ran 3 large "tournaments"
+        Each consisted of 10 rounds of 100 randomly generated scoring functions
+        Then, took the top 10 from each of the rounds, and put them into the finals
+        Each tournament took 4 hours on a pretty fast computer, using 10 threads
+        
+        The folder "Large Tournament Results" contains the results for each tournament when running the top 10 from each of its rounds
+        
+    The finals consisted of 300 AI (100 from each of the 3 large tournaments)
+        I then considered the top 5-10 AI from the finals, and played against all of tem
+        
+        The file "finals.txt" contains all 300 AI descriptions.
+        The finals took <5 hours on a pretty fast computer, using 15 threads
+        
+    An improvement would be to run more large tournaments, and then from the top 100, only take 10 or 15 of them
+
+For the finals, the top 3 were:
+    Depth: 4
+    MainScoring: 0 27 94 56
+    SectionScoring: -14 0 11 4
+    Wins: 376 draw: 69 loss: 153
+
+    Depth: 4
+    MainScoring: 0 40 85 72
+    SectionScoring: -12 1 18 16
+    Wins: 339 draw: 67 loss: 192
+
+    Depth: 4
+    MainScoring: 0 34 76 61
+    SectionScoring: -10 3 16 15
+    Wins: 324 draw: 91 loss: 183
+    
+The one that placed first had significantly more wins (37 more), than the one in second.
+After playing against the first placed one, it badly beat me. There wasn't a chance of me winning after ~50 moves.....
+
+Some next steps for improvement are:
+    1) Add an option for scaling depth for how far they look (and ensure it doesn't have any negative effects)
+    2) Begin working on an AI using Alpha Beta (can look far farther due to pruning)
+    3) Run a massive series of tournaments using Alpha Beta and Minimax
