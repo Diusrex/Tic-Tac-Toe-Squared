@@ -65,7 +65,7 @@ public class SelectedSectionOwner {
 
         @Override
         public void onClick(View v) {
-            Move move = new Move(sectionPosition, (BoxPosition) v.getTag(), player);
+            Move move = Move.make(sectionPosition, (BoxPosition) v.getTag(), player);
             handler.moveChosen(move);
         }
     }
