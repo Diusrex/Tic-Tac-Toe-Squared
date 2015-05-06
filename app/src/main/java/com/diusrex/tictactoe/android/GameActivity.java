@@ -110,8 +110,8 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
         if (gameStillRunning()) {
             prepareForNextMove(getCurrentTime(), selectedSection);
         } else {
-            disablePerformingMove();
             sectionSelected(selectedSection);
+            disablePerformingMove();
         }
 
         undoButton.setEnabled(board.ableToUndoLastMove());
