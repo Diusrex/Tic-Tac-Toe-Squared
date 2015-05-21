@@ -23,9 +23,11 @@ public abstract class AIPlayer {
         public final Move move;
         public final int score;
         
-        MoveScore(Move move, int score) {
+        public MoveScore(Move move, int score) {
             this.move = move;
             this.score = score;
         }
     }
+    
+    public abstract String getIdentifier();
 }
