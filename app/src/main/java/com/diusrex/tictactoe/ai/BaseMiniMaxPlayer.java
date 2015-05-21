@@ -15,21 +15,21 @@ import com.diusrex.tictactoe.logic.GridLists;
  *  rather than having two different states -> One for self, one for opponent,
  *  and then calculating the score based on how it is for self
  */
-public class MiniMaxPlayer extends AIPlayer {
+public abstract class BaseMiniMaxPlayer extends AIPlayer {
     private static final int WIN_SCORE = 10000000;
     private final Scorer scorer;
-    private int maxDepth;
 
-    public MiniMaxPlayer(ScoringValues scoringInfo, int maxDepth) {
+    public BaseMiniMaxPlayer(ScoringValues scoringInfo) {
         this.scorer = new Scorer(scoringInfo);
-        this.maxDepth = maxDepth;
     }
 
     @Override
     protected Move choosePosition(BoardStatus board) {
-        return getBestMoveAndItsScore(board, maxDepth).move;
+        return getBestMoveAndItsScore(board, getMaxDepth(board)).move;
     }
 
+    protected abstract int getMaxDepth(BoardStatus board);
+    
     private MoveScore getBestMoveAndItsScore(BoardStatus board, int depth) {
         if (canPlayInAnySection(board)) {
             return getBestMoveScoreInAnySection(board, depth);
@@ -75,7 +75,6 @@ public class MiniMaxPlayer extends AIPlayer {
 
                 board.undoLastMove();
             }
-
         }
 
         return bestMove;
