@@ -10,18 +10,36 @@ public class ScoringsFromFile {
 
     /*
      * Assumes that there are enough AI's in file. Otherwise will be undefined
-     * behavior Storage format: depth mainScoringInOrderForBuilder
-     * sectionScoringInOrderForBuilder scoring breakdown: cannotWinPointScore
+     * behavior Storage format: <identifier> mainScoringInOrderForBuilder
+     * sectionScoringInOrderForBuilder <specific info>
+     * 
      * ownsOnlyTakenInLineScore ownsBothTakenInLineScore
      * blockedPlayerInLineScore
      */
-    public static void loadAIScorings(Scanner scanner, List<ScoringValuesTestResults> results, int numberOfUniqueAI) {
-        for (int i = 0; i < numberOfUniqueAI; ++i) {
-            int depth = scanner.nextInt();
+    public static void loadAIScorings(Scanner scanner, List<BaseScoringValuesTestResults> results, int numberOfUniqueAI) {
+        while (results.size() < numberOfUniqueAI) {
+            //String identifier = scanner.next();
+            int depth = scanner.nextInt(); // Remove this
             ScoringFunction mainScoring = loadScoring(scanner);
             ScoringFunction sectionScoring = loadScoring(scanner);
-
-            results.add(new ScoringValuesTestResults(new ScoringValues(mainScoring, sectionScoring), depth));
+            /*
+            if (identifier == UnScalingMiniMaxPlayer.IDENTIFIER) {
+                int depth = scanner.nextInt();
+                results.add(UnScalingScoringValuesTestResults.makeMiniMaxPlayer(new ScoringValues(mainScoring,
+                        sectionScoring), depth));
+            } else if (identifier == UnScalingMiniMaxPlayer.IDENTIFIER) {
+                results.add(new ScalingMiniMaxScoringValuesTestResults(new ScoringValues(mainScoring, sectionScoring)));
+            } else if (identifier == AlphaBetaPlayer.IDENTIFIER) {
+                int depth = scanner.nextInt();
+                results.add(UnScalingScoringValuesTestResults.makeAlphaBetaPlayer(new ScoringValues(mainScoring,
+                        sectionScoring), depth));
+            }
+            */
+            
+            results.add(UnScalingScoringValuesTestResults.makeMiniMaxPlayer(new ScoringValues(mainScoring,
+                    sectionScoring), depth));
+            results.add(UnScalingScoringValuesTestResults.makeAlphaBetaPlayer(new ScoringValues(mainScoring,
+                    sectionScoring), depth));
         }
     }
 

@@ -28,9 +28,6 @@ public class AITournament {
 
     // Args -> numberAI numberThreads numberKept
     static public void main(String[] args) {
-        for (String arg : args) {
-            System.out.println(arg);
-        }
         numberOfUniqueAI = Integer.parseInt(args[NUMBER_OF_UNIQUE_AI_ARG_POS]);
         numberOfThreads = Integer.parseInt(args[NUMBER_OF_THREADS_ARG_POS]);
         numberOfResultsKept = Integer.parseInt(args[NUMBER_OF_RESULTS_KEPT_ARG_POS]);
@@ -45,7 +42,7 @@ public class AITournament {
         
         allThreads = new Thread[numberOfThreads];
         
-        List<ScoringValuesTestResults> bestResults = new ArrayList<>();
+        List<BaseScoringValuesTestResults> bestResults = new ArrayList<>();
 
         setUpStaticObjects();
 
@@ -53,7 +50,7 @@ public class AITournament {
         if (numberOfResultsKept < numberOfUniqueAI) {
             // Will run as many times as needed to ensure the final one is full
             for (int i = 0; i < numberOfUniqueAI / numberOfResultsKept; ++i) {
-                List<ScoringValuesTestResults> results = new ArrayList<>();
+                List<BaseScoringValuesTestResults> results = new ArrayList<>();
                 generateAIScorings(results);
                 runAllTests(results);
     
@@ -73,7 +70,7 @@ public class AITournament {
         System.out.println("Completed after " + (getCurrentTime() - totalStartTime));
     }
 
-    private static void generateAIScorings(List<ScoringValuesTestResults> results) {
+    private static void generateAIScorings(List<BaseScoringValuesTestResults> results) {
         if (fileScanner == null) {
             System.out.println("Randomly generating");
             RandomScoringsGenerator.generateAIScorings(results, numberOfUniqueAI);
@@ -84,16 +81,16 @@ public class AITournament {
         
     }
 
-    private static void addToBestResults(List<ScoringValuesTestResults> results,
-            List<ScoringValuesTestResults> bestResults) {
+    private static void addToBestResults(List<BaseScoringValuesTestResults> results,
+            List<BaseScoringValuesTestResults> bestResults) {
         for (int i = 0; i < numberOfResultsKept; ++i) {
-            ScoringValuesTestResults result = results.get(i);
+            BaseScoringValuesTestResults result = results.get(i);
             result.reset();
             bestResults.add(result);
         }
     }
 
-    private static void runAllTests(List<ScoringValuesTestResults> resultsToRun) {
+    private static void runAllTests(List<BaseScoringValuesTestResults> resultsToRun) {
         long totalStartTime = getCurrentTime();
         int numberPerThread = resultsToRun.size() / numberOfThreads;
 
@@ -132,7 +129,7 @@ public class AITournament {
         return c.getTimeInMillis();
     }
 
-    public static void printOutResult(List<ScoringValuesTestResults> results, String file) {
+    public static void printOutResult(List<BaseScoringValuesTestResults> results, String file) {
         Collections.sort(results);
         Collections.reverse(results);
 
@@ -147,7 +144,7 @@ public class AITournament {
 
         for (int i = 0; i < results.size(); ++i) {
             printStream.print("At " + (i + 1) + " ");
-            ScoringValuesTestResults result = results.get(i);
+            BaseScoringValuesTestResults result = results.get(i);
             result.printOut(printStream);
             printStream.println("\n");
         }

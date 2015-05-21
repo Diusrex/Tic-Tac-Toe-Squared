@@ -2,28 +2,24 @@ package com.diusrex.tictactoe.ai.tournament;
 
 import java.io.PrintStream;
 
-import com.diusrex.tictactoe.ai.MiniMaxPlayer;
+import com.diusrex.tictactoe.ai.AIPlayer;
 import com.diusrex.tictactoe.ai.scoring_calculations.ScoringFunction;
 import com.diusrex.tictactoe.ai.scoring_calculations.ScoringValues;
 
 
-public class ScoringValuesTestResults implements Comparable<ScoringValuesTestResults> {
+public abstract class BaseScoringValuesTestResults implements Comparable<BaseScoringValuesTestResults> {
     private final ScoringValues ownValue;
-    private final int depth;
-    private final MiniMaxPlayer player;
 
     private int won, drew, lost;
 
-    public ScoringValuesTestResults(ScoringValues ownValue, int depth) {
+    public BaseScoringValuesTestResults(ScoringValues ownValue) {
         this.ownValue = ownValue;
-        this.depth = depth;
-        player = new MiniMaxPlayer(ownValue, depth);
 
         won = drew = lost = 0;
     }
 
     @Override
-    public int compareTo(ScoringValuesTestResults other) {
+    public int compareTo(BaseScoringValuesTestResults other) {
         if (won != other.won)
             return won - other.won;
 
@@ -33,9 +29,7 @@ public class ScoringValuesTestResults implements Comparable<ScoringValuesTestRes
         return 0;
     }
 
-    public MiniMaxPlayer getPlayer() {
-        return player;
-    }
+    public abstract AIPlayer getPlayer();
 
     public synchronized void increaseWon() {
         ++won;
@@ -51,8 +45,8 @@ public class ScoringValuesTestResults implements Comparable<ScoringValuesTestRes
 
     public void printOut(PrintStream printStream) {
         printStream.println("wins: " + won + " draw: " + drew + " loss: " + lost);
-        
-        printStream.println("Depth: " + depth);
+
+        printAdditionalInfo(printStream);
 
         ScoringFunction cF = ownValue.getMainScoring();
         printStream.println("MainScoring: " + cF.getCannotWinPointScore() + " " + cF.getOwnsOnlyTakenInLine() + " "
@@ -62,6 +56,8 @@ public class ScoringValuesTestResults implements Comparable<ScoringValuesTestRes
         printStream.println("SectionScoring: " + cF.getCannotWinPointScore() + " " + cF.getOwnsOnlyTakenInLine() + " "
                 + cF.getOwnsBothOnlyTakenInLine() + " " + cF.blockedPlayerInLine());
     }
+
+    protected abstract void printAdditionalInfo(PrintStream printStream);
 
     public void reset() {
         won = lost = drew = 0;

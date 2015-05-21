@@ -8,10 +8,8 @@ import java.util.Set;
 import com.diusrex.tictactoe.ai.scoring_calculations.ScoringFunction;
 import com.diusrex.tictactoe.ai.scoring_calculations.ScoringValues;
 
-public class RandomScoringsGenerator {
-    private static final int DEPTH = 4;
-    
-    public static void generateAIScorings(List<ScoringValuesTestResults> results, int numberOfUniqueAI) {
+public class RandomScoringsGenerator {    
+    public static void generateAIScorings(List<BaseScoringValuesTestResults> results, int numberOfUniqueAI) {
         Set<ScoringValues> allValues = new HashSet<ScoringValues>();
 
         Random random = new Random();
@@ -29,7 +27,8 @@ public class RandomScoringsGenerator {
         }
 
         for (ScoringValues value : allValues) {
-            results.add(new ScoringValuesTestResults(value, DEPTH));
+            results.add(UnScalingScoringValuesTestResults.makeMiniMaxPlayer(value, 4));
+            results.add(UnScalingScoringValuesTestResults.makeAlphaBetaPlayer(value, 4));
         }
     }
 }

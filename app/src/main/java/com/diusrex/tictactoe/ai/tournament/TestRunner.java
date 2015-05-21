@@ -8,10 +8,10 @@ import com.diusrex.tictactoe.data_structures.Player;
  * Will run the given range of tests against all of the AI's
  */
 public class TestRunner implements Runnable {
-    private final List<ScoringValuesTestResults> results;
+    private final List<BaseScoringValuesTestResults> results;
     private final int start, exclusiveEnd;
 
-    TestRunner(List<ScoringValuesTestResults> results, int start, int exclusiveEnd) {
+    TestRunner(List<BaseScoringValuesTestResults> results, int start, int exclusiveEnd) {
         this.results = results;
         this.start = start;
         this.exclusiveEnd = exclusiveEnd;
@@ -26,15 +26,15 @@ public class TestRunner implements Runnable {
                 if (index == otherAI)
                     continue;
 
-                ScoringValuesTestResults first = results.get(index);
-                ScoringValuesTestResults second = results.get(otherAI);
+                BaseScoringValuesTestResults first = results.get(index);
+                BaseScoringValuesTestResults second = results.get(otherAI);
 
                 runGameAndUpdate(first, second);
             }
         }
     }
 
-    private void runGameAndUpdate(ScoringValuesTestResults first, ScoringValuesTestResults second) {
+    private void runGameAndUpdate(BaseScoringValuesTestResults first, BaseScoringValuesTestResults second) {
         Player winner = AIvsAI.runGame(first.getPlayer(), second.getPlayer());
 
         if (winner == Player.Player_1) {
