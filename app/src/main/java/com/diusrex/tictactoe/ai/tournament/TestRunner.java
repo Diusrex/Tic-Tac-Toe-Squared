@@ -20,13 +20,17 @@ public class TestRunner implements Runnable {
     @Override
     public void run() {
         for (int index = start; index < exclusiveEnd; ++index) {
-            System.out.println("At " + index + " for " + start);
+            // To reduce output, only print out for one
+            if (start == 0) {
+                System.out.println("At " + index + " for " + start);
+            }
+
+            BaseScoringValuesTestResults first = results.get(index);
 
             for (int otherAI = 0; otherAI < results.size(); ++otherAI) {
                 if (index == otherAI)
                     continue;
 
-                BaseScoringValuesTestResults first = results.get(index);
                 BaseScoringValuesTestResults second = results.get(otherAI);
 
                 runGameAndUpdate(first, second);
@@ -35,7 +39,8 @@ public class TestRunner implements Runnable {
     }
 
     private void runGameAndUpdate(BaseScoringValuesTestResults first, BaseScoringValuesTestResults second) {
-        Player winner = AIvsAI.runGame(first.getPlayer(), second.getPlayer());
+        TimeInfo.GameTimeInfo time = new TimeInfo.GameTimeInfo();
+        Player winner = AIvsAI.runGame(first.getPlayer(), second.getPlayer(), time);
 
         if (winner == Player.Player_1) {
             first.increaseWon();
@@ -47,5 +52,8 @@ public class TestRunner implements Runnable {
             first.increaseDraw();
             second.increaseDraw();
         }
+
+        first.addTime(time.getPlayerOneTime());
+        second.addTime(time.getPlayerTwoTime());
     }
 }

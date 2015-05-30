@@ -5,6 +5,8 @@ import com.diusrex.tictactoe.data_structures.BoardStatus;
 
 public class UnScalingMiniMaxPlayer extends BaseMiniMaxPlayer {
     public static final String IDENTIFIER = "UMiniM";
+    public static final int STANDARD_DEPTH = 4;
+
     private int maxDepth;
 
     public UnScalingMiniMaxPlayer(ScoringValues scoringInfo, int maxDepth) {

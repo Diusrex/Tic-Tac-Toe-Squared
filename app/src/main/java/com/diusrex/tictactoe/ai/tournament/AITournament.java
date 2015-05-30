@@ -6,54 +6,50 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
+import net.sourceforge.argparse4j.ArgumentParsers;
+import net.sourceforge.argparse4j.inf.ArgumentParser;
+import net.sourceforge.argparse4j.inf.ArgumentParserException;
+import net.sourceforge.argparse4j.inf.Namespace;
+
+import com.diusrex.tictactoe.ai.ScalingAlphaBetaPlayer;
+import com.diusrex.tictactoe.ai.ScalingMiniMaxPlayer;
+import com.diusrex.tictactoe.ai.UnScalingAlphaBetaPlayer;
+import com.diusrex.tictactoe.ai.UnScalingMiniMaxPlayer;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.logic.GridLists;
 
 public class AITournament {
-    private static int NUMBER_OF_UNIQUE_AI_ARG_POS = 0;
-    private static int NUMBER_OF_THREADS_ARG_POS = 1;
-    private static int NUMBER_OF_RESULTS_KEPT_ARG_POS = 2;
-    private static int FILE_TO_LOAD_FROM_ARG_POS = 3;
     private static int numberOfUniqueAI;
     private static int numberOfThreads;
 
     private static int numberOfResultsKept;
-    
-    private static Scanner fileScanner;
+
+    private static TournamentAIGenerator generator;
 
     private static Thread[] allThreads;
 
-    // Args -> numberAI numberThreads numberKept
     static public void main(String[] args) {
-        numberOfUniqueAI = Integer.parseInt(args[NUMBER_OF_UNIQUE_AI_ARG_POS]);
-        numberOfThreads = Integer.parseInt(args[NUMBER_OF_THREADS_ARG_POS]);
-        numberOfResultsKept = Integer.parseInt(args[NUMBER_OF_RESULTS_KEPT_ARG_POS]);
-        
-        if (args.length > FILE_TO_LOAD_FROM_ARG_POS) {
-            try {
-                fileScanner = new Scanner(new File(args[FILE_TO_LOAD_FROM_ARG_POS]));
-            } catch (FileNotFoundException e) {
-                System.out.println("Loading file scanner failed. Will just randomly generate instead");
-            }
-        }
-        
+        parseArguments(args);
+
         allThreads = new Thread[numberOfThreads];
-        
+
         List<BaseScoringValuesTestResults> bestResults = new ArrayList<>();
 
         setUpStaticObjects();
 
         long totalStartTime = getCurrentTime();
-        if (numberOfResultsKept < numberOfUniqueAI) {
+        if (numberOfResultsKept != 0) {
             // Will run as many times as needed to ensure the final one is full
             for (int i = 0; i < numberOfUniqueAI / numberOfResultsKept; ++i) {
                 List<BaseScoringValuesTestResults> results = new ArrayList<>();
                 generateAIScorings(results);
                 runAllTests(results);
-    
+
                 System.out.println("Completed " + i);
                 printOutResult(results, "Results " + i + ".txt");
                 addToBestResults(results, bestResults);
@@ -61,7 +57,7 @@ public class AITournament {
         } else {
             generateAIScorings(bestResults);
         }
-        
+
         System.out.println("Running best results");
 
         runAllTests(bestResults);
@@ -70,15 +66,45 @@ public class AITournament {
         System.out.println("Completed after " + (getCurrentTime() - totalStartTime));
     }
 
-    private static void generateAIScorings(List<BaseScoringValuesTestResults> results) {
-        if (fileScanner == null) {
-            System.out.println("Randomly generating");
-            RandomScoringsGenerator.generateAIScorings(results, numberOfUniqueAI);
-        } else {
-            System.out.println("Loading from file");
-            ScoringsFromFile.loadAIScorings(fileScanner, results, numberOfUniqueAI);
+    private static void parseArguments(String[] args) {
+        ArgumentParser parser = ArgumentParsers.newArgumentParser("AITournament").defaultHelp(true)
+                .description("Run a tournament of AI");
+        parser.addArgument("-n", "--number-AI").dest("number").type(Integer.class).setDefault(0)
+                .help("Number of AI to create");
+        parser.addArgument("-t", "--threads").type(Integer.class).setDefault(0).help("Specify number of threads");
+        parser.addArgument("-k", "--number-AI-kept").dest("kept").type(Integer.class).setDefault(0)
+                .help("Will cause a final round to be run, with given number of each earlier run");
+        parser.addArgument("-f", "--file").setDefault("").help("File to load AI from");
+        parser.addArgument("AITypes")
+                .nargs("+")
+                .choices(UnScalingMiniMaxPlayer.IDENTIFIER, ScalingMiniMaxPlayer.IDENTIFIER,
+                        UnScalingAlphaBetaPlayer.IDENTIFIER, ScalingAlphaBetaPlayer.IDENTIFIER).help("AITypes to use");
+
+        Namespace ns = null;
+        try {
+            ns = parser.parseArgs(args);
+        } catch (ArgumentParserException e) {
+            parser.handleError(e);
+            System.exit(1);
         }
-        
+
+        numberOfUniqueAI = ns.getInt("number");
+        numberOfThreads = ns.getInt("threads");
+        numberOfResultsKept = ns.getInt("kept");
+
+        List<String> AITypes = ns.getList("AITypes");
+        String fileName = ns.getString("file");
+
+        try {
+            Scanner scanner = new Scanner(new File(fileName));
+            generator = new GenerateAIFromFile(AITypes, scanner);
+        } catch (FileNotFoundException e) {
+            generator = new GenerateAIRandomly(AITypes);
+        }
+    }
+
+    private static void generateAIScorings(List<BaseScoringValuesTestResults> results) {
+        generator.generateAIScorings(results, numberOfUniqueAI);
     }
 
     private static void addToBestResults(List<BaseScoringValuesTestResults> results,
@@ -143,14 +169,36 @@ public class AITournament {
         }
 
         for (int i = 0; i < results.size(); ++i) {
-            printStream.print("At " + (i + 1) + " ");
             BaseScoringValuesTestResults result = results.get(i);
             result.printOut(printStream);
-            printStream.println("\n");
         }
+        printStream.println();
+        printTotalAITimes(printStream, results);
 
         if (printStream != System.out) {
             printStream.close();
+        }
+    }
+
+    private static void printTotalAITimes(PrintStream printStream, List<BaseScoringValuesTestResults> results) {
+        Map<String, List<Long>> timesMap = new HashMap<>();
+        for (BaseScoringValuesTestResults result : results) {
+            String aiIdentifier = result.getPlayer().getIdentifier();
+
+            if (!timesMap.containsKey(aiIdentifier)) {
+                timesMap.put(aiIdentifier, new ArrayList<Long>());
+            }
+
+            List<Long> allTimes = result.getAllTimes();
+            for (Long time : allTimes) {
+                timesMap.get(aiIdentifier).add(time);
+            }
+        }
+
+        for (Map.Entry<String, List<Long>> entry : timesMap.entrySet()) {
+            double average = TimeInfo.getAverageTime(entry.getValue());
+            double stdDev = TimeInfo.getTimeStdDev(entry.getValue());
+            printStream.println(entry.getKey() + ": " + average + ", std-dev " + stdDev);
         }
     }
 }
