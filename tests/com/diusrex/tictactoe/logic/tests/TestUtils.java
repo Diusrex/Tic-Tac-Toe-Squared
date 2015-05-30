@@ -1,6 +1,9 @@
 package com.diusrex.tictactoe.logic.tests;
 
-import junit.framework.Assert;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.BoxPosition;
@@ -21,7 +24,7 @@ public class TestUtils {
 
         public Player playerToGoNext;
         public SectionPosition fakedSectionToPlayIn;
-        
+
         public Player getActualPlayer() {
             return super.getNextPlayer();
         }
@@ -48,14 +51,14 @@ public class TestUtils {
     }
 
     public static void applyMoveToBoard(BoardStatus board, Move move) {
-        Assert.assertTrue("Reason: " + GeneralTicTacToeLogic.getMoveValidity(board, move),
+        assertTrue("Reason: " + GeneralTicTacToeLogic.getMoveValidity(board, move),
                 GeneralTicTacToeLogic.isValidMove(board, move));
 
         board.applyMoveIfValid(move);
     }
 
     public static void testInvalidMoveOnBoard(BoardStatus board, Move move) {
-        Assert.assertFalse(GeneralTicTacToeLogic.isValidMove(board, move));
+        assertFalse(GeneralTicTacToeLogic.isValidMove(board, move));
 
         board.applyMoveIfValid(move);
     }
@@ -63,17 +66,17 @@ public class TestUtils {
     public static void assertAreEqual(Move expected, Move actual) {
         assertAreEqual(expected.getBox(), actual.getBox());
         assertAreEqual(expected.getSection(), actual.getSection());
-        Assert.assertTrue(expected.getPlayer() == actual.getPlayer());
+        assertTrue(expected.getPlayer() == actual.getPlayer());
     }
 
     public static void assertAreEqual(SectionPosition expected, SectionPosition actual) {
-        Assert.assertEquals(expected.getGridX(), actual.getGridX());
-        Assert.assertEquals(expected.getGridY(), actual.getGridY());
+        assertEquals(expected.getGridX(), actual.getGridX());
+        assertEquals(expected.getGridY(), actual.getGridY());
     }
 
     public static void assertAreEqual(BoxPosition expected, BoxPosition actual) {
-        Assert.assertEquals(expected.getGridX(), actual.getGridX());
-        Assert.assertEquals(expected.getGridY(), actual.getGridY());
+        assertEquals(expected.getGridX(), actual.getGridX());
+        assertEquals(expected.getGridY(), actual.getGridY());
     }
 
     // WARNING: Will not update who owns the section
@@ -85,9 +88,9 @@ public class TestUtils {
 
     public static void testLinesAreEqual(Line expected, Line actual) {
         if (expected == null) {
-            Assert.assertTrue(actual == null);
+            assertTrue(actual == null);
         } else if (actual == null) {
-            Assert.fail();
+            fail();
         }
 
         if (expected.getStart().equals(actual.getStart())) {

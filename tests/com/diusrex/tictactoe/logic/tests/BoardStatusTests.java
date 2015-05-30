@@ -1,6 +1,8 @@
 package com.diusrex.tictactoe.logic.tests;
 
-import junit.framework.Assert;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,18 +26,19 @@ public class BoardStatusTests {
 
     @Test
     public void testGetNextPlayer() {
-        Assert.assertEquals(Player.Player_1, board.getNextPlayer());
+        assertEquals(Player.Player_1, board.getNextPlayer());
 
-        TestUtils.applyMoveToBoard(board, Move.make(board.getSectionToPlayIn(), BoxPosition.make(1, 1), Player.Player_1));
+        TestUtils.applyMoveToBoard(board,
+                Move.make(board.getSectionToPlayIn(), BoxPosition.make(1, 1), Player.Player_1));
 
-        Assert.assertEquals(Player.Player_2, board.getNextPlayer());
+        assertEquals(Player.Player_2, board.getNextPlayer());
     }
 
     @Test
     public void allPositionsStartAsUnowned() {
         for (SectionPosition section : GridLists.getAllStandardSections()) {
             for (BoxPosition box : GridLists.getAllStandardBoxPositions()) {
-                Assert.assertEquals(Player.Unowned, board.getBoxOwner(section, box));
+                assertEquals(Player.Unowned, board.getBoxOwner(section, box));
             }
         }
     }
@@ -44,32 +47,32 @@ public class BoardStatusTests {
     public void testIsNotInsideBoundsBox() {
         SectionPosition validSection = SectionPosition.make(0, 0);
         BoxPosition invalidPos = BoxPosition.make(0, GridConstants.SIZE_OF_SECTION);
-        Assert.assertFalse(board.isInsideBounds(validSection, invalidPos));
+        assertFalse(board.isInsideBounds(validSection, invalidPos));
 
         invalidPos = BoxPosition.make(GridConstants.SIZE_OF_SECTION, 0);
-        Assert.assertFalse(board.isInsideBounds(validSection, invalidPos));
+        assertFalse(board.isInsideBounds(validSection, invalidPos));
 
         invalidPos = BoxPosition.make(-1, 0);
-        Assert.assertFalse(board.isInsideBounds(validSection, invalidPos));
+        assertFalse(board.isInsideBounds(validSection, invalidPos));
 
         invalidPos = BoxPosition.make(0, -1);
-        Assert.assertFalse(board.isInsideBounds(validSection, invalidPos));
+        assertFalse(board.isInsideBounds(validSection, invalidPos));
     }
 
     @Test
     public void testIsNotInsideBoundsSection() {
         SectionPosition invalidSection = SectionPosition.make(GridConstants.NUMBER_OF_SECTIONS_PER_SIDE, 0);
         BoxPosition validPos = BoxPosition.make(0, 0);
-        Assert.assertFalse(board.isInsideBounds(invalidSection, validPos));
+        assertFalse(board.isInsideBounds(invalidSection, validPos));
 
         invalidSection = SectionPosition.make(0, GridConstants.NUMBER_OF_SECTIONS_PER_SIDE);
-        Assert.assertFalse(board.isInsideBounds(invalidSection, validPos));
+        assertFalse(board.isInsideBounds(invalidSection, validPos));
 
         invalidSection = SectionPosition.make(-1, 0);
-        Assert.assertFalse(board.isInsideBounds(invalidSection, validPos));
+        assertFalse(board.isInsideBounds(invalidSection, validPos));
 
         invalidSection = SectionPosition.make(0, -1);
-        Assert.assertFalse(board.isInsideBounds(invalidSection, validPos));
+        assertFalse(board.isInsideBounds(invalidSection, validPos));
     }
 
     @Test
@@ -77,14 +80,14 @@ public class BoardStatusTests {
         /* Test all sections */
         for (SectionPosition section : GridLists.getAllStandardSections()) {
             for (BoxPosition boxPosition : GridLists.getAllStandardBoxPositions()) {
-                Assert.assertTrue(board.isInsideBounds(section, boxPosition));
+                assertTrue(board.isInsideBounds(section, boxPosition));
             }
         }
     }
 
     @Test
     public void testAddingMovesToStack() {
-        Assert.assertEquals(0, getMovesSize());
+        assertEquals(0, getMovesSize());
 
         SectionPosition sectionPos = board.getSectionToPlayIn();
         BoxPosition movePos = BoxPosition.make(0, 0);
@@ -92,8 +95,8 @@ public class BoardStatusTests {
 
         TestUtils.applyMoveToBoard(board, move);
 
-        Assert.assertEquals(1, getMovesSize());
-        Assert.assertEquals(move, board.getAllMoves().peek());
+        assertEquals(1, getMovesSize());
+        assertEquals(move, board.getAllMoves().peek());
     }
 
     private int getMovesSize() {

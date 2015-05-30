@@ -1,6 +1,9 @@
 package com.diusrex.tictactoe.logic.tests;
 
-import junit.framework.Assert;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,12 +32,13 @@ public class StandardEngineTest {
         board = new MockBoardStatus();
         SectionPosition mainSection = board.getSectionToPlayIn();
         SectionPosition wrongSection = board.getSectionToPlayIn().increaseBy(SectionPosition.make(1, 1));
-        
+
         BoxPosition validPosition = BoxPosition.make(1, 1);
         BoxPosition duplicatedPosition = validPosition;
         BoxPosition validPositionForSecond = BoxPosition.make(2, 2);
-        
-        moveP1 = Move.make(mainSection, validPosition, Player.Player_1); // Position 0, 0
+
+        moveP1 = Move.make(mainSection, validPosition, Player.Player_1); // Position
+                                                                         // 0, 0
         moveP1_2 = Move.make(mainSection, validPositionForSecond, Player.Player_1);
         moveP2SameAsMoveP1 = Move.make(mainSection, duplicatedPosition, Player.Player_2);
         moveP2 = Move.make(mainSection, validPositionForSecond, Player.Player_2);
@@ -48,9 +52,9 @@ public class StandardEngineTest {
     @Test
     public void testBoardIsUnowned() {
         // Make sure it is not taken
-        Assert.assertEquals(Player.Unowned, board.getBoxOwner(moveP1));
-        Assert.assertEquals(Player.Unowned, board.getBoxOwner(moveP1_2));
-        Assert.assertEquals(Player.Unowned, board.getBoxOwner(moveP2));
+        assertEquals(Player.Unowned, board.getBoxOwner(moveP1));
+        assertEquals(Player.Unowned, board.getBoxOwner(moveP1_2));
+        assertEquals(Player.Unowned, board.getBoxOwner(moveP2));
     }
 
     @Test
@@ -62,7 +66,7 @@ public class StandardEngineTest {
     public void testApplyMove() {
         TestUtils.applyMoveToBoard(board, moveP1);
 
-        Assert.assertEquals(moveP1.getPlayer(), board.getBoxOwner(moveP1));
+        assertEquals(moveP1.getPlayer(), board.getBoxOwner(moveP1));
     }
 
     @Test
@@ -71,7 +75,7 @@ public class StandardEngineTest {
 
         TestUtils.applyMoveToBoard(board, moveP2);
 
-        Assert.assertEquals(moveP2.getPlayer(), board.getBoxOwner(moveP2));
+        assertEquals(moveP2.getPlayer(), board.getBoxOwner(moveP2));
     }
 
     @Test
@@ -80,14 +84,14 @@ public class StandardEngineTest {
 
         TestUtils.testInvalidMoveOnBoard(board, moveP1_2);
 
-        Assert.assertNotSame(moveP1_2.getPlayer(), board.getBoxOwner(moveP1_2));
+        assertNotSame(moveP1_2.getPlayer(), board.getBoxOwner(moveP1_2));
     }
 
     @Test
     public void testTooManyP2Moves() {
         TestUtils.testInvalidMoveOnBoard(board, moveP2);
 
-        Assert.assertNotSame(moveP2.getPlayer(), board.getBoxOwner(moveP2));
+        assertNotSame(moveP2.getPlayer(), board.getBoxOwner(moveP2));
     }
 
     @Test
@@ -96,12 +100,12 @@ public class StandardEngineTest {
 
         TestUtils.testInvalidMoveOnBoard(board, moveP2SameAsMoveP1);
 
-        Assert.assertEquals(moveP1.getPlayer(), board.getBoxOwner(moveP1));
+        assertEquals(moveP1.getPlayer(), board.getBoxOwner(moveP1));
     }
 
     @Test
     public void testInvalidPosition() {
-        Assert.assertFalse(GeneralTicTacToeLogic.isValidMove(board, invalidPosition));
+        assertFalse(GeneralTicTacToeLogic.isValidMove(board, invalidPosition));
     }
 
     @Test
@@ -109,7 +113,7 @@ public class StandardEngineTest {
         TestUtils.applyMoveToBoard(board, moveP1);
 
         TestUtils.testInvalidMoveOnBoard(board, invalidPlayer);
-        Assert.assertEquals(moveP1.getPlayer(), board.getBoxOwner(invalidPlayer));
+        assertEquals(moveP1.getPlayer(), board.getBoxOwner(invalidPlayer));
     }
 
     @Test
@@ -137,17 +141,17 @@ public class StandardEngineTest {
         BoxPosition pos = BoxPosition.make(2, 2);
         SectionPosition expectedSection = board.getSectionToPlayIn();
         SectionPosition secondSection = SectionPosition.make(2, 2);
-        
+
         Player player = Player.Player_1;
         Move move = Move.make(expectedSection, pos, player);
         TestUtils.applyMoveToBoard(board, move);
-        Assert.assertEquals(GeneralTicTacToeLogic.getSectionToPlayInNext(pos), board.getSectionToPlayIn());
+        assertEquals(GeneralTicTacToeLogic.getSectionToPlayInNext(pos), board.getSectionToPlayIn());
 
         pos = BoxPosition.make(0, 0);
         player = Player.Player_2;
         move = Move.make(secondSection, pos, player);
         TestUtils.applyMoveToBoard(board, move);
-        Assert.assertEquals(GeneralTicTacToeLogic.getSectionToPlayInNext(pos), board.getSectionToPlayIn());
+        assertEquals(GeneralTicTacToeLogic.getSectionToPlayInNext(pos), board.getSectionToPlayIn());
     }
 
     @Test
@@ -166,14 +170,14 @@ public class StandardEngineTest {
 
     @Test
     public void testBoardIsNotFullWhenNoMoves() {
-        Assert.assertFalse(GeneralTicTacToeLogic.boardIsFull(board));
+        assertFalse(GeneralTicTacToeLogic.boardIsFull(board));
     }
 
     @Test
     public void testBoardIsNotFullWithMultipleMoves() {
         TestUtils.applyMoveToBoard(board, moveP1);
         TestUtils.applyMoveToBoard(board, moveP2);
-        Assert.assertFalse(GeneralTicTacToeLogic.boardIsFull(board));
+        assertFalse(GeneralTicTacToeLogic.boardIsFull(board));
     }
 
     @Test
@@ -183,8 +187,7 @@ public class StandardEngineTest {
                 TestUtils.fillSection(board, SectionPosition.make(x, y));
             }
         }
-        Assert.assertTrue(GeneralTicTacToeLogic.boardIsFull(board));
+        assertTrue(GeneralTicTacToeLogic.boardIsFull(board));
     }
 
-    
 }

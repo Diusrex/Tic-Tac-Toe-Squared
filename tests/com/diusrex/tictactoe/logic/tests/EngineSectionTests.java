@@ -1,6 +1,6 @@
 package com.diusrex.tictactoe.logic.tests;
 
-import junit.framework.Assert;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +31,7 @@ public class EngineSectionTests {
     private void winSection(SectionPosition section, Player mainPlayer) {
         takeSectionForPlayerHorizontal(section, BoxPosition.make(0, 0), mainPlayer);
     }
-    
+
     // Will take the given section for one player, and the other section for the
     // other player
     private void takeSectionForPlayerHorizontal(SectionPosition section, BoxPosition lineStart, Player player) {
@@ -42,7 +42,8 @@ public class EngineSectionTests {
         takeLineInBoard(section, lineStart, VERTICAL_INCREASE, lengthOfCompleteLine, player);
     }
 
-    private void takeLineInBoard(SectionPosition section, BoxPosition start, BoxPosition increase, int count, Player player) {
+    private void takeLineInBoard(SectionPosition section, BoxPosition start, BoxPosition increase, int count,
+            Player player) {
         for (int i = 0; i < count; ++i, start = start.increaseBy(increase)) {
             board.fakedSectionToPlayIn = section;
             TestUtils.applyMoveToBoard(board, Move.make(section, start, player));
@@ -58,8 +59,8 @@ public class EngineSectionTests {
         board.playerToGoNext = currentPlayer;
         takeSectionForPlayerHorizontal(player1Section, player1PositionStart, currentPlayer);
 
-        Assert.assertEquals(currentPlayer, board.getSectionOwner(player1Section));
-        
+        assertEquals(currentPlayer, board.getSectionOwner(player1Section));
+
         BoxPosition lineEnd = player1PositionStart.increaseBy(HORIZONTAL_INCREASE).increaseBy(HORIZONTAL_INCREASE);
         TestUtils.testLinesAreEqual(new Line(player1PositionStart, lineEnd), board.getSectionWinLine(player1Section));
     }
@@ -68,21 +69,20 @@ public class EngineSectionTests {
     public void testSectionCannotBeRetaken() {
         BoxPosition player1PositionStart = BoxPosition.make(0, 0);
         BoxPosition player2PositionStart = BoxPosition.make(1, 0);
-        
+
         SectionPosition section = SectionPosition.make(0, 0);
 
         // Player 2 wins the section
         Player currentPlayer = Player.Player_2;
         board.playerToGoNext = currentPlayer;
         takeSectionForPlayerVertical(section, player2PositionStart, currentPlayer);
-        Assert.assertEquals(Player.Player_2, board.getSectionOwner(section));
+        assertEquals(Player.Player_2, board.getSectionOwner(section));
 
-        
         currentPlayer = Player.Player_1;
         board.playerToGoNext = currentPlayer;
         takeSectionForPlayerVertical(section, player1PositionStart, currentPlayer);
 
-        Assert.assertEquals(Player.Player_2, board.getSectionOwner(section));
+        assertEquals(Player.Player_2, board.getSectionOwner(section));
     }
 
     @Test
@@ -97,13 +97,13 @@ public class EngineSectionTests {
 
         // Diagonal version 1, not long enough
         takeLineInBoard(section, player1PositionStart, diagonalIncrease, 2, mainPlayer);
-        Assert.assertEquals(Player.Unowned, board.getSectionOwner(section));
+        assertEquals(Player.Unowned, board.getSectionOwner(section));
 
         // Take the final spot
         board.fakedSectionToPlayIn = section;
         TestUtils.applyMoveToBoard(board, Move.make(section, winningPos, mainPlayer));
 
-        Assert.assertEquals(mainPlayer, board.getSectionOwner(section));
+        assertEquals(mainPlayer, board.getSectionOwner(section));
     }
 
     @Test
@@ -118,13 +118,13 @@ public class EngineSectionTests {
 
         // Diagonal version 2, not long enough
         takeLineInBoard(section, player1PositionStart, increase, 2, currentPlayer);
-        Assert.assertEquals(Player.Unowned, board.getSectionOwner(section));
+        assertEquals(Player.Unowned, board.getSectionOwner(section));
 
         // Take the final spot
         board.fakedSectionToPlayIn = section;
         TestUtils.applyMoveToBoard(board, Move.make(section, winningPos, currentPlayer));
 
-        Assert.assertEquals(currentPlayer, board.getSectionOwner(section));
+        assertEquals(currentPlayer, board.getSectionOwner(section));
     }
 
     @Test
@@ -166,20 +166,20 @@ public class EngineSectionTests {
 
     private void winBoardWithLine(SectionPosition increase, SectionPosition start) {
         resetBoard();
-        Assert.assertEquals(Player.Unowned, board.getWinner());
-        
+        assertEquals(Player.Unowned, board.getWinner());
+
         SectionPosition secondSection = start.increaseBy(increase);
         SectionPosition thirdSection = secondSection.increaseBy(increase);
         Player mainPlayer = Player.Player_1;
 
         board.playerToGoNext = mainPlayer;
         winSection(start, mainPlayer);
-        Assert.assertEquals(Player.Unowned, board.getWinner());
+        assertEquals(Player.Unowned, board.getWinner());
 
         winSection(secondSection, mainPlayer);
-        Assert.assertEquals(Player.Unowned, board.getWinner());
+        assertEquals(Player.Unowned, board.getWinner());
 
         winSection(thirdSection, mainPlayer);
-        Assert.assertEquals(mainPlayer, board.getWinner());
+        assertEquals(mainPlayer, board.getWinner());
     }
 }

@@ -6,8 +6,6 @@ import static org.junit.Assert.fail;
 
 import java.util.List;
 
-import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -41,7 +39,7 @@ public class GridLinesTests {
 
     @Test
     public void ensureContainsAllSections() {
-        Assert.assertEquals(NUMBER_SECTIONS, allSectionPositions.size());
+        assertEquals(NUMBER_SECTIONS, allSectionPositions.size());
 
         for (int x = 0; x < GridConstants.NUMBER_OF_SECTIONS_PER_SIDE; ++x) {
             for (int y = 0; y < GridConstants.NUMBER_OF_SECTIONS_PER_SIDE; ++y) {
@@ -52,7 +50,7 @@ public class GridLinesTests {
 
     @Test
     public void ensureContainsAllBoxPositions() {
-        Assert.assertEquals(NUMBER_BOX_POSITIONS, allBoxPositions.size());
+        assertEquals(NUMBER_BOX_POSITIONS, allBoxPositions.size());
 
         for (int x = 0; x < GridConstants.SIZE_OF_SECTION; ++x) {
             for (int y = 0; y < GridConstants.SIZE_OF_SECTION; ++y) {

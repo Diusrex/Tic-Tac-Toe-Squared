@@ -1,6 +1,7 @@
 package com.diusrex.tictactoe.logic.tests;
 
-import junit.framework.Assert;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +26,7 @@ public class StandardGridCheckerPossibleToWinTests {
 
     @Test
     public void testBoardCanBeWonSimple() {
-        Assert.assertTrue(board.possibleToWin());
+        assertTrue(board.possibleToWin());
     }
 
     // 1 1 2
@@ -41,7 +42,7 @@ public class StandardGridCheckerPossibleToWinTests {
         takeOwnershipOfSection(SectionPosition.make(1, 1), Player.Player_2);
         takeOwnershipOfSection(SectionPosition.make(2, 1), Player.Player_1);
         takeOwnershipOfSection(SectionPosition.make(0, 2), Player.Player_1);
-        Assert.assertTrue(board.possibleToWin());
+        assertTrue(board.possibleToWin());
     }
 
     // 1 2 1
@@ -56,7 +57,7 @@ public class StandardGridCheckerPossibleToWinTests {
         takeOwnershipOfSection(SectionPosition.make(2, 1), Player.Player_1);
         takeOwnershipOfSection(SectionPosition.make(1, 2), Player.Player_1);
         takeOwnershipOfSection(SectionPosition.make(2, 2), Player.Player_2);
-        Assert.assertTrue(board.possibleToWin());
+        assertTrue(board.possibleToWin());
     }
 
     // 1 2 1
@@ -72,7 +73,7 @@ public class StandardGridCheckerPossibleToWinTests {
         takeOwnershipOfSection(SectionPosition.make(0, 2), Player.Player_2);
         takeOwnershipOfSection(SectionPosition.make(1, 2), Player.Player_1);
         takeOwnershipOfSection(SectionPosition.make(2, 2), Player.Player_1);
-        Assert.assertTrue(board.possibleToWin());
+        assertTrue(board.possibleToWin());
     }
 
     // 2 1 2
@@ -88,7 +89,7 @@ public class StandardGridCheckerPossibleToWinTests {
         takeOwnershipOfSection(SectionPosition.make(0, 2), Player.Player_2);
         takeOwnershipOfSection(SectionPosition.make(1, 2), Player.Player_2);
         takeOwnershipOfSection(SectionPosition.make(2, 2), Player.Player_1);
-        Assert.assertTrue(board.possibleToWin());
+        assertTrue(board.possibleToWin());
     }
 
     @Test
@@ -96,7 +97,7 @@ public class StandardGridCheckerPossibleToWinTests {
         takeOwnershipOfSection(SectionPosition.make(0, 0), Player.Player_1);
         takeOwnershipOfSection(SectionPosition.make(1, 0), Player.Player_1);
         takeOwnershipOfSection(SectionPosition.make(2, 0), Player.Player_1);
-        Assert.assertTrue(board.possibleToWin());
+        assertTrue(board.possibleToWin());
     }
 
     // 1 2 1
@@ -113,13 +114,13 @@ public class StandardGridCheckerPossibleToWinTests {
         takeOwnershipOfSection(SectionPosition.make(0, 2), Player.Player_2);
         takeOwnershipOfSection(SectionPosition.make(1, 2), Player.Player_1);
         takeOwnershipOfSection(SectionPosition.make(2, 2), Player.Player_2);
-        Assert.assertFalse(board.possibleToWin());
+        assertFalse(board.possibleToWin());
     }
 
     private void takeOwnershipOfSection(SectionPosition section, Player player) {
         board.setSectionOwner(section, null, player);
     }
-    
+
     private class TicTacToeEngineMock extends TicTacToeEngine {
 
         TicTacToeEngineMock() {
@@ -134,6 +135,6 @@ public class StandardGridCheckerPossibleToWinTests {
         public Player getWinner(Grid grid) {
             return Player.Unowned;
         }
-        
+
     }
 }
