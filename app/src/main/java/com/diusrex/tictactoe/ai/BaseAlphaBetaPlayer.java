@@ -17,22 +17,21 @@ import com.diusrex.tictactoe.logic.GridLists;
 /*
  *  Is actually a negamax alpha beta player, due to it being easier to code.
  */
-public class AlphaBetaPlayer extends AIPlayer {
-    public static final String IDENTIFIER = "UAlphaB";
+public abstract class BaseAlphaBetaPlayer extends AIPlayer {
     private final int WIN_SCORE = 10000000;
     private final Scorer scorer;
-    private final int maxDepth;
 
-    public AlphaBetaPlayer(ScoringValues scoringInfo, int maxDepth) {
+    public BaseAlphaBetaPlayer(ScoringValues scoringInfo) {
         this.scorer = new Scorer(scoringInfo);
-        this.maxDepth = maxDepth;
     }
 
     @Override
     protected Move choosePosition(BoardStatus board) {
         // Is actually possible to get a larger score than WIN_SCORE, due to multiplying it by the depth left
-        return getBestMoveAndItsScore(board, maxDepth, -Integer.MAX_VALUE, Integer.MAX_VALUE).move;
+        return getBestMoveAndItsScore(board, getMaxDepth(board), -Integer.MAX_VALUE, Integer.MAX_VALUE).move;
     }
+
+    protected abstract int getMaxDepth(BoardStatus board);
 
     private MoveScore getBestMoveAndItsScore(BoardStatus board, int depth, int alpha, int beta) {
         if (board.getWinner() != Player.Unowned) {
@@ -65,10 +64,6 @@ public class AlphaBetaPlayer extends AIPlayer {
             if (alpha >= beta) {
                 break;
             }
-        }
-        
-        if (depth == maxDepth) {
-        //    System.out.println("Best move is: " + bestMove.move + " " + bestMove.score);
         }
 
         return bestMove;
@@ -111,10 +106,5 @@ public class AlphaBetaPlayer extends AIPlayer {
         }
 
         return allMoves;
-    }
-
-    @Override
-    public String getIdentifier() {
-        return IDENTIFIER;
     }
 }
