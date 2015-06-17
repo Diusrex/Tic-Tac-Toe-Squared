@@ -13,10 +13,16 @@ public class TimeInfo {
     }
     
     public static double getAverageTime(List<Long> times) {
-        return getTotalTime(times)/ times.size();        
+        if (times.size() != 0)
+            return getTotalTime(times)/ times.size();
+        else
+            return 0.0;
     }
     
     public static double getTimeStdDev(List<Long> times) {
+        if (times.size() == 0)
+            return 0.0;
+        
         double averageTime = getAverageTime(times);
         
         double differences = 0;

@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import net.sourceforge.argparse4j.ArgumentParsers;
+import net.sourceforge.argparse4j.impl.Arguments;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
@@ -24,17 +25,29 @@ import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.logic.GridLists;
 
 public class AITournament {
+    public static final int MAX_NUM_MOVES = 81;
     private static int numberOfUniqueAI;
     private static int numberOfThreads;
 
     private static int numberOfResultsKept;
 
+    private static boolean isVerbose;
+    private static boolean isTesting;
+
     private static TournamentAIGenerator generator;
 
     private static Thread[] allThreads;
 
+    private static PrintStream logFile;
+
     static public void main(String[] args) {
         parseArguments(args);
+
+        try {
+            logFile = new PrintStream("log.txt", "UTF-8");
+        } catch (Exception e) {
+            System.exit(1);
+        }
 
         allThreads = new Thread[numberOfThreads];
 
@@ -48,7 +61,13 @@ public class AITournament {
             for (int i = 0; i < numberOfUniqueAI / numberOfResultsKept; ++i) {
                 List<BaseScoringValuesTestResults> results = new ArrayList<>();
                 generateAIScorings(results);
-                runAllTests(results);
+
+                long currentRunStart = getCurrentTime();
+
+                if (!isTesting)
+                    runAllTests(results);
+
+                logFile.println("Completed run " + i + " after " + (getCurrentTime() - currentRunStart));
 
                 System.out.println("Completed " + i);
                 printOutResult(results, "Results " + i + ".txt");
@@ -60,10 +79,17 @@ public class AITournament {
 
         System.out.println("Running best results");
 
-        runAllTests(bestResults);
+        long finalRunStart = getCurrentTime();
+
+        if (!isTesting) {
+            runAllTests(bestResults);
+        }
+
+        logFile.println("Completed all runs " + (getCurrentTime() - finalRunStart));
+
         printOutResult(bestResults, "Best Results.txt");
 
-        System.out.println("Completed after " + (getCurrentTime() - totalStartTime));
+        logFile.println("Completed all aftessr " + (getCurrentTime() - totalStartTime));
     }
 
     private static void parseArguments(String[] args) {
@@ -75,6 +101,10 @@ public class AITournament {
         parser.addArgument("-k", "--number-AI-kept").dest("kept").type(Integer.class).setDefault(0)
                 .help("Will cause a final round to be run, with given number of each earlier run");
         parser.addArgument("-f", "--file").setDefault("").help("File to load AI from");
+        parser.addArgument("-v", "--verbose").type(Boolean.class).setDefault(false).action(Arguments.storeTrue())
+                .help("Print out additional information on how the AI's did");
+        parser.addArgument("--test").type(Boolean.class).setDefault(false).action(Arguments.storeTrue())
+                .help("See what will be created without running anything");
         parser.addArgument("AITypes")
                 .nargs("+")
                 .choices(UnScalingMiniMaxPlayer.IDENTIFIER, ScalingMiniMaxPlayer.IDENTIFIER,
@@ -91,6 +121,9 @@ public class AITournament {
         numberOfUniqueAI = ns.getInt("number");
         numberOfThreads = ns.getInt("threads");
         numberOfResultsKept = ns.getInt("kept");
+
+        isTesting = ns.getBoolean("test");
+        isVerbose = ns.getBoolean("verbose");
 
         List<String> AITypes = ns.getList("AITypes");
         String fileName = ns.getString("file");
@@ -164,16 +197,22 @@ public class AITournament {
         try {
             printStream = new PrintStream(file, "UTF-8");
         } catch (Exception e) {
-            // Don't really care about the exception, will keep going to not
-            // waste the time spent
+            // Will keep going to not waste the time spent
         }
 
         for (int i = 0; i < results.size(); ++i) {
+            if (isVerbose) {
+                printStream.print("At " + (i + 1) + ": ");
+            }
             BaseScoringValuesTestResults result = results.get(i);
-            result.printOut(printStream);
+            result.printOut(printStream, isVerbose);
+            
+            printStream.println();
         }
+
         printStream.println();
         printTotalAITimes(printStream, results);
+        printAIDepthInformation(printStream, results);
 
         if (printStream != System.out) {
             printStream.close();
@@ -199,6 +238,99 @@ public class AITournament {
             double average = TimeInfo.getAverageTime(entry.getValue());
             double stdDev = TimeInfo.getTimeStdDev(entry.getValue());
             printStream.println(entry.getKey() + ": " + average + ", std-dev " + stdDev);
+        }
+    }
+
+    private static void printAIDepthInformation(PrintStream printStream, List<BaseScoringValuesTestResults> results) {
+        int[] totalWinDepths = new int[MAX_NUM_MOVES + 1];
+        int[] totalWinAsFirstDepths = new int[MAX_NUM_MOVES + 1];
+        int[] totalWinAsSecondDepths = new int[MAX_NUM_MOVES + 1];
+
+        Map<String, int[]> winDepthMap = new HashMap<>();
+        Map<String, int[]> lossDepthMap = new HashMap<>();
+        Map<String, int[]> winAsFirstMap = new HashMap<>();
+        Map<String, int[]> winAsSecondMap = new HashMap<>();
+
+        int lowestWin = MAX_NUM_MOVES + 1, highestWin = 0;
+
+        for (BaseScoringValuesTestResults result : results) {
+            String aiIdentifier = result.getPlayer().getIdentifier();
+
+            if (!winDepthMap.containsKey(aiIdentifier)) {
+                winDepthMap.put(aiIdentifier, new int[MAX_NUM_MOVES + 1]);
+                lossDepthMap.put(aiIdentifier, new int[MAX_NUM_MOVES + 1]);
+                winAsFirstMap.put(aiIdentifier, new int[MAX_NUM_MOVES + 1]);
+                winAsSecondMap.put(aiIdentifier, new int[MAX_NUM_MOVES + 1]);
+            }
+
+            lowestWin = Math.min(lowestWin, findMin(result.getWinDepths()));
+            highestWin = Math.max(highestWin, findMax(result.getWinDepths()));
+
+            mergeInto(result.getWinDepths(), totalWinDepths);
+            mergeInto(result.getWinAsFirstDepths(), totalWinAsFirstDepths);
+            mergeInto(result.getWinAsSecondDepths(), totalWinAsSecondDepths);
+
+            mergeInto(result.getWinDepths(), winDepthMap.get(aiIdentifier));
+            mergeInto(result.getLossDepths(), lossDepthMap.get(aiIdentifier));
+            mergeInto(result.getWinAsFirstDepths(), winAsFirstMap.get(aiIdentifier));
+            mergeInto(result.getWinAsSecondDepths(), winAsSecondMap.get(aiIdentifier));
+        }
+
+        printStream.println("\nEarliest win: " + lowestWin + "\nLatest win: " + highestWin);
+
+        printStream.println("\nWinDepth:");
+        printOutDepthInformation(printStream, totalWinDepths, lowestWin, highestWin);
+        iterateAndPrint(printStream, winDepthMap, lowestWin, highestWin);
+
+        printStream.println("\nLossDepth:");
+        iterateAndPrint(printStream, lossDepthMap, lowestWin, highestWin);
+
+        printStream.println("\nFirstWin:");
+        printOutDepthInformation(printStream, totalWinAsFirstDepths, lowestWin, highestWin);
+        iterateAndPrint(printStream, winAsFirstMap, lowestWin, highestWin);
+
+        printStream.println("\nSecondWin:");
+        printOutDepthInformation(printStream, totalWinAsSecondDepths, lowestWin, highestWin);
+        iterateAndPrint(printStream, winAsSecondMap, lowestWin, highestWin);
+    }
+
+    private static int findMax(int[] winDepths) {
+        int i;
+
+        for (i = MAX_NUM_MOVES; i >= 0 && winDepths[i] == 0; --i)
+            ;
+
+        return i;
+    }
+
+    private static int findMin(int[] winDepths) {
+        int i;
+
+        for (i = 0; i <= MAX_NUM_MOVES && winDepths[i] == 0; ++i)
+            ;
+
+        return i;
+    }
+
+    private static void iterateAndPrint(PrintStream printStream, Map<String, int[]> map, int lowestWin, int highestWin) {
+        for (Map.Entry<String, int[]> entry : map.entrySet()) {
+            printStream.print(entry.getKey() + ":\n");
+            int[] depths = entry.getValue();
+
+            printOutDepthInformation(printStream, depths, lowestWin, highestWin);
+        }
+    }
+
+    private static void printOutDepthInformation(PrintStream printStream, int[] depths, int lowestWin, int highestWin) {
+        for (int i = 0; i <= MAX_NUM_MOVES; ++i) {
+            printStream.print(depths[i] + " ");
+        }
+        printStream.println();
+    }
+
+    private static void mergeInto(int[] from, int[] into) {
+        for (int i = 0; i <= MAX_NUM_MOVES; ++i) {
+            into[i] += from[i];
         }
     }
 }

@@ -2,6 +2,7 @@ package com.diusrex.tictactoe.ai.tournament;
 
 import java.util.List;
 
+import com.diusrex.tictactoe.ai.tournament.AIvsAI.GameInfo;
 import com.diusrex.tictactoe.data_structures.Player;
 
 /*
@@ -40,14 +41,14 @@ public class TestRunner implements Runnable {
 
     private void runGameAndUpdate(BaseScoringValuesTestResults first, BaseScoringValuesTestResults second) {
         TimeInfo.GameTimeInfo time = new TimeInfo.GameTimeInfo();
-        Player winner = AIvsAI.runGame(first.getPlayer(), second.getPlayer(), time);
+        GameInfo gameInfo = AIvsAI.runGame(first.getPlayer(), second.getPlayer(), time);
 
-        if (winner == Player.Player_1) {
-            first.increaseWon();
-            second.increaseLost();
-        } else if (winner == Player.Player_2) {
-            first.increaseLost();
-            second.increaseWon();
+        if (gameInfo.getWinner() == Player.Player_1) {
+            first.increaseWon(gameInfo.getDepth(), true);
+            second.increaseLost(gameInfo.getDepth());
+        } else if (gameInfo.getWinner() == Player.Player_2) {
+            first.increaseLost(gameInfo.getDepth());
+            second.increaseWon(gameInfo.getDepth(), false);
         } else {
             first.increaseDraw();
             second.increaseDraw();

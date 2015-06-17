@@ -19,10 +19,13 @@ public abstract class TournamentAIGenerator {
     public final void generateAIScorings(List<BaseScoringValuesTestResults> results, int numberOfUniqueAI) {
         int numberPerScoringValue = allWantedAICopies.size();
         int numberRemainingForResults = numberOfUniqueAI - results.size();
-        
+        if (numberRemainingForResults % numberPerScoringValue != 0) {
+            System.out.println("WARNING: there will be fewer AI than expected due to rounding");
+        }
         
         Set<ScoringValues> allValues = generateAIInformation(numberRemainingForResults / numberPerScoringValue);
 
+        
         for (ScoringValues value : allValues) {
             addToResults(value, results);
         }

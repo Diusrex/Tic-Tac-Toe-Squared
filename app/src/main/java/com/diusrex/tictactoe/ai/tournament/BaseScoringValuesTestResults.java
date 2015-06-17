@@ -8,7 +8,6 @@ import com.diusrex.tictactoe.ai.AIPlayer;
 import com.diusrex.tictactoe.ai.scoring_calculations.ScoringFunction;
 import com.diusrex.tictactoe.ai.scoring_calculations.ScoringValues;
 
-
 public abstract class BaseScoringValuesTestResults implements Comparable<BaseScoringValuesTestResults> {
     private final ScoringValues ownValue;
     private final AIPlayer player;
@@ -16,9 +15,19 @@ public abstract class BaseScoringValuesTestResults implements Comparable<BaseSco
     private int won, drew, lost;
     private List<Long> times;
 
+    private int[] winDepths;
+    private int[] lossDepths;
+    private int[] winAsFirstDepth;
+    private int[] winAsSecondDepth;
+
     public BaseScoringValuesTestResults(ScoringValues ownValue, AIPlayer player) {
         this.ownValue = ownValue;
         this.player = player;
+
+        winDepths = new int[AITournament.MAX_NUM_MOVES + 1];
+        lossDepths = new int[AITournament.MAX_NUM_MOVES + 1];
+        winAsFirstDepth = new int[AITournament.MAX_NUM_MOVES + 1];
+        winAsSecondDepth = new int[AITournament.MAX_NUM_MOVES + 1];
 
         won = drew = lost = 0;
         times = new ArrayList<>();
@@ -38,17 +47,24 @@ public abstract class BaseScoringValuesTestResults implements Comparable<BaseSco
     public AIPlayer getPlayer() {
         return player;
     }
-    
+
     public synchronized void addTime(long timeTaken) {
         times.add(timeTaken);
     }
 
-    public synchronized void increaseWon() {
+    public synchronized void increaseWon(int depth, boolean first) {
         ++won;
+        ++winDepths[depth];
+
+        if (first)
+            ++winAsFirstDepth[depth];
+        else
+            ++winAsSecondDepth[depth];
     }
 
-    public synchronized void increaseLost() {
+    public synchronized void increaseLost(int depth) {
         ++lost;
+        ++lossDepths[depth];
     }
 
     public synchronized void increaseDraw() {
@@ -58,24 +74,25 @@ public abstract class BaseScoringValuesTestResults implements Comparable<BaseSco
     public List<Long> getAllTimes() {
         return times;
     }
-    
+
     public long getTotalTime() {
         return TimeInfo.getTotalTime(times);
     }
-    
+
     public double getAverageTime() {
         return TimeInfo.getAverageTime(times);
     }
-    
+
     public double getTimeStdDev() {
         return TimeInfo.getTimeStdDev(times);
     }
 
-    public void printOut(PrintStream printStream) {
-        //printStream.println("wins: " + won + " draw: " + drew + " loss: " + lost);
+    public void printOut(PrintStream printStream, boolean isVerbose) {
+        if (isVerbose) {
+            printStream.println("wins: " + won + " draw: " + drew + " loss: " + lost);
 
-        //printAdditionalInfo(printStream);
-        //printStream.println("Took " + getAverageTime() + "ms, with std dev: " + getTimeStdDev());
+            printAdditionalInfo(printStream);
+        }
 
         ScoringFunction cF = ownValue.getMainScoring();
         printStream.print(cF.getCannotWinPointScore() + " " + cF.getOwnsOnlyTakenInLine() + " "
@@ -91,6 +108,22 @@ public abstract class BaseScoringValuesTestResults implements Comparable<BaseSco
     public void reset() {
         won = lost = drew = 0;
         times.clear();
+    }
+
+    public int[] getWinDepths() {
+        return winDepths;
+    }
+
+    public int[] getLossDepths() {
+        return lossDepths;
+    }
+
+    public int[] getWinAsFirstDepths() {
+        return winAsFirstDepth;
+    }
+
+    public int[] getWinAsSecondDepths() {
+        return winAsSecondDepth;
     }
 
 }

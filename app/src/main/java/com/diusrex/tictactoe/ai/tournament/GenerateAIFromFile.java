@@ -24,19 +24,17 @@ public class GenerateAIFromFile extends TournamentAIGenerator {
         super(allWantedAICopies);
         this.scanner = scanner;
     }
-    
+
     @Override
     protected Set<ScoringValues> generateAIInformation(int numberOfAIInformation) {
         Set<ScoringValues> allInformations = new HashSet<>();
-        
+
         while (allInformations.size() < numberOfAIInformation) {
-            //int maxDepth = 
-            scanner.nextInt();
             ScoringFunction mainScoring = loadScoring();
             ScoringFunction sectionScoring = loadScoring();
             allInformations.add(new ScoringValues(mainScoring, sectionScoring));
         }
-        
+
         return allInformations;
     }
 
@@ -50,6 +48,4 @@ public class GenerateAIFromFile extends TournamentAIGenerator {
                 ownsBothTakenInLineScore, blockedPlayerInLineScore).build();
     }
 
-
-    
 }

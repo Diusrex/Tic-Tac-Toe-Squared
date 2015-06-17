@@ -1,6 +1,7 @@
 package com.diusrex.tictactoe.logic;
 
 import com.diusrex.tictactoe.ai.AIPlayer;
+import com.diusrex.tictactoe.ai.ScalingAlphaBetaPlayer;
 import com.diusrex.tictactoe.ai.UnScalingMiniMaxPlayer;
 import com.diusrex.tictactoe.ai.scoring_calculations.ScoringFunction;
 import com.diusrex.tictactoe.ai.scoring_calculations.ScoringValues;
@@ -30,9 +31,7 @@ public class PlayerFactory {
         ScoringFunction.Builder scoringBuilder = new ScoringFunction.Builder();
         ScoringFunction mainFunction = scoringBuilder.setScoreValues(0, 30, 50, 40).build();
         ScoringFunction sectionsFunction = scoringBuilder.setScoreValues(-1, 2, 4, 3).build();
-        ScoringValues easyValues = new ScoringValues(mainFunction, sectionsFunction);
-
-        return easyValues;
+        return new ScoringValues(mainFunction, sectionsFunction);
     }
 
     private static AIPlayer createEasyPlayer() {
@@ -43,9 +42,7 @@ public class PlayerFactory {
         ScoringFunction.Builder scoringBuilder = new ScoringFunction.Builder();
         ScoringFunction mainFunction = scoringBuilder.setScoreValues(0, 27, 94, 56).build();
         ScoringFunction sectionsFunction = scoringBuilder.setScoreValues(-14, 0, 11, 4).build();
-        ScoringValues mediumValues = new ScoringValues(mainFunction, sectionsFunction);
-
-        return mediumValues;
+        return new ScoringValues(mainFunction, sectionsFunction);
     }
 
     private static AIPlayer createMediumPlayer() {
@@ -54,14 +51,12 @@ public class PlayerFactory {
     
     public static ScoringValues getHardValues() {
         ScoringFunction.Builder scoringBuilder = new ScoringFunction.Builder();
-        ScoringFunction mainFunction = scoringBuilder.setScoreValues(0, 27, 94, 56).build();
-        ScoringFunction sectionsFunction = scoringBuilder.setScoreValues(-14, 0, 11, 4).build();
-        ScoringValues hardValues = new ScoringValues(mainFunction, sectionsFunction);
-
-        return hardValues;
+        ScoringFunction mainFunction = scoringBuilder.setScoreValues(0, 34, 86, 55).build();
+        ScoringFunction sectionsFunction = scoringBuilder.setScoreValues(-18, 3, 8, 12).build();
+        return new ScoringValues(mainFunction, sectionsFunction);
     }
 
     private static AIPlayer createHardPlayer() {
-        return new UnScalingMiniMaxPlayer(getHardValues(), 4);
+        return new ScalingAlphaBetaPlayer(getHardValues());
     }
 }

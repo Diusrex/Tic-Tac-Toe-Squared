@@ -3,12 +3,10 @@ package com.diusrex.tictactoe.ai.tournament;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 import java.util.Set;
 
 import com.diusrex.tictactoe.ai.scoring_calculations.ScoringFunction;
 import com.diusrex.tictactoe.ai.scoring_calculations.ScoringValues;
-import com.diusrex.tictactoe.ai.tournament.TournamentAIGenerator.AIInformation;
 
 public class GenerateAIRandomly extends TournamentAIGenerator {
 
