@@ -30,7 +30,7 @@ public abstract class BaseScoringValuesTestResults implements Comparable<BaseSco
         winAsSecondDepth = new int[AITournament.MAX_NUM_MOVES + 1];
 
         won = drew = lost = 0;
-        times = new ArrayList<>();
+        times = new ArrayList<Long>();
     }
 
     @Override

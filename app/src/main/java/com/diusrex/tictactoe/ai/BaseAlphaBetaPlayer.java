@@ -81,7 +81,7 @@ public abstract class BaseAlphaBetaPlayer extends AIPlayer {
         SectionPosition requiredSection = board.getSectionToPlayIn();
         Player player = board.getNextPlayer();
 
-        List<Move> allMoves = new ArrayList<>();
+        List<Move> allMoves = new ArrayList<Move>();
         for (BoxPosition pos : GridLists.getAllStandardBoxPositions()) {
             Move move = Move.make(requiredSection, pos, player);
             if (board.isValidMove(move)) {
@@ -95,7 +95,7 @@ public abstract class BaseAlphaBetaPlayer extends AIPlayer {
     private List<Move> getMovesInAnySection(BoardStatus board) {
         Player player = board.getNextPlayer();
 
-        List<Move> allMoves = new ArrayList<>();
+        List<Move> allMoves = new ArrayList<Move>();
         for (SectionPosition section : GridLists.getAllStandardSections()) {
             for (BoxPosition pos : GridLists.getAllStandardBoxPositions()) {
                 Move move = Move.make(section, pos, player);

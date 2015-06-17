@@ -27,7 +27,7 @@ public class GenerateAIFromFile extends TournamentAIGenerator {
 
     @Override
     protected Set<ScoringValues> generateAIInformation(int numberOfAIInformation) {
-        Set<ScoringValues> allInformations = new HashSet<>();
+        Set<ScoringValues> allInformations = new HashSet<ScoringValues>();
 
         while (allInformations.size() < numberOfAIInformation) {
             ScoringFunction mainScoring = loadScoring();

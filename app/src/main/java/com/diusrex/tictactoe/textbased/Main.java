@@ -75,16 +75,14 @@ public class Main {
             System.out.println("Do you want to play against a 'human', or an 'easy', 'medium', or 'hard' bot?");
             
             String wanted = scanner.next();
-            switch (wanted) {
-            case "human":
+            if (wanted.equals("human"))
                 return WantedPlayer.Human;
-            case "easy":
+            else if (wanted.equals("easy"))
                 return WantedPlayer.Easy;
-            case "medium":
+            else if (wanted.equals("medium"))
                 return WantedPlayer.Medium;
-            case "hard":
+            else if (wanted.equals("hard"))
                 return WantedPlayer.Hard;
-            }
 
             System.out.println("\nPlease enter a valid input.\n");
         }

@@ -16,7 +16,7 @@ public class GenerateAIRandomly extends TournamentAIGenerator {
     
     @Override
     protected Set<ScoringValues> generateAIInformation(int numberOfAIInformation) {
-        Set<ScoringValues> allInformations = new HashSet<>();
+        Set<ScoringValues> allInformations = new HashSet<ScoringValues>();
 
         Random random = new Random();
 

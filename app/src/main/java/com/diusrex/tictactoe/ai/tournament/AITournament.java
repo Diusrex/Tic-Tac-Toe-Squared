@@ -51,7 +51,7 @@ public class AITournament {
 
         allThreads = new Thread[numberOfThreads];
 
-        List<BaseScoringValuesTestResults> bestResults = new ArrayList<>();
+        List<BaseScoringValuesTestResults> bestResults = new ArrayList<BaseScoringValuesTestResults>();
 
         setUpStaticObjects();
 
@@ -59,7 +59,7 @@ public class AITournament {
         if (numberOfResultsKept != 0) {
             // Will run as many times as needed to ensure the final one is full
             for (int i = 0; i < numberOfUniqueAI / numberOfResultsKept; ++i) {
-                List<BaseScoringValuesTestResults> results = new ArrayList<>();
+                List<BaseScoringValuesTestResults> results = new ArrayList<BaseScoringValuesTestResults>();
                 generateAIScorings(results);
 
                 long currentRunStart = getCurrentTime();
@@ -220,7 +220,7 @@ public class AITournament {
     }
 
     private static void printTotalAITimes(PrintStream printStream, List<BaseScoringValuesTestResults> results) {
-        Map<String, List<Long>> timesMap = new HashMap<>();
+        Map<String, List<Long>> timesMap = new HashMap<String, List<Long>>();
         for (BaseScoringValuesTestResults result : results) {
             String aiIdentifier = result.getPlayer().getIdentifier();
 
@@ -246,10 +246,10 @@ public class AITournament {
         int[] totalWinAsFirstDepths = new int[MAX_NUM_MOVES + 1];
         int[] totalWinAsSecondDepths = new int[MAX_NUM_MOVES + 1];
 
-        Map<String, int[]> winDepthMap = new HashMap<>();
-        Map<String, int[]> lossDepthMap = new HashMap<>();
-        Map<String, int[]> winAsFirstMap = new HashMap<>();
-        Map<String, int[]> winAsSecondMap = new HashMap<>();
+        Map<String, int[]> winDepthMap = new HashMap<String, int[]>();
+        Map<String, int[]> lossDepthMap = new HashMap<String, int[]>();
+        Map<String, int[]> winAsFirstMap = new HashMap<String, int[]>();
+        Map<String, int[]> winAsSecondMap = new HashMap<String, int[]>();
 
         int lowestWin = MAX_NUM_MOVES + 1, highestWin = 0;
 

@@ -52,7 +52,7 @@ public class GridLists {
 
     public static List<Position> getAllStandardPositions() {
         if (allPositions == null) {
-            allPositions = new ArrayList<>();
+            allPositions = new ArrayList<Position>();
 
             for (int y = 0; y < GridConstants.SIZE_OF_SECTION; ++y) {
                 for (int x = 0; x < GridConstants.SIZE_OF_SECTION; ++x) {
@@ -68,7 +68,7 @@ public class GridLists {
 
     public static List<BoxPosition> getAllStandardBoxPositions() {
         if (allBoxesInSection == null) {
-            allBoxesInSection = new ArrayList<>();
+            allBoxesInSection = new ArrayList<BoxPosition>();
 
             for (int y = 0; y < GridConstants.SIZE_OF_SECTION; ++y) {
                 for (int x = 0; x < GridConstants.SIZE_OF_SECTION; ++x) {
@@ -84,7 +84,7 @@ public class GridLists {
 
     public static List<SectionPosition> getAllStandardSections() {
         if (allSections == null) {
-            allSections = new ArrayList<>();
+            allSections = new ArrayList<SectionPosition>();
 
             for (int y = 0; y < GridConstants.SIZE_OF_SECTION; ++y) {
                 for (int x = 0; x < GridConstants.SIZE_OF_SECTION; ++x) {
@@ -101,7 +101,7 @@ public class GridLists {
     public static List<LineIterator> getAllLineIterators() {
         if (allLineIterators == null) {
             List<Line> allLines = getAllLines();
-            allLineIterators = new ArrayList<>();
+            allLineIterators = new ArrayList<LineIterator>();
 
             for (Line line : allLines) {
                 allLineIterators.add(new LineIterator(line));
@@ -115,7 +115,7 @@ public class GridLists {
 
     public static List<Line> getAllLines() {
         if (allLines == null) {
-            allLines = new ArrayList<>();
+            allLines = new ArrayList<Line>();
 
             setUpHorizontalLines();
             setUpVerticalLines();
