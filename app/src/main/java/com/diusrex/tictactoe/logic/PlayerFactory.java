@@ -51,8 +51,8 @@ public class PlayerFactory {
     
     public static ScoringValues getHardValues() {
         ScoringFunction.Builder scoringBuilder = new ScoringFunction.Builder();
-        ScoringFunction mainFunction = scoringBuilder.setScoreValues(0, 34, 86, 55).build();
-        ScoringFunction sectionsFunction = scoringBuilder.setScoreValues(-18, 3, 8, 12).build();
+        ScoringFunction mainFunction = scoringBuilder.setScoreValues(0, 33, 70, 63).build();
+        ScoringFunction sectionsFunction = scoringBuilder.setScoreValues(-9, 3, 12, 14).build();
         return new ScoringValues(mainFunction, sectionsFunction);
     }
 
