@@ -13,6 +13,7 @@ import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.SectionGrid;
 import com.diusrex.tictactoe.data_structures.SectionPosition;
 import com.diusrex.tictactoe.logic.StandardGridChecker;
+import com.diusrex.tictactoe.logic.StandardTicTacToeEngine;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
 
 // For all of the tests, the board will be using the grid checker
@@ -21,7 +22,7 @@ public class StandardGridCheckerPossibleToWinTests {
 
     @Before
     public void setup() {
-        board = new BoardStatus(new TicTacToeEngineMock());
+        board = new BoardStatus(new StandardTicTacToeEngine());
     }
 
     @Test
@@ -119,22 +120,5 @@ public class StandardGridCheckerPossibleToWinTests {
 
     private void takeOwnershipOfSection(SectionPosition section, Player player) {
         board.setSectionOwner(section, null, player);
-    }
-
-    private class TicTacToeEngineMock extends TicTacToeEngine {
-
-        TicTacToeEngineMock() {
-            super(new StandardGridChecker());
-        }
-
-        @Override
-        public void updateSectionOwner(SectionGrid section, Move move) {
-        }
-
-        @Override
-        public Player getWinner(Grid grid) {
-            return Player.Unowned;
-        }
-
     }
 }
