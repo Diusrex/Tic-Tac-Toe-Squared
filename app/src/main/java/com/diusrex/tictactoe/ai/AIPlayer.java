@@ -18,16 +18,16 @@ public abstract class AIPlayer {
     }
 
     protected abstract Move choosePosition(BoardStatus board);
-    
+
     protected class MoveScore {
         public final Move move;
         public final int score;
-        
+
         public MoveScore(Move move, int score) {
             this.move = move;
             this.score = score;
         }
     }
-    
+
     public abstract String getIdentifier();
 }

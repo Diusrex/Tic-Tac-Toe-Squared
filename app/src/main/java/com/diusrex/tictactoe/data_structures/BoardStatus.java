@@ -165,5 +165,4 @@ public class BoardStatus {
     public boolean sectionIsImportantToPlayer(SectionPosition section, Player player) {
         return engine.positionIsImportantToPlayer(sectionsOwnersGrid, section, player);
     }
-
 }

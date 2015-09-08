@@ -9,21 +9,23 @@ import com.diusrex.tictactoe.ai.scoring_calculations.ScoringValues;
 public class PlayerFactory {
     public enum WantedPlayer {
         Human, Easy, Medium, Hard
-    };
+    }
+
+    ;
 
     public static AIPlayer createAIPlayer(WantedPlayer player) {
         switch (player) {
-        case Easy:
-            return createEasyPlayer();
+            case Easy:
+                return createEasyPlayer();
 
-        case Medium:
-            return createMediumPlayer();
+            case Medium:
+                return createMediumPlayer();
 
-        case Hard:
-            return createHardPlayer();
+            case Hard:
+                return createHardPlayer();
 
-        default:
-            return null;
+            default:
+                return null;
         }
     }
 
@@ -48,7 +50,7 @@ public class PlayerFactory {
     private static AIPlayer createMediumPlayer() {
         return new UnScalingMiniMaxPlayer(getMediumValues(), 4);
     }
-    
+
     public static ScoringValues getHardValues() {
         ScoringFunction.Builder scoringBuilder = new ScoringFunction.Builder();
         ScoringFunction mainFunction = scoringBuilder.setScoreValues(0, 33, 70, 63).build();
