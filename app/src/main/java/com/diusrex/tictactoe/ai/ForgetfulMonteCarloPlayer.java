@@ -1,16 +1,12 @@
 package com.diusrex.tictactoe.ai;
 
+import com.diusrex.tictactoe.data_structures.*;
+import com.diusrex.tictactoe.logic.GridLists;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-
-import com.diusrex.tictactoe.data_structures.BoardStatus;
-import com.diusrex.tictactoe.data_structures.BoxPosition;
-import com.diusrex.tictactoe.data_structures.Move;
-import com.diusrex.tictactoe.data_structures.Player;
-import com.diusrex.tictactoe.data_structures.SectionPosition;
-import com.diusrex.tictactoe.logic.GridLists;
 
 /*
  *  This is a forgetful player because it only remembers how well the currently possible moves are.
@@ -18,10 +14,19 @@ import com.diusrex.tictactoe.logic.GridLists;
  *
  */
 public class ForgetfulMonteCarloPlayer extends AIPlayer {
-    
+
     public static final String IDENTIFIER = "ForgetfulMonteCarlo";
     private static final double EPSILON = 1e-6;
-    private static final int numberOfIterations = 100000;
+    private int numberOfIterations;
+
+    public static ForgetfulMonteCarloPlayer getStandardPlayer() {
+        return new ForgetfulMonteCarloPlayer(100000);
+    }
+
+    public ForgetfulMonteCarloPlayer(int numberOfIterations) {
+        super();
+        this.numberOfIterations = numberOfIterations;
+    }
 
     @Override
     protected Move choosePosition(BoardStatus board) {
@@ -65,7 +70,7 @@ public class ForgetfulMonteCarloPlayer extends AIPlayer {
     }
 
     private int getBestMoveIndex(int numMoves, List<Integer> numWins, List<Integer> numPlays, List<Double> firstValue,
-            Double logValue, Random random) {
+                                 Double logValue, Random random) {
         int bestIndex = 0;
         double valueOfBest = calculateMoveValue(bestIndex, numWins, numPlays, firstValue, logValue, random);
 
@@ -81,7 +86,7 @@ public class ForgetfulMonteCarloPlayer extends AIPlayer {
     }
 
     private double calculateMoveValue(int index, List<Integer> numWins, List<Integer> numPlays,
-            List<Double> firstValue, Double logValue, Random random) {
+                                      List<Double> firstValue, Double logValue, Random random) {
         int numberPlaysForMove = numPlays.get(index);
         return 1.0 * numWins.get(index) / numberPlaysForMove + Math.sqrt(logValue) / numberPlaysForMove
                 + random.nextDouble() * EPSILON;
