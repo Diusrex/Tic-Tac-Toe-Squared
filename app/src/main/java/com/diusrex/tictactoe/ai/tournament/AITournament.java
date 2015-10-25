@@ -1,28 +1,23 @@
 package com.diusrex.tictactoe.ai.tournament;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-
+import com.diusrex.tictactoe.ai.ScalingAlphaBetaPlayer;
+import com.diusrex.tictactoe.ai.ScalingMiniMaxPlayer;
+import com.diusrex.tictactoe.ai.UnScalingAlphaBetaPlayer;
+import com.diusrex.tictactoe.ai.UnScalingMiniMaxPlayer;
+import com.diusrex.tictactoe.ai.tournament.test_results.BaseScoringValuesTestResults;
+import com.diusrex.tictactoe.ai.tournament.test_results.PlayerTimeResults;
+import com.diusrex.tictactoe.data_structures.Move;
+import com.diusrex.tictactoe.logic.GridLists;
 import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.impl.Arguments;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
 
-import com.diusrex.tictactoe.ai.ScalingAlphaBetaPlayer;
-import com.diusrex.tictactoe.ai.ScalingMiniMaxPlayer;
-import com.diusrex.tictactoe.ai.UnScalingAlphaBetaPlayer;
-import com.diusrex.tictactoe.ai.UnScalingMiniMaxPlayer;
-import com.diusrex.tictactoe.data_structures.Move;
-import com.diusrex.tictactoe.logic.GridLists;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.util.*;
 
 public class AITournament {
     public static final int MAX_NUM_MOVES = 81;
@@ -206,7 +201,7 @@ public class AITournament {
             }
             BaseScoringValuesTestResults result = results.get(i);
             result.printOut(printStream, isVerbose);
-            
+
             printStream.println();
         }
 
@@ -220,24 +215,21 @@ public class AITournament {
     }
 
     private static void printTotalAITimes(PrintStream printStream, List<BaseScoringValuesTestResults> results) {
-        Map<String, List<Long>> timesMap = new HashMap<String, List<Long>>();
+        Map<String, PlayerTimeResults> timesMap = new HashMap<>();
         for (BaseScoringValuesTestResults result : results) {
             String aiIdentifier = result.getPlayer().getIdentifier();
 
             if (!timesMap.containsKey(aiIdentifier)) {
-                timesMap.put(aiIdentifier, new ArrayList<Long>());
+                timesMap.put(aiIdentifier, new PlayerTimeResults());
             }
 
-            List<Long> allTimes = result.getAllTimes();
-            for (Long time : allTimes) {
-                timesMap.get(aiIdentifier).add(time);
-            }
+            PlayerTimeResults timeResults = result.getTimeResults();
+            timesMap.get(aiIdentifier).copyDataFrom(timeResults);
         }
 
-        for (Map.Entry<String, List<Long>> entry : timesMap.entrySet()) {
-            double average = TimeInfo.getAverageTime(entry.getValue());
-            double stdDev = TimeInfo.getTimeStdDev(entry.getValue());
-            printStream.println(entry.getKey() + ": " + average + ", std-dev " + stdDev);
+        for (Map.Entry<String, PlayerTimeResults> entry : timesMap.entrySet()) {
+            printStream.print(entry.getKey() + ": ");
+            entry.getValue().printTimeBreakdown(printStream);
         }
     }
 

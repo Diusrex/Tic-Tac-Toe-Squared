@@ -6,17 +6,13 @@ import com.diusrex.tictactoe.ai.scoring_calculations.ScoringValues;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class BaseScoringValuesTestResults implements Comparable<BaseScoringValuesTestResults> {
     private final ScoringValues ownValue;
     private final AIPlayer player;
 
     private int won, drew, lost;
-    private List<Long> times;
-
-    private AISpecificData specificData;
+    private PlayerTimeResults timeResults;
 
     private int[] winDepths;
     private int[] lossDepths;
@@ -33,7 +29,7 @@ public abstract class BaseScoringValuesTestResults implements Comparable<BaseSco
         winAsSecondDepth = new int[TicTacToeEngine.MAX_NUM_MOVES + 1];
 
         won = drew = lost = 0;
-        times = new ArrayList<Long>();
+        timeResults = new PlayerTimeResults();
     }
 
     @Override
@@ -51,8 +47,7 @@ public abstract class BaseScoringValuesTestResults implements Comparable<BaseSco
         return player;
     }
 
-    public synchronized void addTime(long timeTaken) {
-        times.add(timeTaken);
+    public synchronized void addTime(long timeTaken) {timeResults.add(timeTaken);
     }
 
     public synchronized void increaseWon(int depth, boolean first) {
@@ -74,20 +69,8 @@ public abstract class BaseScoringValuesTestResults implements Comparable<BaseSco
         ++drew;
     }
 
-    public List<Long> getAllTimes() {
-        return times;
-    }
-
-    public long getTotalTime() {
-        return TimingResults.getTotalTime(times);
-    }
-
-    public double getAverageTime() {
-        return TimingResults.getAverageTime(times);
-    }
-
-    public double getTimeStdDev() {
-        return TimingResults.getTimeStdDev(times);
+    public PlayerTimeResults getTimeResults() {
+        return timeResults;
     }
 
     public void printOut(PrintStream printStream, boolean isVerbose) {
@@ -110,7 +93,7 @@ public abstract class BaseScoringValuesTestResults implements Comparable<BaseSco
 
     public void reset() {
         won = lost = drew = 0;
-        times.clear();
+        timeResults.clear();
     }
 
     public int[] getWinDepths() {

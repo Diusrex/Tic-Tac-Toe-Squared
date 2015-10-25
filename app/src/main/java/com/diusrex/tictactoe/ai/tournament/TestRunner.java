@@ -1,9 +1,11 @@
 package com.diusrex.tictactoe.ai.tournament;
 
-import java.util.List;
-
 import com.diusrex.tictactoe.ai.tournament.AIvsAI.GameInfo;
+import com.diusrex.tictactoe.ai.tournament.recording.GameTimeRecording;
+import com.diusrex.tictactoe.ai.tournament.test_results.BaseScoringValuesTestResults;
 import com.diusrex.tictactoe.data_structures.Player;
+
+import java.util.List;
 
 /*
  * Will run the given range of tests against all of the AI's
@@ -40,7 +42,7 @@ public class TestRunner implements Runnable {
     }
 
     private void runGameAndUpdate(BaseScoringValuesTestResults first, BaseScoringValuesTestResults second) {
-        TimeInfo.GameTimeInfo time = new TimeInfo.GameTimeInfo();
+        GameTimeRecording time = new GameTimeRecording();
         GameInfo gameInfo = AIvsAI.runGame(first.getPlayer(), second.getPlayer(), time);
 
         if (gameInfo.getWinner() == Player.Player_1) {

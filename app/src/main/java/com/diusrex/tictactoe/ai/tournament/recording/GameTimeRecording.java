@@ -1,9 +1,9 @@
 package com.diusrex.tictactoe.ai.tournament.recording;
 
-public class TimeRecording {
+public class GameTimeRecording {
     private final long times[];
 
-    public TimeRecording() {
+    public GameTimeRecording() {
         times = new long[2];
         times[0] = times[1] = 0;
     }
