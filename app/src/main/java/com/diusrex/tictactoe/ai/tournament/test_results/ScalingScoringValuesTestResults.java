@@ -1,11 +1,11 @@
-package com.diusrex.tictactoe.ai.tournament;
-
-import java.io.PrintStream;
+package com.diusrex.tictactoe.ai.tournament.test_results;
 
 import com.diusrex.tictactoe.ai.AIPlayer;
 import com.diusrex.tictactoe.ai.ScalingAlphaBetaPlayer;
 import com.diusrex.tictactoe.ai.ScalingMiniMaxPlayer;
 import com.diusrex.tictactoe.ai.scoring_calculations.ScoringValues;
+
+import java.io.PrintStream;
 
 public class ScalingScoringValuesTestResults extends BaseScoringValuesTestResults {
     public static BaseScoringValuesTestResults makeMiniMaxPlayer(ScoringValues ownValues) {

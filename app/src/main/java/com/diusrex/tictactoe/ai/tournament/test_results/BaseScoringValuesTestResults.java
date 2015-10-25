@@ -1,12 +1,13 @@
-package com.diusrex.tictactoe.ai.tournament;
-
-import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.List;
+package com.diusrex.tictactoe.ai.tournament.test_results;
 
 import com.diusrex.tictactoe.ai.AIPlayer;
 import com.diusrex.tictactoe.ai.scoring_calculations.ScoringFunction;
 import com.diusrex.tictactoe.ai.scoring_calculations.ScoringValues;
+import com.diusrex.tictactoe.logic.TicTacToeEngine;
+
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class BaseScoringValuesTestResults implements Comparable<BaseScoringValuesTestResults> {
     private final ScoringValues ownValue;
@@ -14,6 +15,8 @@ public abstract class BaseScoringValuesTestResults implements Comparable<BaseSco
 
     private int won, drew, lost;
     private List<Long> times;
+
+    private AISpecificData specificData;
 
     private int[] winDepths;
     private int[] lossDepths;
@@ -24,10 +27,10 @@ public abstract class BaseScoringValuesTestResults implements Comparable<BaseSco
         this.ownValue = ownValue;
         this.player = player;
 
-        winDepths = new int[AITournament.MAX_NUM_MOVES + 1];
-        lossDepths = new int[AITournament.MAX_NUM_MOVES + 1];
-        winAsFirstDepth = new int[AITournament.MAX_NUM_MOVES + 1];
-        winAsSecondDepth = new int[AITournament.MAX_NUM_MOVES + 1];
+        winDepths = new int[TicTacToeEngine.MAX_NUM_MOVES + 1];
+        lossDepths = new int[TicTacToeEngine.MAX_NUM_MOVES + 1];
+        winAsFirstDepth = new int[TicTacToeEngine.MAX_NUM_MOVES + 1];
+        winAsSecondDepth = new int[TicTacToeEngine.MAX_NUM_MOVES + 1];
 
         won = drew = lost = 0;
         times = new ArrayList<Long>();
@@ -76,15 +79,15 @@ public abstract class BaseScoringValuesTestResults implements Comparable<BaseSco
     }
 
     public long getTotalTime() {
-        return TimeInfo.getTotalTime(times);
+        return TimingResults.getTotalTime(times);
     }
 
     public double getAverageTime() {
-        return TimeInfo.getAverageTime(times);
+        return TimingResults.getAverageTime(times);
     }
 
     public double getTimeStdDev() {
-        return TimeInfo.getTimeStdDev(times);
+        return TimingResults.getTimeStdDev(times);
     }
 
     public void printOut(PrintStream printStream, boolean isVerbose) {
