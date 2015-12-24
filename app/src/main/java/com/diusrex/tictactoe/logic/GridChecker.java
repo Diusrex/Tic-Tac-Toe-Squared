@@ -26,11 +26,11 @@ import com.diusrex.tictactoe.data_structures.Position;
  * section within the grid
  */
 public interface GridChecker {
-    public boolean possibleToWin(Grid grid);
+    boolean possibleToWin(Grid grid);
 
-    public Player searchForOwner(Grid grid);
+    Player searchForOwner(Grid grid);
 
-    public Line searchForWinLineOrGetNull(Grid grid);
+    Line searchForWinLineOrGetNull(Grid grid);
 
-    public boolean possibleToWinGridForPlayerUsingPosition(Grid grid, Position position, Player player);
+    boolean possibleToWinGridForPlayerUsingPosition(Grid grid, Position position, Player player);
 }

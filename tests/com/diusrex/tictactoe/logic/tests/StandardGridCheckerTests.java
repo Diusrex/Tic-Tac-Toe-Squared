@@ -1,24 +1,14 @@
 package com.diusrex.tictactoe.logic.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
+import com.diusrex.tictactoe.data_structures.*;
+import com.diusrex.tictactoe.logic.GridConstants;
+import com.diusrex.tictactoe.logic.StandardGridChecker;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.diusrex.tictactoe.data_structures.BasicPosition;
-import com.diusrex.tictactoe.data_structures.BoxPosition;
-import com.diusrex.tictactoe.data_structures.Grid;
-import com.diusrex.tictactoe.data_structures.Line;
-import com.diusrex.tictactoe.data_structures.Player;
-import com.diusrex.tictactoe.data_structures.Position;
-import com.diusrex.tictactoe.logic.GridConstants;
-import com.diusrex.tictactoe.logic.StandardGridChecker;
+import static org.junit.Assert.*;
 
 public class StandardGridCheckerTests {
-    static final int SIZE = 9;
-
     static final BoxPosition horizontalIncrease = BoxPosition.make(1, 0);
     static final BoxPosition verticalIncrease = BoxPosition.make(0, 1);
 
@@ -41,20 +31,7 @@ public class StandardGridCheckerTests {
         BoxPosition startPos = BoxPosition.make(0, 0);
         BoxPosition finalPos = BoxPosition.make(2, 0);
 
-        Player currentPlayer = Player.Player_1;
-
-        for (int i = 0; i < 3; ++i, startPos = startPos.increaseBy(verticalIncrease), finalPos = finalPos
-                .increaseBy(verticalIncrease)) {
-
-            // Will not completely fill the line
-            fillLine(startPos, horizontalIncrease, currentPlayer, 2);
-            assertEquals(Player.Unowned, checker.searchForOwner(grid));
-
-            setGridPlayer(finalPos, currentPlayer);
-
-            assertEquals(currentPlayer, checker.searchForOwner(grid));
-            grid.reset();
-        }
+        testOwner(startPos, finalPos, Player.Player_1, horizontalIncrease, verticalIncrease);
     }
 
     @Test
@@ -62,12 +39,14 @@ public class StandardGridCheckerTests {
         BoxPosition startPos = BoxPosition.make(0, 0);
         BoxPosition finalPos = BoxPosition.make(0, 2);
 
-        Player currentPlayer = Player.Player_1;
+        testOwner(startPos, finalPos, Player.Player_1, verticalIncrease, horizontalIncrease);
+    }
 
-        for (int i = 0; i < 3; ++i, startPos = startPos.increaseBy(horizontalIncrease), finalPos = finalPos
-                .increaseBy(horizontalIncrease)) {
+    private void testOwner(BoxPosition startPos, BoxPosition finalPos, Player currentPlayer, BoxPosition increaseTested, BoxPosition otherIncrease) {
+        for (int i = 0; i < 3; ++i, startPos = startPos.increaseBy(otherIncrease), finalPos = finalPos.increaseBy(otherIncrease)) {
+
             // Will not completely fill the line
-            fillLine(startPos, verticalIncrease, currentPlayer, 2);
+            fillLine(startPos, increaseTested, currentPlayer, 2);
             assertEquals(Player.Unowned, checker.searchForOwner(grid));
 
             setGridPlayer(finalPos, currentPlayer);
@@ -118,22 +97,7 @@ public class StandardGridCheckerTests {
         BoxPosition startPos = BoxPosition.make(0, 0);
         BoxPosition finalPos = BoxPosition.make(2, 0);
 
-        Player currentPlayer = Player.Player_1;
-
-        for (int i = 0; i < 3; ++i, startPos = startPos.increaseBy(verticalIncrease), finalPos = finalPos
-                .increaseBy(verticalIncrease)) {
-            // Will not completely fill the line
-            fillLine(startPos, horizontalIncrease, currentPlayer, 2);
-            assertEquals(null, checker.searchForWinLineOrGetNull(grid));
-
-            setGridPlayer(finalPos, currentPlayer);
-
-            Line foundLine = checker.searchForWinLineOrGetNull(grid);
-
-            TestUtils.testLinesAreEqual(new Line(startPos, finalPos), foundLine);
-
-            grid.reset();
-        }
+        testLine(startPos, finalPos, Player.Player_1,  horizontalIncrease, verticalIncrease);
     }
 
     @Test
@@ -141,12 +105,14 @@ public class StandardGridCheckerTests {
         BoxPosition startPos = BoxPosition.make(0, 0);
         BoxPosition finalPos = BoxPosition.make(0, 2);
 
-        Player currentPlayer = Player.Player_1;
+        testLine(startPos, finalPos, Player.Player_1, verticalIncrease, horizontalIncrease);
+    }
 
-        for (int i = 0; i < 3; ++i, startPos = startPos.increaseBy(horizontalIncrease), finalPos = finalPos
-                .increaseBy(horizontalIncrease)) {
+    private void testLine(BoxPosition startPos, BoxPosition finalPos, Player currentPlayer, BoxPosition increaseTested, BoxPosition otherIncrease) {
+        for (int i = 0; i < 3; ++i, startPos = startPos.increaseBy(otherIncrease), finalPos = finalPos.increaseBy(otherIncrease)) {
+
             // Will not completely fill the line
-            fillLine(startPos, verticalIncrease, currentPlayer, 2);
+            fillLine(startPos, increaseTested, currentPlayer, 2);
             assertEquals(null, checker.searchForWinLineOrGetNull(grid));
 
             setGridPlayer(finalPos, currentPlayer);
@@ -229,7 +195,6 @@ public class StandardGridCheckerTests {
 
     private class MockGrid implements Grid {
         public Player grid[][];
-        public Player owner;
 
         public MockGrid() {
             grid = new Player[GridConstants.SIZE_OF_SECTION][GridConstants.SIZE_OF_SECTION];
@@ -252,7 +217,7 @@ public class StandardGridCheckerTests {
 
         @Override
         public Player getGridOwner() {
-            return owner;
+            return Player.Unowned;
         }
 
         @Override
