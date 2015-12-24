@@ -1,19 +1,11 @@
 package com.diusrex.tictactoe.logic.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import com.diusrex.tictactoe.data_structures.BoardStatus;
-import com.diusrex.tictactoe.data_structures.BoxPosition;
-import com.diusrex.tictactoe.data_structures.Line;
-import com.diusrex.tictactoe.data_structures.Move;
-import com.diusrex.tictactoe.data_structures.Player;
-import com.diusrex.tictactoe.data_structures.SectionPosition;
+import com.diusrex.tictactoe.data_structures.*;
 import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
 import com.diusrex.tictactoe.logic.GridLists;
 import com.diusrex.tictactoe.logic.StandardTicTacToeEngine;
+
+import static org.junit.Assert.*;
 
 public class TestUtils {
     public static class MockBoardStatus extends BoardStatus {
@@ -45,8 +37,8 @@ public class TestUtils {
             return super.getSectionToPlayIn();
         }
 
-        public void useDefaultSection() {
-            fakedSectionToPlayIn = null;
+        public void changeBoxOwner(SectionPosition sectionPos, BoxPosition pos, Player newOwner) {
+            sectionsOwnersGrid.setBoxOwner(sectionPos, pos, newOwner);
         }
     }
 
@@ -80,9 +72,9 @@ public class TestUtils {
     }
 
     // WARNING: Will not update who owns the section
-    public static void fillSection(BoardStatus board, SectionPosition toFill) {
+    public static void fillSection(MockBoardStatus board, SectionPosition toFill) {
         for (BoxPosition pos : GridLists.getAllStandardBoxPositions()) {
-            board.setBoxOwner(toFill, pos, board.getNextPlayer());
+            board.changeBoxOwner(toFill, pos, board.getNextPlayer());
         }
     }
 

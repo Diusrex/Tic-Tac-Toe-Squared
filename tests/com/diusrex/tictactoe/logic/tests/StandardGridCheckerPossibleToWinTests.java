@@ -1,28 +1,23 @@
 package com.diusrex.tictactoe.logic.tests;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
+import com.diusrex.tictactoe.data_structures.BoardStatus;
+import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.data_structures.SectionPosition;
+import com.diusrex.tictactoe.logic.StandardTicTacToeEngine;
+import com.diusrex.tictactoe.logic.TicTacToeEngine;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.diusrex.tictactoe.data_structures.BoardStatus;
-import com.diusrex.tictactoe.data_structures.Grid;
-import com.diusrex.tictactoe.data_structures.Move;
-import com.diusrex.tictactoe.data_structures.Player;
-import com.diusrex.tictactoe.data_structures.SectionGrid;
-import com.diusrex.tictactoe.data_structures.SectionPosition;
-import com.diusrex.tictactoe.logic.StandardGridChecker;
-import com.diusrex.tictactoe.logic.StandardTicTacToeEngine;
-import com.diusrex.tictactoe.logic.TicTacToeEngine;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 // For all of the tests, the board will be using the grid checker
 public class StandardGridCheckerPossibleToWinTests {
-    private BoardStatus board;
+    private BoardStatusWrapper board;
 
     @Before
     public void setup() {
-        board = new BoardStatus(new StandardTicTacToeEngine());
+        board = new BoardStatusWrapper(new StandardTicTacToeEngine());
     }
 
     @Test
@@ -119,6 +114,17 @@ public class StandardGridCheckerPossibleToWinTests {
     }
 
     private void takeOwnershipOfSection(SectionPosition section, Player player) {
-        board.setSectionOwner(section, null, player);
+        board.setSectionOwner(section, player);
+    }
+
+    private class BoardStatusWrapper extends BoardStatus {
+
+        public BoardStatusWrapper(TicTacToeEngine engine) {
+            super(engine);
+        }
+
+        public void setSectionOwner(SectionPosition section, Player player) {
+            sectionsOwnersGrid.setOwner(section, null, player);
+        }
     }
 }

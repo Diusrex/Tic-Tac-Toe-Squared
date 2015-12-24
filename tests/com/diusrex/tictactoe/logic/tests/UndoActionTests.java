@@ -1,20 +1,14 @@
 package com.diusrex.tictactoe.logic.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
+import com.diusrex.tictactoe.data_structures.*;
+import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
+import com.diusrex.tictactoe.logic.GridConstants;
+import com.diusrex.tictactoe.logic.tests.TestUtils.MockBoardStatus;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.diusrex.tictactoe.data_structures.BoxPosition;
-import com.diusrex.tictactoe.data_structures.Line;
-import com.diusrex.tictactoe.data_structures.Move;
-import com.diusrex.tictactoe.data_structures.Player;
-import com.diusrex.tictactoe.data_structures.SectionPosition;
-import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
-import com.diusrex.tictactoe.logic.GridConstants;
-import com.diusrex.tictactoe.logic.GridLists;
-import com.diusrex.tictactoe.logic.tests.TestUtils.MockBoardStatus;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class UndoActionTests {
     MockBoardStatus board;
@@ -75,7 +69,7 @@ public class UndoActionTests {
     public void testUndoMoveSupposedToPlayInFull() {
         SectionPosition fullSection = SectionPosition.make(1, 1);
         SectionPosition otherSection = SectionPosition.make(0, 0);
-        fillSection(fullSection);
+        TestUtils.fillSection(board, fullSection);
 
         BoxPosition pos = BoxPosition.make(0, 0);
         Move move = Move.make(otherSection, pos, mainPlayer);
@@ -123,12 +117,6 @@ public class UndoActionTests {
                 board.getSectionWinLine(sectionToWin));
 
         assertBoardStateUnchanged();
-    }
-
-    private void fillSection(SectionPosition fullSection) {
-        for (BoxPosition box : GridLists.getAllStandardBoxPositions()) {
-            board.setBoxOwner(fullSection, box, mainPlayer);
-        }
     }
 
     private void winSection(SectionPosition section) {

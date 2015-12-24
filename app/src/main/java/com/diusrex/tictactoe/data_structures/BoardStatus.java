@@ -28,7 +28,7 @@ public class BoardStatus {
     private SectionPosition sectionToPlayIn;
     private Player nextPlayer;
 
-    private MainGrid sectionsOwnersGrid;
+    protected MainGrid sectionsOwnersGrid;
 
     private Stack<Move> allMoves;
 
@@ -41,7 +41,7 @@ public class BoardStatus {
 
         sectionToPlayIn = DEFAULT_STARTING_SECTION_TO_PLAY_IN;
 
-        allMoves = new Stack<Move>();
+        allMoves = new Stack<>();
     }
 
     public BoardStatus(BoardStatus board) {
@@ -53,7 +53,7 @@ public class BoardStatus {
 
         sectionToPlayIn = DEFAULT_STARTING_SECTION_TO_PLAY_IN;
 
-        allMoves = new Stack<Move>();
+        allMoves = new Stack<>();
     }
 
     public boolean possibleToWin() {
@@ -71,7 +71,7 @@ public class BoardStatus {
         setBoxOwner(undoneTopMove.getSection(), undoneTopMove.getBox(), Player.Unowned);
 
         if (UndoAction.moveLostOwnership(engine, getSectionGrid(undoneTopMove.getSection()), undoneTopMove)) {
-            setSectionOwner(undoneTopMove.getSection(), null, Player.Unowned);
+            sectionsOwnersGrid.setOwner(undoneTopMove.getSection(), null, Player.Unowned);
         }
 
         sectionToPlayIn = UndoAction.getSectionToPlayIn(allMoves, undoneTopMove);
@@ -83,10 +83,6 @@ public class BoardStatus {
 
     public SectionPosition getSectionToPlayIn() {
         return sectionToPlayIn;
-    }
-
-    public void setSectionOwner(SectionPosition changedSection, Line line, Player owner) {
-        sectionsOwnersGrid.setOwner(changedSection, line, owner);
     }
 
     public Player getWinner() {
@@ -122,11 +118,11 @@ public class BoardStatus {
         return sectionsOwnersGrid.getSectionGrid(section);
     }
 
-    public void setBoxOwner(Move move) {
+    private void setBoxOwner(Move move) {
         setBoxOwner(move.getSection(), move.getBox(), move.getPlayer());
     }
 
-    public void setBoxOwner(SectionPosition sectionPos, BoxPosition pos, Player newOwner) {
+    protected void setBoxOwner(SectionPosition sectionPos, BoxPosition pos, Player newOwner) {
         sectionsOwnersGrid.setBoxOwner(sectionPos, pos, newOwner);
     }
 
