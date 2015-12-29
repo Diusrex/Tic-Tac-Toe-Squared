@@ -1,0 +1,445 @@
+At 1: wins: 114 draw: 16 loss: 68
+Type: SAlphaB
+0 42 99 33 -2 8 24 3
+Placings:
+    4th in run4 03 Results 9
+    1st in run4 03 Best Results
+    2nd in run4 Best Results
+
+At 2: wins: 111 draw: 13 loss: 74
+Type: SAlphaB
+0 31 86 22 -9 0 15 7
+Placings:
+    4th in run1 04 Results 5
+    4th in run1 04 Best Results
+    10th in run1 Best Results
+
+At 3: wins: 107 draw: 23 loss: 68
+Type: SAlphaB
+0 25 62 5 -11 2 5 8
+Placings:
+    4th in run6 27 Results 5
+    9th in run6 27 Best Results
+    j7th in run6 Best Results
+
+At 4: wins: 107 draw: 21 loss: 70
+Type: SAlphaB
+0 40 97 76 -6 7 21 10
+Placings:
+    1st in run1 07 Results 0
+    1st in run1 07 Best Results
+    2nd in run1 Best Results
+
+At 5: wins: 106 draw: 22 loss: 70
+Type: SAlphaB
+0 40 72 19 -18 2 6 10
+Placings:
+    4th in run3 20 Results 4
+    7th in run3 20 Best Results
+    2nd in run3 Best Results
+
+At 6: wins: 105 draw: 24 loss: 69
+Type: SAlphaB
+0 26 53 16 -17 1 3 8
+
+At 7: wins: 105 draw: 16 loss: 77
+Type: SAlphaB
+0 18 50 29 -3 3 8 5
+
+At 8: wins: 104 draw: 23 loss: 71
+Type: SAlphaB
+0 24 95 25 -14 1 3 15
+
+At 9: wins: 104 draw: 21 loss: 73
+Type: SAlphaB
+0 21 42 17 -14 1 3 4
+
+At 10: wins: 104 draw: 19 loss: 75
+Type: SAlphaB
+0 46 75 6 -15 6 12 3
+
+At 11: wins: 103 draw: 23 loss: 72
+Type: SAlphaB
+0 49 88 77 -17 7 20 7
+
+At 12: wins: 103 draw: 21 loss: 74
+Type: SAlphaB
+0 36 90 41 -15 4 9 16
+
+At 13: wins: 103 draw: 20 loss: 75
+Type: SAlphaB
+0 39 62 70 -20 1 3 10
+
+At 14: wins: 102 draw: 21 loss: 75
+Type: SAlphaB
+0 55 80 9 -7 9 27 14
+
+At 15: wins: 100 draw: 23 loss: 75
+Type: SAlphaB
+0 36 47 34 -8 3 9 8
+
+At 16: wins: 99 draw: 21 loss: 78
+Type: SAlphaB
+0 84 97 62 -15 15 30 22
+
+At 17: wins: 98 draw: 20 loss: 80
+Type: SAlphaB
+0 19 64 25 -10 0 6 7
+
+At 18: wins: 97 draw: 33 loss: 68
+Type: SAlphaB
+0 31 87 93 -15 3 9 1
+
+At 19: wins: 97 draw: 32 loss: 69
+Type: SAlphaB
+0 24 50 4 -1 4 10 9
+
+At 20: wins: 95 draw: 31 loss: 72
+Type: SAlphaB
+0 35 73 36 -17 4 12 18
+
+At 21: wins: 95 draw: 21 loss: 82
+Type: SAlphaB
+0 38 83 58 -19 1 2 15
+
+At 22: wins: 95 draw: 21 loss: 82
+Type: SAlphaB
+0 32 70 88 -16 3 9 8
+
+At 23: wins: 94 draw: 33 loss: 71
+Type: SAlphaB
+0 34 79 52 -4 6 18 0
+
+At 24: wins: 94 draw: 28 loss: 76
+Type: SAlphaB
+0 34 88 22 -16 5 17 23
+
+At 25: wins: 94 draw: 28 loss: 76
+Type: SAlphaB
+0 56 76 65 -9 8 24 6
+
+At 26: wins: 94 draw: 19 loss: 85
+Type: SAlphaB
+0 39 51 50 -19 2 6 8
+
+At 27: wins: 94 draw: 18 loss: 86
+Type: SAlphaB
+0 34 85 55 -11 1 17 21
+
+At 28: wins: 93 draw: 30 loss: 75
+Type: SAlphaB
+0 44 77 11 -16 3 9 26
+
+At 29: wins: 93 draw: 29 loss: 76
+Type: SAlphaB
+0 53 95 59 -15 5 15 33
+
+At 30: wins: 92 draw: 37 loss: 69
+Type: SAlphaB
+0 18 55 33 -12 1 3 8
+
+At 31: wins: 92 draw: 33 loss: 73
+Type: SAlphaB
+0 12 46 37 -2 2 5 4
+
+At 32: wins: 91 draw: 24 loss: 83
+Type: SAlphaB
+0 78 96 16 -5 10 30 23
+
+At 33: wins: 91 draw: 24 loss: 83
+Type: SAlphaB
+0 48 98 21 -2 5 12 4
+
+At 34: wins: 91 draw: 20 loss: 87
+Type: SAlphaB
+0 52 95 61 -18 6 20 33
+
+At 35: wins: 90 draw: 33 loss: 75
+Type: SAlphaB
+0 28 89 37 -2 5 15 10
+
+At 36: wins: 90 draw: 29 loss: 79
+Type: SAlphaB
+0 24 57 0 -14 1 3 5
+
+At 37: wins: 90 draw: 28 loss: 80
+Type: SAlphaB
+0 24 61 68 -17 1 3 5
+
+At 38: wins: 90 draw: 19 loss: 89
+Type: SAlphaB
+0 52 93 20 -2 0 33 20
+
+At 39: wins: 90 draw: 18 loss: 90
+Type: SAlphaB
+0 44 81 35 -8 6 18 1
+
+At 40: wins: 89 draw: 32 loss: 77
+Type: SAlphaB
+0 19 29 15 -2 3 9 6
+
+At 41: wins: 89 draw: 29 loss: 80
+Type: SAlphaB
+0 46 82 66 -4 3 9 2
+
+At 42: wins: 89 draw: 24 loss: 85
+Type: SAlphaB
+0 60 98 24 -3 19 40 40
+
+At 43: wins: 89 draw: 14 loss: 95
+Type: SAlphaB
+0 28 79 11 -4 5 16 6
+
+At 44: wins: 88 draw: 25 loss: 85
+Type: SAlphaB
+0 22 99 28 -7 1 13 4
+
+At 45: wins: 88 draw: 21 loss: 89
+Type: SAlphaB
+0 38 57 62 -18 2 6 4
+
+At 46: wins: 88 draw: 20 loss: 90
+Type: SAlphaB
+0 40 89 69 -14 6 16 6
+
+At 47: wins: 88 draw: 17 loss: 93
+Type: SAlphaB
+0 25 60 18 -10 3 6 2
+
+At 48: wins: 87 draw: 31 loss: 80
+Type: SAlphaB
+0 38 65 95 -2 7 23 1
+
+At 49: wins: 87 draw: 27 loss: 84
+Type: SAlphaB
+0 23 97 4 -14 2 18 11
+
+At 50: wins: 87 draw: 23 loss: 88
+Type: SAlphaB
+0 32 61 22 -9 1 3 6
+
+At 51: wins: 87 draw: 22 loss: 89
+Type: SAlphaB
+0 68 96 27 -6 7 21 22
+
+At 52: wins: 87 draw: 22 loss: 89
+Type: SAlphaB
+0 57 82 24 -13 5 15 9
+
+At 53: wins: 87 draw: 21 loss: 90
+Type: SAlphaB
+0 40 71 6 -17 6 19 28
+
+At 54: wins: 87 draw: 16 loss: 95
+Type: SAlphaB
+0 27 51 18 -12 3 11 1
+
+At 55: wins: 86 draw: 29 loss: 83
+Type: SAlphaB
+0 49 54 25 -14 3 9 11
+
+At 56: wins: 86 draw: 26 loss: 86
+Type: SAlphaB
+0 30 99 48 -16 1 3 8
+
+At 57: wins: 86 draw: 17 loss: 95
+Type: SAlphaB
+0 25 76 55 -11 2 6 3
+
+At 58: wins: 85 draw: 26 loss: 87
+Type: SAlphaB
+0 30 89 31 -2 3 14 3
+
+At 59: wins: 85 draw: 11 loss: 102
+Type: SAlphaB
+0 43 98 88 -2 9 31 8
+
+At 60: wins: 84 draw: 29 loss: 85
+Type: SAlphaB
+0 42 96 41 -16 3 9 12
+
+At 61: wins: 84 draw: 28 loss: 86
+Type: SAlphaB
+0 30 93 23 -9 6 16 27
+
+At 62: wins: 84 draw: 26 loss: 88
+Type: SAlphaB
+0 53 62 57 -7 10 23 8
+
+At 63: wins: 84 draw: 21 loss: 93
+Type: SAlphaB
+0 24 91 16 -5 1 15 2
+
+At 64: wins: 84 draw: 13 loss: 101
+Type: SAlphaB
+0 26 95 75 -8 1 7 8
+
+At 65: wins: 83 draw: 25 loss: 90
+Type: SAlphaB
+0 28 74 75 -6 2 16 18
+
+At 66: wins: 83 draw: 24 loss: 91
+Type: SAlphaB
+0 68 98 95 -13 13 35 5
+
+At 67: wins: 83 draw: 16 loss: 99
+Type: SAlphaB
+0 32 94 5 -6 6 21 14
+
+At 68: wins: 83 draw: 16 loss: 99
+Type: SAlphaB
+0 80 83 60 -5 7 21 11
+
+At 69: wins: 82 draw: 28 loss: 88
+Type: SAlphaB
+0 8 60 55 -6 4 9 2
+
+At 70: wins: 82 draw: 18 loss: 98
+Type: SAlphaB
+0 42 83 21 -9 0 11 25
+
+At 71: wins: 81 draw: 33 loss: 84
+Type: SAlphaB
+0 14 62 54 -5 2 7 4
+
+At 72: wins: 81 draw: 32 loss: 85
+Type: SAlphaB
+0 32 72 87 -11 0 7 11
+
+At 73: wins: 81 draw: 27 loss: 90
+Type: SAlphaB
+0 33 43 82 -7 5 15 6
+
+At 74: wins: 81 draw: 25 loss: 92
+Type: SAlphaB
+0 45 95 72 -1 7 24 10
+
+At 75: wins: 80 draw: 19 loss: 99
+Type: SAlphaB
+0 39 77 51 -2 10 20 2
+
+At 76: wins: 80 draw: 16 loss: 102
+Type: SAlphaB
+0 18 87 94 -11 2 10 18
+
+At 77: wins: 79 draw: 36 loss: 83
+Type: SAlphaB
+0 23 81 23 -6 3 7 8
+
+At 78: wins: 79 draw: 28 loss: 91
+Type: SAlphaB
+0 64 88 40 -18 8 24 16
+
+At 79: wins: 79 draw: 17 loss: 102
+Type: SAlphaB
+0 22 40 66 -14 2 5 17
+
+At 80: wins: 79 draw: 8 loss: 111
+Type: SAlphaB
+0 32 71 36 -1 2 14 11
+
+At 81: wins: 78 draw: 14 loss: 106
+Type: SAlphaB
+0 24 82 24 -7 0 2 11
+
+At 82: wins: 77 draw: 30 loss: 91
+Type: SAlphaB
+0 47 88 90 -6 9 28 22
+
+At 83: wins: 77 draw: 24 loss: 97
+Type: SAlphaB
+0 49 74 80 -19 8 29 22
+
+At 84: wins: 77 draw: 18 loss: 103
+Type: SAlphaB
+0 38 84 64 -11 2 6 3
+
+At 85: wins: 76 draw: 39 loss: 83
+Type: SAlphaB
+0 17 98 10 -7 1 10 7
+
+At 86: wins: 76 draw: 23 loss: 99
+Type: SAlphaB
+0 37 96 84 -1 1 13 1
+
+At 87: wins: 76 draw: 21 loss: 101
+Type: SAlphaB
+0 37 71 87 -11 2 6 3
+
+At 88: wins: 76 draw: 15 loss: 107
+Type: SAlphaB
+0 46 66 91 -4 7 24 14
+
+At 89: wins: 75 draw: 21 loss: 102
+Type: SAlphaB
+0 27 84 33 -5 1 14 8
+
+At 90: wins: 74 draw: 23 loss: 101
+Type: SAlphaB
+0 41 68 99 -16 0 5 15
+
+At 91: wins: 73 draw: 29 loss: 96
+Type: SAlphaB
+0 18 96 67 -12 1 6 8
+
+At 92: wins: 73 draw: 20 loss: 105
+Type: SAlphaB
+0 29 99 69 -4 4 17 0
+
+At 93: wins: 72 draw: 26 loss: 100
+Type: SAlphaB
+0 21 98 25 -7 1 6 0
+
+At 94: wins: 71 draw: 30 loss: 97
+Type: SAlphaB
+0 40 80 32 -1 5 21 5
+
+At 95: wins: 71 draw: 21 loss: 106
+Type: SAlphaB
+0 59 95 55 -15 10 34 13
+
+At 96: wins: 71 draw: 13 loss: 114
+Type: SAlphaB
+0 60 91 60 -14 2 20 27
+
+At 97: wins: 69 draw: 32 loss: 97
+Type: SAlphaB
+0 42 91 39 -9 7 23 15
+
+At 98: wins: 66 draw: 30 loss: 102
+Type: SAlphaB
+0 29 83 46 -2 2 19 21
+
+At 99: wins: 62 draw: 26 loss: 110
+Type: SAlphaB
+0 65 93 47 -12 11 38 18
+
+At 100: wins: 62 draw: 12 loss: 124
+Type: SAlphaB
+0 70 82 68 -10 3 25 34
+
+
+SAlphaB: 701.0, std-dev 205.50831264368983
+
+Earliest win: 33
+Latest win: 81
+
+WinDepth:
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 8 0 9 5 6 4 13 45 33 22 31 37 60 49 78 90 151 142 219 201 301 158 331 281 338 299 389 354 468 338 485 364 452 409 439 364 298 369 301 223 185 126 109 81 64 
+SAlphaB:
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 8 0 9 5 6 4 13 45 33 22 31 37 60 49 78 90 151 142 219 201 301 158 331 281 338 299 389 354 468 338 485 364 452 409 439 364 298 369 301 223 185 126 109 81 64 
+
+LossDepth:
+SAlphaB:
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 8 0 9 5 6 4 13 45 33 22 31 37 60 49 78 90 151 142 219 201 301 158 331 281 338 299 389 354 468 338 485 364 452 409 439 364 298 369 301 223 185 126 109 81 64 
+
+FirstWin: 4769
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 8 0 9 0 6 0 13 0 33 0 31 0 60 0 78 0 151 0 219 0 301 0 331 0 338 0 389 0 468 0 485 0 452 0 439 0 298 0 301 0 185 0 109 0 64 
+SAlphaB:
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 8 0 9 0 6 0 13 0 33 0 31 0 60 0 78 0 151 0 219 0 301 0 331 0 338 0 389 0 468 0 485 0 452 0 439 0 298 0 301 0 185 0 109 0 64 
+
+
+SecondWin: 3961
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 5 0 4 0 45 0 22 0 37 0 49 0 90 0 142 0 201 0 158 0 281 0 299 0 354 0 338 0 364 0 409 0 364 0 369 0 223 0 126 0 81 0 
+SAlphaB:
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 5 0 4 0 45 0 22 0 37 0 49 0 90 0 142 0 201 0 158 0 281 0 299 0 354 0 338 0 364 0 409 0 364 0 369 0 223 0 126 0 81 0 

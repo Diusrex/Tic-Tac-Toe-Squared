@@ -1,0 +1,19 @@
+This tournament was meant to determine the best scoring function for the Scaling Alpha Beta Player, using Static Scoring function. Tried randomly selecting possibly scores for each state, and then ran a tournament with these 'AI'.
+
+Used the tournament manager with 100 AI per tournament.
+    Every AI plays every other AI twice for a total of 9900 games
+    Some additional information was recorded as well.
+    
+
+The structure was:
+    Top 100 AI configurations are in the Best_Results in the base directory of this. (x1)
+    
+        These top 100 were selected from the top 10 for each of the 10 runs. (x10)
+    
+            For each of these runs, they had 10 sub-runs and used the top 10 from each sub-run
+            
+    In total, 1111 100-AI tournaments were run, for a total of 109989 games
+   
+Since I had access to a University of Alberta computer lab for my job during the summer I was working on this (2015), I was able to run this tournament on those machines.
+    Using 4 threads, it would take ~1 hours per 100 AI tournament for the machines in the lab.
+    So it would have taken ~46 days of computing power on one computer to run this tournament.

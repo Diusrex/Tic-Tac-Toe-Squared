@@ -1,0 +1,1403 @@
+UAlphaB: 2387.0, std-dev 669.4790138607782
+SAlphaB: 2814.0, std-dev 453.805817503478
+
+At 1 wins: 240 draw: 34 loss: 124
+Type: SAlphaB
+Took 2617.0ms, with std dev: 1093.1865711748314
+MainScoring: 0 34 86 55
+SectionScoring: -18 3 8 12
+
+
+At 2 wins: 240 draw: 34 loss: 124
+Type: SAlphaB
+Took 2921.0ms, with std dev: 1104.8381063332447
+MainScoring: 0 53 93 53
+SectionScoring: -10 10 29 13
+
+
+At 3 wins: 239 draw: 53 loss: 106
+Type: SAlphaB
+Took 3526.0ms, with std dev: 916.2579580711117
+MainScoring: 0 34 76 61
+SectionScoring: -10 3 16 15
+
+
+At 4 wins: 239 draw: 44 loss: 115
+Type: SAlphaB
+Took 2665.0ms, with std dev: 818.9958875471203
+MainScoring: 0 36 82 37
+SectionScoring: -18 0 2 33
+
+
+At 5 wins: 238 draw: 51 loss: 109
+Type: SAlphaB
+Took 2509.0ms, with std dev: 834.6543848869754
+MainScoring: 0 22 91 21
+SectionScoring: -17 0 6 3
+
+
+At 6 wins: 235 draw: 64 loss: 99
+Type: SAlphaB
+Took 3188.0ms, with std dev: 836.6194943891517
+MainScoring: 0 36 96 39
+SectionScoring: -16 2 18 34
+
+
+At 7 wins: 235 draw: 60 loss: 103
+Type: SAlphaB
+Took 3287.0ms, with std dev: 1018.3829395457236
+MainScoring: 0 47 73 12
+SectionScoring: -4 3 13 9
+
+
+At 8 wins: 234 draw: 54 loss: 110
+Type: SAlphaB
+Took 3446.0ms, with std dev: 825.3483656148569
+MainScoring: 0 26 71 67
+SectionScoring: -5 2 14 9
+
+
+At 9 wins: 231 draw: 66 loss: 101
+Type: SAlphaB
+Took 3428.0ms, with std dev: 858.4198437482113
+MainScoring: 0 31 90 21
+SectionScoring: -16 1 7 25
+
+
+At 10 wins: 231 draw: 64 loss: 103
+Type: SAlphaB
+Took 1494.0ms, with std dev: 915.332569926275
+MainScoring: 0 33 84 97
+SectionScoring: -14 7 10 10
+
+
+At 11 wins: 230 draw: 63 loss: 105
+Type: SAlphaB
+Took 3636.0ms, with std dev: 837.764526588498
+MainScoring: 0 42 90 55
+SectionScoring: -11 2 13 28
+
+
+At 12 wins: 229 draw: 66 loss: 103
+Type: SAlphaB
+Took 2255.0ms, with std dev: 1053.56082146339
+MainScoring: 0 33 66 88
+SectionScoring: -9 21 23 15
+
+
+At 13 wins: 228 draw: 65 loss: 105
+Type: SAlphaB
+Took 3163.0ms, with std dev: 966.7567159004863
+MainScoring: 0 53 92 13
+SectionScoring: -12 6 25 16
+
+
+At 14 wins: 227 draw: 43 loss: 128
+Type: SAlphaB
+Took 2916.0ms, with std dev: 880.4128314426388
+MainScoring: 0 27 69 22
+SectionScoring: -14 2 8 14
+
+
+At 15 wins: 225 draw: 60 loss: 113
+Type: SAlphaB
+Took 3366.0ms, with std dev: 848.7797034122713
+MainScoring: 0 45 97 60
+SectionScoring: -16 1 20 27
+
+
+At 16 wins: 224 draw: 61 loss: 113
+Type: SAlphaB
+Took 3327.0ms, with std dev: 846.2091553944373
+MainScoring: 0 55 73 85
+SectionScoring: -18 2 19 35
+
+
+At 17 wins: 224 draw: 52 loss: 122
+Type: SAlphaB
+Took 2831.0ms, with std dev: 889.5820259563042
+MainScoring: 0 30 91 87
+SectionScoring: -10 0 5 15
+
+
+At 18 wins: 224 draw: 50 loss: 124
+Type: SAlphaB
+Took 2851.0ms, with std dev: 910.0467890671652
+MainScoring: 0 40 93 32
+SectionScoring: -15 0 3 18
+
+
+At 19 wins: 224 draw: 46 loss: 128
+Type: SAlphaB
+Took 2492.0ms, with std dev: 824.6817659408852
+MainScoring: 0 55 83 59
+SectionScoring: -11 8 24 0
+
+
+At 20 wins: 223 draw: 69 loss: 106
+Type: SAlphaB
+Took 3285.0ms, with std dev: 804.4961280829775
+MainScoring: 0 71 78 98
+SectionScoring: -20 3 28 31
+
+
+At 21 wins: 223 draw: 51 loss: 124
+Type: SAlphaB
+Took 2799.0ms, with std dev: 921.104420937907
+MainScoring: 0 59 80 63
+SectionScoring: -15 5 15 27
+
+
+At 22 wins: 223 draw: 46 loss: 129
+Type: SAlphaB
+Took 2906.0ms, with std dev: 963.5687136002008
+MainScoring: 0 44 85 45
+SectionScoring: -11 0 17 9
+
+
+At 23 wins: 222 draw: 48 loss: 128
+Type: SAlphaB
+Took 2424.0ms, with std dev: 949.0273346482428
+MainScoring: 0 47 83 25
+SectionScoring: -3 11 19 7
+
+
+At 24 wins: 222 draw: 46 loss: 130
+Type: SAlphaB
+Took 3856.0ms, with std dev: 1105.3229694682775
+MainScoring: 0 53 91 98
+SectionScoring: -10 2 21 4
+
+
+At 25 wins: 221 draw: 60 loss: 117
+Type: SAlphaB
+Took 2538.0ms, with std dev: 779.2572113927068
+MainScoring: 0 12 30 2
+SectionScoring: -2 0 5 0
+
+
+At 26 wins: 221 draw: 58 loss: 119
+Type: SAlphaB
+Took 2844.0ms, with std dev: 893.9459065959181
+MainScoring: 0 45 81 67
+SectionScoring: -20 0 1 19
+
+
+At 27 wins: 220 draw: 59 loss: 119
+Type: SAlphaB
+Took 3486.0ms, with std dev: 859.6204622948316
+MainScoring: 0 40 85 72
+SectionScoring: -12 1 18 16
+
+
+At 28 wins: 220 draw: 49 loss: 129
+Type: SAlphaB
+Took 3030.0ms, with std dev: 973.4430359405246
+MainScoring: 0 39 76 6
+SectionScoring: -7 0 16 20
+
+
+At 29 wins: 218 draw: 67 loss: 113
+Type: SAlphaB
+Took 3203.0ms, with std dev: 1044.8228793657952
+MainScoring: 0 24 88 28
+SectionScoring: -10 2 9 17
+
+
+At 30 wins: 217 draw: 68 loss: 113
+Type: SAlphaB
+Took 3541.0ms, with std dev: 1239.5850760653825
+MainScoring: 0 37 95 6
+SectionScoring: -8 1 5 4
+
+
+At 31 wins: 217 draw: 56 loss: 125
+Type: SAlphaB
+Took 3414.0ms, with std dev: 808.3488848251045
+MainScoring: 0 35 98 65
+SectionScoring: -5 2 28 7
+
+
+At 32 wins: 217 draw: 55 loss: 126
+Type: SAlphaB
+Took 3690.0ms, with std dev: 934.696387434667
+MainScoring: 0 53 84 99
+SectionScoring: -3 2 19 14
+
+
+At 33 wins: 216 draw: 56 loss: 126
+Type: SAlphaB
+Took 3596.0ms, with std dev: 959.6331232068737
+MainScoring: 0 73 98 68
+SectionScoring: -3 6 37 9
+
+
+At 34 wins: 216 draw: 43 loss: 139
+Type: SAlphaB
+Took 2974.0ms, with std dev: 983.4441120918058
+MainScoring: 0 52 98 74
+SectionScoring: -14 0 11 18
+
+
+At 35 wins: 216 draw: 40 loss: 142
+Type: SAlphaB
+Took 3023.0ms, with std dev: 1147.0688677830926
+MainScoring: 0 29 61 74
+SectionScoring: -5 3 11 8
+
+
+At 36 wins: 215 draw: 43 loss: 140
+Type: SAlphaB
+Took 2851.0ms, with std dev: 861.1164688149458
+MainScoring: 0 33 71 65
+SectionScoring: -7 0 10 17
+
+
+At 37 wins: 214 draw: 43 loss: 141
+Type: SAlphaB
+Took 2117.0ms, with std dev: 665.6299468403246
+MainScoring: 0 10 33 26
+SectionScoring: -9 0 1 9
+
+
+At 38 wins: 212 draw: 56 loss: 130
+Type: SAlphaB
+Took 2072.0ms, with std dev: 929.5362341257945
+MainScoring: 0 47 89 99
+SectionScoring: -11 12 14 10
+
+
+At 39 wins: 212 draw: 47 loss: 139
+Type: SAlphaB
+Took 2734.0ms, with std dev: 818.1588289242704
+MainScoring: 0 27 94 56
+SectionScoring: -14 0 11 4
+
+
+At 40 wins: 211 draw: 56 loss: 131
+Type: SAlphaB
+Took 2507.0ms, with std dev: 822.5555746372607
+MainScoring: 0 42 83 81
+SectionScoring: -17 0 3 21
+
+
+At 41 wins: 211 draw: 49 loss: 138
+Type: SAlphaB
+Took 3221.0ms, with std dev: 1203.359392132361
+MainScoring: 0 75 92 81
+SectionScoring: -3 0 2 5
+
+
+At 42 wins: 210 draw: 63 loss: 125
+Type: SAlphaB
+Took 2992.0ms, with std dev: 911.195938143077
+MainScoring: 0 51 71 1
+SectionScoring: -19 3 15 26
+
+
+At 43 wins: 210 draw: 44 loss: 144
+Type: SAlphaB
+Took 2764.0ms, with std dev: 960.3132994839908
+MainScoring: 0 40 62 71
+SectionScoring: -19 0 4 18
+
+
+At 44 wins: 210 draw: 36 loss: 152
+Type: SAlphaB
+Took 2586.0ms, with std dev: 858.4459884438722
+MainScoring: 0 34 91 56
+SectionScoring: -20 0 3 0
+
+
+At 45 wins: 209 draw: 71 loss: 118
+Type: SAlphaB
+Took 2466.0ms, with std dev: 1136.485046670889
+MainScoring: 0 25 99 45
+SectionScoring: -16 1 6 22
+
+
+At 46 wins: 209 draw: 59 loss: 130
+Type: SAlphaB
+Took 3406.0ms, with std dev: 848.2076758120812
+MainScoring: 0 33 95 87
+SectionScoring: -13 1 9 31
+
+
+At 47 wins: 209 draw: 48 loss: 141
+Type: SAlphaB
+Took 2956.0ms, with std dev: 1091.6779935990937
+MainScoring: 0 33 53 32
+SectionScoring: -17 2 7 4
+
+
+At 48 wins: 209 draw: 48 loss: 141
+Type: SAlphaB
+Took 2541.0ms, with std dev: 930.0989910573117
+MainScoring: 0 41 65 98
+SectionScoring: -6 7 15 20
+
+
+At 49 wins: 207 draw: 47 loss: 144
+Type: SAlphaB
+Took 3003.0ms, with std dev: 1001.2824289442829
+MainScoring: 0 43 93 78
+SectionScoring: -3 0 5 6
+
+
+At 50 wins: 207 draw: 43 loss: 148
+Type: SAlphaB
+Took 3104.0ms, with std dev: 1024.6664023870912
+MainScoring: 0 31 97 87
+SectionScoring: -18 3 14 16
+
+
+At 51 wins: 206 draw: 85 loss: 107
+Type: SAlphaB
+Took 3332.0ms, with std dev: 863.4698712711202
+MainScoring: 0 27 94 14
+SectionScoring: -1 3 17 30
+
+
+At 52 wins: 206 draw: 54 loss: 138
+Type: SAlphaB
+Took 3229.0ms, with std dev: 1000.8571678075542
+MainScoring: 0 68 80 56
+SectionScoring: -17 1 10 8
+
+
+At 53 wins: 205 draw: 68 loss: 125
+Type: SAlphaB
+Took 2881.0ms, with std dev: 920.6221637250043
+MainScoring: 0 24 96 9
+SectionScoring: -8 0 1 12
+
+
+At 54 wins: 204 draw: 45 loss: 149
+Type: SAlphaB
+Took 2861.0ms, with std dev: 880.1800010059615
+MainScoring: 0 27 49 36
+SectionScoring: -7 0 4 15
+
+
+At 55 wins: 204 draw: 43 loss: 151
+Type: SAlphaB
+Took 2966.0ms, with std dev: 1010.1597938174069
+MainScoring: 0 45 59 73
+SectionScoring: -12 0 7 21
+
+
+At 56 wins: 201 draw: 43 loss: 154
+Type: SAlphaB
+Took 3490.0ms, with std dev: 898.9353040706114
+MainScoring: 0 51 66 56
+SectionScoring: -10 1 7 7
+
+
+At 57 wins: 200 draw: 50 loss: 148
+Type: SAlphaB
+Took 2649.0ms, with std dev: 910.5513446567861
+MainScoring: 0 24 64 9
+SectionScoring: -18 0 1 3
+
+
+At 58 wins: 199 draw: 55 loss: 144
+Type: SAlphaB
+Took 3189.0ms, with std dev: 1115.233318311176
+MainScoring: 0 53 88 11
+SectionScoring: -4 0 2 12
+
+
+At 59 wins: 199 draw: 51 loss: 148
+Type: SAlphaB
+Took 3446.0ms, with std dev: 868.9802086440608
+MainScoring: 0 37 92 94
+SectionScoring: -1 2 12 24
+
+
+At 60 wins: 198 draw: 51 loss: 149
+Type: SAlphaB
+Took 3251.0ms, with std dev: 935.1134588404354
+MainScoring: 0 69 73 70
+SectionScoring: -16 5 23 19
+
+
+At 61 wins: 197 draw: 61 loss: 140
+Type: SAlphaB
+Took 3575.0ms, with std dev: 884.4780819143766
+MainScoring: 0 82 90 25
+SectionScoring: -17 4 31 32
+
+
+At 62 wins: 195 draw: 68 loss: 135
+Type: SAlphaB
+Took 2326.0ms, with std dev: 1105.7738644026545
+MainScoring: 0 42 96 67
+SectionScoring: -3 20 21 13
+
+
+At 63 wins: 194 draw: 80 loss: 124
+Type: SAlphaB
+Took 2860.0ms, with std dev: 997.5933112109685
+MainScoring: 0 56 94 64
+SectionScoring: -13 5 14 21
+
+
+At 64 wins: 194 draw: 53 loss: 151
+Type: SAlphaB
+Took 2933.0ms, with std dev: 1038.943155036398
+MainScoring: 0 16 76 59
+SectionScoring: -2 0 5 9
+
+
+At 65 wins: 194 draw: 43 loss: 161
+Type: UAlphaB 6
+Took 3495.0ms, with std dev: 1061.7802971884003
+MainScoring: 0 42 90 55
+SectionScoring: -11 2 13 28
+
+
+At 66 wins: 193 draw: 41 loss: 164
+Type: SAlphaB
+Took 3555.0ms, with std dev: 938.2929731792666
+MainScoring: 0 47 64 10
+SectionScoring: -11 1 26 21
+
+
+At 67 wins: 193 draw: 37 loss: 168
+Type: SAlphaB
+Took 2027.0ms, with std dev: 734.1118176436204
+MainScoring: 0 29 84 75
+SectionScoring: -18 0 6 0
+
+
+At 68 wins: 192 draw: 57 loss: 149
+Type: SAlphaB
+Took 2624.0ms, with std dev: 723.3015245921904
+MainScoring: 0 30 80 23
+SectionScoring: -16 0 6 17
+
+
+At 69 wins: 192 draw: 52 loss: 154
+Type: SAlphaB
+Took 2627.0ms, with std dev: 1155.1927486061193
+MainScoring: 0 39 68 62
+SectionScoring: -3 10 16 33
+
+
+At 70 wins: 192 draw: 49 loss: 157
+Type: SAlphaB
+Took 2499.0ms, with std dev: 1131.5655007166224
+MainScoring: 0 24 53 57
+SectionScoring: -17 11 13 6
+
+
+At 71 wins: 191 draw: 59 loss: 148
+Type: SAlphaB
+Took 2765.0ms, with std dev: 897.5982428278468
+MainScoring: 0 4 99 79
+SectionScoring: -1 4 14 1
+
+
+At 72 wins: 191 draw: 42 loss: 165
+Type: UAlphaB 6
+Took 2437.0ms, with std dev: 802.8045078905868
+MainScoring: 0 30 91 87
+SectionScoring: -10 0 5 15
+
+
+At 73 wins: 189 draw: 72 loss: 137
+Type: SAlphaB
+Took 3003.0ms, with std dev: 986.5372579413981
+MainScoring: 0 36 47 55
+SectionScoring: -4 4 16 13
+
+
+At 74 wins: 188 draw: 55 loss: 155
+Type: UAlphaB 6
+Took 1877.0ms, with std dev: 619.5736498090347
+MainScoring: 0 47 83 25
+SectionScoring: -3 11 19 7
+
+
+At 75 wins: 187 draw: 64 loss: 147
+Type: SAlphaB
+Took 2199.0ms, with std dev: 976.4702276708892
+MainScoring: 0 1 33 92
+SectionScoring: -3 27 30 12
+
+
+At 76 wins: 185 draw: 61 loss: 152
+Type: SAlphaB
+Took 2939.0ms, with std dev: 950.4923188754374
+MainScoring: 0 57 81 35
+SectionScoring: -18 0 1 40
+
+
+At 77 wins: 184 draw: 69 loss: 145
+Type: SAlphaB
+Took 2257.0ms, with std dev: 1075.0060722044234
+MainScoring: 0 51 87 90
+SectionScoring: -2 26 32 14
+
+
+At 78 wins: 183 draw: 62 loss: 153
+Type: UAlphaB 6
+Took 2050.0ms, with std dev: 592.2247362200897
+MainScoring: 0 34 86 55
+SectionScoring: -18 3 8 12
+
+
+At 79 wins: 182 draw: 62 loss: 154
+Type: SAlphaB
+Took 1979.0ms, with std dev: 963.431533164385
+MainScoring: 0 30 66 17
+SectionScoring: -12 4 7 0
+
+
+At 80 wins: 181 draw: 46 loss: 171
+Type: UAlphaB 6
+Took 2238.0ms, with std dev: 579.5475145387479
+MainScoring: 0 53 93 53
+SectionScoring: -10 10 29 13
+
+
+At 81 wins: 179 draw: 64 loss: 155
+Type: SAlphaB
+Took 2577.0ms, with std dev: 692.107948271295
+MainScoring: 0 20 95 79
+SectionScoring: -6 0 11 28
+
+
+At 82 wins: 179 draw: 38 loss: 181
+Type: SAlphaB
+Took 2507.0ms, with std dev: 1230.5269482428082
+MainScoring: 0 50 57 9
+SectionScoring: -10 14 41 17
+
+
+At 83 wins: 177 draw: 57 loss: 164
+Type: UAlphaB 6
+Took 3395.0ms, with std dev: 1028.7002227282767
+MainScoring: 0 51 66 56
+SectionScoring: -10 1 7 7
+
+
+At 84 wins: 176 draw: 61 loss: 161
+Type: SAlphaB
+Took 2802.0ms, with std dev: 947.7139911625375
+MainScoring: 0 66 88 61
+SectionScoring: -8 0 8 24
+
+
+At 85 wins: 175 draw: 64 loss: 159
+Type: UAlphaB 6
+Took 2226.0ms, with std dev: 780.6976891918841
+MainScoring: 0 44 85 45
+SectionScoring: -11 0 17 9
+
+
+At 86 wins: 175 draw: 50 loss: 173
+Type: UAlphaB 6
+Took 3433.0ms, with std dev: 1077.8347536990107
+MainScoring: 0 35 98 65
+SectionScoring: -5 2 28 7
+
+
+At 87 wins: 173 draw: 52 loss: 173
+Type: SAlphaB
+Took 2487.0ms, with std dev: 961.2262569683722
+MainScoring: 0 18 87 99
+SectionScoring: -20 44 45 36
+
+
+At 88 wins: 173 draw: 45 loss: 180
+Type: UAlphaB 6
+Took 3467.0ms, with std dev: 1079.3249251128454
+MainScoring: 0 55 73 85
+SectionScoring: -18 2 19 35
+
+
+At 89 wins: 171 draw: 43 loss: 184
+Type: UAlphaB 6
+Took 3157.0ms, with std dev: 1131.6216284828827
+MainScoring: 0 31 97 87
+SectionScoring: -18 3 14 16
+
+
+At 90 wins: 170 draw: 78 loss: 150
+Type: UAlphaB 6
+Took 2923.0ms, with std dev: 1040.2647976578999
+MainScoring: 0 37 95 6
+SectionScoring: -8 1 5 4
+
+
+At 91 wins: 170 draw: 62 loss: 166
+Type: UAlphaB 6
+Took 2481.0ms, with std dev: 837.5783770420785
+MainScoring: 0 24 96 9
+SectionScoring: -8 0 1 12
+
+
+At 92 wins: 169 draw: 69 loss: 160
+Type: SAlphaB
+Took 2519.0ms, with std dev: 959.7660087007074
+MainScoring: 0 13 36 36
+SectionScoring: -10 26 27 17
+
+
+At 93 wins: 169 draw: 66 loss: 163
+Type: UAlphaB 6
+Took 3457.0ms, with std dev: 1080.459019800074
+MainScoring: 0 34 76 61
+SectionScoring: -10 3 16 15
+
+
+At 94 wins: 168 draw: 60 loss: 170
+Type: SAlphaB
+Took 2493.0ms, with std dev: 955.6466712658541
+MainScoring: 0 26 35 69
+SectionScoring: -8 37 42 22
+
+
+At 95 wins: 168 draw: 51 loss: 179
+Type: UAlphaB 6
+Took 1924.0ms, with std dev: 553.679076813006
+MainScoring: 0 10 33 26
+SectionScoring: -9 0 1 9
+
+
+At 96 wins: 167 draw: 77 loss: 154
+Type: SAlphaB
+Took 2208.0ms, with std dev: 1055.9885803878506
+MainScoring: 0 55 69 84
+SectionScoring: -8 17 41 11
+
+
+At 97 wins: 167 draw: 73 loss: 158
+Type: SAlphaB
+Took 2582.0ms, with std dev: 933.4679383673545
+MainScoring: 0 9 51 32
+SectionScoring: -15 42 44 27
+
+
+At 98 wins: 167 draw: 69 loss: 162
+Type: SAlphaB
+Took 2434.0ms, with std dev: 1289.1138760509623
+MainScoring: 0 25 64 24
+SectionScoring: -13 9 26 15
+
+
+At 99 wins: 167 draw: 50 loss: 181
+Type: UAlphaB 6
+Took 2730.0ms, with std dev: 864.9584661943059
+MainScoring: 0 27 69 22
+SectionScoring: -14 2 8 14
+
+
+At 100 wins: 166 draw: 62 loss: 170
+Type: UAlphaB 6
+Took 2486.0ms, with std dev: 804.5850392762319
+MainScoring: 0 40 93 32
+SectionScoring: -15 0 3 18
+
+
+At 101 wins: 164 draw: 68 loss: 166
+Type: UAlphaB 6
+Took 2219.0ms, with std dev: 714.3937567605784
+MainScoring: 0 22 91 21
+SectionScoring: -17 0 6 3
+
+
+At 102 wins: 164 draw: 55 loss: 179
+Type: UAlphaB 6
+Took 2381.0ms, with std dev: 707.2537268695403
+MainScoring: 0 27 94 56
+SectionScoring: -14 0 11 4
+
+
+At 103 wins: 163 draw: 51 loss: 184
+Type: UAlphaB 6
+Took 2589.0ms, with std dev: 907.0192803211913
+MainScoring: 0 43 93 78
+SectionScoring: -3 0 5 6
+
+
+At 104 wins: 162 draw: 68 loss: 168
+Type: UAlphaB 6
+Took 3490.0ms, with std dev: 1055.06955282888
+MainScoring: 0 53 84 99
+SectionScoring: -3 2 19 14
+
+
+At 105 wins: 162 draw: 62 loss: 174
+Type: UAlphaB 6
+Took 1816.0ms, with std dev: 548.6116075876444
+MainScoring: 0 55 83 59
+SectionScoring: -11 8 24 0
+
+
+At 106 wins: 162 draw: 52 loss: 184
+Type: UAlphaB 6
+Took 3304.0ms, with std dev: 1128.2471841501372
+MainScoring: 0 36 96 39
+SectionScoring: -16 2 18 34
+
+
+At 107 wins: 162 draw: 51 loss: 185
+Type: UAlphaB 6
+Took 2236.0ms, with std dev: 748.8864010706448
+MainScoring: 0 34 91 56
+SectionScoring: -20 0 3 0
+
+
+At 108 wins: 162 draw: 50 loss: 186
+Type: UAlphaB 6
+Took 2199.0ms, with std dev: 753.6480991062289
+MainScoring: 0 41 65 98
+SectionScoring: -6 7 15 20
+
+
+At 109 wins: 162 draw: 43 loss: 193
+Type: UAlphaB 6
+Took 3391.0ms, with std dev: 1045.0989325869932
+MainScoring: 0 71 78 98
+SectionScoring: -20 3 28 31
+
+
+At 110 wins: 161 draw: 49 loss: 188
+Type: UAlphaB 6
+Took 2304.0ms, with std dev: 1371.7895548933782
+MainScoring: 0 68 80 56
+SectionScoring: -17 1 10 8
+
+
+At 111 wins: 160 draw: 92 loss: 146
+Type: UAlphaB 6
+Took 2327.0ms, with std dev: 882.9993298881458
+MainScoring: 0 59 80 63
+SectionScoring: -15 5 15 27
+
+
+At 112 wins: 160 draw: 91 loss: 147
+Type: SAlphaB
+Took 2901.0ms, with std dev: 871.5810231409914
+MainScoring: 0 36 72 53
+SectionScoring: -14 0 1 31
+
+
+At 113 wins: 160 draw: 66 loss: 172
+Type: UAlphaB 6
+Took 3556.0ms, with std dev: 1115.5289774351393
+MainScoring: 0 26 71 67
+SectionScoring: -5 2 14 9
+
+
+At 114 wins: 160 draw: 65 loss: 173
+Type: UAlphaB 6
+Took 2449.0ms, with std dev: 787.5726990452418
+MainScoring: 0 27 49 36
+SectionScoring: -7 0 4 15
+
+
+At 115 wins: 160 draw: 47 loss: 191
+Type: SAlphaB
+Took 2558.0ms, with std dev: 886.8904758088239
+MainScoring: 0 9 84 49
+SectionScoring: -9 4 15 29
+
+
+At 116 wins: 159 draw: 68 loss: 171
+Type: UAlphaB 6
+Took 2380.0ms, with std dev: 720.8272135951142
+MainScoring: 0 24 64 9
+SectionScoring: -18 0 1 3
+
+
+At 117 wins: 159 draw: 56 loss: 183
+Type: SAlphaB
+Took 2443.0ms, with std dev: 1216.1103741893887
+MainScoring: 0 23 64 66
+SectionScoring: -16 11 15 3
+
+
+At 118 wins: 158 draw: 55 loss: 185
+Type: UAlphaB 6
+Took 2289.0ms, with std dev: 639.1464255288702
+MainScoring: 0 30 80 23
+SectionScoring: -16 0 6 17
+
+
+At 119 wins: 158 draw: 43 loss: 197
+Type: SAlphaB
+Took 2093.0ms, with std dev: 1057.693919399974
+MainScoring: 0 70 92 98
+SectionScoring: -4 31 45 7
+
+
+At 120 wins: 157 draw: 50 loss: 191
+Type: UAlphaB 6
+Took 3015.0ms, with std dev: 969.3447146806944
+MainScoring: 0 53 92 13
+SectionScoring: -12 6 25 16
+
+
+At 121 wins: 156 draw: 65 loss: 177
+Type: UAlphaB 6
+Took 1943.0ms, with std dev: 645.7358740967373
+MainScoring: 0 12 30 2
+SectionScoring: -2 0 5 0
+
+
+At 122 wins: 156 draw: 63 loss: 179
+Type: UAlphaB 6
+Took 2744.0ms, with std dev: 1012.1863494585128
+MainScoring: 0 75 92 81
+SectionScoring: -3 0 2 5
+
+
+At 123 wins: 156 draw: 59 loss: 183
+Type: SAlphaB
+Took 2579.0ms, with std dev: 949.8749560656939
+MainScoring: 0 4 41 43
+SectionScoring: -2 20 23 10
+
+
+At 124 wins: 155 draw: 65 loss: 178
+Type: SAlphaB
+Took 2658.0ms, with std dev: 974.9938963859978
+MainScoring: 0 1 79 44
+SectionScoring: -12 40 45 26
+
+
+At 125 wins: 154 draw: 62 loss: 182
+Type: SAlphaB
+Took 2448.0ms, with std dev: 970.4071569456072
+MainScoring: 0 21 62 7
+SectionScoring: -17 9 25 17
+
+
+At 126 wins: 154 draw: 53 loss: 191
+Type: UAlphaB 6
+Took 3427.0ms, with std dev: 1041.4225630232281
+MainScoring: 0 45 97 60
+SectionScoring: -16 1 20 27
+
+
+At 127 wins: 153 draw: 82 loss: 163
+Type: SAlphaB
+Took 2341.0ms, with std dev: 822.0609885186263
+MainScoring: 0 7 98 48
+SectionScoring: -8 15 17 3
+
+
+At 128 wins: 153 draw: 66 loss: 179
+Type: UAlphaB 6
+Took 2574.0ms, with std dev: 966.6254334762851
+MainScoring: 0 16 76 59
+SectionScoring: -2 0 5 9
+
+
+At 129 wins: 153 draw: 62 loss: 183
+Type: UAlphaB 6
+Took 2569.0ms, with std dev: 860.5251551892994
+MainScoring: 0 39 76 6
+SectionScoring: -7 0 16 20
+
+
+At 130 wins: 153 draw: 55 loss: 190
+Type: UAlphaB 6
+Took 2419.0ms, with std dev: 802.7574666431053
+MainScoring: 0 33 71 65
+SectionScoring: -7 0 10 17
+
+
+At 131 wins: 153 draw: 37 loss: 208
+Type: UAlphaB 6
+Took 3447.0ms, with std dev: 1132.857060975927
+MainScoring: 0 47 64 10
+SectionScoring: -11 1 26 21
+
+
+At 132 wins: 152 draw: 64 loss: 182
+Type: UAlphaB 6
+Took 1737.0ms, with std dev: 710.5418485866718
+MainScoring: 0 30 66 17
+SectionScoring: -12 4 7 0
+
+
+At 133 wins: 151 draw: 76 loss: 171
+Type: UAlphaB 6
+Took 3442.0ms, with std dev: 1061.5860372917798
+MainScoring: 0 33 95 87
+SectionScoring: -13 1 9 31
+
+
+At 134 wins: 151 draw: 70 loss: 177
+Type: UAlphaB 6
+Took 1392.0ms, with std dev: 829.5779440936416
+MainScoring: 0 29 84 75
+SectionScoring: -18 0 6 0
+
+
+At 135 wins: 150 draw: 74 loss: 174
+Type: UAlphaB 6
+Took 3299.0ms, with std dev: 1234.6250168212225
+MainScoring: 0 24 88 28
+SectionScoring: -10 2 9 17
+
+
+At 136 wins: 150 draw: 70 loss: 178
+Type: UAlphaB 6
+Took 2531.0ms, with std dev: 848.2814092305873
+MainScoring: 0 52 98 74
+SectionScoring: -14 0 11 18
+
+
+At 137 wins: 149 draw: 70 loss: 179
+Type: UAlphaB 6
+Took 1876.0ms, with std dev: 672.6470361013118
+MainScoring: 0 36 82 37
+SectionScoring: -18 0 2 33
+
+
+At 138 wins: 149 draw: 39 loss: 210
+Type: SAlphaB
+Took 2360.0ms, with std dev: 927.0696864408781
+MainScoring: 0 22 34 54
+SectionScoring: -6 27 29 22
+
+
+At 139 wins: 148 draw: 75 loss: 175
+Type: SAlphaB
+Took 2456.0ms, with std dev: 902.1753219623051
+MainScoring: 0 11 25 77
+SectionScoring: -6 35 38 23
+
+
+At 140 wins: 148 draw: 75 loss: 175
+Type: UAlphaB 6
+Took 2455.0ms, with std dev: 772.674751338999
+MainScoring: 0 45 81 67
+SectionScoring: -20 0 1 19
+
+
+At 141 wins: 148 draw: 70 loss: 180
+Type: UAlphaB 6
+Took 3115.0ms, with std dev: 968.8179789733
+MainScoring: 0 51 71 1
+SectionScoring: -19 3 15 26
+
+
+At 142 wins: 148 draw: 61 loss: 189
+Type: UAlphaB 6
+Took 2121.0ms, with std dev: 751.6215485610471
+MainScoring: 0 36 47 55
+SectionScoring: -4 4 16 13
+
+
+At 143 wins: 147 draw: 78 loss: 173
+Type: UAlphaB 6
+Took 3157.0ms, with std dev: 1049.6515586004537
+MainScoring: 0 47 73 12
+SectionScoring: -4 3 13 9
+
+
+At 144 wins: 147 draw: 76 loss: 175
+Type: SAlphaB
+Took 2585.0ms, with std dev: 963.8570157101459
+MainScoring: 0 6 14 58
+SectionScoring: -3 27 28 21
+
+
+At 145 wins: 146 draw: 59 loss: 193
+Type: UAlphaB 6
+Took 1610.0ms, with std dev: 587.6791483514071
+MainScoring: 0 55 69 84
+SectionScoring: -8 17 41 11
+
+
+At 146 wins: 146 draw: 59 loss: 193
+Type: UAlphaB 6
+Took 3538.0ms, with std dev: 1097.1847517154915
+MainScoring: 0 40 85 72
+SectionScoring: -12 1 18 16
+
+
+At 147 wins: 145 draw: 76 loss: 177
+Type: UAlphaB 6
+Took 1658.0ms, with std dev: 809.3763620698265
+MainScoring: 0 42 83 81
+SectionScoring: -17 0 3 21
+
+
+At 148 wins: 145 draw: 75 loss: 178
+Type: UAlphaB 6
+Took 3520.0ms, with std dev: 1119.4984721497965
+MainScoring: 0 31 90 21
+SectionScoring: -16 1 7 25
+
+
+At 149 wins: 145 draw: 68 loss: 185
+Type: UAlphaB 6
+Took 2351.0ms, with std dev: 709.624761058644
+MainScoring: 0 40 62 71
+SectionScoring: -19 0 4 18
+
+
+At 150 wins: 144 draw: 72 loss: 182
+Type: UAlphaB 6
+Took 2356.0ms, with std dev: 659.1269198586962
+MainScoring: 0 56 94 64
+SectionScoring: -13 5 14 21
+
+
+At 151 wins: 144 draw: 52 loss: 202
+Type: UAlphaB 6
+Took 3169.0ms, with std dev: 1005.8445275328784
+MainScoring: 0 69 73 70
+SectionScoring: -16 5 23 19
+
+
+At 152 wins: 141 draw: 85 loss: 172
+Type: UAlphaB 6
+Took 2184.0ms, with std dev: 853.1260444615986
+MainScoring: 0 29 61 74
+SectionScoring: -5 3 11 8
+
+
+At 153 wins: 141 draw: 71 loss: 186
+Type: SAlphaB
+Took 2394.0ms, with std dev: 855.9447262363728
+MainScoring: 0 0 83 14
+SectionScoring: -10 23 24 7
+
+
+At 154 wins: 138 draw: 75 loss: 185
+Type: UAlphaB 6
+Took 2789.0ms, with std dev: 979.0932195982754
+MainScoring: 0 53 88 11
+SectionScoring: -4 0 2 12
+
+
+At 155 wins: 138 draw: 55 loss: 205
+Type: SAlphaB
+Took 2449.0ms, with std dev: 881.9873573314202
+MainScoring: 0 4 24 50
+SectionScoring: -2 19 22 11
+
+
+At 156 wins: 136 draw: 59 loss: 203
+Type: UAlphaB 6
+Took 3857.0ms, with std dev: 1344.6732617645532
+MainScoring: 0 53 91 98
+SectionScoring: -10 2 21 4
+
+
+At 157 wins: 134 draw: 74 loss: 190
+Type: UAlphaB 6
+Took 2427.0ms, with std dev: 842.8160233682266
+MainScoring: 0 66 88 61
+SectionScoring: -8 0 8 24
+
+
+At 158 wins: 130 draw: 57 loss: 211
+Type: UAlphaB 6
+Took 2002.0ms, with std dev: 1506.029094395533
+MainScoring: 0 25 99 45
+SectionScoring: -16 1 6 22
+
+
+At 159 wins: 130 draw: 57 loss: 211
+Type: UAlphaB 6
+Took 1476.0ms, with std dev: 449.21744631119543
+MainScoring: 0 47 89 99
+SectionScoring: -11 12 14 10
+
+
+At 160 wins: 130 draw: 50 loss: 218
+Type: SAlphaB
+Took 2444.0ms, with std dev: 866.4721707089417
+MainScoring: 0 28 42 52
+SectionScoring: -4 43 49 26
+
+
+At 161 wins: 129 draw: 78 loss: 191
+Type: UAlphaB 6
+Took 1205.0ms, with std dev: 1008.0230926305121
+MainScoring: 0 33 84 97
+SectionScoring: -14 7 10 10
+
+
+At 162 wins: 129 draw: 61 loss: 208
+Type: UAlphaB 6
+Took 2564.0ms, with std dev: 1245.5681343816302
+MainScoring: 0 37 92 94
+SectionScoring: -1 2 12 24
+
+
+At 163 wins: 129 draw: 54 loss: 215
+Type: UAlphaB 6
+Took 3551.0ms, with std dev: 1085.645638438854
+MainScoring: 0 82 90 25
+SectionScoring: -17 4 31 32
+
+
+At 164 wins: 128 draw: 77 loss: 193
+Type: UAlphaB 6
+Took 3496.0ms, with std dev: 1106.275606977287
+MainScoring: 0 73 98 68
+SectionScoring: -3 6 37 9
+
+
+At 165 wins: 125 draw: 88 loss: 185
+Type: UAlphaB 6
+Took 2863.0ms, with std dev: 764.6636893360013
+MainScoring: 0 33 53 32
+SectionScoring: -17 2 7 4
+
+
+At 166 wins: 124 draw: 77 loss: 197
+Type: UAlphaB 6
+Took 2565.0ms, with std dev: 897.4068938702383
+MainScoring: 0 45 59 73
+SectionScoring: -12 0 7 21
+
+
+At 167 wins: 124 draw: 76 loss: 198
+Type: UAlphaB 6
+Took 1634.0ms, with std dev: 530.15045508339
+MainScoring: 0 4 24 50
+SectionScoring: -2 19 22 11
+
+
+At 168 wins: 124 draw: 47 loss: 227
+Type: UAlphaB 6
+Took 2181.0ms, with std dev: 840.7129317836984
+MainScoring: 0 21 62 7
+SectionScoring: -17 9 25 17
+
+
+At 169 wins: 123 draw: 44 loss: 231
+Type: UAlphaB 6
+Took 2313.0ms, with std dev: 711.2842850582699
+MainScoring: 0 20 95 79
+SectionScoring: -6 0 11 28
+
+
+At 170 wins: 121 draw: 66 loss: 211
+Type: UAlphaB 6
+Took 2570.0ms, with std dev: 900.43173899131
+MainScoring: 0 57 81 35
+SectionScoring: -18 0 1 40
+
+
+At 171 wins: 118 draw: 66 loss: 214
+Type: SAlphaB
+Took 2362.0ms, with std dev: 1034.891954159428
+MainScoring: 0 8 98 6
+SectionScoring: -2 9 16 0
+
+
+At 172 wins: 118 draw: 56 loss: 224
+Type: UAlphaB 6
+Took 1879.0ms, with std dev: 535.3377485523748
+MainScoring: 0 50 57 9
+SectionScoring: -10 14 41 17
+
+
+At 173 wins: 116 draw: 59 loss: 223
+Type: UAlphaB 6
+Took 1988.0ms, with std dev: 650.5352821072287
+MainScoring: 0 39 68 62
+SectionScoring: -3 10 16 33
+
+
+At 174 wins: 115 draw: 48 loss: 235
+Type: UAlphaB 6
+Took 1772.0ms, with std dev: 578.7915239019171
+MainScoring: 0 25 64 24
+SectionScoring: -13 9 26 15
+
+
+At 175 wins: 115 draw: 46 loss: 237
+Type: UAlphaB 6
+Took 2302.0ms, with std dev: 609.299156664079
+MainScoring: 0 9 84 49
+SectionScoring: -9 4 15 29
+
+
+At 176 wins: 114 draw: 87 loss: 197
+Type: UAlphaB 6
+Took 2500.0ms, with std dev: 754.6414070711543
+MainScoring: 0 36 72 53
+SectionScoring: -14 0 1 31
+
+
+At 177 wins: 114 draw: 60 loss: 224
+Type: SAlphaB
+Took 2465.0ms, with std dev: 899.2342387166995
+MainScoring: 0 9 20 85
+SectionScoring: -9 22 26 11
+
+
+At 178 wins: 114 draw: 57 loss: 227
+Type: UAlphaB 6
+Took 1768.0ms, with std dev: 478.7318727953579
+MainScoring: 0 7 98 48
+SectionScoring: -8 15 17 3
+
+
+At 179 wins: 113 draw: 63 loss: 222
+Type: UAlphaB 6
+Took 1773.0ms, with std dev: 545.2214685325072
+MainScoring: 0 33 66 88
+SectionScoring: -9 21 23 15
+
+
+At 180 wins: 112 draw: 74 loss: 212
+Type: UAlphaB 6
+Took 1315.0ms, with std dev: 579.945347017836
+MainScoring: 0 18 87 99
+SectionScoring: -20 44 45 36
+
+
+At 181 wins: 112 draw: 55 loss: 231
+Type: UAlphaB 6
+Took 3072.0ms, with std dev: 1101.8453445545717
+MainScoring: 0 27 94 14
+SectionScoring: -1 3 17 30
+
+
+At 182 wins: 111 draw: 76 loss: 211
+Type: UAlphaB 6
+Took 1611.0ms, with std dev: 503.18131391514015
+MainScoring: 0 42 96 67
+SectionScoring: -3 20 21 13
+
+
+At 183 wins: 108 draw: 61 loss: 229
+Type: UAlphaB 6
+Took 1719.0ms, with std dev: 558.2402447461768
+MainScoring: 0 28 42 52
+SectionScoring: -4 43 49 26
+
+
+At 184 wins: 108 draw: 56 loss: 234
+Type: UAlphaB 6
+Took 1711.0ms, with std dev: 441.02498533353213
+MainScoring: 0 0 83 14
+SectionScoring: -10 23 24 7
+
+
+At 185 wins: 107 draw: 52 loss: 239
+Type: UAlphaB 6
+Took 1746.0ms, with std dev: 529.7033207751307
+MainScoring: 0 8 98 6
+SectionScoring: -2 9 16 0
+
+
+At 186 wins: 106 draw: 49 loss: 243
+Type: UAlphaB 6
+Took 1724.0ms, with std dev: 637.3353980030755
+MainScoring: 0 70 92 98
+SectionScoring: -4 31 45 7
+
+
+At 187 wins: 105 draw: 90 loss: 203
+Type: UAlphaB 6
+Took 1585.0ms, with std dev: 509.393799249233
+MainScoring: 0 51 87 90
+SectionScoring: -2 26 32 14
+
+
+At 188 wins: 105 draw: 76 loss: 217
+Type: UAlphaB 6
+Took 1694.0ms, with std dev: 520.0008093345074
+MainScoring: 0 13 36 36
+SectionScoring: -10 26 27 17
+
+
+At 189 wins: 105 draw: 63 loss: 230
+Type: UAlphaB 6
+Took 2199.0ms, with std dev: 542.1952354704292
+MainScoring: 0 4 99 79
+SectionScoring: -1 4 14 1
+
+
+At 190 wins: 104 draw: 78 loss: 216
+Type: UAlphaB 6
+Took 1696.0ms, with std dev: 523.8096435858812
+MainScoring: 0 22 34 54
+SectionScoring: -6 27 29 22
+
+
+At 191 wins: 104 draw: 74 loss: 220
+Type: UAlphaB 6
+Took 1713.0ms, with std dev: 549.3672102139801
+MainScoring: 0 4 41 43
+SectionScoring: -2 20 23 10
+
+
+At 192 wins: 101 draw: 66 loss: 231
+Type: UAlphaB 6
+Took 1758.0ms, with std dev: 547.3869631596883
+MainScoring: 0 1 79 44
+SectionScoring: -12 40 45 26
+
+
+At 193 wins: 100 draw: 71 loss: 227
+Type: UAlphaB 6
+Took 1656.0ms, with std dev: 515.1284271736632
+MainScoring: 0 11 25 77
+SectionScoring: -6 35 38 23
+
+
+At 194 wins: 99 draw: 91 loss: 208
+Type: UAlphaB 6
+Took 1706.0ms, with std dev: 550.2816524153105
+MainScoring: 0 9 20 85
+SectionScoring: -9 22 26 11
+
+
+At 195 wins: 99 draw: 75 loss: 224
+Type: UAlphaB 6
+Took 1683.0ms, with std dev: 512.6864656496225
+MainScoring: 0 26 35 69
+SectionScoring: -8 37 42 22
+
+
+At 196 wins: 94 draw: 61 loss: 243
+Type: UAlphaB 6
+Took 1729.0ms, with std dev: 511.5501542385727
+MainScoring: 0 9 51 32
+SectionScoring: -15 42 44 27
+
+
+At 197 wins: 90 draw: 73 loss: 235
+Type: UAlphaB 6
+Took 1753.0ms, with std dev: 536.8477344180086
+MainScoring: 0 6 14 58
+SectionScoring: -3 27 28 21
+
+
+At 198 wins: 87 draw: 83 loss: 228
+Type: UAlphaB 6
+Took 1763.0ms, with std dev: 606.9895543545024
+MainScoring: 0 24 53 57
+SectionScoring: -17 11 13 6
+
+
+At 199 wins: 86 draw: 63 loss: 249
+Type: UAlphaB 6
+Took 1421.0ms, with std dev: 517.9684198091597
+MainScoring: 0 1 33 92
+SectionScoring: -3 27 30 12
+
+
+At 200 wins: 73 draw: 87 loss: 238
+Type: UAlphaB 6
+Took 1703.0ms, with std dev: 563.5864961950981
+MainScoring: 0 23 64 66
+SectionScoring: -16 11 15 3
+
+
