@@ -17,14 +17,12 @@ package com.diusrex.tictactoe.data_structures;
 
 import com.diusrex.tictactoe.logic.GridConstants;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
-
-
+import com.diusrex.tictactoe.logic.UndoAction;
 
 public class MainGrid implements Grid {
     private Player owner;
     private SectionGrid[][] sections;
-    
-    // TODO: Maybe not the best method
+
     private final TicTacToeEngine engine;
 
     public MainGrid(TicTacToeEngine engine) {
@@ -56,18 +54,29 @@ public class MainGrid implements Grid {
     }
 
     public void setBoxOwner(SectionPosition sectionPos, BoxPosition pos, Player newOwner) {
-        getSectionGrid(sectionPos).setPointOwner(pos, newOwner);
+        SectionGrid changedSection = getSectionGrid(sectionPos);
+        Player originalOwner = changedSection.getGridOwner();
+
+        changedSection.setPointOwner(pos, newOwner);
+
+        if (originalOwner != changedSection.getGridOwner()) {
+            owner = engine.getWinner(this);
+        }
     }
-    
+
+    public void undoMove(Move undoneTopMove) {
+        setBoxOwner(undoneTopMove.getSection(), undoneTopMove.getBox(), Player.Unowned);
+
+        if (UndoAction.moveLostOwnership(engine, getSectionGrid(undoneTopMove.getSection()), undoneTopMove)) {
+            getSectionGrid(undoneTopMove.getSection()).setSectionOwner(Player.Unowned, null);
+        }
+    }
+
     public Player getBoxOwner(SectionPosition section, BoxPosition pos) {
         return getSectionGrid(section).getPointOwner(pos);
     }
-    
-    public void setOwner(SectionPosition pos, Line winningLine, Player owner) {
-        getSectionGrid(pos).setSectionOwner(owner, winningLine);
-    }
 
-    public SectionGrid getSectionGrid(SectionPosition pos) {
+    private SectionGrid getSectionGrid(SectionPosition pos) {
         return getSectionGrid((Position) pos);
     }
     

@@ -17,19 +17,20 @@ package com.diusrex.tictactoe.logic;
 
 import com.diusrex.tictactoe.data_structures.Grid;
 import com.diusrex.tictactoe.data_structures.Line;
-import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.Position;
 import com.diusrex.tictactoe.data_structures.SectionGrid;
 
 public abstract class TicTacToeEngine {
+    public static final int MAX_NUM_MOVES = 81;
+
     private GridChecker gridChecker;
 
     protected TicTacToeEngine(GridChecker gridChecker) {
         this.gridChecker = gridChecker;
     }
 
-    public abstract void updateSectionOwner(SectionGrid section, Move move);
+    public abstract void updateSectionOwner(SectionGrid section, Player recentMoverOwner);
 
     public abstract Player getWinner(Grid grid);
 

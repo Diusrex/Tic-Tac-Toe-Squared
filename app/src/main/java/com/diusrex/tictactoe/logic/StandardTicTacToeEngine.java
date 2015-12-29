@@ -28,7 +28,7 @@ public class StandardTicTacToeEngine extends TicTacToeEngine {
     }
 
     @Override
-    public void updateSectionOwner(SectionGrid section, Move move) {
+    public void updateSectionOwner(SectionGrid section, Player recentMoverOwner) {
         // Cannot take a section from other player
         if (section.getGridOwner() != Player.Unowned)
             return;

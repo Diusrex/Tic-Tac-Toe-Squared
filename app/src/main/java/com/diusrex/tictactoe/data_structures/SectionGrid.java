@@ -53,6 +53,7 @@ public class SectionGrid implements Grid {
 
     public void setPointOwner(BoxPosition pos, Player newOwner) {
         owners[pos.getGridX()][pos.getGridY()] = newOwner;
+        engine.updateSectionOwner(this, newOwner);
     }
 
     @Override

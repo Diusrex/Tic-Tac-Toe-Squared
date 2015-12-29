@@ -1,10 +1,12 @@
 package com.diusrex.tictactoe.logic.tests;
 
 import com.diusrex.tictactoe.data_structures.BoardStatus;
+import com.diusrex.tictactoe.data_structures.BoxPosition;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.SectionPosition;
 import com.diusrex.tictactoe.logic.StandardTicTacToeEngine;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -89,11 +91,11 @@ public class StandardGridCheckerPossibleToWinTests {
     }
 
     @Test
-    public void testBoardCanBeWonWhenIsWon() {
+    public void testBoardCannotBeWonWhenIsWon() {
         takeOwnershipOfSection(SectionPosition.make(0, 0), Player.Player_1);
         takeOwnershipOfSection(SectionPosition.make(1, 0), Player.Player_1);
         takeOwnershipOfSection(SectionPosition.make(2, 0), Player.Player_1);
-        assertTrue(board.possibleToWin());
+        assertFalse(board.possibleToWin());
     }
 
     // 1 2 1
@@ -124,7 +126,10 @@ public class StandardGridCheckerPossibleToWinTests {
         }
 
         public void setSectionOwner(SectionPosition section, Player player) {
-            sectionsOwnersGrid.setOwner(section, null, player);
+            // Make a diagonal line
+            sectionsOwnersGrid.setBoxOwner(section, BoxPosition.make(0,  0), player);
+            sectionsOwnersGrid.setBoxOwner(section, BoxPosition.make(1,  1), player);
+            sectionsOwnersGrid.setBoxOwner(section, BoxPosition.make(2,  2), player);
         }
     }
 }

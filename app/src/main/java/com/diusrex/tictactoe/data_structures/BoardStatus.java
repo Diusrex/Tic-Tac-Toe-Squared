@@ -66,14 +66,10 @@ public class BoardStatus {
             return;
 
         Move undoneTopMove = allMoves.pop();
+
+        sectionsOwnersGrid.undoMove(undoneTopMove);
+
         nextPlayer = nextPlayer.opposite();
-
-        setBoxOwner(undoneTopMove.getSection(), undoneTopMove.getBox(), Player.Unowned);
-
-        if (UndoAction.moveLostOwnership(engine, getSectionGrid(undoneTopMove.getSection()), undoneTopMove)) {
-            sectionsOwnersGrid.setOwner(undoneTopMove.getSection(), null, Player.Unowned);
-        }
-
         sectionToPlayIn = UndoAction.getSectionToPlayIn(allMoves, undoneTopMove);
     }
 
@@ -86,7 +82,7 @@ public class BoardStatus {
     }
 
     public Player getWinner() {
-        return engine.getWinner(sectionsOwnersGrid);
+        return sectionsOwnersGrid.getGridOwner();
     }
 
     public boolean isValidMove(Move move) {
@@ -96,8 +92,6 @@ public class BoardStatus {
     public void applyMoveIfValid(Move move) {
         if (isValidMove(move)) {
             applyMove(move);
-
-            engine.updateSectionOwner(getSectionGrid(move.getSection()), move);
         }
     }
 
@@ -106,7 +100,7 @@ public class BoardStatus {
 
         sectionToPlayIn = GeneralTicTacToeLogic.getSectionToPlayInNext(move);
 
-        setBoxOwner(move);
+        setBoxOwner(move.getSection(), move.getBox(), move.getPlayer());
         nextPlayer = nextPlayer.opposite();
     }
 
@@ -116,10 +110,6 @@ public class BoardStatus {
 
     public SectionGrid getSectionGrid(SectionPosition section) {
         return sectionsOwnersGrid.getSectionGrid(section);
-    }
-
-    private void setBoxOwner(Move move) {
-        setBoxOwner(move.getSection(), move.getBox(), move.getPlayer());
     }
 
     protected void setBoxOwner(SectionPosition sectionPos, BoxPosition pos, Player newOwner) {
