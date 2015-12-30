@@ -2,6 +2,7 @@ package com.diusrex.tictactoe.ai.scoring_calculations;
 
 import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.Grid;
+import com.diusrex.tictactoe.data_structures.MainGrid;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.SectionPosition;
 import com.diusrex.tictactoe.logic.GridLists;
@@ -15,22 +16,22 @@ public class Scorer {
         this.scoring = scoring;
     }
 
-    public int calculateScore(Player positivePlayer, BoardStatus board) {
-        int score = calculateGridScoreWinningGridIsImportantForBothPlayers(positivePlayer, board.getMainGrid(),
+    public int calculateScore(Player positivePlayer, BoardStatus board, MainGrid grid) {
+        int score = calculateGridScoreWinningGridIsImportantForBothPlayers(positivePlayer, grid,
                 scoring.getMainScoring());
 
         for (SectionPosition section : GridLists.getAllStandardSections()) {
-            score += calculateSectionScore(positivePlayer, board, section) * scoring.getSectionGridMultiplier(section);
+            score += grid.calculateSectionScore(this, positivePlayer, board, section)
+                    * scoring.getSectionGridMultiplier(section);
         }
 
         return score;
     }
 
-    private int calculateSectionScore(Player positivePlayer, BoardStatus board, SectionPosition section) {
+    public int calculateSectionScore(Player positivePlayer, BoardStatus board, SectionPosition section, Grid sectionGrid) {
         Player negativePlayer = positivePlayer.opposite();
 
         ScoringFunction scoringFunction = scoring.getSectionScoring();
-        Grid sectionGrid = board.getSectionGrid(section);
         if (!sectionGrid.canBeWon()) {
             return SectionUnimportantWrapper.calculateSetupScore(positivePlayer, sectionGrid, scoringFunction)
                     - SectionUnimportantWrapper.calculateSetupScore(negativePlayer, sectionGrid, scoringFunction);

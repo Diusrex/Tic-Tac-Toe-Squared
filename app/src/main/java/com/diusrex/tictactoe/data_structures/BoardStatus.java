@@ -15,6 +15,7 @@
  **/
 package com.diusrex.tictactoe.data_structures;
 
+import com.diusrex.tictactoe.ai.scoring_calculations.Scorer;
 import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
 import com.diusrex.tictactoe.logic.UndoAction;
@@ -104,14 +105,6 @@ public class BoardStatus {
         nextPlayer = nextPlayer.opposite();
     }
 
-    public Grid getMainGrid() {
-        return sectionsOwnersGrid;
-    }
-
-    public SectionGrid getSectionGrid(SectionPosition section) {
-        return sectionsOwnersGrid.getSectionGrid(section);
-    }
-
     protected void setBoxOwner(SectionPosition sectionPos, BoxPosition pos, Player newOwner) {
         sectionsOwnersGrid.setBoxOwner(sectionPos, pos, newOwner);
     }
@@ -150,5 +143,9 @@ public class BoardStatus {
 
     public boolean sectionIsImportantToPlayer(SectionPosition section, Player player) {
         return engine.positionIsImportantToPlayer(sectionsOwnersGrid, section, player);
+    }
+
+    public int calculateScore(Player positivePlayer, Scorer scorer) {
+        return scorer.calculateScore(positivePlayer, this, sectionsOwnersGrid);
     }
 }

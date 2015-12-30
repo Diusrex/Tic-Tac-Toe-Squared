@@ -89,7 +89,7 @@ public abstract class BaseMiniMaxPlayer extends AIPlayer {
         } else if (GeneralTicTacToeLogic.boardIsFull(board)) {
             return scorer.getTieScore();
         } else if (depth == 0) {
-            return scorer.calculateScore(board.getNextPlayer(), board);
+            return board.calculateScore(board.getNextPlayer(), scorer);
         }
         MoveScore bestMove = getBestMoveAndItsScore(board, depth);
         return bestMove.score;

@@ -37,7 +37,7 @@ public abstract class BaseAlphaBetaPlayer extends AIPlayer {
         } else if (GeneralTicTacToeLogic.boardIsFull(board)) {
             return new MoveScore(null, scorer.getTieScore());
         } else if (depthLeft == 0) {
-            return new MoveScore(null, scorer.calculateScore(board.getNextPlayer(), board));
+            return new MoveScore(null, board.calculateScore(board.getNextPlayer(), scorer));
         }
 
         List<Move> allMoves = generateMoves(board);
