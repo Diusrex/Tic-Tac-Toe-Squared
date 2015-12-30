@@ -2,6 +2,7 @@ package com.diusrex.tictactoe.ai;
 
 import com.diusrex.tictactoe.ai.scoring_calculations.Scorer;
 import com.diusrex.tictactoe.ai.scoring_calculations.ScoringValues;
+import com.diusrex.tictactoe.ai.scoring_calculations.StaticScorer;
 import com.diusrex.tictactoe.data_structures.*;
 import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
 import com.diusrex.tictactoe.logic.GridLists;
@@ -17,7 +18,7 @@ public abstract class BaseAlphaBetaPlayer extends AIPlayer {
     private final Scorer scorer;
 
     public BaseAlphaBetaPlayer(ScoringValues scoringInfo) {
-        this.scorer = new Scorer(scoringInfo);
+        this.scorer = new StaticScorer(scoringInfo);
     }
 
     @Override
