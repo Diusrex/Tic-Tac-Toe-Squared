@@ -145,7 +145,7 @@ public class BoardStatus {
         return engine.positionIsImportantToPlayer(sectionsOwnersGrid, section, player);
     }
 
-    public int calculateScore(Player positivePlayer, Scorer scorer) {
+    public int calculateScore(Scorer scorer, Player positivePlayer) {
         return scorer.calculateScore(positivePlayer, this, sectionsOwnersGrid);
     }
 }

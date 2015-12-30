@@ -29,7 +29,7 @@ public abstract class BaseMiniMaxPlayer extends AIPlayer {
     }
 
     protected abstract int getMaxDepth(BoardStatus board);
-    
+
     private MoveScore getBestMoveAndItsScore(BoardStatus board, int depth) {
         if (canPlayInAnySection(board)) {
             return getBestMoveScoreInAnySection(board, depth);
@@ -89,7 +89,7 @@ public abstract class BaseMiniMaxPlayer extends AIPlayer {
         } else if (GeneralTicTacToeLogic.boardIsFull(board)) {
             return scorer.getTieScore();
         } else if (depth == 0) {
-            return board.calculateScore(board.getNextPlayer(), scorer);
+            return board.calculateScore(scorer, board.getNextPlayer());
         }
         MoveScore bestMove = getBestMoveAndItsScore(board, depth);
         return bestMove.score;

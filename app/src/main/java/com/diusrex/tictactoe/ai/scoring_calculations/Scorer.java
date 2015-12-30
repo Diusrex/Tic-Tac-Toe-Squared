@@ -1,10 +1,7 @@
 package com.diusrex.tictactoe.ai.scoring_calculations;
 
-import com.diusrex.tictactoe.data_structures.BoardStatus;
-import com.diusrex.tictactoe.data_structures.Grid;
-import com.diusrex.tictactoe.data_structures.MainGrid;
-import com.diusrex.tictactoe.data_structures.Player;
-import com.diusrex.tictactoe.data_structures.SectionPosition;
+
+import com.diusrex.tictactoe.data_structures.*;
 import com.diusrex.tictactoe.logic.GridLists;
 
 public class Scorer {
@@ -16,19 +13,20 @@ public class Scorer {
         this.scoring = scoring;
     }
 
-    public int calculateScore(Player positivePlayer, BoardStatus board, MainGrid grid) {
-        int score = calculateGridScoreWinningGridIsImportantForBothPlayers(positivePlayer, grid,
+
+    public int calculateScore(Player positivePlayer, BoardStatus board, MainGrid mainGrid) {
+        int score = calculateGridScoreWinningGridIsImportantForBothPlayers(positivePlayer, mainGrid,
                 scoring.getMainScoring());
 
         for (SectionPosition section : GridLists.getAllStandardSections()) {
-            score += grid.calculateSectionScore(this, positivePlayer, board, section)
+            score += calculateSectionScore(positivePlayer, board, section, mainGrid.getGrid(section))
                     * scoring.getSectionGridMultiplier(section);
         }
 
         return score;
     }
 
-    public int calculateSectionScore(Player positivePlayer, BoardStatus board, SectionPosition section, Grid sectionGrid) {
+    private int calculateSectionScore(Player positivePlayer, BoardStatus board, SectionPosition section, Grid sectionGrid) {
         Player negativePlayer = positivePlayer.opposite();
 
         ScoringFunction scoringFunction = scoring.getSectionScoring();
@@ -53,8 +51,7 @@ public class Scorer {
         return score;
     }
 
-    private int calculateGridScoreWinningGridIsImportantForBothPlayers(Player positivePlayer, Grid grid,
-            ScoringFunction scoringFunction) {
+    private int calculateGridScoreWinningGridIsImportantForBothPlayers(Player positivePlayer, Grid grid, ScoringFunction scoringFunction) {
         Player negativePlayer = positivePlayer.opposite();
         if (!grid.canBeWon()) {
             return SectionUnimportantWrapper.calculateSetupScore(positivePlayer, grid, scoringFunction)

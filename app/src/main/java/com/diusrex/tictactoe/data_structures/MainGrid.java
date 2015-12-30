@@ -15,7 +15,6 @@
  **/
 package com.diusrex.tictactoe.data_structures;
 
-import com.diusrex.tictactoe.ai.scoring_calculations.Scorer;
 import com.diusrex.tictactoe.logic.GridConstants;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
 import com.diusrex.tictactoe.logic.UndoAction;
@@ -77,6 +76,10 @@ public class MainGrid implements Grid {
         return getSectionGrid(section).getPointOwner(pos);
     }
 
+    public Grid getGrid(SectionPosition pos) {
+        return sections[pos.getGridX()][pos.getGridY()];
+    }
+
     private SectionGrid getSectionGrid(SectionPosition pos) {
         return getSectionGrid((Position) pos);
     }
@@ -95,10 +98,6 @@ public class MainGrid implements Grid {
 
     public Line getLine(SectionPosition sectionPosition) {
         return getSectionGrid(sectionPosition).getLine();
-    }
-
-    public int calculateSectionScore(Scorer scorer, Player positivePlayer, BoardStatus board, SectionPosition section) {
-        return scorer.calculateSectionScore(positivePlayer, board, section, getSectionGrid(section));
     }
 
 }
