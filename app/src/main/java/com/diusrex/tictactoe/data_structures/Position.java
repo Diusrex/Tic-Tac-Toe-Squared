@@ -16,8 +16,8 @@
 package com.diusrex.tictactoe.data_structures;
 
 public interface Position {
-    
+
     // These are relative to the grid they belong to
-    public int getGridX();
-    public int getGridY();
+    int getGridX();
+    int getGridY();
 }

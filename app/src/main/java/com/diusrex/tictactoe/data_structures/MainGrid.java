@@ -15,6 +15,7 @@
  **/
 package com.diusrex.tictactoe.data_structures;
 
+import com.diusrex.tictactoe.ai.scoring_calculations.Scorer;
 import com.diusrex.tictactoe.logic.GridConstants;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
 import com.diusrex.tictactoe.logic.UndoAction;
@@ -79,20 +80,25 @@ public class MainGrid implements Grid {
     private SectionGrid getSectionGrid(SectionPosition pos) {
         return getSectionGrid((Position) pos);
     }
-    
+
     private SectionGrid getSectionGrid(Position pos) {
         return sections[pos.getGridX()][pos.getGridY()];
     }
 
     public boolean isInsideBounds(SectionPosition sectionPosition, BoxPosition pos) {
-        if (sectionPosition.getGridX() < 0 || sectionPosition.getGridX() >= GridConstants.NUMBER_OF_SECTIONS_PER_SIDE
-                || sectionPosition.getGridY() < 0 || sectionPosition.getGridY() >= GridConstants.NUMBER_OF_SECTIONS_PER_SIDE)
-            return false;
-
-        return getSectionGrid(sectionPosition).isInsideBounds(pos);
+        return sectionPosition.getGridX() >= 0
+                && sectionPosition.getGridX() < GridConstants.NUMBER_OF_SECTIONS_PER_SIDE
+                && sectionPosition.getGridY() >= 0
+                && sectionPosition.getGridY() < GridConstants.NUMBER_OF_SECTIONS_PER_SIDE
+                && getSectionGrid(sectionPosition).isInsideBounds(pos);
     }
 
     public Line getLine(SectionPosition sectionPosition) {
         return getSectionGrid(sectionPosition).getLine();
     }
+
+    public int calculateSectionScore(Scorer scorer, Player positivePlayer, BoardStatus board, SectionPosition section) {
+        return scorer.calculateSectionScore(positivePlayer, board, section, getSectionGrid(section));
+    }
+
 }

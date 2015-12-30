@@ -18,10 +18,10 @@ package com.diusrex.tictactoe.data_structures;
 
 
 public interface Grid {
-    public Player getGridOwner();
-    
-    public Player getPointOwner(Position pos);
-    
-    public boolean canBeWon();
+    Player getGridOwner();
+
+    Player getPointOwner(Position pos);
+
+    boolean canBeWon();
 
 }

@@ -5,7 +5,6 @@ import com.diusrex.tictactoe.ai.tournament.test_results.PlayerTimeResults;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,10 +16,10 @@ public class StandardPrintouts {
         int[] totalWinAsFirstDepths = new int[TicTacToeEngine.MAX_NUM_MOVES + 1];
         int[] totalWinAsSecondDepths = new int[TicTacToeEngine.MAX_NUM_MOVES + 1];
 
-        Map<String, int[]> winDepthMap = new HashMap<String, int[]>();
-        Map<String, int[]> lossDepthMap = new HashMap<String, int[]>();
-        Map<String, int[]> winAsFirstMap = new HashMap<String, int[]>();
-        Map<String, int[]> winAsSecondMap = new HashMap<String, int[]>();
+        Map<String, int[]> winDepthMap = new HashMap<>();
+        Map<String, int[]> lossDepthMap = new HashMap<>();
+        Map<String, int[]> winAsFirstMap = new HashMap<>();
+        Map<String, int[]> winAsSecondMap = new HashMap<>();
 
         int lowestWin = TicTacToeEngine.MAX_NUM_MOVES + 1, highestWin = 0;
 
@@ -66,24 +65,20 @@ public class StandardPrintouts {
     }
 
     public static void printTotalAITimes(PrintStream printStream, List<BaseScoringValuesTestResults> results) {
-        Map<String, List<Long>> timesMap = new HashMap<String, List<Long>>();
+        Map<String, PlayerTimeResults> timesMap = new HashMap<>();
         for (BaseScoringValuesTestResults result : results) {
             String aiIdentifier = result.getPlayer().getIdentifier();
 
             if (!timesMap.containsKey(aiIdentifier)) {
-                timesMap.put(aiIdentifier, new ArrayList<Long>());
-            }
-
-            List<Long> allTimes = result.getTimeResults();
-            for (Long time : allTimes) {
-                timesMap.get(aiIdentifier).add(time);
+                timesMap.put(aiIdentifier, result.getTimeResults());
+            } else {
+                PlayerTimeResults timeResults = timesMap.get(aiIdentifier);
+                timeResults.copyDataFrom(result.getTimeResults());
             }
         }
 
-        for (Map.Entry<String, List<Long>> entry : timesMap.entrySet()) {
-            double average = PlayerTimeResults.getAverageTime(entry.getValue());
-            double stdDev = PlayerTimeResults.getTimeStdDev(entry.getValue());
-            printStream.println(entry.getKey() + ": " + average + ", std-dev " + stdDev);
+        for (Map.Entry<String, PlayerTimeResults> entry : timesMap.entrySet()) {
+            entry.getValue().printTimeBreakdown(printStream);
         }
     }
 
