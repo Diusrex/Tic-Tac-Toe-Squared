@@ -23,6 +23,8 @@ import com.diusrex.tictactoe.logic.GridLists;
 public class GridLinesTests {
     static private final int NUMBER_LINES = 8;
     static private final int NUMBER_SECTIONS = 9;
+    static private final int NUMBER_CORNER_SECTIONS = 4;
+    static private final int NUMBER_MID_EDGE_SECTIONS = 4;
     static private final int NUMBER_BOX_POSITIONS = 9;
     static private final BoxPosition fakePosition = BoxPosition.make(0, 0);
 
@@ -43,9 +45,31 @@ public class GridLinesTests {
 
         for (int x = 0; x < GridConstants.NUMBER_OF_SECTIONS_PER_SIDE; ++x) {
             for (int y = 0; y < GridConstants.NUMBER_OF_SECTIONS_PER_SIDE; ++y) {
-                allSectionPositions.contains(SectionPosition.make(x, y));
+               assertTrue(allSectionPositions.contains(SectionPosition.make(x, y)));
             }
         }
+    }
+
+    @Test
+    public void ensureContainsAllCornerSections() {
+        List<SectionPosition> allCornerSections = GridLists.getAllCornerSections();
+        assertEquals(NUMBER_CORNER_SECTIONS, allCornerSections.size());
+
+        assertTrue(allCornerSections.contains(SectionPosition.make(0, 0)));
+        assertTrue(allCornerSections.contains(SectionPosition.make(0, 2)));
+        assertTrue(allCornerSections.contains(SectionPosition.make(2, 0)));
+        assertTrue(allCornerSections.contains(SectionPosition.make(2, 2)));
+    }
+
+    @Test
+    public void ensureContainsAllMidEdgeSections() {
+        List<SectionPosition> allMidEdgeSections = GridLists.getAllMidEdgeSections();
+        assertEquals(NUMBER_MID_EDGE_SECTIONS, allMidEdgeSections.size());
+
+        assertTrue(allMidEdgeSections.contains(SectionPosition.make(1, 0)));
+        assertTrue(allMidEdgeSections.contains(SectionPosition.make(0, 1)));
+        assertTrue(allMidEdgeSections.contains(SectionPosition.make(2, 1)));
+        assertTrue(allMidEdgeSections.contains(SectionPosition.make(1, 2)));
     }
 
     @Test
@@ -54,7 +78,7 @@ public class GridLinesTests {
 
         for (int x = 0; x < GridConstants.SIZE_OF_SECTION; ++x) {
             for (int y = 0; y < GridConstants.SIZE_OF_SECTION; ++y) {
-                allBoxPositions.contains(BoxPosition.make(x, y));
+                assertTrue(allBoxPositions.contains(BoxPosition.make(x, y)));
             }
         }
     }

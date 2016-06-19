@@ -15,6 +15,8 @@
  **/
 package com.diusrex.tictactoe.logic;
 
+import static org.junit.Assert.assertTrue;
+
 import com.diusrex.tictactoe.data_structures.BasicPosition;
 import com.diusrex.tictactoe.data_structures.BoxPosition;
 import com.diusrex.tictactoe.data_structures.Line;
@@ -33,6 +35,8 @@ public class GridLists {
     private static List<Position> allPositions;
     private static List<BoxPosition> allBoxesInSection;
     private static List<SectionPosition> allSections;
+    private static List<SectionPosition> allCornerSections;
+    private static List<SectionPosition> allMidEdgeSections;
     private static List<LineIterator> allLineIterators;
     private static List<Line> allLines;
 
@@ -42,11 +46,16 @@ public class GridLists {
     private GridLists() {
     }
 
+    // Not necessary to be called first
+    // But should be called if multiple games are ran at once, to avoid
+    // any kind of race conditions
     public static void initialize() {
         getAllStandardPositions();
         getAllStandardBoxPositions();
         getAllStandardSections();
+        getAllCornerSections();
         getAllLineIterators();
+        getAllMidEdgeSections();
         getAllLines();
     }
 
@@ -96,6 +105,37 @@ public class GridLists {
         }
 
         return allSections;
+    }
+
+    public static List<SectionPosition> getAllCornerSections() {
+        if (allCornerSections == null) {
+            allCornerSections = new ArrayList<>();
+
+            for (int y = 0; y < GridConstants.SIZE_OF_SECTION; y += 2) {
+                for (int x = 0; x < GridConstants.SIZE_OF_SECTION; x += 2) {
+                    allCornerSections.add(SectionPosition.make(x, y));
+                }
+            }
+
+            allCornerSections = Collections.unmodifiableList(allCornerSections);
+        }
+
+        return allCornerSections;
+    }
+
+    public static List<SectionPosition> getAllMidEdgeSections() {
+        if (allMidEdgeSections == null) {
+            allMidEdgeSections = new ArrayList<>();
+
+            allMidEdgeSections.add(SectionPosition.make(1, 0));
+            allMidEdgeSections.add(SectionPosition.make(0, 1));
+            allMidEdgeSections.add(SectionPosition.make(2, 1));
+            allMidEdgeSections.add(SectionPosition.make(1, 2));
+            
+            allMidEdgeSections = Collections.unmodifiableList(allMidEdgeSections);
+        }
+
+        return allMidEdgeSections;
     }
 
     public static List<LineIterator> getAllLineIterators() {
