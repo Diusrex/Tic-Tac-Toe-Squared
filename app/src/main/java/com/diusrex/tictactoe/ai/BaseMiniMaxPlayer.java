@@ -1,9 +1,11 @@
 package com.diusrex.tictactoe.ai;
 
 import com.diusrex.tictactoe.ai.scoring_calculations.Scorer;
-import com.diusrex.tictactoe.ai.scoring_calculations.ScoringValues;
-import com.diusrex.tictactoe.ai.scoring_calculations.StaticScorer;
-import com.diusrex.tictactoe.data_structures.*;
+import com.diusrex.tictactoe.data_structures.BoardStatus;
+import com.diusrex.tictactoe.data_structures.BoxPosition;
+import com.diusrex.tictactoe.data_structures.Move;
+import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.data_structures.SectionPosition;
 import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
 import com.diusrex.tictactoe.logic.GridLists;
 
@@ -12,12 +14,10 @@ import com.diusrex.tictactoe.logic.GridLists;
  *  rather than having two different states -> One for self, one for opponent,
  *  and then calculating the score based on how it is for self
  */
-public abstract class BaseMiniMaxPlayer extends AIPlayer {
-    private static final int WIN_SCORE = 10000000;
-    private final Scorer scorer;
+public abstract class BaseMiniMaxPlayer extends AIPlayerWithScorer {
 
-    public BaseMiniMaxPlayer(ScoringValues scoringInfo) {
-        this.scorer = new StaticScorer(scoringInfo);
+    public BaseMiniMaxPlayer(Scorer scorer) {
+        super(scorer);
     }
 
     @Override
@@ -65,7 +65,7 @@ public abstract class BaseMiniMaxPlayer extends AIPlayer {
             if (board.isValidMove(move)) {
                 board.applyMoveIfValid(move);
                 // The score calculated is always for the other player
-                int score = calculateScore(board, depth - 1) * -1;
+                double score = calculateScore(board, depth - 1) * -1;
                 if (bestMove == null || score > bestMove.score) {
                     bestMove = new MoveScore(move, score);
                 }
@@ -77,16 +77,16 @@ public abstract class BaseMiniMaxPlayer extends AIPlayer {
         return bestMove;
     }
 
-    private int calculateScore(BoardStatus board, int depth) {
+    private double calculateScore(BoardStatus board, int depth) {
         if (board.getWinner() != Player.Unowned) {
             // The previous player won, but this scoring is for the current player
             // Multiplies by depth to prefer (mostly) winning sooner
             // Adds one to ensure that the score wouldn't be 0 if depth is 0
-            return -WIN_SCORE * (depth + 1);
+            return -getWinScore() * (depth + 1);
         } else if (GeneralTicTacToeLogic.boardIsFull(board)) {
-            return scorer.getTieScore();
+            return getTieScore();
         } else if (depth == 0) {
-            return board.calculateScore(scorer, board.getNextPlayer());
+            return getScore(board, board.getNextPlayer());
         }
         MoveScore bestMove = getBestMoveAndItsScore(board, depth);
         return bestMove.score;

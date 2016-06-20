@@ -1,13 +1,13 @@
 package com.diusrex.tictactoe.ai;
 
-import com.diusrex.tictactoe.ai.scoring_calculations.ScoringValues;
+import com.diusrex.tictactoe.ai.scoring_calculations.Scorer;
 import com.diusrex.tictactoe.data_structures.BoardStatus;
 
 public class ScalingMiniMaxPlayer extends BaseMiniMaxPlayer {
     public static final String IDENTIFIER = "SMiniM";
 
-    public ScalingMiniMaxPlayer(ScoringValues scoringInfo) {
-        super(scoringInfo);
+    public ScalingMiniMaxPlayer(Scorer scorer) {
+        super(scorer);
     }
 
     @Override

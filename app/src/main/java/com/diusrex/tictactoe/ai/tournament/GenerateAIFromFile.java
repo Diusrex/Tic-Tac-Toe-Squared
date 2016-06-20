@@ -5,17 +5,17 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
-import com.diusrex.tictactoe.ai.scoring_calculations.ScoringFunction;
-import com.diusrex.tictactoe.ai.scoring_calculations.ScoringValues;
+import com.diusrex.tictactoe.ai.scoring_calculations.fixed.ScoringFunction;
+import com.diusrex.tictactoe.ai.scoring_calculations.fixed.ScoringValues;
 
 /*
  * The file MUST have at least as many entries as there are AI's wanted
- * 
+ *
  * To use, the format must be:
  * <depth> <mainScoring> <sectionScoring>
- * 
+ *
  * Where the scorings are stored in the order used by the builder for ScoringFunctions
- *      
+ *
  */
 public class GenerateAIFromFile extends TournamentAIGenerator {
     final Scanner scanner;

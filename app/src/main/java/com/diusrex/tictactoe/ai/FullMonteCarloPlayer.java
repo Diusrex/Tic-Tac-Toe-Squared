@@ -4,6 +4,7 @@ import com.diusrex.tictactoe.data_structures.*;
 import com.diusrex.tictactoe.logic.GridLists;
 import com.diusrex.tictactoe.logic.StringSaver;
 
+import java.io.PrintStream;
 import java.util.*;
 
 public class FullMonteCarloPlayer extends AIPlayer {
@@ -152,5 +153,20 @@ public class FullMonteCarloPlayer extends AIPlayer {
     @Override
     public String getIdentifier() {
         return null;
+    }
+
+    @Override
+    public void learnFromChange(BoardStatus board) {
+        // Nothing to do
+    }
+
+    @Override
+    public void newGame(BoardStatus board) {
+        // Don't want to reset the board
+    }
+
+    @Override
+    public void saveInternalState(PrintStream logger) {
+        logger.println(numberOfIterations);
     }
 }

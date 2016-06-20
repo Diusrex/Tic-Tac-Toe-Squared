@@ -15,12 +15,11 @@
  **/
 package com.diusrex.tictactoe.data_structures;
 
-import com.diusrex.tictactoe.ai.scoring_calculations.Scorer;
+import java.util.Stack;
+
 import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
 import com.diusrex.tictactoe.logic.UndoAction;
-
-import java.util.Stack;
 
 public class BoardStatus {
     private static final SectionPosition DEFAULT_STARTING_SECTION_TO_PLAY_IN = SectionPosition.make(1, 1);
@@ -144,8 +143,12 @@ public class BoardStatus {
     public boolean sectionIsImportantToPlayer(SectionPosition section, Player player) {
         return engine.positionIsImportantToPlayer(sectionsOwnersGrid, section, player);
     }
-
-    public int calculateScore(Scorer scorer, Player positivePlayer) {
-        return scorer.calculateScore(positivePlayer, this, sectionsOwnersGrid);
+    
+    public Grid getMainGrid() {
+        return sectionsOwnersGrid;
+    }
+    
+    public Grid getSubGrid(SectionPosition section) {
+        return sectionsOwnersGrid.getGrid(section);
     }
 }

@@ -1,5 +1,7 @@
 package com.diusrex.tictactoe.ai;
 
+import java.io.PrintStream;
+
 import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
@@ -21,13 +23,26 @@ public abstract class AIPlayer {
 
     protected class MoveScore {
         public final Move move;
-        public final int score;
+        public final double score;
 
-        public MoveScore(Move move, int score) {
+        public MoveScore(Move move, double score) {
             this.move = move;
             this.score = score;
         }
     }
 
     public abstract String getIdentifier();
+    
+    // Should be learning from this, if it will do any learning
+    public abstract void learnFromChange(BoardStatus board);
+    
+    // Should be used to reset any learning it was doing
+    public abstract void newGame(BoardStatus board);
+    
+    public final void saveState(PrintStream logger) {
+        logger.println(getIdentifier());
+        saveInternalState(logger);
+    }
+
+    protected abstract void saveInternalState(PrintStream logger);
 }

@@ -23,5 +23,4 @@ public interface Grid {
     Player getPointOwner(Position pos);
 
     boolean canBeWon();
-
 }

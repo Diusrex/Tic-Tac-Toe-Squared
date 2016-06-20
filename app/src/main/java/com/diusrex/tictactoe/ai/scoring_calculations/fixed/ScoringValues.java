@@ -1,4 +1,6 @@
-package com.diusrex.tictactoe.ai.scoring_calculations;
+package com.diusrex.tictactoe.ai.scoring_calculations.fixed;
+
+import java.io.PrintStream;
 
 import com.diusrex.tictactoe.data_structures.SectionPosition;
 
@@ -21,6 +23,11 @@ public class ScoringValues {
 
     public int getSectionGridMultiplier(SectionPosition section) {
         return mainScoring.getMultiplier(section);
+    }
+
+    public void saveState(PrintStream logger) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

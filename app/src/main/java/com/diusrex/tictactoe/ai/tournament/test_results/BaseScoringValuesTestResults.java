@@ -1,14 +1,11 @@
 package com.diusrex.tictactoe.ai.tournament.test_results;
 
-import com.diusrex.tictactoe.ai.AIPlayer;
-import com.diusrex.tictactoe.ai.scoring_calculations.ScoringFunction;
-import com.diusrex.tictactoe.ai.scoring_calculations.ScoringValues;
-import com.diusrex.tictactoe.logic.TicTacToeEngine;
-
 import java.io.PrintStream;
 
-public abstract class BaseScoringValuesTestResults implements Comparable<BaseScoringValuesTestResults> {
-    private final ScoringValues ownValue;
+import com.diusrex.tictactoe.ai.AIPlayer;
+import com.diusrex.tictactoe.logic.TicTacToeEngine;
+
+public class BaseScoringValuesTestResults implements Comparable<BaseScoringValuesTestResults> {
     private final AIPlayer player;
 
     private int won, drew, lost;
@@ -19,8 +16,7 @@ public abstract class BaseScoringValuesTestResults implements Comparable<BaseSco
     private int[] winAsFirstDepth;
     private int[] winAsSecondDepth;
 
-    public BaseScoringValuesTestResults(ScoringValues ownValue, AIPlayer player) {
-        this.ownValue = ownValue;
+    public BaseScoringValuesTestResults(AIPlayer player) {
         this.player = player;
 
         winDepths = new int[TicTacToeEngine.MAX_NUM_MOVES + 1];
@@ -76,20 +72,10 @@ public abstract class BaseScoringValuesTestResults implements Comparable<BaseSco
     public void printOut(PrintStream printStream, boolean isVerbose) {
         if (isVerbose) {
             printStream.println("wins: " + won + " draw: " + drew + " loss: " + lost);
-
-            printAdditionalInfo(printStream);
         }
-
-        ScoringFunction cF = ownValue.getMainScoring();
-        printStream.print(cF.getCannotWinPointScore() + " " + cF.getOwnsOnlyTakenInLine() + " "
-                + cF.getOwnsBothOnlyTakenInLine() + " " + cF.blockedPlayerInLine() + " ");
-
-        cF = ownValue.getSectionScoring();
-        printStream.println(cF.getCannotWinPointScore() + " " + cF.getOwnsOnlyTakenInLine() + " "
-                + cF.getOwnsBothOnlyTakenInLine() + " " + cF.blockedPlayerInLine());
+        
+        player.saveState(printStream);
     }
-
-    protected abstract void printAdditionalInfo(PrintStream printStream);
 
     public void reset() {
         won = lost = drew = 0;

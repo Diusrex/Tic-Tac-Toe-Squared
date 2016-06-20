@@ -5,15 +5,15 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import com.diusrex.tictactoe.ai.scoring_calculations.ScoringFunction;
-import com.diusrex.tictactoe.ai.scoring_calculations.ScoringValues;
+import com.diusrex.tictactoe.ai.scoring_calculations.fixed.ScoringFunction;
+import com.diusrex.tictactoe.ai.scoring_calculations.fixed.ScoringValues;
 
 public class GenerateAIRandomly extends TournamentAIGenerator {
 
     public GenerateAIRandomly(List<String> allWantedAICopies) {
         super(allWantedAICopies);
     }
-    
+
     @Override
     protected Set<ScoringValues> generateAIInformation(int numberOfAIInformation) {
         Set<ScoringValues> allInformations = new HashSet<ScoringValues>();
@@ -31,7 +31,7 @@ public class GenerateAIRandomly extends TournamentAIGenerator {
                     random.nextInt(secondaryTwoInRowScore), secondaryTwoInRowScore, random.nextInt(50)).build();
             allInformations.add(new ScoringValues(mainFunction, sectionsFunction));
         }
-        
+
         return allInformations;
     }
 

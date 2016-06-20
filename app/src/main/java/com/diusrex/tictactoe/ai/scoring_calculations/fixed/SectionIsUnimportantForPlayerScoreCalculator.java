@@ -1,5 +1,6 @@
-package com.diusrex.tictactoe.ai.scoring_calculations;
+package com.diusrex.tictactoe.ai.scoring_calculations.fixed;
 
+import com.diusrex.tictactoe.ai.scoring_calculations.PlayerScoreCalculator;
 import com.diusrex.tictactoe.data_structures.BoxPosition;
 import com.diusrex.tictactoe.data_structures.Grid;
 import com.diusrex.tictactoe.data_structures.Player;
@@ -7,10 +8,10 @@ import com.diusrex.tictactoe.logic.GridLists;
 
 /*
  * Should be used when:
- * 
+ *
  * 1) Unable to win the current section
  * 2) Unable to use the section to win the game
- * 
+ *
  * Basic idea is, punish moves that are unimportant
  */
 public class SectionIsUnimportantForPlayerScoreCalculator implements PlayerScoreCalculator {

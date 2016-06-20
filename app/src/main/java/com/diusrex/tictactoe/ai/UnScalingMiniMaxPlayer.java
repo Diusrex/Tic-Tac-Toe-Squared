@@ -1,6 +1,8 @@
 package com.diusrex.tictactoe.ai;
 
-import com.diusrex.tictactoe.ai.scoring_calculations.ScoringValues;
+import java.io.PrintStream;
+
+import com.diusrex.tictactoe.ai.scoring_calculations.Scorer;
 import com.diusrex.tictactoe.data_structures.BoardStatus;
 
 public class UnScalingMiniMaxPlayer extends BaseMiniMaxPlayer {
@@ -9,8 +11,8 @@ public class UnScalingMiniMaxPlayer extends BaseMiniMaxPlayer {
 
     private int maxDepth;
 
-    public UnScalingMiniMaxPlayer(ScoringValues scoringInfo, int maxDepth) {
-        super(scoringInfo);
+    public UnScalingMiniMaxPlayer(Scorer scorer, int maxDepth) {
+        super(scorer);
         this.maxDepth = maxDepth;
     }
 
@@ -23,5 +25,8 @@ public class UnScalingMiniMaxPlayer extends BaseMiniMaxPlayer {
     public String getIdentifier() {
         return IDENTIFIER;
     }
-
+    
+    protected void saveAdditionalPlayerState(PrintStream logger) {
+        logger.println(maxDepth);
+    }
 }

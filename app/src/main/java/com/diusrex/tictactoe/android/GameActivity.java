@@ -19,6 +19,7 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ import com.diusrex.tictactoe.data_structures.SectionPosition;
 import com.diusrex.tictactoe.logic.BoardStatusFactory;
 import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
 import com.diusrex.tictactoe.logic.PlayerFactory;
+import com.diusrex.tictactoe.logic.StringSaver;
 
 import java.util.Calendar;
 
@@ -157,12 +159,12 @@ public class GameActivity extends Activity implements GameEventHandler, GameEndA
     public void moveChosen(final Move move) {
         final long currentTime = getCurrentTime();
         if (isValidTiming(currentTime) && board.isValidMove(move)) {
-
             // Ensure that there will not be any problems
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     updateBoardWithMove(currentTime, move);
+                    Log.e("Hi there", "'" + StringSaver.getSaveString(board) + "'");
                 }
             });
         }

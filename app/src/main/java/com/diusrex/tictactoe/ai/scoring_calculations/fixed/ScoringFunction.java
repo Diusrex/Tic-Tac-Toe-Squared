@@ -1,4 +1,4 @@
-package com.diusrex.tictactoe.ai.scoring_calculations;
+package com.diusrex.tictactoe.ai.scoring_calculations.fixed;
 
 import com.diusrex.tictactoe.data_structures.Position;
 
@@ -27,7 +27,7 @@ public class ScoringFunction {
             this.middleMultiplier = middleMultiplier;
             this.cornerMultiplier = cornerMultiplier;
             this.outerCenterMultiplier = outerCenterMultiplier;
-            
+
             return this;
         }
 
@@ -36,12 +36,12 @@ public class ScoringFunction {
             this.ownsOnlyTakenInLineScore = ownsOnlyTakenInLineScore;
             this.ownsBothTakenInLineScore = ownsBothTakenInLineScore;
             this.blockedPlayerInLineScore = blockedPlayerInLineScore;
-            
+
             return this;
         }
-        
+
         public ScoringFunction build() {
-            return new ScoringFunction(middleMultiplier, cornerMultiplier, outerCenterMultiplier, 
+            return new ScoringFunction(middleMultiplier, cornerMultiplier, outerCenterMultiplier,
                     cannotWinPointScore, ownsOnlyTakenInLineScore, ownsBothTakenInLineScore,
                     blockedPlayerInLineScore);
         }
@@ -75,7 +75,7 @@ public class ScoringFunction {
     public int getOwnsOnlyTakenInLine() {
         return ownsOnlyTakenInLineScore;
     }
-    
+
     public int getOwnsBothOnlyTakenInLine() {
         return ownsBothTakenInLineScore;
     }

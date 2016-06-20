@@ -3,6 +3,7 @@ package com.diusrex.tictactoe.ai;
 import com.diusrex.tictactoe.data_structures.*;
 import com.diusrex.tictactoe.logic.GridLists;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -152,5 +153,21 @@ public class ForgetfulMonteCarloPlayer extends AIPlayer {
     @Override
     public String getIdentifier() {
         return null;
+    }
+
+    @Override
+    public void learnFromChange(BoardStatus board) {
+        // Nothing to do
+    }
+
+    @Override
+    public void newGame(BoardStatus board) {
+        // Nothing to do
+    }
+
+    @Override
+    public void saveInternalState(PrintStream logger) {
+        logger.println("ForgetfulMonteCarloPlayer");
+        logger.println(numberOfIterations);
     }
 }

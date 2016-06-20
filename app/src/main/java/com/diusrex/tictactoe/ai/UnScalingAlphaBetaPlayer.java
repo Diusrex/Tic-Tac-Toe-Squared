@@ -1,6 +1,8 @@
 package com.diusrex.tictactoe.ai;
 
-import com.diusrex.tictactoe.ai.scoring_calculations.ScoringValues;
+import java.io.PrintStream;
+
+import com.diusrex.tictactoe.ai.scoring_calculations.Scorer;
 import com.diusrex.tictactoe.data_structures.BoardStatus;
 
 public class UnScalingAlphaBetaPlayer extends BaseAlphaBetaPlayer {
@@ -9,8 +11,8 @@ public class UnScalingAlphaBetaPlayer extends BaseAlphaBetaPlayer {
 
     private final int maxDepth;
 
-    public UnScalingAlphaBetaPlayer(ScoringValues scoringInfo, int maxDepth) {
-        super(scoringInfo);
+    public UnScalingAlphaBetaPlayer(Scorer scorer, int maxDepth) {
+        super(scorer);
         this.maxDepth = maxDepth;
     }
 
@@ -22,5 +24,9 @@ public class UnScalingAlphaBetaPlayer extends BaseAlphaBetaPlayer {
     @Override
     public String getIdentifier() {
         return IDENTIFIER;
+    }
+    
+    protected void saveAdditionalPlayerState(PrintStream logger) {
+        logger.println(maxDepth);
     }
 }

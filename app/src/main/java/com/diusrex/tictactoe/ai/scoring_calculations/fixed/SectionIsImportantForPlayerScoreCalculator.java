@@ -1,5 +1,6 @@
-package com.diusrex.tictactoe.ai.scoring_calculations;
+package com.diusrex.tictactoe.ai.scoring_calculations.fixed;
 
+import com.diusrex.tictactoe.ai.scoring_calculations.PlayerScoreCalculator;
 import com.diusrex.tictactoe.data_structures.Grid;
 import com.diusrex.tictactoe.data_structures.LineIterator;
 import com.diusrex.tictactoe.data_structures.Player;
@@ -52,7 +53,7 @@ public class SectionIsImportantForPlayerScoreCalculator implements PlayerScoreCa
         // Doesn't matter if block the other player if this section doesn't matter
         else if (numOwnPlayer == 2 && numOtherPlayer == 1)
             return -scoringFunction.blockedPlayerInLine();
-            
+
         return 0;
     }
 }

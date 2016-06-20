@@ -1,24 +1,24 @@
 package com.diusrex.tictactoe.ai;
 
-import com.diusrex.tictactoe.ai.scoring_calculations.Scorer;
-import com.diusrex.tictactoe.ai.scoring_calculations.ScoringValues;
-import com.diusrex.tictactoe.ai.scoring_calculations.StaticScorer;
-import com.diusrex.tictactoe.data_structures.*;
-import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
-import com.diusrex.tictactoe.logic.GridLists;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.diusrex.tictactoe.ai.scoring_calculations.Scorer;
+import com.diusrex.tictactoe.data_structures.BoardStatus;
+import com.diusrex.tictactoe.data_structures.BoxPosition;
+import com.diusrex.tictactoe.data_structures.Move;
+import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.data_structures.SectionPosition;
+import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
+import com.diusrex.tictactoe.logic.GridLists;
 
 /*
  *  Is actually a negamax alpha beta player, due to it being easier to code.
  */
-public abstract class BaseAlphaBetaPlayer extends AIPlayer {
-    private final int WIN_SCORE = 10000000;
-    private final Scorer scorer;
+public abstract class BaseAlphaBetaPlayer extends AIPlayerWithScorer {
 
-    public BaseAlphaBetaPlayer(ScoringValues scoringInfo) {
-        this.scorer = new StaticScorer(scoringInfo);
+    public BaseAlphaBetaPlayer(Scorer scorer) {
+        super(scorer);
     }
 
     @Override
@@ -29,16 +29,16 @@ public abstract class BaseAlphaBetaPlayer extends AIPlayer {
 
     protected abstract int getMaxDepth(BoardStatus board);
 
-    private MoveScore getBestMoveAndItsScore(BoardStatus board, int depthLeft, int alpha, int beta) {
+    private MoveScore getBestMoveAndItsScore(BoardStatus board, int depthLeft, double alpha, double beta) {
         if (board.getWinner() != Player.Unowned) {
             // The previous player won, but this scoring is for the current player
             // Multiplies by depth to prefer winning sooner, and also causes it to lose later
             // Adds one to ensure that the score wouldn't be 0 if depth is 0
-            return new MoveScore(null, -1 * WIN_SCORE * (depthLeft + 1));
+            return new MoveScore(null, -1 * getWinScore() * (depthLeft + 1));
         } else if (GeneralTicTacToeLogic.boardIsFull(board)) {
-            return new MoveScore(null, scorer.getTieScore());
+            return new MoveScore(null, getTieScore());
         } else if (depthLeft == 0) {
-            return new MoveScore(null, board.calculateScore(scorer, board.getNextPlayer()));
+            return new MoveScore(null, getScore(board, board.getNextPlayer()));
         }
 
         List<Move> allMoves = generateMoves(board);
@@ -47,7 +47,7 @@ public abstract class BaseAlphaBetaPlayer extends AIPlayer {
 
         for (Move move : allMoves) {
             board.applyMoveIfValid(move);
-            int score = - getBestMoveAndItsScore(board, depthLeft - 1, -beta, -alpha).score;
+            double score = - getBestMoveAndItsScore(board, depthLeft - 1, -beta, -alpha).score;
             board.undoLastMove();
 
             if (bestMove == null || score > bestMove.score)

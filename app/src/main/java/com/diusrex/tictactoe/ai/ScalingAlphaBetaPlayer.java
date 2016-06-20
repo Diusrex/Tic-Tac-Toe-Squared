@@ -1,13 +1,13 @@
 package com.diusrex.tictactoe.ai;
 
-import com.diusrex.tictactoe.ai.scoring_calculations.ScoringValues;
+import com.diusrex.tictactoe.ai.scoring_calculations.Scorer;
 import com.diusrex.tictactoe.data_structures.BoardStatus;
 
 public class ScalingAlphaBetaPlayer extends BaseAlphaBetaPlayer {
     public static final String IDENTIFIER = "SAlphaB";
 
-    public ScalingAlphaBetaPlayer(ScoringValues scoringInfo) {
-        super(scoringInfo);
+    public ScalingAlphaBetaPlayer(Scorer scorer) {
+        super(scorer);
     }
 
     @Override
