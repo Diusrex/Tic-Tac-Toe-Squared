@@ -15,6 +15,8 @@
  **/
 package com.diusrex.tictactoe.data_structures;
 
+import com.diusrex.tictactoe.data_structures.position.BoxPosition;
+
 
 
 public class Line {

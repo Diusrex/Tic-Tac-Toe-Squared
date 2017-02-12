@@ -13,7 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
-package com.diusrex.tictactoe.data_structures;
+package com.diusrex.tictactoe.data_structures.grid;
+
+import com.diusrex.tictactoe.data_structures.LinesFormed;
+import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.data_structures.position.Position;
 
 
 

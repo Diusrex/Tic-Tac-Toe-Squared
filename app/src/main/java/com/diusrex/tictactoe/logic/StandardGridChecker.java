@@ -2,11 +2,12 @@ package com.diusrex.tictactoe.logic;
 
 import java.util.List;
 
-import com.diusrex.tictactoe.data_structures.Grid;
 import com.diusrex.tictactoe.data_structures.Line;
 import com.diusrex.tictactoe.data_structures.LineIterator;
+import com.diusrex.tictactoe.data_structures.LinesFormed;
 import com.diusrex.tictactoe.data_structures.Player;
-import com.diusrex.tictactoe.data_structures.Position;
+import com.diusrex.tictactoe.data_structures.grid.Grid;
+import com.diusrex.tictactoe.data_structures.position.Position;
 
 public class StandardGridChecker implements GridChecker {
     @Override

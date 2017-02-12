@@ -5,11 +5,11 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.diusrex.tictactoe.data_structures.BoxPosition;
 import com.diusrex.tictactoe.data_structures.Line;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
-import com.diusrex.tictactoe.data_structures.SectionPosition;
+import com.diusrex.tictactoe.data_structures.position.BoxPosition;
+import com.diusrex.tictactoe.data_structures.position.SectionPosition;
 import com.diusrex.tictactoe.logic.tests.TestUtils.MockBoardStatus;
 
 public class EngineSectionTests {

@@ -1,9 +1,9 @@
 package com.diusrex.tictactoe.ai.scoring_calculations.fixed;
 
 import com.diusrex.tictactoe.ai.scoring_calculations.PlayerScoreCalculator;
-import com.diusrex.tictactoe.data_structures.BoxPosition;
-import com.diusrex.tictactoe.data_structures.Grid;
 import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.data_structures.grid.Grid;
+import com.diusrex.tictactoe.data_structures.position.BoxPosition;
 import com.diusrex.tictactoe.logic.GridLists;
 
 /*

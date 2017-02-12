@@ -17,6 +17,10 @@ package com.diusrex.tictactoe.data_structures;
 
 import java.util.Stack;
 
+import com.diusrex.tictactoe.data_structures.grid.Grid;
+import com.diusrex.tictactoe.data_structures.grid.MainGrid;
+import com.diusrex.tictactoe.data_structures.position.BoxPosition;
+import com.diusrex.tictactoe.data_structures.position.SectionPosition;
 import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
 import com.diusrex.tictactoe.logic.UndoAction;

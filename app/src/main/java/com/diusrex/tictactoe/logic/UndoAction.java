@@ -19,8 +19,8 @@ import java.util.Stack;
 
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
-import com.diusrex.tictactoe.data_structures.SectionGrid;
-import com.diusrex.tictactoe.data_structures.SectionPosition;
+import com.diusrex.tictactoe.data_structures.grid.SectionGrid;
+import com.diusrex.tictactoe.data_structures.position.SectionPosition;
 
 
 public class UndoAction {

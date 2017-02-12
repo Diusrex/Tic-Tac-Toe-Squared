@@ -11,6 +11,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+// Uses multiple different custom wrappers that don't create a copy of the board to ensure
+// the bot doesn't alter the game unexpectedly.
 public class BoardUnchangedInternallyTest {
     BoardStatus board;
 

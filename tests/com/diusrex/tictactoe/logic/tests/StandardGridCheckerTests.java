@@ -1,12 +1,21 @@
 package com.diusrex.tictactoe.logic.tests;
 
-import com.diusrex.tictactoe.data_structures.*;
-import com.diusrex.tictactoe.logic.GridConstants;
-import com.diusrex.tictactoe.logic.StandardGridChecker;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import com.diusrex.tictactoe.data_structures.Line;
+import com.diusrex.tictactoe.data_structures.LinesFormed;
+import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.data_structures.grid.Grid;
+import com.diusrex.tictactoe.data_structures.position.BasicPosition;
+import com.diusrex.tictactoe.data_structures.position.BoxPosition;
+import com.diusrex.tictactoe.data_structures.position.Position;
+import com.diusrex.tictactoe.logic.GridConstants;
+import com.diusrex.tictactoe.logic.StandardGridChecker;
 
 public class StandardGridCheckerTests {
     static final BoxPosition horizontalIncrease = BoxPosition.make(1, 0);

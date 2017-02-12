@@ -1,10 +1,10 @@
 package com.diusrex.tictactoe.logic;
 
 import com.diusrex.tictactoe.data_structures.BoardStatus;
-import com.diusrex.tictactoe.data_structures.BoxPosition;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
-import com.diusrex.tictactoe.data_structures.SectionPosition;
+import com.diusrex.tictactoe.data_structures.position.BoxPosition;
+import com.diusrex.tictactoe.data_structures.position.SectionPosition;
 
 public class GeneralTicTacToeLogic {
     enum MoveValidity {

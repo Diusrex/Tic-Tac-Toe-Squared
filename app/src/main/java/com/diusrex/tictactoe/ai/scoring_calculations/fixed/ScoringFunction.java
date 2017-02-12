@@ -1,6 +1,6 @@
 package com.diusrex.tictactoe.ai.scoring_calculations.fixed;
 
-import com.diusrex.tictactoe.data_structures.Position;
+import com.diusrex.tictactoe.data_structures.position.Position;
 
 public class ScoringFunction {
     private static final int DEFAULT_MULTIPLIER = 1;

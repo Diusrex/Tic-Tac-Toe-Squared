@@ -2,7 +2,7 @@ package com.diusrex.tictactoe.ai.scoring_calculations.fixed;
 
 import java.io.PrintStream;
 
-import com.diusrex.tictactoe.data_structures.SectionPosition;
+import com.diusrex.tictactoe.data_structures.position.SectionPosition;
 
 public class ScoringValues {
     private final ScoringFunction mainScoring;

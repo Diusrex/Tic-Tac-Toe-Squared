@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
-package com.diusrex.tictactoe.data_structures;
+package com.diusrex.tictactoe.data_structures.position;
 
 import com.diusrex.tictactoe.logic.GridConstants;
 
 
 
 
-// Immutable data structure
+// Immutable data structure, which does not need to be allocated
 public class BoxPosition implements Position {
     static private final BoxPosition[][] standardPositions = new BoxPosition[GridConstants.NUMBER_OF_BOXES_PER_SIDE][GridConstants.NUMBER_OF_BOXES_PER_SIDE];
     static private boolean initialized = false;

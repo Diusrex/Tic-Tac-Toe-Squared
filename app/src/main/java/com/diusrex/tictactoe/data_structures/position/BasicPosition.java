@@ -14,7 +14,8 @@
  *  limitations under the License.
  */
 
-package com.diusrex.tictactoe.data_structures;
+package com.diusrex.tictactoe.data_structures.position;
+
 
 public class BasicPosition implements Position {
     private final int x;

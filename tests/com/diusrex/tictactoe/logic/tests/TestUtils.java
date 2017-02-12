@@ -1,6 +1,8 @@
 package com.diusrex.tictactoe.logic.tests;
 
 import com.diusrex.tictactoe.data_structures.*;
+import com.diusrex.tictactoe.data_structures.position.BoxPosition;
+import com.diusrex.tictactoe.data_structures.position.SectionPosition;
 import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
 import com.diusrex.tictactoe.logic.GridLists;
 import com.diusrex.tictactoe.logic.StandardTicTacToeEngine;

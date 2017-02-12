@@ -17,12 +17,12 @@ package com.diusrex.tictactoe.logic;
 
 import static org.junit.Assert.assertTrue;
 
-import com.diusrex.tictactoe.data_structures.BasicPosition;
-import com.diusrex.tictactoe.data_structures.BoxPosition;
 import com.diusrex.tictactoe.data_structures.Line;
 import com.diusrex.tictactoe.data_structures.LineIterator;
-import com.diusrex.tictactoe.data_structures.Position;
-import com.diusrex.tictactoe.data_structures.SectionPosition;
+import com.diusrex.tictactoe.data_structures.position.BasicPosition;
+import com.diusrex.tictactoe.data_structures.position.BoxPosition;
+import com.diusrex.tictactoe.data_structures.position.Position;
+import com.diusrex.tictactoe.data_structures.position.SectionPosition;
 
 import java.util.ArrayList;
 import java.util.Collections;
