@@ -25,9 +25,8 @@ public class ScoringValues {
         return mainScoring.getMultiplier(section);
     }
 
+    // Don't bother to save any state, since it hasn't changed at all.
     public void saveState(PrintStream logger) {
-        // TODO Auto-generated method stub
-        
     }
 
 }

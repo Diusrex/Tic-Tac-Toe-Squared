@@ -33,22 +33,42 @@ public class AIvsAI {
         System.out.println("Time: " + time.getPlayerTwoTime() + " " + time.getPlayerOneTime());
         System.out.println("Won: " + info.getWinner().opposite());
     }
-
+    
     public static GameInfo runGame(AIPlayer player, AIPlayer player2, GameTimeRecording times) {
+        return runGame(player, player2, times, false);
+    }
+
+    public static GameInfo runAndLearnGame(AIPlayer player, AIPlayer player2, GameTimeRecording times) {
+        return runGame(player, player2, times, true);
+    }
+    
+    public static GameInfo runGame(AIPlayer player, AIPlayer player2, GameTimeRecording times, boolean learn) {
         AIPlayer[] players = new AIPlayer[2];
         players[0] = player;
         players[1] = player2;
 
         int currentPlayer = 0;
         BoardStatus board = BoardStatusFactory.createStandardBoard();
+        player.newGame(board);
+        player2.newGame(board);
         while (board.getWinner() == Player.Unowned && !GeneralTicTacToeLogic.boardIsFull(board)) {
             long timeBefore = AITournament.getCurrentTime();
+            
+            if (learn) {
+                players[currentPlayer].learnFromChange(board);
+            }
+            
 
             board.applyMoveIfValid(players[currentPlayer].getPositionToPlay(board));
 
             times.addTime(AITournament.getCurrentTime() - timeBefore, currentPlayer);
 
             currentPlayer = 1 - currentPlayer;
+        }
+        
+        if (learn) {
+            players[0].learnFromChange(board);
+            players[1].learnFromChange(board);
         }
 
         return new GameInfo(board.getWinner(), board.getAllMoves().size());

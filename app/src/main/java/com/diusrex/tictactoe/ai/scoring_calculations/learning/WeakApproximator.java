@@ -3,28 +3,24 @@ package com.diusrex.tictactoe.ai.scoring_calculations.learning;
 import java.io.PrintStream;
 
 import com.diusrex.tictactoe.data_structures.BoardStatus;
-import com.diusrex.tictactoe.data_structures.BoxPosition;
-import com.diusrex.tictactoe.data_structures.Grid;
-import com.diusrex.tictactoe.data_structures.LineIterator;
+import com.diusrex.tictactoe.data_structures.LinesFormed;
 import com.diusrex.tictactoe.data_structures.Player;
-import com.diusrex.tictactoe.data_structures.Position;
-import com.diusrex.tictactoe.data_structures.SectionPosition;
+import com.diusrex.tictactoe.data_structures.grid.Grid;
+import com.diusrex.tictactoe.data_structures.position.BoxPosition;
+import com.diusrex.tictactoe.data_structures.position.SectionPosition;
 import com.diusrex.tictactoe.logic.GridLists;
 
-public class StandardScorer implements FunctionApproximator {
-    public static final String IDENTIFIER = "StandardScorer";
-    public final double WIN_SCORE = 10000000;
-    private static final int NUM_SECTION_TYPES = 4;
-    private static final int FEATURES_PER_SECION_TYPE = 4;
-    private static final int NUM_FEATURES = NUM_SECTION_TYPES * FEATURES_PER_SECION_TYPE;
-    
-    double[] weights = new double[NUM_FEATURES];
+// Approximator that is based off of the StaticScorer, but is able to learn.
+public class WeakApproximator implements FunctionApproximator {
+    public static final String IDENTIFIER = "WeakApproximator";
+    public static final double WIN_SCORE = 1;
     
     // Will break it up into different types of sections:
         // Corner sections
         // Middle edge sections
         // Middle section
         // This way, they can have different weights
+    private static final int NUM_SECTION_TYPES = 4;
     
     // For each section:
         // (If winnable) Number of lines that are:
@@ -39,7 +35,11 @@ public class StandardScorer implements FunctionApproximator {
     
         // So for each type of section
         // Will be 4 types.
+    private static final int FEATURES_PER_SECTION_TYPE = 4;
+    private static final int NUM_FEATURES = NUM_SECTION_TYPES * FEATURES_PER_SECTION_TYPE;
 
+    double[] weights = new double[NUM_FEATURES];
+    
     @Override
     public double getScore(Player positivePlayer, BoardStatus board, double[] gradient) {
         Player winner = board.getWinner();
@@ -55,21 +55,22 @@ public class StandardScorer implements FunctionApproximator {
             calculateFeaturesForSection(positivePlayer, board, cornerPos, gradient, offset);
         }
         
-        offset += FEATURES_PER_SECION_TYPE;
+        offset += FEATURES_PER_SECTION_TYPE;
         
         for (SectionPosition midEdgePos : GridLists.getAllMidEdgeSections()) {
             calculateFeaturesForSection(positivePlayer, board, midEdgePos, gradient, offset);
         }
-        offset += FEATURES_PER_SECION_TYPE;
+        offset += FEATURES_PER_SECTION_TYPE;
         
         calculateFeaturesForSection(positivePlayer, board, SectionPosition.make(1, 1), gradient, offset);
 
-        offset += FEATURES_PER_SECION_TYPE;
+        offset += FEATURES_PER_SECTION_TYPE;
         calculateFeatures(positivePlayer, board.getMainGrid(), gradient, offset, true, true);
 
         double score = 0;
         for (int i = 0; i < NUM_FEATURES; ++i)
             score += gradient[i] * weights[i];
+        
         return score;
     }
 
@@ -87,31 +88,20 @@ public class StandardScorer implements FunctionApproximator {
     private void calculateFeatures(Player positivePlayer, Grid grid, double[] gradient, int offset, 
             boolean isImportantToPositivePlayer, boolean isImportantToOtherPlayer) {
         if (isImportantToPositivePlayer || isImportantToOtherPlayer) {
-            for (LineIterator iter : GridLists.getAllLineIterators()) {
-                int numOwnPlayer = 0, numOtherPlayer = 0;
-        
-                for (int pos = 0; !iter.isDone(pos); ++pos) {
-                    Position boxPos = iter.getCurrent(pos);
-                    Player boxPlayer = grid.getPointOwner(boxPos);
-                    if (boxPlayer == positivePlayer)
-                        ++numOwnPlayer;
-                    else if (boxPlayer != Player.Unowned)
-                        ++numOtherPlayer;
-                }
-                
-    
-                if (numOwnPlayer == numOtherPlayer) {
-                    continue;
-                }
-        
-                // Either 0, or 1. Either way, wouldn't help current person
-                if (isImportantToPositivePlayer) {
-                    increaseLineCounts(gradient, offset, numOwnPlayer, numOtherPlayer, 1);
-                }
-                
-                if (isImportantToOtherPlayer) {
-                    increaseLineCounts(gradient, offset, numOtherPlayer, numOwnPlayer, -1);
-                }
+            LinesFormed linesFormed = new LinesFormed(positivePlayer);
+            
+            grid.getLinesFormed(linesFormed);
+            
+            if (isImportantToPositivePlayer) {
+                gradient[offset] += linesFormed.oneFormedForMain;
+                gradient[offset + 1] += linesFormed.twoFormedForMain;
+                gradient[offset + 2] += linesFormed.mainBlocked;
+            }
+            
+            if (isImportantToOtherPlayer) {
+                gradient[offset] -= linesFormed.oneFormedForOther;
+                gradient[offset + 1] -= linesFormed.twoFormedForOther;
+                gradient[offset + 2] -= linesFormed.otherBlocked;
             }
         }
         
@@ -125,18 +115,6 @@ public class StandardScorer implements FunctionApproximator {
                 }
             }
         }
-    }
-
-    private void increaseLineCounts(double[] gradient, int offset, int numOwnPlayer, int numOtherPlayer, int change) {
-        if (numOwnPlayer == 1 && numOtherPlayer == 0)
-            gradient[offset] += change;
-
-        else if (numOwnPlayer == 2 && numOtherPlayer == 0)
-            gradient[offset + 1] += change;
-
-        // Doesn't matter if block the other player if this section doesn't matter
-        else if (numOwnPlayer == 2 && numOtherPlayer == 1)
-            gradient[offset + 2] += change;
     }
 
     @Override
@@ -157,7 +135,7 @@ public class StandardScorer implements FunctionApproximator {
     @Override
     public void saveState(PrintStream logger) {
         for (int i = 0; i < NUM_FEATURES; ++i) {
-            logger.append(weights[i] + "");
+            logger.append(weights[i] + " ");
         }
         logger.println("");
     }
@@ -165,6 +143,11 @@ public class StandardScorer implements FunctionApproximator {
     @Override
     public String getIdentifier() {
         return IDENTIFIER;
+    }
+
+    @Override
+    public double[] getParametersCopy() {
+        return weights.clone();
     }
 
 }

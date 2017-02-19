@@ -17,4 +17,6 @@ public interface FunctionApproximator {
     void saveState(PrintStream logger);
 
     String getIdentifier();
+
+    double[] getParametersCopy();
 }
