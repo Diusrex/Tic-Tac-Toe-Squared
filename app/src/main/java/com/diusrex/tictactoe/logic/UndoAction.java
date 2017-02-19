@@ -19,12 +19,12 @@ import java.util.Stack;
 
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
-import com.diusrex.tictactoe.data_structures.grid.SectionGrid;
+import com.diusrex.tictactoe.data_structures.grid.Grid;
 import com.diusrex.tictactoe.data_structures.position.SectionPosition;
 
 
 public class UndoAction {
-    public static boolean moveLostOwnership(TicTacToeEngine usedEngine, SectionGrid undoneMovesSection, Move topMove) {
+    public static boolean moveLostOwnership(TicTacToeEngine usedEngine, Grid undoneMovesSection, Move topMove) {
         // In this case, it is impossible
         if (topMove.getPlayer() != undoneMovesSection.getGridOwner())
             return false;

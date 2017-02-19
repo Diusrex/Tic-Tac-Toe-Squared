@@ -27,4 +27,6 @@ public interface Grid {
     Player getPointOwner(Position pos);
 
     boolean canBeWon();
+    
+    void getLinesFormed(LinesFormed linesFormed);
 }

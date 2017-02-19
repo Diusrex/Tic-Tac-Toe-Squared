@@ -71,6 +71,12 @@ public class SectionGrid implements Grid {
         return engine.possibleToWin(this);
     }
 
+
+    @Override
+    public void getLinesFormed(LinesFormed linesFormed) {
+        engine.getLinesFormed(this, linesFormed);
+    }
+
     public Line getLine() {
         return winningLine;
     }

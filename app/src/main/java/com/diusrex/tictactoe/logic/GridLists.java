@@ -15,7 +15,9 @@
  **/
 package com.diusrex.tictactoe.logic;
 
-import static org.junit.Assert.assertTrue;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import com.diusrex.tictactoe.data_structures.Line;
 import com.diusrex.tictactoe.data_structures.LineIterator;
@@ -23,10 +25,6 @@ import com.diusrex.tictactoe.data_structures.position.BasicPosition;
 import com.diusrex.tictactoe.data_structures.position.BoxPosition;
 import com.diusrex.tictactoe.data_structures.position.Position;
 import com.diusrex.tictactoe.data_structures.position.SectionPosition;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /*
  *  All non line Lists go emulate going through with x in inner for loop

@@ -60,6 +60,11 @@ public class MainGrid implements Grid {
         return engine.possibleToWin(this);
     }
 
+    @Override
+    public void getLinesFormed(LinesFormed linesFormed) {
+        engine.getLinesFormed(this, linesFormed);
+    }
+    
     public void setBoxOwner(SectionPosition sectionPos, BoxPosition pos, Player newOwner) {
         SectionGrid changedSection = getSectionGrid(sectionPos);
         Player originalOwner = changedSection.getGridOwner();

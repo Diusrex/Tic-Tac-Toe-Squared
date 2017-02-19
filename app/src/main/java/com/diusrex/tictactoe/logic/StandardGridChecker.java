@@ -101,22 +101,72 @@ public class StandardGridChecker implements GridChecker {
     public boolean possibleToWinGridForPlayerUsingPosition(Grid grid, Position position, Player player) {
         Player other = player.opposite();
         for (LineIterator lineIter : GridLists.getAllLineIterators()) {
-            boolean contains = false, hasOtherPlayer = false;
+            if (!lineIter.containsPosition(position))
+                continue;
+            boolean hasOtherPlayer = false;
 
             for (int index = 0; !lineIter.isDone(index); ++index) {
                 Position pos = lineIter.getCurrent(index);
-
-                if (pos.getGridX() == position.getGridX() && pos.getGridY() == position.getGridY())
-                    contains = true;
 
                 if (grid.getPointOwner(pos) == other)
                     hasOtherPlayer = true;
             }
 
-            if (contains && !hasOtherPlayer)
+            if (!hasOtherPlayer)
                 return true;
         }
 
         return false;
+    }
+    
+    @Override
+    public void getLinesFormed(Grid grid, LinesFormed linesFormed, Position position) {
+        Player main = linesFormed.mainPlayer;
+        Player other = main.opposite();
+        linesFormed.reset();
+        
+        for (LineIterator lineIter : GridLists.getAllLineIterators()) {
+            if (position != null && !lineIter.containsPosition(position))
+                continue;
+            
+            int mainCount = 0, otherCount = 0;
+            
+            for (int index = 0; !lineIter.isDone(index); ++index) {
+                Position pos = lineIter.getCurrent(index);
+
+                if (grid.getPointOwner(pos) == main)
+                    ++mainCount;
+
+                else if (grid.getPointOwner(pos) == other)
+                    ++otherCount;
+            }
+            // No point, since cancel out
+            if (mainCount == otherCount)
+                continue;
+            // Doesn't currently handle this case
+            else if (mainCount == 3 || otherCount == 3)
+                continue;
+            else if (mainCount == 2) {
+                if (otherCount == 0)
+                    ++linesFormed.twoFormedForMain;
+                else // otherCount == 1
+                    ++linesFormed.mainBlocked;
+            } else if (mainCount == 1) {
+                if (otherCount == 0)
+                    ++linesFormed.oneFormedForMain;
+                else // otherCount == 2
+                    ++linesFormed.otherBlocked;
+            } else { // mainCount == 0
+                if (otherCount == 2)
+                    ++linesFormed.twoFormedForOther;
+                else // otherCount == 1
+                    ++linesFormed.oneFormedForOther;
+            }
+        }
+    }
+    
+    @Override
+    public void getLinesFormed(Grid grid, LinesFormed linesFormed) {
+        getLinesFormed(grid, linesFormed, null);
     }
 }

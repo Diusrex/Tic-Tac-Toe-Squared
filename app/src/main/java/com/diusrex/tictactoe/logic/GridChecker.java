@@ -34,4 +34,9 @@ public interface GridChecker {
     Line searchForWinLineOrGetNull(Grid grid);
 
     boolean possibleToWinGridForPlayerUsingPosition(Grid grid, Position position, Player player);
+
+    //
+    void getLinesFormed(Grid grid, LinesFormed linesFormed);
+    void getLinesFormed(Grid grid, LinesFormed linesFormed, Position position);
+
 }

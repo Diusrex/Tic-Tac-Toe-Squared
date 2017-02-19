@@ -22,7 +22,6 @@ import com.diusrex.tictactoe.data_structures.grid.Grid;
 import com.diusrex.tictactoe.data_structures.grid.MainGrid;
 import com.diusrex.tictactoe.data_structures.grid.SectionGrid;
 import com.diusrex.tictactoe.data_structures.position.Position;
-import com.diusrex.tictactoe.data_structures.position.SectionPosition;
 
 public abstract class TicTacToeEngine {
     public static final int MAX_NUM_MOVES = 81;
@@ -51,5 +50,13 @@ public abstract class TicTacToeEngine {
 
     public boolean positionIsImportantToPlayer(Grid grid, Position position, Player player) {
         return gridChecker.possibleToWinGridForPlayerUsingPosition(grid, position, player);
+    }
+
+    public void getLinesFormed(Grid grid, LinesFormed linesFormed) {
+        gridChecker.getLinesFormed(grid, linesFormed);
+    }
+
+    public void getLinesFormed(MainGrid grid, LinesFormed linesFormed, Position section) {
+        gridChecker.getLinesFormed(grid, linesFormed, section);
     }
 }

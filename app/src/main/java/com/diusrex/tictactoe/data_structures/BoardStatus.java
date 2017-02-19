@@ -73,6 +73,7 @@ public class BoardStatus {
 
         sectionsOwnersGrid.undoMove(undoneTopMove);
 
+
         nextPlayer = nextPlayer.opposite();
         sectionToPlayIn = UndoAction.getSectionToPlayIn(allMoves, undoneTopMove);
     }
@@ -140,7 +141,7 @@ public class BoardStatus {
         return sectionsOwnersGrid.getLine(sectionPosition);
     }
 
-    public Line getWinLine() {
+    public Line getWinLineOrNull() {
         return engine.searchForWinLineOrGetNull(sectionsOwnersGrid);
     }
 
@@ -154,5 +155,9 @@ public class BoardStatus {
     
     public Grid getSubGrid(SectionPosition section) {
         return sectionsOwnersGrid.getGrid(section);
+    }
+
+    public void getLinesUsingSection(SectionPosition section, LinesFormed linesFormed) {
+        engine.getLinesFormed(sectionsOwnersGrid, linesFormed, section);
     }
 }
