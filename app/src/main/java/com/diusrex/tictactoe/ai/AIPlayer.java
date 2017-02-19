@@ -21,16 +21,6 @@ public abstract class AIPlayer {
 
     protected abstract Move choosePosition(BoardStatus board);
 
-    protected class MoveScore {
-        public final Move move;
-        public final double score;
-
-        public MoveScore(Move move, double score) {
-            this.move = move;
-            this.score = score;
-        }
-    }
-
     public abstract String getIdentifier();
     
     // Should be learning from this, if it will do any learning
