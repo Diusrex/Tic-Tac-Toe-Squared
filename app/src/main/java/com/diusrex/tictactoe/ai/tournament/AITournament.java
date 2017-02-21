@@ -91,7 +91,7 @@ public class AITournament {
                 .description("Run a tournament of AI");
         parser.addArgument("-n", "--number-AI").dest("number").type(Integer.class).setDefault(0)
                 .help("Number of AI to create");
-        parser.addArgument("-t", "--threads").type(Integer.class).setDefault(0).help("Specify number of threads");
+        parser.addArgument("-t", "--threads").type(Integer.class).setDefault(1).help("Specify number of threads");
         parser.addArgument("-k", "--number-AI-kept").dest("kept").type(Integer.class).setDefault(0)
                 .help("Will cause a final round to be run, with given number of each earlier run");
         parser.addArgument("-f", "--file").setDefault("").help("File to load AI from");
