@@ -48,7 +48,7 @@ public abstract class BaseMiniMaxPlayer extends AIPlayerWithScorer {
         for (SectionPosition section : GridLists.getAllStandardSections()) {
             MoveScore bestMoveInSection = getBestMoveInSection(board, section, depth);
 
-            if (bestMoveInSection != null && (bestMove == null || bestMove.score > bestMove.score)) {
+            if (bestMoveInSection != null && (bestMove == null || bestMoveInSection.score > bestMove.score)) {
                 bestMove = bestMoveInSection;
             }
         }

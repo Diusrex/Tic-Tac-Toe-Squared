@@ -10,7 +10,6 @@ import java.io.PrintStream;
 import java.util.*;
 
 public class FullMonteCarloPlayer extends AIPlayer {
-
     public static final String IDENTIFIER = "FullMonteCarlo";
     private int numberOfIterations;
 
@@ -154,7 +153,7 @@ public class FullMonteCarloPlayer extends AIPlayer {
 
     @Override
     public String getIdentifier() {
-        return null;
+        return IDENTIFIER;
     }
 
     @Override

@@ -17,7 +17,6 @@ import java.util.Random;
  *
  */
 public class ForgetfulMonteCarloPlayer extends AIPlayer {
-
     public static final String IDENTIFIER = "ForgetfulMonteCarlo";
     private static final double EPSILON = 1e-6;
     private int numberOfIterations;
@@ -36,10 +35,14 @@ public class ForgetfulMonteCarloPlayer extends AIPlayer {
         return getBestValidMove(board);
     }
 
+    protected Random getRandom() {
+        return new Random();
+    }
+
     private Move getBestValidMove(BoardStatus board) {
         Player currentPlayer = board.getNextPlayer();
 
-        Random random = new Random();
+        Random random = getRandom();
         final List<Move> allValidMoves = getAllValidMoves(board);
         final int numMoves = allValidMoves.size();
 
@@ -154,7 +157,7 @@ public class ForgetfulMonteCarloPlayer extends AIPlayer {
 
     @Override
     public String getIdentifier() {
-        return null;
+        return IDENTIFIER;
     }
 
     @Override
