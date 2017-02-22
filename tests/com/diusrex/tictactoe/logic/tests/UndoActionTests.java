@@ -91,7 +91,7 @@ public class UndoActionTests {
     @Test
     public void testUndoSectionWinningMove() {
         SectionPosition sectionToWin = SectionPosition.make(0, 0);
-        winSection(sectionToWin);
+        winSection(sectionToWin, mainPlayer);
 
         assertEquals(mainPlayer, board.getSectionOwner(sectionToWin));
         board.undoLastMove();
@@ -103,7 +103,7 @@ public class UndoActionTests {
     @Test
     public void testUndoSectionDoesntLoseSection() {
         SectionPosition sectionToWin = SectionPosition.make(0, 0);
-        winSection(sectionToWin);
+        winSection(sectionToWin, mainPlayer);
 
         assertEquals(mainPlayer, board.getSectionOwner(sectionToWin));
 
@@ -121,21 +121,35 @@ public class UndoActionTests {
 
         assertBoardStateUnchanged();
     }
+    
+    @Test
+    public void testUndoGameWinningMove() {
+        winSection(SectionPosition.make(0, 0), mainPlayer);
+        winSection(SectionPosition.make(1, 1), mainPlayer);
+        winSection(SectionPosition.make(2, 2), mainPlayer);
+        
+        assertEquals(mainPlayer, board.getWinner());
+        
+        board.undoLastMove();
+        
+        assertEquals(Player.Unowned, board.getWinner());
+        assertEquals(null, board.getWinLineOrNull());
+    }
 
-    private void winSection(SectionPosition section) {
+    private void winSection(SectionPosition section, Player player) {
         BoxPosition current = BoxPosition.make(0, 0);
         BoxPosition increase = BoxPosition.make(1, 0);
 
         board.fakedSectionToPlayIn = section;
-        TestUtils.applyMoveToBoard(board, Move.make(section, current, mainPlayer));
+        TestUtils.applyMoveToBoard(board, Move.make(section, current, player));
         current = current.increaseBy(increase);
 
         board.fakedSectionToPlayIn = section;
-        TestUtils.applyMoveToBoard(board, Move.make(section, current, mainPlayer));
+        TestUtils.applyMoveToBoard(board, Move.make(section, current, player));
         current = current.increaseBy(increase);
 
         board.fakedSectionToPlayIn = section;
-        TestUtils.applyMoveToBoard(board, Move.make(section, current, mainPlayer));
+        TestUtils.applyMoveToBoard(board, Move.make(section, current, player));
     }
 
     private void backupBoardState() {

@@ -191,6 +191,101 @@ public class StandardGridCheckerTests {
         grid.grid[1][1] = grid.grid[1][0] = grid.grid[0][1] = testedPlayer;
         assertTrue(checker.possibleToWinGridForPlayerUsingPosition(grid, new BasicPosition(0, 0), testedPlayer));
     }
+    
+    @Test
+    public void testLinesSingle() {
+        Player testedPlayer = Player.Player_1;
+        LinesFormed lines = new LinesFormed(testedPlayer);
+
+        // Both effect just 2 lines, don't effect each other at all
+        grid.grid[0][1] = testedPlayer;
+        grid.grid[1][0] = testedPlayer.opposite();
+        checker.getLinesFormed(grid, lines);
+        assertEquals(2, lines.oneFormedForMain);
+        assertEquals(2, lines.oneFormedForOther);
+        assertEquals(0, lines.twoFormedForMain);
+        assertEquals(0, lines.twoFormedForOther);
+        assertEquals(0, lines.mainBlocked);
+        assertEquals(0, lines.otherBlocked);
+
+        // Check that it doesn't care about old values
+        checker.getLinesFormed(grid, lines);
+        assertEquals(2, lines.oneFormedForMain);
+        assertEquals(2, lines.oneFormedForOther);
+    }
+    
+    @Test
+    public void testLinesDoubles() {
+        Player mainPlayer = Player.Player_1;
+        LinesFormed lines = new LinesFormed(mainPlayer);
+
+        // Expect 1 two line 
+        grid.grid[0][0] = mainPlayer;
+        grid.grid[0][1] = mainPlayer;
+        checker.getLinesFormed(grid, lines);
+        assertEquals(1, lines.twoFormedForMain);
+        assertEquals(0, lines.twoFormedForOther);
+        
+        // Expect 1 two line for other
+        grid.grid[0][0] = mainPlayer.opposite();
+        grid.grid[0][1] = mainPlayer.opposite();
+        checker.getLinesFormed(grid, lines);
+        assertEquals(0, lines.twoFormedForMain);
+        assertEquals(1, lines.twoFormedForOther);
+    }
+    
+    @Test
+    public void testLinesBlocked() {
+        Player mainPlayer = Player.Player_1;
+        Player otherPlayer = mainPlayer.opposite();
+        LinesFormed lines = new LinesFormed(mainPlayer);
+
+        grid.grid[0][0] = mainPlayer;
+        grid.grid[0][1] = mainPlayer;
+        grid.grid[0][2] = otherPlayer;
+        checker.getLinesFormed(grid, lines);
+        assertEquals(1, lines.mainBlocked);
+        assertEquals(0, lines.otherBlocked);
+        
+        grid.grid[0][0] = otherPlayer;
+        grid.grid[0][1] = otherPlayer;
+        grid.grid[0][2] = mainPlayer;
+        checker.getLinesFormed(grid, lines);
+        assertEquals(0, lines.mainBlocked);
+        assertEquals(1, lines.otherBlocked);
+    }
+    
+    @Test
+    public void testLinesCorrectPlayer() {
+        Player mainPlayer = Player.Player_1;
+        LinesFormed lines = new LinesFormed(mainPlayer);
+
+        // Just sets 3 lines
+        grid.grid[0][0] = mainPlayer;
+        checker.getLinesFormed(grid, lines);
+        assertEquals(3, lines.oneFormedForMain);
+        assertEquals(0, lines.oneFormedForOther);
+
+        // Just sets 3 lines for opposite
+        grid.grid[0][0] = mainPlayer.opposite();
+        checker.getLinesFormed(grid, lines);
+        assertEquals(0, lines.oneFormedForMain);
+        assertEquals(3, lines.oneFormedForOther);
+    }
+    
+    @Test
+    public void testLinesIgnoreOtherPositions() {
+        Player mainPlayer = Player.Player_1;
+        LinesFormed lines = new LinesFormed(mainPlayer);
+        
+        Position includedPosition = BoxPosition.make(1, 0);
+
+        // Just sets 1 line that includes the position
+        grid.grid[0][0] = mainPlayer;
+        checker.getLinesFormed(grid, lines, includedPosition);
+        assertEquals(1, lines.oneFormedForMain);
+        assertEquals(0, lines.oneFormedForOther);
+    }
 
     private void fillLine(BoxPosition startPos, BoxPosition increase, Player player, int length) {
         for (int i = 0; i < length; ++i, startPos = startPos.increaseBy(increase)) {
@@ -232,6 +327,10 @@ public class StandardGridCheckerTests {
         @Override
         public Player getPointOwner(Position pos) {
             return grid[pos.getGridX()][pos.getGridY()];
+        }
+
+        @Override
+        public void getLinesFormed(LinesFormed linesFormed) {
         }
 
     }

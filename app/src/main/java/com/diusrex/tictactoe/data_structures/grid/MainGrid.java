@@ -81,6 +81,11 @@ public class MainGrid implements Grid {
 
         if (UndoAction.moveLostOwnership(engine, getSectionGrid(undoneTopMove.getSection()), undoneTopMove)) {
             getSectionGrid(undoneTopMove.getSection()).setSectionOwner(Player.Unowned, null);
+
+            // The game may have progressed past winning this
+            if (UndoAction.moveLostOwnership(engine, this, undoneTopMove)) {
+                owner = Player.Unowned;
+            }
         }
     }
 
