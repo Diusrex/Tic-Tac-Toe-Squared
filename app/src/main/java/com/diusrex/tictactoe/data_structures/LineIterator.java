@@ -58,7 +58,6 @@ public class LineIterator {
         }
     }
     
-    // TODO: Should be tested
     public boolean containsPosition(Position position) {
         for (int i = 0; !isDone(i); ++i) {
             if (allPositions[i].getGridX() == position.getGridX() && allPositions[i].getGridY() == position.getGridY()) {

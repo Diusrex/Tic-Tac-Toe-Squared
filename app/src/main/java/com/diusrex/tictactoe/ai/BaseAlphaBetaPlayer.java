@@ -50,8 +50,9 @@ public abstract class BaseAlphaBetaPlayer extends AIPlayerWithScorer {
             double score = - getBestMoveAndItsScore(board, depthLeft - 1, -beta, -alpha).score;
             board.undoLastMove();
 
-            if (bestMove == null || score > bestMove.score)
+            if (bestMove == null || score > bestMove.score) {
                 bestMove = new MoveScore(move, score);
+            }
 
             alpha = Math.max(alpha, score);
 
