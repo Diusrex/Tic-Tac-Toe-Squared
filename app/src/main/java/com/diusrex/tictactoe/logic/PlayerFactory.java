@@ -4,7 +4,7 @@ import com.diusrex.tictactoe.ai.AIPlayer;
 import com.diusrex.tictactoe.ai.ScalingAlphaBetaPlayer;
 import com.diusrex.tictactoe.ai.UnScalingMiniMaxPlayer;
 import com.diusrex.tictactoe.ai.scoring_calculations.Scorer;
-import com.diusrex.tictactoe.ai.scoring_calculations.fixed.ScoringFunction;
+import com.diusrex.tictactoe.ai.scoring_calculations.fixed.GridScoringFunction;
 import com.diusrex.tictactoe.ai.scoring_calculations.fixed.ScoringValues;
 import com.diusrex.tictactoe.ai.scoring_calculations.fixed.StaticScorer;
 
@@ -30,10 +30,10 @@ public class PlayerFactory {
     }
 
     public static Scorer getEasyValues() {
-        ScoringFunction.Builder scoringBuilder = new ScoringFunction.Builder();
-        ScoringFunction mainFunction = scoringBuilder.setScoreValues(0, 30, 50, 40).build();
-        ScoringFunction sectionsFunction = scoringBuilder.setScoreValues(-1, 2, 4, 3).build();
-        return new StaticScorer(new ScoringValues(mainFunction, sectionsFunction));
+        GridScoringFunction.Builder scoringBuilder = new GridScoringFunction.Builder();
+        GridScoringFunction mainGridFunction = scoringBuilder.setScoreValues(0, 30, 50, 40).build();
+        GridScoringFunction sectionsFunction = scoringBuilder.setScoreValues(-1, 2, 4, 3).build();
+        return new StaticScorer(new ScoringValues(mainGridFunction, sectionsFunction));
     }
 
     private static AIPlayer createEasyPlayer() {
@@ -41,10 +41,10 @@ public class PlayerFactory {
     }
 
     public static Scorer getMediumValues() {
-        ScoringFunction.Builder scoringBuilder = new ScoringFunction.Builder();
-        ScoringFunction mainFunction = scoringBuilder.setScoreValues(0, 27, 94, 56).build();
-        ScoringFunction sectionsFunction = scoringBuilder.setScoreValues(-14, 0, 11, 4).build();
-        return new StaticScorer(new ScoringValues(mainFunction, sectionsFunction));
+        GridScoringFunction.Builder scoringBuilder = new GridScoringFunction.Builder();
+        GridScoringFunction mainGridFunction = scoringBuilder.setScoreValues(0, 27, 94, 56).build();
+        GridScoringFunction sectionsFunction = scoringBuilder.setScoreValues(-14, 0, 11, 4).build();
+        return new StaticScorer(new ScoringValues(mainGridFunction, sectionsFunction));
     }
 
     private static AIPlayer createMediumPlayer() {
@@ -52,10 +52,10 @@ public class PlayerFactory {
     }
 
     public static Scorer getHardValues() {
-        ScoringFunction.Builder scoringBuilder = new ScoringFunction.Builder();
-        ScoringFunction mainFunction = scoringBuilder.setScoreValues(0, 33, 70, 63).build();
-        ScoringFunction sectionsFunction = scoringBuilder.setScoreValues(-9, 3, 12, 14).build();
-        return new StaticScorer(new ScoringValues(mainFunction, sectionsFunction));
+        GridScoringFunction.Builder scoringBuilder = new GridScoringFunction.Builder();
+        GridScoringFunction mainGridFunction = scoringBuilder.setScoreValues(0, 42, 99, 33).build();
+        GridScoringFunction sectionsFunction = scoringBuilder.setScoreValues(-2, 8, 24, 3).build();
+        return new StaticScorer(new ScoringValues(mainGridFunction, sectionsFunction));
     }
 
     private static AIPlayer createHardPlayer() {

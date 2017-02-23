@@ -12,8 +12,8 @@ import com.diusrex.tictactoe.logic.GridLists;
 public class StaticScorer extends Scorer {
     public static final String IDENTIFIER = "StaticScorer";
     public static final double WIN_SCORE = 10000000;
-    private static final PlayerScoreCalculator SectionImportantWrapper = new SectionIsImportantForPlayerScoreCalculator();
-    private static final PlayerScoreCalculator SectionUnimportantWrapper = new SectionIsUnimportantForPlayerScoreCalculator();
+    private static final PlayerGridScoreCalculator SectionImportantWrapper = new SectionIsImportantForPlayerScoreCalculator();
+    private static final PlayerGridScoreCalculator SectionUnimportantWrapper = new SectionIsUnimportantForPlayerScoreCalculator();
     private final ScoringValues scoring;
 
     public StaticScorer(ScoringValues scoring) {
@@ -36,37 +36,37 @@ public class StaticScorer extends Scorer {
     private int calculateSectionScore(Player positivePlayer, BoardStatus board, SectionPosition section, Grid sectionGrid) {
         Player negativePlayer = positivePlayer.opposite();
 
-        ScoringFunction scoringFunction = scoring.getSectionScoring();
+        GridScoringFunction scoringFunction = scoring.getSectionScoring();
         if (!sectionGrid.canBeWon()) {
-            return SectionUnimportantWrapper.calculateSetupScore(positivePlayer, sectionGrid, scoringFunction)
-                    - SectionUnimportantWrapper.calculateSetupScore(negativePlayer, sectionGrid, scoringFunction);
+            return SectionUnimportantWrapper.calculateGridScoreForPlayer(positivePlayer, sectionGrid, scoringFunction)
+                    - SectionUnimportantWrapper.calculateGridScoreForPlayer(negativePlayer, sectionGrid, scoringFunction);
         }
 
         int score = 0;
         if (board.sectionIsImportantToPlayer(section, positivePlayer)) {
-            score += SectionImportantWrapper.calculateSetupScore(positivePlayer, sectionGrid, scoringFunction);
+            score += SectionImportantWrapper.calculateGridScoreForPlayer(positivePlayer, sectionGrid, scoringFunction);
         } else {
-            score += SectionUnimportantWrapper.calculateSetupScore(positivePlayer, sectionGrid, scoringFunction);
+            score += SectionUnimportantWrapper.calculateGridScoreForPlayer(positivePlayer, sectionGrid, scoringFunction);
         }
 
         if (board.sectionIsImportantToPlayer(section, negativePlayer)) {
-            score -= SectionImportantWrapper.calculateSetupScore(negativePlayer, sectionGrid, scoringFunction);
+            score -= SectionImportantWrapper.calculateGridScoreForPlayer(negativePlayer, sectionGrid, scoringFunction);
         } else {
-            score -= SectionUnimportantWrapper.calculateSetupScore(negativePlayer, sectionGrid, scoringFunction);
+            score -= SectionUnimportantWrapper.calculateGridScoreForPlayer(negativePlayer, sectionGrid, scoringFunction);
         }
 
         return score;
     }
 
-    private int calculateGridScoreWinningGridIsImportantForBothPlayers(Player positivePlayer, Grid grid, ScoringFunction scoringFunction) {
+    private int calculateGridScoreWinningGridIsImportantForBothPlayers(Player positivePlayer, Grid grid, GridScoringFunction scoringFunction) {
         Player negativePlayer = positivePlayer.opposite();
         if (!grid.canBeWon()) {
-            return SectionUnimportantWrapper.calculateSetupScore(positivePlayer, grid, scoringFunction)
-                    - SectionUnimportantWrapper.calculateSetupScore(negativePlayer, grid, scoringFunction);
+            return SectionUnimportantWrapper.calculateGridScoreForPlayer(positivePlayer, grid, scoringFunction)
+                    - SectionUnimportantWrapper.calculateGridScoreForPlayer(negativePlayer, grid, scoringFunction);
         }
 
-        return SectionImportantWrapper.calculateSetupScore(positivePlayer, grid, scoringFunction)
-                - SectionImportantWrapper.calculateSetupScore(negativePlayer, grid, scoringFunction);
+        return SectionImportantWrapper.calculateGridScoreForPlayer(positivePlayer, grid, scoringFunction)
+                - SectionImportantWrapper.calculateGridScoreForPlayer(negativePlayer, grid, scoringFunction);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class StaticScorer extends Scorer {
 
     @Override
     protected void saveInternalState(PrintStream logger) {
-        ScoringFunction cF = scoring.getMainScoring();
+        GridScoringFunction cF = scoring.getMainScoring();
         logger.print(cF.getCannotWinPointScore() + " " + cF.getOwnsOnlyTakenInLine() + " "
                 + cF.getOwnsBothOnlyTakenInLine() + " " + cF.blockedPlayerInLine() + " ");
 

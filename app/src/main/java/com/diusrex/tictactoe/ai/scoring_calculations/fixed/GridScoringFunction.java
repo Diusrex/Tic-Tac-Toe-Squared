@@ -2,9 +2,13 @@ package com.diusrex.tictactoe.ai.scoring_calculations.fixed;
 
 import com.diusrex.tictactoe.data_structures.position.Position;
 
-public class ScoringFunction {
+// Contains all of the different scoring possible for a single Grid.
+// Should probably be different for the the two types of grids - section and main grid.
+// Immutable class.
+public class GridScoringFunction {
+    // TODO: Remove multipliers, and move into scoring values.
     private static final int DEFAULT_MULTIPLIER = 1;
-    private static final int DEFAULT_SCORE = 1;
+    private static final int DEFAULT_SCORE = 0;
     private final int middleMultiplier;
     private final int cornerMultiplier;
     private final int outerCenterMultiplier;
@@ -40,14 +44,14 @@ public class ScoringFunction {
             return this;
         }
 
-        public ScoringFunction build() {
-            return new ScoringFunction(middleMultiplier, cornerMultiplier, outerCenterMultiplier,
+        public GridScoringFunction build() {
+            return new GridScoringFunction(middleMultiplier, cornerMultiplier, outerCenterMultiplier,
                     cannotWinPointScore, ownsOnlyTakenInLineScore, ownsBothTakenInLineScore,
                     blockedPlayerInLineScore);
         }
     }
 
-    private ScoringFunction(int middleMultiplier, int cornerMultiplier, int outerCenterMultiplier,
+    private GridScoringFunction(int middleMultiplier, int cornerMultiplier, int outerCenterMultiplier,
             int cannotWinPointScore, int onesOnlyTakenInLineScore, int ownsBothTakenInLineScore,
             int blockedPlayerInLineScore) {
         this.middleMultiplier = middleMultiplier;
@@ -59,6 +63,7 @@ public class ScoringFunction {
         this.blockedPlayerInLineScore = blockedPlayerInLineScore;
     }
 
+    // Returns the multiplier for the child of this guy.
     public int getMultiplier(Position pos) {
         if (pos.getGridX() == 1 && pos.getGridY() == 1)
             return middleMultiplier;
@@ -80,6 +85,7 @@ public class ScoringFunction {
         return ownsBothTakenInLineScore;
     }
 
+    // Note: Should be used for how many times the OTHER player blocked us (negative value of course)
     public int blockedPlayerInLine() {
         return blockedPlayerInLineScore;
     }

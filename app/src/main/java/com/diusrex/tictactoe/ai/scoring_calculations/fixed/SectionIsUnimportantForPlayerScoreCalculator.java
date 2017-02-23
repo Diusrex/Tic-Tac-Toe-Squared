@@ -1,6 +1,5 @@
 package com.diusrex.tictactoe.ai.scoring_calculations.fixed;
 
-import com.diusrex.tictactoe.ai.scoring_calculations.PlayerScoreCalculator;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.grid.Grid;
 import com.diusrex.tictactoe.data_structures.position.BoxPosition;
@@ -14,14 +13,14 @@ import com.diusrex.tictactoe.logic.GridLists;
  *
  * Basic idea is, punish moves that are unimportant
  */
-public class SectionIsUnimportantForPlayerScoreCalculator implements PlayerScoreCalculator {
+public class SectionIsUnimportantForPlayerScoreCalculator implements PlayerGridScoreCalculator {
 
     @Override
-    public int calculateSetupScore(Player currentPlayer, Grid grid, ScoringFunction scoringFunction) {
+    public int calculateGridScoreForPlayer(Player currentPlayer, Grid grid, GridScoringFunction scoringFunction) {
         return getAllPointScores(currentPlayer, grid, scoringFunction);
     }
 
-    private int getAllPointScores(Player currentPlayer, Grid grid, ScoringFunction scoringFunction) {
+    private int getAllPointScores(Player currentPlayer, Grid grid, GridScoringFunction scoringFunction) {
         int score = 0;
         for (BoxPosition box : GridLists.getAllStandardBoxPositions()) {
             score += getPointScore(grid.getPointOwner(box), currentPlayer, scoringFunction, box);
@@ -30,7 +29,7 @@ public class SectionIsUnimportantForPlayerScoreCalculator implements PlayerScore
         return score;
     }
 
-    private int getPointScore(Player pointOwner, Player currentPlayer, ScoringFunction scoringFunction, BoxPosition box) {
+    private int getPointScore(Player pointOwner, Player currentPlayer, GridScoringFunction scoringFunction, BoxPosition box) {
         if (pointOwner == currentPlayer)
             return scoringFunction.getCannotWinPointScore();
 

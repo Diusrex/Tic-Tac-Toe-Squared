@@ -4,25 +4,26 @@ import java.io.PrintStream;
 
 import com.diusrex.tictactoe.data_structures.position.SectionPosition;
 
+// A convenience wrapper to store the two ScoringFunctions - one for mainGrid, and other for section storing
 public class ScoringValues {
-    private final ScoringFunction mainScoring;
-    private final ScoringFunction sectionScoring;
+    private final GridScoringFunction mainGridScoring;
+    private final GridScoringFunction sectionScoring;
 
-    public ScoringValues(ScoringFunction mainScoring, ScoringFunction sectionScoring) {
-        this.mainScoring = mainScoring;
+    public ScoringValues(GridScoringFunction mainScoring, GridScoringFunction sectionScoring) {
+        this.mainGridScoring = mainScoring;
         this.sectionScoring = sectionScoring;
     }
 
-    public ScoringFunction getMainScoring() {
-        return mainScoring;
+    public GridScoringFunction getMainScoring() {
+        return mainGridScoring;
     }
 
-    public ScoringFunction getSectionScoring() {
+    public GridScoringFunction getSectionScoring() {
         return sectionScoring;
     }
 
     public int getSectionGridMultiplier(SectionPosition section) {
-        return mainScoring.getMultiplier(section);
+        return mainGridScoring.getMultiplier(section);
     }
 
     // Don't bother to save any state, since it hasn't changed at all.

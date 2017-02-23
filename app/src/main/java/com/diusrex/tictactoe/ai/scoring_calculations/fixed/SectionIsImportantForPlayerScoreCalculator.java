@@ -1,34 +1,31 @@
 package com.diusrex.tictactoe.ai.scoring_calculations.fixed;
 
-import com.diusrex.tictactoe.ai.scoring_calculations.PlayerScoreCalculator;
 import com.diusrex.tictactoe.data_structures.LineIterator;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.grid.Grid;
 import com.diusrex.tictactoe.data_structures.position.Position;
 import com.diusrex.tictactoe.logic.GridLists;
 
-public class SectionIsImportantForPlayerScoreCalculator implements PlayerScoreCalculator {
+// Will only calculate for this player - since other player won't care if we block them
+// in a section that doesn't help them.
+public class SectionIsImportantForPlayerScoreCalculator implements PlayerGridScoreCalculator {
 
     @Override
-    public int calculateSetupScore(Player currentPlayer, Grid grid, ScoringFunction scoringFunction) {
-        int score = 0;
-
-        score += calculateAllLineScores(currentPlayer, grid, scoringFunction);
-
-        return score;
+    public int calculateGridScoreForPlayer(Player currentPlayer, Grid grid, GridScoringFunction scoringFunction) {
+        return calculateAllLineScores(currentPlayer, grid, scoringFunction);
     }
 
     // Must calculate score for both winning lines, and enemy winning lines
-    private int calculateAllLineScores(Player currentPlayer, Grid grid, ScoringFunction scoringFunction) {
+    private int calculateAllLineScores(Player currentPlayer, Grid grid, GridScoringFunction scoringFunction) {
         int score = 0;
 
-        for (LineIterator iter : GridLists.getAllLineIterators())
+        for (LineIterator iter : GridLists.getAllLineIterators()) {
             score += calculateLineScore(grid, iter, currentPlayer, scoringFunction);
-
+        }
         return score;
     }
 
-    private int calculateLineScore(Grid grid, LineIterator iter, Player currentPlayer, ScoringFunction scoringFunction) {
+    private int calculateLineScore(Grid grid, LineIterator iter, Player currentPlayer, GridScoringFunction scoringFunction) {
         int numOwnPlayer = 0, numOtherPlayer = 0;
 
         for (int pos = 0; !iter.isDone(pos); ++pos) {

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
-import com.diusrex.tictactoe.ai.scoring_calculations.fixed.ScoringFunction;
+import com.diusrex.tictactoe.ai.scoring_calculations.fixed.GridScoringFunction;
 import com.diusrex.tictactoe.ai.scoring_calculations.fixed.ScoringValues;
 
 /*
@@ -30,21 +30,21 @@ public class GenerateAIFromFile extends TournamentAIGenerator {
         Set<ScoringValues> allInformations = new HashSet<ScoringValues>();
 
         while (allInformations.size() < numberOfAIInformation) {
-            ScoringFunction mainScoring = loadScoring();
-            ScoringFunction sectionScoring = loadScoring();
-            allInformations.add(new ScoringValues(mainScoring, sectionScoring));
+            GridScoringFunction mainGridScoring = loadScoring();
+            GridScoringFunction sectionScoring = loadScoring();
+            allInformations.add(new ScoringValues(mainGridScoring, sectionScoring));
         }
 
         return allInformations;
     }
 
-    private ScoringFunction loadScoring() {
+    private GridScoringFunction loadScoring() {
         int cannotWinPointScore = scanner.nextInt();
         int ownsOnlyTakenInLineScore = scanner.nextInt();
         int ownsBothTakenInLineScore = scanner.nextInt();
         int blockedPlayerInLineScore = scanner.nextInt();
 
-        return new ScoringFunction.Builder().setScoreValues(cannotWinPointScore, ownsOnlyTakenInLineScore,
+        return new GridScoringFunction.Builder().setScoreValues(cannotWinPointScore, ownsOnlyTakenInLineScore,
                 ownsBothTakenInLineScore, blockedPlayerInLineScore).build();
     }
 
