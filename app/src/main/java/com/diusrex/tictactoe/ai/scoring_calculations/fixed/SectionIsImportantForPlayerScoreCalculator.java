@@ -6,8 +6,14 @@ import com.diusrex.tictactoe.data_structures.grid.Grid;
 import com.diusrex.tictactoe.data_structures.position.Position;
 import com.diusrex.tictactoe.logic.GridLists;
 
-// Will only calculate for this player - since other player won't care if we block them
-// in a section that doesn't help them.
+/*
+ * Should be used when both:
+ *
+ * 1) Able to win the section
+ * 2) Able to use the section to win the game
+ *
+ * Reward for setting up lines where can win and punish for getting blocked by opponent.
+ */
 public class SectionIsImportantForPlayerScoreCalculator implements PlayerGridScoreCalculator {
 
     @Override

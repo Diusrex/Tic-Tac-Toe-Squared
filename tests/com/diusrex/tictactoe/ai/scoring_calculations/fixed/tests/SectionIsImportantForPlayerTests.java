@@ -12,7 +12,8 @@ import com.diusrex.tictactoe.ai.scoring_calculations.fixed.SectionIsImportantFor
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.position.Position;
 
-public class SectionIsImportantTests {
+
+public class SectionIsImportantForPlayerTests {
     Player un = Player.Unowned;
     Player p1 = Player.Player_1;
     Player p2 = Player.Player_2;
@@ -38,7 +39,7 @@ public class SectionIsImportantTests {
     
     @Test
     public void testGridIsEqual() {
-        // Only two lines do not have the players
+        // No one owns anything
         TestingGrid grid = new TestingGrid(Player.Unowned,
                 new Player[][]{
                     {un, un, un},

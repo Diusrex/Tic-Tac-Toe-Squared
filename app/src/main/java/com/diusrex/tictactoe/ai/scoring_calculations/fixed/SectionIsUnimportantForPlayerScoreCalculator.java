@@ -6,7 +6,7 @@ import com.diusrex.tictactoe.data_structures.position.BoxPosition;
 import com.diusrex.tictactoe.logic.GridLists;
 
 /*
- * Should be used when:
+ * Should be used when either:
  *
  * 1) Unable to win the current section
  * 2) Unable to use the section to win the game
