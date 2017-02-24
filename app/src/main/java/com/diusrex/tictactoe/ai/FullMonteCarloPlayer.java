@@ -167,7 +167,12 @@ public class FullMonteCarloPlayer extends AIPlayer {
     }
 
     @Override
-    public void saveInternalState(PrintStream logger) {
-        logger.println(numberOfIterations);
+    public void saveInternalPlayerSpecification(PrintStream logger) {
+        // Don't have any additional identifiers
+    }
+
+    @Override
+    public void saveParameters(PrintStream printStream) {
+        printStream.println(numberOfIterations);
     }
 }

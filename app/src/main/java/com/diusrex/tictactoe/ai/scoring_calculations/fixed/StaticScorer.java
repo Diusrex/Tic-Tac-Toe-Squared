@@ -85,7 +85,12 @@ public class StaticScorer extends Scorer {
     }
 
     @Override
-    protected void saveInternalState(PrintStream logger) {
+    protected void saveInternalIdentifiers(PrintStream logger) {
+        // Doesn't have any special identifiers.
+    }
+
+    @Override
+    public void saveParameters(PrintStream logger) {
         GridScoringFunction cF = scoring.getMainScoring();
         logger.print(cF.getCannotWinPointScore() + " " + cF.getOwnsOnlyTakenInLine() + " "
                 + cF.getOwnsBothOnlyTakenInLine() + " " + cF.blockedPlayerInLine() + " ");

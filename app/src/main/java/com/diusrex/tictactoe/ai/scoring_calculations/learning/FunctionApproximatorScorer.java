@@ -139,17 +139,6 @@ public class FunctionApproximatorScorer extends Scorer {
         //System.out.println();
     }
 
-    public void saveState(PrintStream logger) {
-        logger.append("FunctionApproximator\n");
-        logger.append("" + alpha + " " + lambda + " " + gamma + "\n");
-        logger.append("Win increased: " + shouldEnsureWinHigher);
-        if (shouldPrintout) {
-            logger.append("Exceeded basic win score " + numberTimesExceededCount + " times");
-        }
-        logger.append(approximator.getIdentifier() + "\n");
-        approximator.saveState(logger);
-    }
-
     @Override
     public double getWinScore() {
         if (shouldEnsureWinHigher) {
@@ -160,9 +149,18 @@ public class FunctionApproximatorScorer extends Scorer {
     }
 
     @Override
-    protected void saveInternalState(PrintStream logger) {
+    protected void saveInternalIdentifiers(PrintStream logger) {
+        if (shouldPrintout) {
+            logger.append("Exceeded basic win score " + numberTimesExceededCount + " times");
+        }
         logger.println(approximator.getIdentifier());
-        approximator.saveState(logger);
+    }
+    
+    @Override
+    public void saveParameters(PrintStream logger) {
+        logger.append("" + alpha + " " + lambda + " " + gamma + "\n");
+        logger.append("Win increased: " + shouldEnsureWinHigher);
+        approximator.saveParameters(logger);
     }
 
     @Override

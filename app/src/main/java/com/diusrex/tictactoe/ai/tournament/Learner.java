@@ -104,7 +104,7 @@ public class Learner {
             System.exit(1);
         }
         
-        player.saveState(logFile);
+        player.completelySavePlayer(logFile);
         
         int win = 0, tie = 0, loss = 0;
         int winDepth[] = new int[82];
@@ -211,7 +211,7 @@ public class Learner {
             logFile.print(drawDepth[d] + " ");
         }
         
-        player.saveState(logFile);
+        player.completelySavePlayer(logFile);
         
         // Print out parameter stats
         for (int i = 0; i < approximator.numberElements(); ++i) {

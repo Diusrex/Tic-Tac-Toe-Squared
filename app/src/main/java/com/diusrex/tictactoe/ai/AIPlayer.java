@@ -29,10 +29,25 @@ public abstract class AIPlayer {
     // Should be used to reset any learning it was doing
     public abstract void newGame(BoardStatus board);
     
-    public final void saveState(PrintStream logger) {
-        logger.println(getIdentifier());
-        saveInternalState(logger);
+    // This should allow the bot type to be completely recreated, both the types inside it
+    // and the weights used.
+    public final void completelySavePlayer(PrintStream printStream) {
+        savePlayerSpecification(printStream);
+        saveParameters(printStream);
+    }
+    
+    // This should allow the bot type to be completely recreated, albiet without
+    // any weights
+    public final void savePlayerSpecification(PrintStream printStream) {
+        printStream.println(getIdentifier());
+        saveInternalPlayerSpecification(printStream);
     }
 
-    protected abstract void saveInternalState(PrintStream logger);
+    // This should allow the bot type to be completely recreated, other than the necessary weights.
+    // Should NOT save the weights.
+    protected abstract void saveInternalPlayerSpecification(PrintStream printStream);
+
+    // This should allow the bot to be completely recreated given that we already knew
+    // what type of bot it was - just need to know the numbers
+    public abstract void saveParameters(PrintStream printStream);
 }

@@ -48,12 +48,12 @@ public abstract class AIPlayerWithScorer extends AIPlayer {
     }
 
     @Override
-    public void saveInternalState(PrintStream logger) {
-        saveAdditionalPlayerState(logger);
-        scorer.saveState(logger);
+    protected void saveInternalPlayerSpecification(PrintStream logger) {
+        scorer.saveIdentifiers(logger);
     }
 
-    // Default to nothing
-    protected void saveAdditionalPlayerState(PrintStream logger) {
+    @Override
+    public final void saveParameters(PrintStream logger) {
+        scorer.saveParameters(logger);  
     }
 }

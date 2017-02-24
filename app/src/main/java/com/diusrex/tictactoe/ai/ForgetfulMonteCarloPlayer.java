@@ -171,8 +171,12 @@ public class ForgetfulMonteCarloPlayer extends AIPlayer {
     }
 
     @Override
-    public void saveInternalState(PrintStream logger) {
-        logger.println("ForgetfulMonteCarloPlayer");
-        logger.println(numberOfIterations);
+    protected void saveInternalPlayerSpecification(PrintStream printStream) {
+        // Don't have any additional identifiers
+    }
+
+    @Override
+    public void saveParameters(PrintStream printStream) {
+        printStream.println(numberOfIterations);
     }
 }

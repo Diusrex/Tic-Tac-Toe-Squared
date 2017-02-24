@@ -25,6 +25,7 @@ public class AITournament {
 
     private static int numberOfResultsKept;
 
+    private static boolean isCleanOutput;
     private static boolean isVerbose;
     private static boolean isTesting;
 
@@ -95,6 +96,8 @@ public class AITournament {
         parser.addArgument("-k", "--number-AI-kept").dest("kept").type(Integer.class).setDefault(0)
                 .help("Will cause a final round to be run, with given number of each earlier run");
         parser.addArgument("-f", "--file").setDefault("").help("File to load AI from");
+        parser.addArgument("-c", "--clean_output").type(Boolean.class).setDefault(false).action(Arguments.storeTrue())
+                .help("Do not print out any details for the AI's, just the ranking they had based on weights.");
         parser.addArgument("-v", "--verbose").type(Boolean.class).setDefault(false).action(Arguments.storeTrue())
                 .help("Print out additional information on how the AI's did");
         parser.addArgument("--test").type(Boolean.class).setDefault(false).action(Arguments.storeTrue())
@@ -116,8 +119,13 @@ public class AITournament {
         numberOfThreads = ns.getInt("threads");
         numberOfResultsKept = ns.getInt("kept");
 
-        isTesting = ns.getBoolean("test");
+        isCleanOutput = ns.getBoolean("clean_output");
         isVerbose = ns.getBoolean("verbose");
+        isTesting = ns.getBoolean("test");
+        
+        if (isCleanOutput && isVerbose) {
+            throw new IllegalArgumentException("Can't be clean output and verbose");
+        }
 
         List<String> AITypes = ns.getList("AITypes");
         String fileName = ns.getString("file");
@@ -199,7 +207,7 @@ public class AITournament {
                 printStream.print("At " + (i + 1) + ": ");
             }
             BaseScoringValuesTestResults result = results.get(i);
-            result.printOut(printStream, isVerbose);
+            result.printOut(printStream, isCleanOutput, isVerbose);
 
             printStream.println();
         }

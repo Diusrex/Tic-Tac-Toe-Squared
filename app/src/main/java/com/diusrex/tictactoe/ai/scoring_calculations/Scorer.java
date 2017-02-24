@@ -19,12 +19,18 @@ public abstract class Scorer {
 
     public abstract double getWinScore();
 
-    public void saveState(PrintStream logger) {
+    // This should allow the scorer to be completely recreated (without any weights)
+    // given that we already knew what type it was - just need weights as well
+    public final void saveIdentifiers(PrintStream logger) {
         logger.println(getIdentifier());
-        saveInternalState(logger);
+        saveInternalIdentifiers(logger);
     }
     
-    protected abstract void saveInternalState(PrintStream logger);
+    protected abstract void saveInternalIdentifiers(PrintStream logger);
+
+    // This will save all the parameters like bots - including weights (which may be changed over time).
+    // Just requires knowing what classes were used, which is stored by saveIdentifiers
+    public abstract void saveParameters(PrintStream logger);
 
     public abstract String getIdentifier();
 }

@@ -69,12 +69,16 @@ public class BaseScoringValuesTestResults implements Comparable<BaseScoringValue
         return timeResults;
     }
 
-    public void printOut(PrintStream printStream, boolean isVerbose) {
+    public void printOut(PrintStream printStream, boolean isCleanOutput, boolean isVerbose) {
         if (isVerbose) {
             printStream.println("wins: " + won + " draw: " + drew + " loss: " + lost);
         }
         
-        player.saveState(printStream);
+        if (isCleanOutput) {
+            player.saveParameters(printStream);
+        } else {
+            player.completelySavePlayer(printStream);
+        }
     }
 
     public void reset() {

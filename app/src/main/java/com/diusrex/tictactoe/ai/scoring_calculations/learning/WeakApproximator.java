@@ -133,7 +133,7 @@ public class WeakApproximator implements FunctionApproximator {
     }
 
     @Override
-    public void saveState(PrintStream logger) {
+    public void saveParameters(PrintStream logger) {
         for (int i = 0; i < NUM_FEATURES; ++i) {
             logger.append(weights[i] + " ");
         }
