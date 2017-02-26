@@ -28,6 +28,8 @@ public class AITournament {
     private static boolean isCleanOutput;
     private static boolean isVerbose;
     private static boolean isTesting;
+    
+    private static String resultsFile;
 
     private static TournamentAIGenerator generator;
 
@@ -82,7 +84,7 @@ public class AITournament {
 
         logFile.println("Completed all runs " + (getCurrentTime() - finalRunStart));
 
-        printOutResult(bestResults, "Best Results.txt");
+        printOutResult(bestResults, resultsFile);
 
         logFile.println("Completed all aftessr " + (getCurrentTime() - totalStartTime));
     }
@@ -106,7 +108,9 @@ public class AITournament {
                 .nargs("+")
                 .choices(UnScalingMiniMaxPlayer.IDENTIFIER, ScalingMiniMaxPlayer.IDENTIFIER,
                         UnScalingAlphaBetaPlayer.IDENTIFIER, ScalingAlphaBetaPlayer.IDENTIFIER).help("AITypes to use");
-
+        parser.addArgument("-o", "--output_file").type(String.class).setDefault("Best Results.txt")
+                .help("File to write results to");
+        
         Namespace ns = null;
         try {
             ns = parser.parseArgs(args);
@@ -122,6 +126,8 @@ public class AITournament {
         isCleanOutput = ns.getBoolean("clean_output");
         isVerbose = ns.getBoolean("verbose");
         isTesting = ns.getBoolean("test");
+        
+        resultsFile = ns.getString("output_file");
         
         if (isCleanOutput && isVerbose) {
             throw new IllegalArgumentException("Can't be clean output and verbose");
