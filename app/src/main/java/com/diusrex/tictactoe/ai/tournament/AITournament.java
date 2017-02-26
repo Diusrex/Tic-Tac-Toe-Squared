@@ -95,7 +95,7 @@ public class AITournament {
         parser.addArgument("-t", "--threads").type(Integer.class).setDefault(1).help("Specify number of threads");
         parser.addArgument("-k", "--number-AI-kept").dest("kept").type(Integer.class).setDefault(0)
                 .help("Will cause a final round to be run, with given number of each earlier run");
-        parser.addArgument("-f", "--file").setDefault("").help("File to load AI from");
+        parser.addArgument("-f", "--file").help("File to load AI from");
         parser.addArgument("-c", "--clean_output").type(Boolean.class).setDefault(false).action(Arguments.storeTrue())
                 .help("Do not print out any details for the AI's, just the ranking they had based on weights.");
         parser.addArgument("-v", "--verbose").type(Boolean.class).setDefault(false).action(Arguments.storeTrue())
@@ -129,11 +129,15 @@ public class AITournament {
 
         List<String> AITypes = ns.getList("AITypes");
         String fileName = ns.getString("file");
-
-        try {
-            Scanner scanner = new Scanner(new File(fileName));
-            generator = new GenerateAIFromFile(AITypes, scanner);
-        } catch (FileNotFoundException e) {
+        if (fileName != null) {
+            try {
+                Scanner scanner = new Scanner(new File(fileName));
+                generator = new GenerateAIFromFile(AITypes, scanner);
+            } catch (FileNotFoundException e) {
+                System.out.println(e);
+                System.exit(1);
+            }
+        } else {
             generator = new GenerateAIRandomly(AITypes);
         }
     }
