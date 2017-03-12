@@ -7,10 +7,17 @@ import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.Player;
 
 // Will call the other functions in this class
+// This function uses eligibility traces to train - will constantly
+// train on the features of the grid that we had once seen, keeping an
+// idea of the features using the trace
+// Try: high lambda, low gamma -> want the accumulation to reduce quickly, since getting
+// quite a bit each time
+// NOTE: If alpha value is too large, can become unstable and perform far worse than expected!
+// TODO: Way to make this guy sometimes choose 'worse' solution?
 public class FunctionApproximatorScorer extends Scorer {
     public final static String IDENTIFIER = "FunctionApproximator";
     double previousBoardEstimate;
-    double carryOver[];
+    double trace[];
     double previousGradient[];
 
     // Formula using these variables is in learnFromChange
@@ -39,7 +46,7 @@ public class FunctionApproximatorScorer extends Scorer {
         shouldEnsureWinHigher = builder.shouldEnsureWinHigher;
         shouldPrintout = builder.shouldPrintout;
         
-        carryOver = new double[approximator.numberElements()];
+        trace = new double[approximator.numberElements()];
         previousGradient = new double[approximator.numberElements()];
         ignoredGradient = new double[approximator.numberElements()];
     }
@@ -96,16 +103,18 @@ public class FunctionApproximatorScorer extends Scorer {
     @Override
     public void newGame(BoardStatus board) {
         for (int i = 0; i < approximator.numberElements(); ++i) {
-            carryOver[i] = 0;
+            trace[i] = 0;
         }
 
         approximator.getScore(board.getNextPlayer(), board, ignoredGradient);
     }
 
+    // TODO: This should be refactored to use an algorithmic class to update to make it easier
+    // to try out + compare different learning methods
     // General formula will be:
     //      delta = lambda*currentEstimate - previousEstimate
-    //      carryOver = gamma * lambda * previousCarryOver + gradient of previousEstimate
-    //      new weights = weights + alpha * delta * carryOver
+    //      trace = gamma * lambda * previousTrace + gradient of previousEstimate
+    //      weights += alpha * delta * trace
     @Override
     public void learnFromChange(BoardStatus board) {
         // Determine current estimate
@@ -114,8 +123,8 @@ public class FunctionApproximatorScorer extends Scorer {
 
         //System.out.print("Carry over: ");
         for (int i = 0; i < approximator.numberElements(); ++i) {
-            carryOver[i] = gamma * lambda * carryOver[i] + previousGradient[i];
-            approximator.update(i, alpha * delta * carryOver[i]);
+            trace[i] = gamma * lambda * trace[i] + previousGradient[i];
+            approximator.update(i, alpha * delta * trace[i]);
             //System.out.print(carryOver[i] + " ");
         }
         
