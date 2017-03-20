@@ -25,11 +25,10 @@ public class AITournament {
 
     private static int numberOfResultsKept;
 
-    private static boolean isCleanOutput;
-    private static boolean isVerbose;
     private static boolean isTesting;
-    
+
     private static String resultsFile;
+    private static String verboseFile;
 
     private static TournamentAIGenerator generator;
 
@@ -67,7 +66,7 @@ public class AITournament {
                 logFile.println("Completed run " + i + " after " + (getCurrentTime() - currentRunStart));
 
                 System.out.println("Completed " + i);
-                printOutResult(results, "Results " + i + ".txt");
+                printOutResult(results, "Results_" + i + ".txt", null);
                 addToBestResults(results, bestResults);
             }
         } else {
@@ -84,9 +83,9 @@ public class AITournament {
 
         logFile.println("Completed all runs " + (getCurrentTime() - finalRunStart));
 
-        printOutResult(bestResults, resultsFile);
+        printOutResult(bestResults, resultsFile, verboseFile);
 
-        logFile.println("Completed all aftessr " + (getCurrentTime() - totalStartTime));
+        logFile.println("Completed all after " + (getCurrentTime() - totalStartTime));
     }
 
     private static void parseArguments(String[] args) {
@@ -98,19 +97,17 @@ public class AITournament {
         parser.addArgument("-k", "--number-AI-kept").dest("kept").type(Integer.class).setDefault(0)
                 .help("Will cause a final round to be run, with given number of each earlier run");
         parser.addArgument("-f", "--file").help("File to load AI from");
-        parser.addArgument("-c", "--clean_output").type(Boolean.class).setDefault(false).action(Arguments.storeTrue())
-                .help("Do not print out any details for the AI's, just the ranking they had based on weights.");
-        parser.addArgument("-v", "--verbose").type(Boolean.class).setDefault(false).action(Arguments.storeTrue())
-                .help("Print out additional information on how the AI's did");
         parser.addArgument("--test").type(Boolean.class).setDefault(false).action(Arguments.storeTrue())
                 .help("See what will be created without running anything");
         parser.addArgument("AITypes")
                 .nargs("+")
                 .choices(UnScalingMiniMaxPlayer.IDENTIFIER, ScalingMiniMaxPlayer.IDENTIFIER,
                         UnScalingAlphaBetaPlayer.IDENTIFIER, ScalingAlphaBetaPlayer.IDENTIFIER).help("AITypes to use");
-        parser.addArgument("-o", "--output_file").type(String.class).setDefault("Best Results.txt")
-                .help("File to write results to");
-        
+        parser.addArgument("-o", "--output_file").type(String.class).setDefault("Best_Results.txt")
+                .help("File to write parameters of bots, in order of strength");
+        parser.addArgument("-v", "--verbose").type(String.class).required(false)
+                .help("File to save additional stats about the bots, optional");
+
         Namespace ns = null;
         try {
             ns = parser.parseArgs(args);
@@ -123,15 +120,10 @@ public class AITournament {
         numberOfThreads = ns.getInt("threads");
         numberOfResultsKept = ns.getInt("kept");
 
-        isCleanOutput = ns.getBoolean("clean_output");
-        isVerbose = ns.getBoolean("verbose");
         isTesting = ns.getBoolean("test");
-        
+
         resultsFile = ns.getString("output_file");
-        
-        if (isCleanOutput && isVerbose) {
-            throw new IllegalArgumentException("Can't be clean output and verbose");
-        }
+
 
         List<String> AITypes = ns.getList("AITypes");
         String fileName = ns.getString("file");
@@ -200,34 +192,47 @@ public class AITournament {
         return c.getTimeInMillis();
     }
 
-    public static void printOutResult(List<BaseScoringValuesTestResults> results, String file) {
+    // If the user doesn't want verbose output, have verboseFile be null
+    public static void printOutResult(List<BaseScoringValuesTestResults> results, String resultsFile, String verboseFile) {
         Collections.sort(results);
         Collections.reverse(results);
 
-        PrintStream printStream = System.out;
+        PrintStream resultsStream = System.out;
+        PrintStream verboseStream = null;
 
         try {
-            printStream = new PrintStream(file, "UTF-8");
+            resultsStream = new PrintStream(resultsFile, "UTF-8");
         } catch (Exception e) {
             // Will keep going to not waste the time spent
         }
 
         for (int i = 0; i < results.size(); ++i) {
-            if (isVerbose) {
-                printStream.print("At " + (i + 1) + ": ");
-            }
             BaseScoringValuesTestResults result = results.get(i);
-            result.printOut(printStream, isCleanOutput, isVerbose);
-
-            printStream.println();
+            result.printOutCompact(resultsStream);
         }
 
-        printStream.println();
-        StandardPrintouts.printTotalAITimes(printStream, results);
-        StandardPrintouts.printAIDepthInformation(printStream, results);
+        if (resultsStream != System.out) {
+            resultsStream.close();
+        }
 
-        if (printStream != System.out) {
-            printStream.close();
+        if (verboseFile != null) {
+            try {
+                verboseStream = new PrintStream(verboseFile, "UTF-8");
+            } catch (Exception e) {
+                // Will keep going to not waste the time spent
+            }
+
+            for (int i = 0; i < results.size(); ++i) {
+                verboseStream.print("At " + (i + 1) + ": ");
+                BaseScoringValuesTestResults result = results.get(i);
+                result.printOutVerbose(verboseStream);
+
+                verboseStream.println();
+            }
+
+            resultsStream.println();
+            StandardPrintouts.printTotalAITimes(resultsStream, results);
+            StandardPrintouts.printAIDepthInformation(resultsStream, results);
         }
     }
 
