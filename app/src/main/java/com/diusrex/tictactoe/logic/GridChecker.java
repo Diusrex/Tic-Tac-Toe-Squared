@@ -35,8 +35,8 @@ public interface GridChecker {
 
     boolean possibleToWinGridForPlayerUsingPosition(Grid grid, Position position, Player player);
 
-    //
+    // Will fill out the data in linesFormed based on its player using the provided grid.
     void getLinesFormed(Grid grid, LinesFormed linesFormed);
-    void getLinesFormed(Grid grid, LinesFormed linesFormed, Position position);
-
+    // Will only include lines that pass through the wanted position.
+    void getLinesFormedUsingPosition(Grid grid, LinesFormed linesFormed, Position position);
 }

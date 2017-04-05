@@ -120,7 +120,7 @@ public class StandardGridChecker implements GridChecker {
     }
     
     @Override
-    public void getLinesFormed(Grid grid, LinesFormed linesFormed, Position position) {
+    public void getLinesFormedUsingPosition(Grid grid, LinesFormed linesFormed, Position position) {
         Player main = linesFormed.mainPlayer;
         Player other = main.opposite();
         linesFormed.reset();
@@ -140,13 +140,15 @@ public class StandardGridChecker implements GridChecker {
                 else if (grid.getPointOwner(pos) == other)
                     ++otherCount;
             }
-            // No point, since cancel out
-            if (mainCount == otherCount)
-                continue;
-            // Doesn't currently handle this case
-            else if (mainCount == 3 || otherCount == 3)
-                continue;
-            else if (mainCount == 2) {
+
+            if (mainCount == 0 && otherCount == 0) {
+                ++linesFormed.emptyLines;
+            } else if (mainCount == otherCount) {
+                // No point, since cancel out
+            } else if (mainCount == 3 || otherCount == 3) {
+                // Doesn't currently handle this case. Board is already won, so shouldn't care
+                // as much about lines.
+            } else if (mainCount == 2) {
                 if (otherCount == 0)
                     ++linesFormed.twoFormedForMain;
                 else // otherCount == 1
@@ -167,6 +169,6 @@ public class StandardGridChecker implements GridChecker {
     
     @Override
     public void getLinesFormed(Grid grid, LinesFormed linesFormed) {
-        getLinesFormed(grid, linesFormed, null);
+        getLinesFormedUsingPosition(grid, linesFormed, null);
     }
 }

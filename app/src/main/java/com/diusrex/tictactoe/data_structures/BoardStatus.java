@@ -158,6 +158,6 @@ public class BoardStatus {
     }
 
     public void getLinesUsingSection(SectionPosition section, LinesFormed linesFormed) {
-        engine.getLinesFormed(sectionsOwnersGrid, linesFormed, section);
+        engine.getLinesFormedUsingPosition(sectionsOwnersGrid, linesFormed, section);
     }
 }

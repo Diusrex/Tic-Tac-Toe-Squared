@@ -201,6 +201,7 @@ public class StandardGridCheckerTests {
         grid.grid[0][1] = testedPlayer;
         grid.grid[1][0] = testedPlayer.opposite();
         checker.getLinesFormed(grid, lines);
+        assertEquals(4, lines.emptyLines); // Only 4 lines are unaffected
         assertEquals(2, lines.oneFormedForMain);
         assertEquals(2, lines.oneFormedForOther);
         assertEquals(0, lines.twoFormedForMain);
@@ -208,8 +209,9 @@ public class StandardGridCheckerTests {
         assertEquals(0, lines.mainBlocked);
         assertEquals(0, lines.otherBlocked);
 
-        // Check that it doesn't care about old values
+        // Check that it properly resets values.
         checker.getLinesFormed(grid, lines);
+        assertEquals(4, lines.emptyLines);
         assertEquals(2, lines.oneFormedForMain);
         assertEquals(2, lines.oneFormedForOther);
     }
@@ -223,6 +225,7 @@ public class StandardGridCheckerTests {
         grid.grid[0][0] = mainPlayer;
         grid.grid[0][1] = mainPlayer;
         checker.getLinesFormed(grid, lines);
+        assertEquals(4, lines.emptyLines); // Only 4 lines are unaffected
         assertEquals(1, lines.twoFormedForMain);
         assertEquals(0, lines.twoFormedForOther);
         
@@ -230,6 +233,7 @@ public class StandardGridCheckerTests {
         grid.grid[0][0] = mainPlayer.opposite();
         grid.grid[0][1] = mainPlayer.opposite();
         checker.getLinesFormed(grid, lines);
+        assertEquals(4, lines.emptyLines); // Only 4 lines are unaffected
         assertEquals(0, lines.twoFormedForMain);
         assertEquals(1, lines.twoFormedForOther);
     }
@@ -244,6 +248,7 @@ public class StandardGridCheckerTests {
         grid.grid[0][1] = mainPlayer;
         grid.grid[0][2] = otherPlayer;
         checker.getLinesFormed(grid, lines);
+        assertEquals(2, lines.emptyLines); // Only 2 lines are unaffected
         assertEquals(1, lines.mainBlocked);
         assertEquals(0, lines.otherBlocked);
         
@@ -251,6 +256,7 @@ public class StandardGridCheckerTests {
         grid.grid[0][1] = otherPlayer;
         grid.grid[0][2] = mainPlayer;
         checker.getLinesFormed(grid, lines);
+        assertEquals(2, lines.emptyLines); // Only 2 lines are unaffected
         assertEquals(0, lines.mainBlocked);
         assertEquals(1, lines.otherBlocked);
     }
@@ -260,15 +266,17 @@ public class StandardGridCheckerTests {
         Player mainPlayer = Player.Player_1;
         LinesFormed lines = new LinesFormed(mainPlayer);
 
-        // Just sets 3 lines
+        // Just sets 3 lines, so 5 are empty
         grid.grid[0][0] = mainPlayer;
         checker.getLinesFormed(grid, lines);
+        assertEquals(5, lines.emptyLines);
         assertEquals(3, lines.oneFormedForMain);
         assertEquals(0, lines.oneFormedForOther);
 
-        // Just sets 3 lines for opposite
+        // Just sets 3 lines for opposite, so 5 are empty
         grid.grid[0][0] = mainPlayer.opposite();
         checker.getLinesFormed(grid, lines);
+        assertEquals(5, lines.emptyLines);
         assertEquals(0, lines.oneFormedForMain);
         assertEquals(3, lines.oneFormedForOther);
     }
@@ -277,13 +285,25 @@ public class StandardGridCheckerTests {
     public void testLinesIgnoreOtherPositions() {
         Player mainPlayer = Player.Player_1;
         LinesFormed lines = new LinesFormed(mainPlayer);
-        
-        Position includedPosition = BoxPosition.make(1, 0);
 
         // Just sets 1 line that includes the position
         grid.grid[0][0] = mainPlayer;
-        checker.getLinesFormed(grid, lines, includedPosition);
+        checker.getLinesFormedUsingPosition(grid, lines, BoxPosition.make(1, 0));
+        // There are 2 lines including (1, 0), with only 1 having any elements in it.
+        assertEquals(1, lines.emptyLines);
         assertEquals(1, lines.oneFormedForMain);
+        assertEquals(0, lines.oneFormedForOther);
+        
+        checker.getLinesFormedUsingPosition(grid, lines, BoxPosition.make(1, 1));
+        // There are 4 lines including (1, 1), with only 1 having any elements in it.
+        assertEquals(3, lines.emptyLines);
+        assertEquals(1, lines.oneFormedForMain);
+        assertEquals(0, lines.oneFormedForOther);
+        
+        checker.getLinesFormedUsingPosition(grid, lines, BoxPosition.make(0, 0));
+        // There are 3 lines including (0, 0), and all will include (0, 0)
+        assertEquals(0, lines.emptyLines);
+        assertEquals(3, lines.oneFormedForMain);
         assertEquals(0, lines.oneFormedForOther);
     }
 
