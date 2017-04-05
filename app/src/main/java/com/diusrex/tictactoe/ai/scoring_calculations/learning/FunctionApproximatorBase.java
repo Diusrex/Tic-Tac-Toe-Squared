@@ -26,27 +26,27 @@ public abstract class FunctionApproximatorBase implements FunctionApproximator {
             gradient[i] = 0;
         
         // The value won't be used  from previous, but should speed it up by not allocating every step
-        LinesFormed linesFormedForSection = new LinesFormed(positivePlayer);
+        LinesFormed linesFormedUsingSection = new LinesFormed(positivePlayer);
 
         int offset = 0;
         for (SectionPosition cornerPos : GridLists.getAllCornerSections()) {
-            calculateFeaturesForSection(positivePlayer, board, cornerPos, gradient, offset, linesFormedForSection);
+            calculateFeaturesForSection(positivePlayer, board, cornerPos, gradient, offset, linesFormedUsingSection);
         }
 
         offset += getNumFeaturesPerSectionType();
 
         for (SectionPosition midEdgePos : GridLists.getAllMidEdgeSections()) {
-            calculateFeaturesForSection(positivePlayer, board, midEdgePos, gradient, offset, linesFormedForSection);
+            calculateFeaturesForSection(positivePlayer, board, midEdgePos, gradient, offset, linesFormedUsingSection);
         }
         offset += getNumFeaturesPerSectionType();
 
-        calculateFeaturesForSection(positivePlayer, board, SectionPosition.make(1, 1), gradient, offset, linesFormedForSection);
+        calculateFeaturesForSection(positivePlayer, board, SectionPosition.make(1, 1), gradient, offset, linesFormedUsingSection);
 
         offset += getNumFeaturesPerSectionType();
         
         // Calculate for the maingrid specially since it will always be important
-        board.getMainGrid().getLinesFormed(linesFormedForSection);
-        calculateFeaturesForMainGrid(positivePlayer, board.getMainGrid(), gradient, offset, linesFormedForSection);
+        board.getMainGrid().getLinesFormed(linesFormedUsingSection);
+        calculateFeaturesForMainGrid(positivePlayer, board.getMainGrid(), gradient, offset, linesFormedUsingSection);
         
         double score = 0;
         for (int i = 0; i < numberElements(); ++i)
@@ -55,16 +55,16 @@ public abstract class FunctionApproximatorBase implements FunctionApproximator {
     }
 
     private final void calculateFeaturesForSection(Player positivePlayer, BoardStatus board, SectionPosition section,
-            double[] gradient, int offset, LinesFormed linesFormedForSection) {
+            double[] gradient, int offset, LinesFormed linesFormedUsingSection) {
         Grid subGrid = board.getSubGrid(section);
         
         if (!subGrid.canBeWon()) {
             // Set all lines to 0, so will treat it as not being important to either player
-            linesFormedForSection.reset();
-            calculateFeaturesForGrid(positivePlayer, subGrid, gradient, offset, linesFormedForSection);
+            linesFormedUsingSection.reset();
+            calculateFeaturesForGrid(positivePlayer, subGrid, gradient, offset, linesFormedUsingSection);
         } else {
-            board.getLinesUsingSection(section, linesFormedForSection);
-            calculateFeaturesForGrid(positivePlayer, subGrid, gradient, offset, linesFormedForSection);
+            board.getLinesUsingSection(section, linesFormedUsingSection);
+            calculateFeaturesForGrid(positivePlayer, subGrid, gradient, offset, linesFormedUsingSection);
         }
     }
     
