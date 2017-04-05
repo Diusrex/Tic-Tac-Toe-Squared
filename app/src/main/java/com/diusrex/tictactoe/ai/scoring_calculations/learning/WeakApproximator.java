@@ -79,13 +79,13 @@ public class WeakApproximator extends FunctionApproximatorBase {
         if (isImportantToPositivePlayer) {
             gradient[offset + OFFSET_FOR_ONE_IN_ROW] += linesFormed.oneFormedForMain;
             gradient[offset + OFFSET_FOR_TWO_IN_ROW] += linesFormed.twoFormedForMain;
-            gradient[offset + OFFSET_FOR_ROWS_BLOCKED] += linesFormed.mainBlocked;
+            gradient[offset + OFFSET_FOR_ROWS_BLOCKED] += linesFormed.twoWereBlockedForMain;
         }
 
         if (isImportantToOtherPlayer) {
             gradient[offset + OFFSET_FOR_ONE_IN_ROW] -= linesFormed.oneFormedForOther;
             gradient[offset + OFFSET_FOR_TWO_IN_ROW] -= linesFormed.twoFormedForOther;
-            gradient[offset + OFFSET_FOR_ROWS_BLOCKED] -= linesFormed.otherBlocked;
+            gradient[offset + OFFSET_FOR_ROWS_BLOCKED] -= linesFormed.twoWereBlockedForOther;
         }
     }
 

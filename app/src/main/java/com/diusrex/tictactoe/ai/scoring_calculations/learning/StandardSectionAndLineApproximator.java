@@ -65,7 +65,7 @@ public class StandardSectionAndLineApproximator extends FunctionApproximatorBase
                                                           PER_IN_ROW_BASE_OFFSET + 9,
                                                           PER_IN_ROW_BASE_OFFSET + 12,
                                                           PER_IN_ROW_BASE_OFFSET + 14};
-    private static final int NUM_FEATURES = SIZE_FOR_SECTION_TYPE + NUM_PER_IN_ROW * FEATURES_PER_IN_ROW;
+    public static final int NUM_FEATURES = SIZE_FOR_SECTION_TYPE + NUM_PER_IN_ROW * FEATURES_PER_IN_ROW;
     
     // TODO: What should the default for this be? Set in constructor
     // For testing purposes
@@ -112,19 +112,17 @@ public class StandardSectionAndLineApproximator extends FunctionApproximatorBase
                         linesFormed);
             }
             
-            // Do the scoring for the counts based on # in line
-            // Main player first
-            
+            // Do the scoring for the counts based on the lines this grid is a part of.
             if (isImportantToPositivePlayer) {
                 gradient[mainPlayerLinesOffset + OFFSET_FOR_ONE_IN_ROW] += linesFormed.oneFormedForMain;
                 gradient[mainPlayerLinesOffset + OFFSET_FOR_TWO_IN_ROW] += linesFormed.twoFormedForMain;
-                gradient[mainPlayerLinesOffset + OFFSET_FOR_ROWS_BLOCKED] += linesFormed.mainBlocked;
+                gradient[mainPlayerLinesOffset + OFFSET_FOR_ROWS_BLOCKED] += linesFormed.twoWereBlockedForMain;
             }
 
             if (isImportantToOtherPlayer) {
                 gradient[otherPlayerLinesOffset + OFFSET_FOR_ONE_IN_ROW] -= linesFormed.oneFormedForOther;
                 gradient[otherPlayerLinesOffset + OFFSET_FOR_TWO_IN_ROW] -= linesFormed.twoFormedForOther;
-                gradient[otherPlayerLinesOffset + OFFSET_FOR_ROWS_BLOCKED] -= linesFormed.otherBlocked;
+                gradient[otherPlayerLinesOffset + OFFSET_FOR_ROWS_BLOCKED] -= linesFormed.twoWereBlockedForOther;
             }
         }
 
@@ -158,13 +156,13 @@ public class StandardSectionAndLineApproximator extends FunctionApproximatorBase
         if (isImportantToPositivePlayer) {
             gradient[offset + OFFSET_FOR_ONE_IN_ROW] += linesFormed.oneFormedForMain;
             gradient[offset + OFFSET_FOR_TWO_IN_ROW] += linesFormed.twoFormedForMain;
-            gradient[offset + OFFSET_FOR_ROWS_BLOCKED] += linesFormed.mainBlocked;
+            gradient[offset + OFFSET_FOR_ROWS_BLOCKED] += linesFormed.twoWereBlockedForMain;
         }
         
         if (isImportantToOtherPlayer) {
             gradient[offset + OFFSET_FOR_ONE_IN_ROW] -= linesFormed.oneFormedForOther;
             gradient[offset + OFFSET_FOR_TWO_IN_ROW] -= linesFormed.twoFormedForOther;
-            gradient[offset + OFFSET_FOR_ROWS_BLOCKED] -= linesFormed.otherBlocked;
+            gradient[offset + OFFSET_FOR_ROWS_BLOCKED] -= linesFormed.twoWereBlockedForOther;
         }
     }
 

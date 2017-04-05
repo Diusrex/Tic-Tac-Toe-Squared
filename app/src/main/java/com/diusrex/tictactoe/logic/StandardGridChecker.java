@@ -152,12 +152,12 @@ public class StandardGridChecker implements GridChecker {
                 if (otherCount == 0)
                     ++linesFormed.twoFormedForMain;
                 else // otherCount == 1
-                    ++linesFormed.mainBlocked;
+                    ++linesFormed.twoWereBlockedForMain;
             } else if (mainCount == 1) {
                 if (otherCount == 0)
                     ++linesFormed.oneFormedForMain;
                 else // otherCount == 2
-                    ++linesFormed.otherBlocked;
+                    ++linesFormed.twoWereBlockedForOther;
             } else { // mainCount == 0
                 if (otherCount == 2)
                     ++linesFormed.twoFormedForOther;
