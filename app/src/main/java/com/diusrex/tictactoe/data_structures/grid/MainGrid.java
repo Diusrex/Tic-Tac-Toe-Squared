@@ -24,13 +24,14 @@ import com.diusrex.tictactoe.data_structures.position.Position;
 import com.diusrex.tictactoe.data_structures.position.SectionPosition;
 import com.diusrex.tictactoe.logic.GridConstants;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
-import com.diusrex.tictactoe.logic.UndoAction;
 
 public class MainGrid implements Grid {
     private Player owner;
-    private SectionGrid[][] sections;
+    protected SectionGrid[][] sections;
 
     private final TicTacToeEngine engine;
+
+    private LinesFormed linesFormed;
 
     public MainGrid(TicTacToeEngine engine) {
         this.engine = engine;
@@ -43,6 +44,11 @@ public class MainGrid implements Grid {
         }
 
         owner = Player.Unowned;
+
+        // Choose arbitrary player
+        linesFormed = new LinesFormed(Player.Player_1);
+        // Setup lines formed.
+        engine.getLinesFormed(this, linesFormed);
     }
 
     @Override
@@ -57,36 +63,66 @@ public class MainGrid implements Grid {
 
     @Override
     public boolean canBeWon() {
-        return engine.possibleToWin(this);
+        if (owner != Player.Unowned) {
+            return false;
+        }
+
+        return canBeWonByPlayer(Player.Player_1) || canBeWonByPlayer(Player.Player_2);
+    }
+
+    @Override
+    public boolean canBeWonByPlayer(Player player) {
+        if (owner != Player.Unowned) {
+            return false;
+        }
+
+        if (player == Player.Unowned) {
+            return false;
+        } else if (player == linesFormed.mainPlayer) {
+            return linesFormed.unownedButWinnableForMain + linesFormed.oneFormedForMain
+                    + linesFormed.twoFormedForMain > 0;
+        } else {
+            return linesFormed.unownedButWinnableForOther + linesFormed.oneFormedForOther
+                    + linesFormed.twoFormedForOther > 0;
+        }
+    }
+
+    @Override
+    public boolean pointCanBeWonByPlayer(Position pos, Player other) {
+        return getSectionGrid(pos).canBeWonByPlayer(other);
     }
 
     @Override
     public void getLinesFormed(LinesFormed linesFormed) {
-        engine.getLinesFormed(this, linesFormed);
+        linesFormed.copyFrom(this.linesFormed);
     }
-    
+
     public void setBoxOwner(SectionPosition sectionPos, BoxPosition pos, Player newOwner) {
         SectionGrid changedSection = getSectionGrid(sectionPos);
         Player originalOwner = changedSection.getGridOwner();
+
+        boolean p1Winnable = changedSection.canBeWonByPlayer(Player.Player_1);
+        boolean p2Winnable = changedSection.canBeWonByPlayer(Player.Player_2);
 
         changedSection.setPointOwner(pos, newOwner);
 
         if (originalOwner != changedSection.getGridOwner()) {
             owner = engine.getWinner(this);
+            
+            // Update lines owned
+            engine.getLinesFormed(this, linesFormed);
+        } else if (p1Winnable != changedSection.canBeWonByPlayer(Player.Player_1)
+                || p2Winnable != changedSection.canBeWonByPlayer(Player.Player_2)) {
+            
+            // Update lines owned, since their values may have changed.
+            engine.getLinesFormed(this, linesFormed);
         }
     }
 
     public void undoMove(Move undoneTopMove) {
+        assert(undoneTopMove.getPlayer() != Player.Unowned);
+        
         setBoxOwner(undoneTopMove.getSection(), undoneTopMove.getBox(), Player.Unowned);
-
-        if (UndoAction.moveLostOwnership(engine, getSectionGrid(undoneTopMove.getSection()), undoneTopMove)) {
-            getSectionGrid(undoneTopMove.getSection()).setSectionOwner(Player.Unowned, null);
-
-            // The game may have progressed past winning this
-            if (UndoAction.moveLostOwnership(engine, this, undoneTopMove)) {
-                owner = Player.Unowned;
-            }
-        }
     }
 
     public Player getBoxOwner(SectionPosition section, BoxPosition pos) {
@@ -114,7 +150,7 @@ public class MainGrid implements Grid {
     }
 
     public Line getLine(SectionPosition sectionPosition) {
-        return getSectionGrid(sectionPosition).getLine();
+        return getSectionGrid(sectionPosition).getWinLine();
     }
 
 }

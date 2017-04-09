@@ -18,23 +18,10 @@ package com.diusrex.tictactoe.logic;
 import java.util.Stack;
 
 import com.diusrex.tictactoe.data_structures.Move;
-import com.diusrex.tictactoe.data_structures.Player;
-import com.diusrex.tictactoe.data_structures.grid.Grid;
 import com.diusrex.tictactoe.data_structures.position.SectionPosition;
 
 
 public class UndoAction {
-    public static boolean moveLostOwnership(TicTacToeEngine usedEngine, Grid undoneMovesSection, Move topMove) {
-        // In this case, it is impossible
-        if (topMove.getPlayer() != undoneMovesSection.getGridOwner())
-            return false;
-
-        Player completedWinner = usedEngine.searchForOwner(undoneMovesSection);
-
-        // If there is no found match, then the grid was lost
-        return completedWinner == Player.Unowned;
-    }
-
     public static SectionPosition getSectionToPlayIn(Stack<Move> allMoves, Move undoneTopMove) {
         // If > 0, can get where to play from previous move
         if (allMoves.size() > 0) {

@@ -20,7 +20,6 @@ import com.diusrex.tictactoe.data_structures.LinesFormed;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.grid.Grid;
 import com.diusrex.tictactoe.data_structures.grid.MainGrid;
-import com.diusrex.tictactoe.data_structures.grid.SectionGrid;
 import com.diusrex.tictactoe.data_structures.position.Position;
 
 public abstract class TicTacToeEngine {
@@ -31,8 +30,6 @@ public abstract class TicTacToeEngine {
     protected TicTacToeEngine(GridChecker gridChecker) {
         this.gridChecker = gridChecker;
     }
-
-    public abstract void updateSectionOwner(SectionGrid section, Player recentMoverOwner);
 
     public abstract Player getWinner(Grid grid);
 
@@ -56,7 +53,7 @@ public abstract class TicTacToeEngine {
         gridChecker.getLinesFormed(grid, linesFormed);
     }
 
-    public void getLinesFormed(MainGrid grid, LinesFormed linesFormed, Position section) {
-        gridChecker.getLinesFormed(grid, linesFormed, section);
+    public void getLinesFormedUsingPosition(MainGrid grid, LinesFormed linesFormed, Position section) {
+        gridChecker.getLinesFormedUsingPosition(grid, linesFormed, section);
     }
 }

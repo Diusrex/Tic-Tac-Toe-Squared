@@ -36,7 +36,17 @@ public class TestingGrid implements Grid {
 
     @Override
     public void getLinesFormed(LinesFormed linesFormed) {
-        // TODO: Transfer data from allLinesFormed to linesFormed
+        linesFormed.copyFrom(allLinesFormed);
+    }
+
+    @Override
+    public boolean canBeWonByPlayer(Player player) {
+        return isWinnable;
+    }
+
+    @Override
+    public boolean pointCanBeWonByPlayer(Position pos, Player player) {
+        return isWinnable;
     }
 
 }
