@@ -7,6 +7,7 @@ import com.diusrex.tictactoe.data_structures.position.BoxPosition;
 import com.diusrex.tictactoe.logic.GridLists;
 
 // Approximator that is based off of the StaticScorer, but is able to learn.
+//TODO: Start to store oneInRowWasBlockedForMain
 public class WeakApproximator extends FunctionApproximatorBase {
     public static final String IDENTIFIER = "WeakApproximator";
     public static final double WIN_SCORE = 1;
@@ -67,7 +68,7 @@ public class WeakApproximator extends FunctionApproximatorBase {
                 if (!isImportantToPositivePlayer && grid.getPointOwner(box) == positivePlayer) {
                     ++gradient[offset + OFFSET_FOR_EXCESS_BLOCKS_IN_GRID];
 
-                } else if (!isImportantToOtherPlayer && grid.getPointOwner(box) == positivePlayer.opposite()) {
+                } else if (!isImportantToOtherPlayer && grid.getPointOwner(box) == negativePlayer) {
                     --gradient[offset + OFFSET_FOR_EXCESS_BLOCKS_IN_GRID];
                 }
             }
@@ -79,13 +80,13 @@ public class WeakApproximator extends FunctionApproximatorBase {
         if (isImportantToPositivePlayer) {
             gradient[offset + OFFSET_FOR_ONE_IN_ROW] += linesFormed.oneFormedForMain;
             gradient[offset + OFFSET_FOR_TWO_IN_ROW] += linesFormed.twoFormedForMain;
-            gradient[offset + OFFSET_FOR_ROWS_BLOCKED] += linesFormed.twoWereBlockedForMain;
+            gradient[offset + OFFSET_FOR_ROWS_BLOCKED] += linesFormed.twoInRowWasBlockedForMain;
         }
 
         if (isImportantToOtherPlayer) {
             gradient[offset + OFFSET_FOR_ONE_IN_ROW] -= linesFormed.oneFormedForOther;
             gradient[offset + OFFSET_FOR_TWO_IN_ROW] -= linesFormed.twoFormedForOther;
-            gradient[offset + OFFSET_FOR_ROWS_BLOCKED] -= linesFormed.twoWereBlockedForOther;
+            gradient[offset + OFFSET_FOR_ROWS_BLOCKED] -= linesFormed.twoInRowWasBlockedForOther;
         }
     }
 

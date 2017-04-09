@@ -20,9 +20,7 @@ public class StandardGridChecker implements GridChecker {
     }
 
     private boolean searchForUnownedLine(Grid grid) {
-        List<LineIterator> allIterators = GridLists.getAllLineIterators();
-
-        for (LineIterator iter : allIterators) {
+        for (LineIterator iter : GridLists.getAllLineIterators()) {
             if (lineEmptyOrOwnedBySinglePlayer(grid, iter))
                 return true;
         }
@@ -119,6 +117,7 @@ public class StandardGridChecker implements GridChecker {
         return false;
     }
     
+    // TODO: Should be updated more
     @Override
     public void getLinesFormedUsingPosition(Grid grid, LinesFormed linesFormed, Position position) {
         Player main = linesFormed.mainPlayer;
@@ -130,39 +129,82 @@ public class StandardGridChecker implements GridChecker {
                 continue;
             
             int mainCount = 0, otherCount = 0;
+            int mainCanOwn = 0, otherCanOwn = 0;
             
+            // TODO: More counts -> safe, unsafe, able to win, unable to win, etc.
             for (int index = 0; !lineIter.isDone(index); ++index) {
                 Position pos = lineIter.getCurrent(index);
 
-                if (grid.getPointOwner(pos) == main)
+                if (grid.getPointOwner(pos) == main) {
                     ++mainCount;
-
-                else if (grid.getPointOwner(pos) == other)
+                } else if (grid.getPointOwner(pos) == other) {
                     ++otherCount;
+                } else {
+                    // Point is unowned, so see who can take ownership of it.
+                    if (grid.pointCanBeWonByPlayer(pos, main)) {
+                        ++mainCanOwn;
+                    }
+                    if (grid.pointCanBeWonByPlayer(pos, other)) {
+                        ++otherCanOwn;
+                    }
+                }
             }
-
-            if (mainCount == 0 && otherCount == 0) {
-                ++linesFormed.emptyLines;
-            } else if (mainCount == otherCount) {
-                // No point, since cancel out
-            } else if (mainCount == 3 || otherCount == 3) {
-                // Doesn't currently handle this case. Board is already won, so shouldn't care
-                // as much about lines.
-            } else if (mainCount == 2) {
-                if (otherCount == 0)
-                    ++linesFormed.twoFormedForMain;
-                else // otherCount == 1
-                    ++linesFormed.twoWereBlockedForMain;
-            } else if (mainCount == 1) {
-                if (otherCount == 0)
+            
+            boolean canBeWonByMain =
+                    (mainCount + mainCanOwn == 3);
+            boolean canBeWonByOther =
+                    (otherCount + otherCanOwn == 3);
+            
+            if (mainCount == 0 && canBeWonByMain) {
+                // Both are 0, and main can win this line
+                ++linesFormed.unownedButWinnableForMain;
+            }
+            
+            if (otherCount == 0 && canBeWonByOther) {
+                // Both are 0, and main can win this line
+                ++linesFormed.unownedButWinnableForOther;
+            }
+            
+            // Don't do any more checks if they are equal
+            if (mainCount == otherCount) {
+                continue;
+            }
+            
+            
+            // Quickly calculate for main
+            if (mainCount == 1) {
+                if (canBeWonByMain) {
                     ++linesFormed.oneFormedForMain;
-                else // otherCount == 2
-                    ++linesFormed.twoWereBlockedForOther;
-            } else { // mainCount == 0
-                if (otherCount == 2)
-                    ++linesFormed.twoFormedForOther;
-                else // otherCount == 1
+                } else if (otherCount != 2){
+                    // Only count the one as being blocked if it isn't blocking a two
+                    ++linesFormed.oneInRowWasBlockedForMain;
+                }
+            } else if (mainCount == 2) {
+                if (canBeWonByMain) {
+                    ++linesFormed.twoFormedForMain;
+                } else { // Is blocked by unwinnable or other.
+                    ++linesFormed.twoInRowWasBlockedForMain;
+                }
+            } else if (mainCount == 3) {
+                ++linesFormed.threeFormedForMain;
+            }
+            
+            // Quickly count for other
+            if (otherCount == 1) {
+                if (canBeWonByOther) {
                     ++linesFormed.oneFormedForOther;
+                } else if (mainCount != 2){
+                    // Only count the one as being blocked if it isn't blocking a two
+                    ++linesFormed.oneInRowWasBlockedForOther;
+                }
+            } else if (otherCount == 2) {
+                if (canBeWonByOther) {
+                    ++linesFormed.twoFormedForOther;
+                } else { // Is blocked by unwinnable or main player.
+                    ++linesFormed.twoInRowWasBlockedForOther;
+                }
+            } else if (otherCount == 3) {
+                ++linesFormed.threeFormedForOther;
             }
         }
     }

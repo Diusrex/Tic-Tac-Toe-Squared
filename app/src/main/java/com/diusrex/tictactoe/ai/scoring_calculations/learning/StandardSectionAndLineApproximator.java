@@ -6,6 +6,8 @@ import com.diusrex.tictactoe.data_structures.grid.Grid;
 import com.diusrex.tictactoe.data_structures.position.BoxPosition;
 import com.diusrex.tictactoe.logic.GridLists;
 
+// TODO: Start to store oneInRowWasBlockedForMain
+// TODO: How often are the different spots in gradient non-zero, and what is their average value.
 public class StandardSectionAndLineApproximator extends FunctionApproximatorBase {
     public static final String IDENTIFIER = "StandardSectionAndLineApproximator";
     public final double WIN_SCORE = 1;
@@ -116,13 +118,13 @@ public class StandardSectionAndLineApproximator extends FunctionApproximatorBase
             if (isImportantToPositivePlayer) {
                 gradient[mainPlayerLinesOffset + OFFSET_FOR_ONE_IN_ROW] += linesFormed.oneFormedForMain;
                 gradient[mainPlayerLinesOffset + OFFSET_FOR_TWO_IN_ROW] += linesFormed.twoFormedForMain;
-                gradient[mainPlayerLinesOffset + OFFSET_FOR_ROWS_BLOCKED] += linesFormed.twoWereBlockedForMain;
+                gradient[mainPlayerLinesOffset + OFFSET_FOR_ROWS_BLOCKED] += linesFormed.twoInRowWasBlockedForMain;
             }
 
             if (isImportantToOtherPlayer) {
                 gradient[otherPlayerLinesOffset + OFFSET_FOR_ONE_IN_ROW] -= linesFormed.oneFormedForOther;
                 gradient[otherPlayerLinesOffset + OFFSET_FOR_TWO_IN_ROW] -= linesFormed.twoFormedForOther;
-                gradient[otherPlayerLinesOffset + OFFSET_FOR_ROWS_BLOCKED] -= linesFormed.twoWereBlockedForOther;
+                gradient[otherPlayerLinesOffset + OFFSET_FOR_ROWS_BLOCKED] -= linesFormed.twoInRowWasBlockedForOther;
             }
         }
 
@@ -156,13 +158,13 @@ public class StandardSectionAndLineApproximator extends FunctionApproximatorBase
         if (isImportantToPositivePlayer) {
             gradient[offset + OFFSET_FOR_ONE_IN_ROW] += linesFormed.oneFormedForMain;
             gradient[offset + OFFSET_FOR_TWO_IN_ROW] += linesFormed.twoFormedForMain;
-            gradient[offset + OFFSET_FOR_ROWS_BLOCKED] += linesFormed.twoWereBlockedForMain;
+            gradient[offset + OFFSET_FOR_ROWS_BLOCKED] += linesFormed.twoInRowWasBlockedForMain;
         }
         
         if (isImportantToOtherPlayer) {
             gradient[offset + OFFSET_FOR_ONE_IN_ROW] -= linesFormed.oneFormedForOther;
             gradient[offset + OFFSET_FOR_TWO_IN_ROW] -= linesFormed.twoFormedForOther;
-            gradient[offset + OFFSET_FOR_ROWS_BLOCKED] -= linesFormed.twoWereBlockedForOther;
+            gradient[offset + OFFSET_FOR_ROWS_BLOCKED] -= linesFormed.twoInRowWasBlockedForOther;
         }
     }
 

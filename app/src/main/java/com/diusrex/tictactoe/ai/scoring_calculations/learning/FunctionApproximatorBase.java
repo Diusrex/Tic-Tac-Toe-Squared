@@ -76,12 +76,12 @@ public abstract class FunctionApproximatorBase implements FunctionApproximator {
             LinesFormed linesFormedInMainGrid);
     
     protected final boolean isImportantForPositivePlayer(LinesFormed linesFormedForSection) {
-        return linesFormedForSection.emptyLines + linesFormedForSection.oneFormedForMain
+        return linesFormedForSection.unownedButWinnableForMain + linesFormedForSection.oneFormedForMain
                 + linesFormedForSection.twoFormedForMain != 0;
     }
     
     protected final boolean isImportantForOtherPlayer(LinesFormed linesFormedForSection) {
-        return linesFormedForSection.emptyLines + linesFormedForSection.oneFormedForOther
+        return linesFormedForSection.unownedButWinnableForOther + linesFormedForSection.oneFormedForOther
                 + linesFormedForSection.twoFormedForOther != 0;
     }
 
