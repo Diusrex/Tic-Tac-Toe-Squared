@@ -4,6 +4,7 @@ package com.diusrex.tictactoe.data_structures;
 // of lines formed within a certain grid, for both players
 // While this class doesn't have a dedicated suite of tests, it is tested
 // through usage in many different AI and grid checker tests. Especially MainGridTests
+// TODO: Make sure all tests for this file are correct!
 public class LinesFormed {
     public LinesFormed(Player mainPlayer) {
         assert(mainPlayer != Player.Unowned);
