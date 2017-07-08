@@ -9,7 +9,7 @@ public interface LearningMethod {
 
     public void newGame();
 
-    public void learnFromChange(double newStateEstimate, double previousBoardEstimate, double[] previousGradient,
+    public void learnFromChange(double newStateEstimate, double previousBoardEstimate, double[] previousFeatures,
             FunctionApproximator approximator);
 
     public void saveParameters(PrintStream logger);

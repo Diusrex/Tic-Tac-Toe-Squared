@@ -42,13 +42,13 @@ public class WeakApproximator extends FunctionApproximatorBase {
     double[] weights = new double[NUM_FEATURES];
 
     @Override
-    protected void calculateFeaturesForMainGrid(Player positivePlayer, Grid mainGrid, double[] gradient, int offset,
+    protected void calculateFeaturesForMainGrid(Player positivePlayer, Grid mainGrid, double[] features, int offset,
             LinesFormed linesFormedInMainGrid) {
-        calculateFeaturesForImportantGrid(gradient, offset, true, true, linesFormedInMainGrid);
+        calculateFeaturesForImportantGrid(features, offset, true, true, linesFormedInMainGrid);
     }
 
     @Override
-    protected void calculateFeaturesForGrid(Player positivePlayer, Grid grid, double[] gradient, int offset,
+    protected void calculateFeaturesForGrid(Player positivePlayer, Grid grid, double[] features, int offset,
             LinesFormed linesFormedForSection) {
         boolean isImportantToPositivePlayer = isImportantForPositivePlayer(linesFormedForSection);
         boolean isImportantToOtherPlayer = isImportantForOtherPlayer(linesFormedForSection);
@@ -59,34 +59,35 @@ public class WeakApproximator extends FunctionApproximatorBase {
 
             grid.getLinesFormed(linesFormed);
 
-            calculateFeaturesForImportantGrid(gradient, offset, isImportantToPositivePlayer, isImportantToOtherPlayer,
+            calculateFeaturesForImportantGrid(features, offset, isImportantToPositivePlayer, isImportantToOtherPlayer,
                     linesFormed);
         }
 
         if (!isImportantToPositivePlayer || !isImportantToOtherPlayer) {
+            Player negativePlayer = positivePlayer.opposite();
             for (BoxPosition box : GridLists.getAllStandardBoxPositions()) {
                 if (!isImportantToPositivePlayer && grid.getPointOwner(box) == positivePlayer) {
-                    ++gradient[offset + OFFSET_FOR_EXCESS_BLOCKS_IN_GRID];
+                    ++features[offset + OFFSET_FOR_EXCESS_BLOCKS_IN_GRID];
 
                 } else if (!isImportantToOtherPlayer && grid.getPointOwner(box) == negativePlayer) {
-                    --gradient[offset + OFFSET_FOR_EXCESS_BLOCKS_IN_GRID];
+                    --features[offset + OFFSET_FOR_EXCESS_BLOCKS_IN_GRID];
                 }
             }
         }
     }
 
-    private void calculateFeaturesForImportantGrid(double[] gradient, int offset, boolean isImportantToPositivePlayer,
+    private void calculateFeaturesForImportantGrid(double[] features, int offset, boolean isImportantToPositivePlayer,
             boolean isImportantToOtherPlayer, LinesFormed linesFormed) {
         if (isImportantToPositivePlayer) {
-            gradient[offset + OFFSET_FOR_ONE_IN_ROW] += linesFormed.oneFormedForMain;
-            gradient[offset + OFFSET_FOR_TWO_IN_ROW] += linesFormed.twoFormedForMain;
-            gradient[offset + OFFSET_FOR_ROWS_BLOCKED] += linesFormed.twoInRowWasBlockedForMain;
+            features[offset + OFFSET_FOR_ONE_IN_ROW] += linesFormed.oneFormedForMain;
+            features[offset + OFFSET_FOR_TWO_IN_ROW] += linesFormed.twoFormedForMain;
+            features[offset + OFFSET_FOR_ROWS_BLOCKED] += linesFormed.twoInRowWasBlockedForMain;
         }
 
         if (isImportantToOtherPlayer) {
-            gradient[offset + OFFSET_FOR_ONE_IN_ROW] -= linesFormed.oneFormedForOther;
-            gradient[offset + OFFSET_FOR_TWO_IN_ROW] -= linesFormed.twoFormedForOther;
-            gradient[offset + OFFSET_FOR_ROWS_BLOCKED] -= linesFormed.twoInRowWasBlockedForOther;
+            features[offset + OFFSET_FOR_ONE_IN_ROW] -= linesFormed.oneFormedForOther;
+            features[offset + OFFSET_FOR_TWO_IN_ROW] -= linesFormed.twoFormedForOther;
+            features[offset + OFFSET_FOR_ROWS_BLOCKED] -= linesFormed.twoInRowWasBlockedForOther;
         }
     }
 

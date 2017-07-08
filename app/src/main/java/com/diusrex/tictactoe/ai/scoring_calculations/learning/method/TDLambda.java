@@ -7,7 +7,7 @@ import com.diusrex.tictactoe.ai.scoring_calculations.learning.FunctionApproximat
 // Backward View of TD(lambda)
 // General formula will be:
 //   delta = gamma*currentEstimate - previousEstimate
-//   trace = gamma * lambda * previousTrace + gradient of previousEstimate
+//   trace = gamma * lambda * previousTrace + features of previousEstimate
 //   weights += alpha * delta * trace
 // Will be learning for what we estimated for previousEstimate.
 public class TDLambda implements LearningMethod {
@@ -22,7 +22,7 @@ public class TDLambda implements LearningMethod {
     final double gamma;
     final double lambda;
     
-    // Replacing will do max(old * gamma * lambda, newGradient)
+    // Replacing will do max(old * gamma * lambda, newFeatures)
     public static enum TraceVersion { ACCUMULATING, REPLACING };
     TraceVersion traceVersion;
     
@@ -81,20 +81,20 @@ public class TDLambda implements LearningMethod {
     // When debugging, would be useful to print out the trace before + after each step
     @Override
     public void learnFromChange(double newStateEstimate, double previousBoardEstimate,
-            double[] previousGradient, FunctionApproximator approximator) {
+            double[] previousFeatures, FunctionApproximator approximator) {
         double delta = gamma * newStateEstimate - previousBoardEstimate;
         for (int i = 0; i < numberElements; ++i) {
             
             switch (traceVersion) {
             case ACCUMULATING:
-                trace[i] = gamma * lambda * trace[i] + previousGradient[i];
+                trace[i] = gamma * lambda * trace[i] + previousFeatures[i];
                 
                 break;
             case REPLACING:
-                if (previousGradient[i] == 0) {
+                if (previousFeatures[i] == 0) {
                     trace[i] = gamma * lambda * trace[i];
                 } else {
-                    trace[i] = previousGradient[i];
+                    trace[i] = previousFeatures[i];
                 }
                 
                 break;

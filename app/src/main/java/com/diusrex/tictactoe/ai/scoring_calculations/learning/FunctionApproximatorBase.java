@@ -16,41 +16,41 @@ public abstract class FunctionApproximatorBase implements FunctionApproximator {
     protected abstract int getNumFeaturesPerSectionType();
 
     @Override
-    public final double getScore(Player positivePlayer, BoardStatus board, double[] gradient) {
+    public final double getScore(Player positivePlayer, BoardStatus board, double[] features) {
         Player winner = board.getWinner();
         if (winner != Player.Unowned) {
             return (winner == positivePlayer) ? getWinScore() : -getWinScore();
         }
 
         for (int i = 0; i < numberElements(); ++i)
-            gradient[i] = 0;
+            features[i] = 0;
         
         // The value won't be used  from previous, but should speed it up by not allocating every step
         LinesFormed linesFormedUsingSection = new LinesFormed(positivePlayer);
 
         int offset = 0;
         for (SectionPosition cornerPos : GridLists.getAllCornerSections()) {
-            calculateFeaturesForSection(positivePlayer, board, cornerPos, gradient, offset, linesFormedUsingSection);
+            calculateFeaturesForSection(positivePlayer, board, cornerPos, features, offset, linesFormedUsingSection);
         }
 
         offset += getNumFeaturesPerSectionType();
 
         for (SectionPosition midEdgePos : GridLists.getAllMidEdgeSections()) {
-            calculateFeaturesForSection(positivePlayer, board, midEdgePos, gradient, offset, linesFormedUsingSection);
+            calculateFeaturesForSection(positivePlayer, board, midEdgePos, features, offset, linesFormedUsingSection);
         }
         offset += getNumFeaturesPerSectionType();
 
-        calculateFeaturesForSection(positivePlayer, board, SectionPosition.make(1, 1), gradient, offset, linesFormedUsingSection);
+        calculateFeaturesForSection(positivePlayer, board, SectionPosition.make(1, 1), features, offset, linesFormedUsingSection);
 
         offset += getNumFeaturesPerSectionType();
         
         // Calculate for the maingrid specially since it will always be important
         board.getMainGrid().getLinesFormed(linesFormedUsingSection);
-        calculateFeaturesForMainGrid(positivePlayer, board.getMainGrid(), gradient, offset, linesFormedUsingSection);
+        calculateFeaturesForMainGrid(positivePlayer, board.getMainGrid(), features, offset, linesFormedUsingSection);
         
         double score = 0;
         for (int i = 0; i < numberElements(); ++i)
-            score += gradient[i] * weights[i];
+            score += features[i] * weights[i];
         return score;
     }
 

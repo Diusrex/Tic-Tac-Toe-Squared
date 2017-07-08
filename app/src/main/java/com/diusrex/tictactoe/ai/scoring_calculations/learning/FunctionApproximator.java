@@ -5,9 +5,9 @@ import java.io.PrintStream;
 import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.Player;
 
-// TODO: Subclasses should be more merged together, since they act very similar
 public interface FunctionApproximator {
-    double getScore(Player positivePlayer, BoardStatus board, double gradient[]);
+    // features is calculated by the approximator. Must be numberElements() sized
+    double getScore(Player positivePlayer, BoardStatus board, double features[]);
     
     void update(int element, double change);
     

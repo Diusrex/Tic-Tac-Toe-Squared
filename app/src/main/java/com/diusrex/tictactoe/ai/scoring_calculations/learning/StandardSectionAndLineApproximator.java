@@ -7,7 +7,7 @@ import com.diusrex.tictactoe.data_structures.position.BoxPosition;
 import com.diusrex.tictactoe.logic.GridLists;
 
 // TODO: Start to store oneInRowWasBlockedForMain
-// TODO: How often are the different spots in gradient non-zero, and what is their average value.
+// TODO: How often are the different spots in features non-zero, and what is their average value.
 public class StandardSectionAndLineApproximator extends FunctionApproximatorBase {
     public static final String IDENTIFIER = "StandardSectionAndLineApproximator";
     public final double WIN_SCORE = 1;
@@ -81,14 +81,14 @@ public class StandardSectionAndLineApproximator extends FunctionApproximatorBase
     }
 
     @Override
-    protected void calculateFeaturesForMainGrid(Player positivePlayer, Grid mainGrid, double[] gradient, int offset,
+    protected void calculateFeaturesForMainGrid(Player positivePlayer, Grid mainGrid, double[] features, int offset,
             LinesFormed linesFormedInMainGrid) {
-        calculateGridInternalFeatures(mainGrid, gradient, offset, true, true,
+        calculateGridInternalFeatures(mainGrid, features, offset, true, true,
                 linesFormedInMainGrid);
     }
 
     @Override
-    protected void calculateFeaturesForGrid(Player positivePlayer, Grid grid, double[] gradient, int offset,
+    protected void calculateFeaturesForGrid(Player positivePlayer, Grid grid, double[] features, int offset,
             LinesFormed linesFormedForSection) {
         boolean isImportantToPositivePlayer = isImportantForPositivePlayer(linesFormedForSection);
         boolean isImportantToOtherPlayer = isImportantForOtherPlayer(linesFormedForSection);
@@ -110,61 +110,61 @@ public class StandardSectionAndLineApproximator extends FunctionApproximatorBase
             LinesFormed linesFormed = linesFormedForSection;
             grid.getLinesFormed(linesFormed);
             if (shouldCalculateSectionsScores) {
-                calculateGridInternalFeatures(grid, gradient, offset, isImportantToPositivePlayer, isImportantToOtherPlayer,
+                calculateGridInternalFeatures(grid, features, offset, isImportantToPositivePlayer, isImportantToOtherPlayer,
                         linesFormed);
             }
             
             // Do the scoring for the counts based on the lines this grid is a part of.
             if (isImportantToPositivePlayer) {
-                gradient[mainPlayerLinesOffset + OFFSET_FOR_ONE_IN_ROW] += linesFormed.oneFormedForMain;
-                gradient[mainPlayerLinesOffset + OFFSET_FOR_TWO_IN_ROW] += linesFormed.twoFormedForMain;
-                gradient[mainPlayerLinesOffset + OFFSET_FOR_ROWS_BLOCKED] += linesFormed.twoInRowWasBlockedForMain;
+                features[mainPlayerLinesOffset + OFFSET_FOR_ONE_IN_ROW] += linesFormed.oneFormedForMain;
+                features[mainPlayerLinesOffset + OFFSET_FOR_TWO_IN_ROW] += linesFormed.twoFormedForMain;
+                features[mainPlayerLinesOffset + OFFSET_FOR_ROWS_BLOCKED] += linesFormed.twoInRowWasBlockedForMain;
             }
 
             if (isImportantToOtherPlayer) {
-                gradient[otherPlayerLinesOffset + OFFSET_FOR_ONE_IN_ROW] -= linesFormed.oneFormedForOther;
-                gradient[otherPlayerLinesOffset + OFFSET_FOR_TWO_IN_ROW] -= linesFormed.twoFormedForOther;
-                gradient[otherPlayerLinesOffset + OFFSET_FOR_ROWS_BLOCKED] -= linesFormed.twoInRowWasBlockedForOther;
+                features[otherPlayerLinesOffset + OFFSET_FOR_ONE_IN_ROW] -= linesFormed.oneFormedForOther;
+                features[otherPlayerLinesOffset + OFFSET_FOR_TWO_IN_ROW] -= linesFormed.twoFormedForOther;
+                features[otherPlayerLinesOffset + OFFSET_FOR_ROWS_BLOCKED] -= linesFormed.twoInRowWasBlockedForOther;
             }
         }
 
         if (!isImportantToPositivePlayer || !isImportantToOtherPlayer) {
-            calculateScoreForUnimportantSection(positivePlayer, grid, gradient, offset, isImportantToPositivePlayer,
+            calculateScoreForUnimportantSection(positivePlayer, grid, features, offset, isImportantToPositivePlayer,
                     isImportantToOtherPlayer);
         }
     }
 
-    protected void calculateScoreForUnimportantSection(Player positivePlayer, Grid grid, double[] gradient, int offset,
+    protected void calculateScoreForUnimportantSection(Player positivePlayer, Grid grid, double[] features, int offset,
             boolean isImportantToPositivePlayer, boolean isImportantToOtherPlayer) {
         if (!shouldCalculateSectionsScores)
             return;
         
         for (BoxPosition box : GridLists.getAllStandardBoxPositions()) {
             if (!isImportantToPositivePlayer && grid.getPointOwner(box) == positivePlayer) {
-                ++gradient[offset + OFFSET_FOR_EXCESS_BLOCKS_IN_GRID];
+                ++features[offset + OFFSET_FOR_EXCESS_BLOCKS_IN_GRID];
 
             } else if (!isImportantToOtherPlayer && grid.getPointOwner(box) == positivePlayer.opposite()) {
-                --gradient[offset + OFFSET_FOR_EXCESS_BLOCKS_IN_GRID];
+                --features[offset + OFFSET_FOR_EXCESS_BLOCKS_IN_GRID];
             }
         }
     }
 
     // Will use the lines formed within the grid, cancelling out the two players within the offset for this grid.
     // Note: Assumes linesFormed has already been initialized with the internal lines for the given grid.
-    private void calculateGridInternalFeatures(Grid grid, double[] gradient, int offset, boolean isImportantToPositivePlayer,
+    private void calculateGridInternalFeatures(Grid grid, double[] features, int offset, boolean isImportantToPositivePlayer,
             boolean isImportantToOtherPlayer, LinesFormed linesFormed) {
         
         // Do scoring for the basic sections
         if (isImportantToPositivePlayer) {
-            gradient[offset + OFFSET_FOR_ONE_IN_ROW] += linesFormed.oneFormedForMain;
-            gradient[offset + OFFSET_FOR_TWO_IN_ROW] += linesFormed.twoFormedForMain;
-            gradient[offset + OFFSET_FOR_ROWS_BLOCKED] += linesFormed.twoInRowWasBlockedForMain;
+            features[offset + OFFSET_FOR_ONE_IN_ROW] += linesFormed.oneFormedForMain;
+            features[offset + OFFSET_FOR_TWO_IN_ROW] += linesFormed.twoFormedForMain;
+            features[offset + OFFSET_FOR_ROWS_BLOCKED] += linesFormed.twoInRowWasBlockedForMain;
         }
         
         if (isImportantToOtherPlayer) {
-            gradient[offset + OFFSET_FOR_ONE_IN_ROW] -= linesFormed.oneFormedForOther;
-            gradient[offset + OFFSET_FOR_TWO_IN_ROW] -= linesFormed.twoFormedForOther;
-            gradient[offset + OFFSET_FOR_ROWS_BLOCKED] -= linesFormed.twoInRowWasBlockedForOther;
+            features[offset + OFFSET_FOR_ONE_IN_ROW] -= linesFormed.oneFormedForOther;
+            features[offset + OFFSET_FOR_TWO_IN_ROW] -= linesFormed.twoFormedForOther;
+            features[offset + OFFSET_FOR_ROWS_BLOCKED] -= linesFormed.twoInRowWasBlockedForOther;
         }
     }
 
