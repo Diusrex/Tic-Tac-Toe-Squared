@@ -78,4 +78,13 @@ public class LineIterator {
     public Line getLine() {
         return line;
     }
+    
+    @Override
+    public String toString() {
+        String s = getCurrent(0).toString();
+        for (int i = 1; !isDone(i); ++i) {
+            s += "-" + getCurrent(i);
+        }
+        return s;
+    }
 }

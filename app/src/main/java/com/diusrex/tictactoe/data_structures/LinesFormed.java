@@ -24,18 +24,16 @@ public class LinesFormed {
     // Otherwise, it is the first to reach this
     public int threeFormedForMain, threeFormedForOther;
     
-    // TODO: Should I add this specially for MainGrid?
-    // Will NOT count lines where each player owns one (since those would immediatley cancel out).
-    // Instead, only applies to lines where one player owns something, and the other player doesn't.
-    // Not a huge investment though, and idk how much it would actually improve things.
+    // Will NOT count lines where each player owns one (since those would cancel out).
+    // Instead, only applies to lines where one player owns something, and the other player doesn't,
+    // but a point is not winnable. Just applies to the MainGrid, since the smaller grid can't reach this situation.
     public int oneInRowWasBlockedForMain, oneInRowWasBlockedForOther;
     
     // Owns two in a row, but has been blocked (by other player owning,
     // or by a section that cannot be won).
     public int twoInRowWasBlockedForMain, twoInRowWasBlockedForOther;
 
-    // Line which can be won by player, but the player currently doesn't have any spots in it.
-    // TODO: Convert to be:
+    // Lines which can be won by player, but the player currently doesn't have any spots in it.
     public int unownedButWinnableForMain, unownedButWinnableForOther;
 
 
@@ -51,11 +49,11 @@ public class LinesFormed {
     @Override
     public String toString() {
         return "Player: " + mainPlayer +
-                " formed 1: " + oneFormedForMain + " 1 blocked: " + oneInRowWasBlockedForMain +
-                " 2 in row: " + twoFormedForMain + " 2 blocked: " + twoInRowWasBlockedForMain + ", " +
+                " formed 1: " + oneFormedForMain + " 1-blocked: " + oneInRowWasBlockedForMain +
+                " 2-in-row: " + twoFormedForMain + " 2-blocked: " + twoInRowWasBlockedForMain + ", " +
                 "unowned but winnable for main: " + unownedButWinnableForMain + "." +
-                " Other formed 1: " + oneFormedForOther + " 1 blocked: " + oneInRowWasBlockedForOther +
-                " 2: " + twoFormedForOther + " 2 blocked: " + twoInRowWasBlockedForOther + ", " +
+                " Other formed 1: " + oneFormedForOther + " 1-blocked: " + oneInRowWasBlockedForOther +
+                " 2-in-row: " + twoFormedForOther + " 2-blocked: " + twoInRowWasBlockedForOther + ", " +
                 "unowned but winnable for other: " + unownedButWinnableForOther + ".";
     }
 
