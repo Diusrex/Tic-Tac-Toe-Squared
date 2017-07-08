@@ -61,6 +61,10 @@ public class GridScoringFunction {
         this.ownsOnlyTakenInLineScore = onesOnlyTakenInLineScore;
         this.ownsBothTakenInLineScore = ownsBothTakenInLineScore;
         this.blockedPlayerInLineScore = blockedPlayerInLineScore;
+        
+        if (this.cannotWinPointScore > 0) {
+            System.out.println("Do note that you are rewarding the bot for playing more into a section it cannot win");
+        }
     }
 
     // Returns the multiplier for the child of this guy.
