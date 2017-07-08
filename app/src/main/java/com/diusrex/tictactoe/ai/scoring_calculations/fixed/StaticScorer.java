@@ -114,6 +114,10 @@ public class StaticScorer extends Scorer {
         logger.println(cF.getCannotWinPointScore() + " " + cF.getOwnsOnlyTakenInLine() + " "
                 + cF.getOwnsBothOnlyTakenInLine() + " " + cF.blockedPlayerInLine());
     }
+    
+    public ScoringValues getScoringValues() {
+        return scoring;
+    }
 
     @Override
     public String getIdentifier() {
