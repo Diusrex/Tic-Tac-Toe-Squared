@@ -11,10 +11,10 @@ import com.diusrex.tictactoe.data_structures.Player;
 public class FunctionApproximatorScorer extends Scorer {
     public final static String IDENTIFIER = "FunctionApproximator";
     double previousBoardEstimate;
-    double previousGradient[];
+    double previousFeatures[];
 
     // Is just used to not need to allocate new array every single call
-    double ignoredGradient[];
+    double ignoredFeatures[];
 
     long numberTimesExceededCount = 0;
 
@@ -32,8 +32,8 @@ public class FunctionApproximatorScorer extends Scorer {
         shouldEnsureWinHigher = builder.shouldEnsureWinHigher;
         shouldPrintout = builder.shouldPrintout;
 
-        previousGradient = new double[approximator.numberElements()];
-        ignoredGradient = new double[approximator.numberElements()];
+        previousFeatures = new double[approximator.numberElements()];
+        ignoredFeatures = new double[approximator.numberElements()];
     }
 
     public static class Builder {
@@ -64,11 +64,12 @@ public class FunctionApproximatorScorer extends Scorer {
 
     @Override
     public double calculateScore(Player positivePlayer, BoardStatus board) {
-        double score = approximator.getScore(positivePlayer, board, ignoredGradient);
+        double score = approximator.getScore(positivePlayer, board, ignoredFeatures);
 
         if (shouldPrintout && score > getWinScore()) {
             ++numberTimesExceededCount;
-            //System.out.println("Exceeded win score anyway, score is " + score);
+            // System.out.println("Exceeded win score anyway, score is " +
+            // score);
         }
 
         return score;
@@ -78,7 +79,7 @@ public class FunctionApproximatorScorer extends Scorer {
     public void newGame(BoardStatus board) {
         learningMethod.newGame();
 
-        previousBoardEstimate = approximator.getScore(board.getNextPlayer(), board, ignoredGradient);
+        previousBoardEstimate = approximator.getScore(board.getNextPlayer(), board, ignoredFeatures);
     }
 
     // TODO: Make sure this is being called at end of game!
@@ -87,9 +88,9 @@ public class FunctionApproximatorScorer extends Scorer {
         // Determine current estimate
         double newStateEstimate = calculateScore(board.getNextPlayer(), board);
 
-        learningMethod.learnFromChange(newStateEstimate, previousBoardEstimate, previousGradient, approximator);
+        learningMethod.learnFromChange(newStateEstimate, previousBoardEstimate, previousFeatures, approximator);
 
-        previousBoardEstimate = approximator.getScore(board.getNextPlayer(), board, previousGradient);
+        previousBoardEstimate = approximator.getScore(board.getNextPlayer(), board, previousFeatures);
     }
 
     @Override
