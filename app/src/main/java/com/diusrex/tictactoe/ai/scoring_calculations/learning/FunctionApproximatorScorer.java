@@ -4,8 +4,8 @@ import java.io.PrintStream;
 
 import com.diusrex.tictactoe.ai.scoring_calculations.Scorer;
 import com.diusrex.tictactoe.ai.scoring_calculations.learning.method.LearningMethod;
-import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.data_structures.board_status.BoardStatus;
 
 // This class will use the provided LearningMethod to update the FunctionApproximator at each step.
 public class FunctionApproximatorScorer extends Scorer {

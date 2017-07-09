@@ -2,9 +2,9 @@ package com.diusrex.tictactoe.ai.scoring_calculations.learning;
 
 import java.io.PrintStream;
 
-import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.LinesFormed;
 import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.data_structures.board_status.BoardStatus;
 import com.diusrex.tictactoe.data_structures.grid.Grid;
 import com.diusrex.tictactoe.data_structures.position.SectionPosition;
 import com.diusrex.tictactoe.logic.GridLists;

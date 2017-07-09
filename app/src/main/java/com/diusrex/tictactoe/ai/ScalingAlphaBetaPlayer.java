@@ -1,7 +1,7 @@
 package com.diusrex.tictactoe.ai;
 
 import com.diusrex.tictactoe.ai.scoring_calculations.Scorer;
-import com.diusrex.tictactoe.data_structures.BoardStatus;
+import com.diusrex.tictactoe.data_structures.board_status.BoardStatus;
 
 public class ScalingAlphaBetaPlayer extends BaseAlphaBetaPlayer {
     public static final String IDENTIFIER = "SAlphaB";

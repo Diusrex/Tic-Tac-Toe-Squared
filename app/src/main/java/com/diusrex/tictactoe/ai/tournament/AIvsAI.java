@@ -3,9 +3,12 @@ package com.diusrex.tictactoe.ai.tournament;
 import com.diusrex.tictactoe.ai.AIPlayer;
 import com.diusrex.tictactoe.ai.FullMonteCarloPlayer;
 import com.diusrex.tictactoe.ai.tournament.recording.GameTimeRecording;
-import com.diusrex.tictactoe.data_structures.BoardStatus;
+import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
-import com.diusrex.tictactoe.logic.*;
+import com.diusrex.tictactoe.data_structures.board_status.BoardStatus;
+import com.diusrex.tictactoe.data_structures.board_status.BoardStatusFactory;
+import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
+import com.diusrex.tictactoe.logic.PlayerFactory;
 
 public class AIvsAI {
     static public void main(String[] args) {

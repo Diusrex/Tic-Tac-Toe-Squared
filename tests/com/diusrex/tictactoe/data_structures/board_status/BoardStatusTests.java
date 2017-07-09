@@ -1,4 +1,4 @@
-package com.diusrex.tictactoe.logic.tests;
+package com.diusrex.tictactoe.data_structures.board_status;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -7,14 +7,15 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.data_structures.board_status.BoardStatus;
 import com.diusrex.tictactoe.data_structures.position.BoxPosition;
 import com.diusrex.tictactoe.data_structures.position.SectionPosition;
 import com.diusrex.tictactoe.logic.GridConstants;
 import com.diusrex.tictactoe.logic.GridLists;
 import com.diusrex.tictactoe.logic.StandardTicTacToeEngine;
+import com.diusrex.tictactoe.logic.tests.TestUtils;
 
 public class BoardStatusTests {
     BoardStatus board;

@@ -17,8 +17,8 @@
 package com.diusrex.tictactoe.textbased;
 
 import com.diusrex.tictactoe.ai.AIPlayer;
-import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.Move;
+import com.diusrex.tictactoe.data_structures.board_status.BoardStatus;
 
 public class AIPlayerController implements PlayerController {
     private final AIPlayer aiPlayer;

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.diusrex.tictactoe.ai.scoring_calculations.Scorer;
-import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.data_structures.board_status.BoardStatus;
 import com.diusrex.tictactoe.data_structures.position.BoxPosition;
 import com.diusrex.tictactoe.data_structures.position.SectionPosition;
 import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;

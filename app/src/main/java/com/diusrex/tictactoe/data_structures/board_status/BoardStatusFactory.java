@@ -14,9 +14,13 @@
  *  limitations under the License.
  */
 
-package com.diusrex.tictactoe.logic;
+package com.diusrex.tictactoe.data_structures.board_status;
 
-import com.diusrex.tictactoe.data_structures.BoardStatus;
+import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.data_structures.position.BoxPosition;
+import com.diusrex.tictactoe.data_structures.position.SectionPosition;
+import com.diusrex.tictactoe.logic.GridLists;
+import com.diusrex.tictactoe.logic.StandardTicTacToeEngine;
 
 public class BoardStatusFactory {
     private BoardStatusFactory() {

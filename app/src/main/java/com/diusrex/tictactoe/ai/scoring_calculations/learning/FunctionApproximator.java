@@ -2,8 +2,8 @@ package com.diusrex.tictactoe.ai.scoring_calculations.learning;
 
 import java.io.PrintStream;
 
-import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.data_structures.board_status.BoardStatus;
 
 public interface FunctionApproximator {
     // features is calculated by the approximator. Must be numberElements() sized

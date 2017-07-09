@@ -13,10 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
-package com.diusrex.tictactoe.data_structures;
+package com.diusrex.tictactoe.data_structures.board_status;
 
 import java.util.Stack;
 
+import com.diusrex.tictactoe.data_structures.Line;
+import com.diusrex.tictactoe.data_structures.LinesFormed;
+import com.diusrex.tictactoe.data_structures.Move;
+import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.grid.Grid;
 import com.diusrex.tictactoe.data_structures.grid.MainGrid;
 import com.diusrex.tictactoe.data_structures.position.BoxPosition;

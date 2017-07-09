@@ -4,6 +4,7 @@ import java.io.PrintStream;
 
 import com.diusrex.tictactoe.ai.scoring_calculations.*;
 import com.diusrex.tictactoe.data_structures.*;
+import com.diusrex.tictactoe.data_structures.board_status.BoardStatus;
 import com.diusrex.tictactoe.data_structures.grid.Grid;
 import com.diusrex.tictactoe.data_structures.position.SectionPosition;
 import com.diusrex.tictactoe.logic.GridLists;

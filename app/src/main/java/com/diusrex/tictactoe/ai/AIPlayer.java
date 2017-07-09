@@ -2,8 +2,8 @@ package com.diusrex.tictactoe.ai;
 
 import java.io.PrintStream;
 
-import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.Move;
+import com.diusrex.tictactoe.data_structures.board_status.BoardStatus;
 import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
 import com.diusrex.tictactoe.logic.StringSaver;
 

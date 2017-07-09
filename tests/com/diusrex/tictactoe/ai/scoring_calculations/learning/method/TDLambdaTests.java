@@ -15,8 +15,8 @@ import org.mockito.AdditionalMatchers;
 import org.mockito.Mock;
 
 import com.diusrex.tictactoe.ai.scoring_calculations.learning.FunctionApproximator;
-import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.data_structures.board_status.BoardStatus;
 
 // This test is meant to both ensure the calculations for TDLambda are correct
 // and give an idea of how the values will change over time.

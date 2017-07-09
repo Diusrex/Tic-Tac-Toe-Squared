@@ -3,8 +3,8 @@ package com.diusrex.tictactoe.ai.scoring_calculations;
 
 import java.io.PrintStream;
 
-import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.data_structures.board_status.BoardStatus;
 
 public abstract class Scorer {
     public abstract double calculateScore(Player positivePlayer, BoardStatus board);

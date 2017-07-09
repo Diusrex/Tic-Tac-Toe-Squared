@@ -3,7 +3,7 @@ package com.diusrex.tictactoe.ai;
 import java.io.PrintStream;
 
 import com.diusrex.tictactoe.ai.scoring_calculations.Scorer;
-import com.diusrex.tictactoe.data_structures.BoardStatus;
+import com.diusrex.tictactoe.data_structures.board_status.BoardStatus;
 
 public class UnScalingMiniMaxPlayer extends BaseMiniMaxPlayer {
     public static final String IDENTIFIER = "UMiniM";

@@ -3,9 +3,9 @@ package com.diusrex.tictactoe.ai;
 import java.io.PrintStream;
 
 import com.diusrex.tictactoe.ai.scoring_calculations.Scorer;
-import com.diusrex.tictactoe.data_structures.BoardStatus;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
+import com.diusrex.tictactoe.data_structures.board_status.BoardStatus;
 
 public abstract class AIPlayerWithScorer extends AIPlayer {
     private final Scorer scorer;
