@@ -33,8 +33,8 @@ public class BoardStatus {
     private static final SectionPosition DEFAULT_STARTING_SECTION_TO_PLAY_IN = SectionPosition.make(1, 1);
 
     private final TicTacToeEngine engine;
-    private SectionPosition sectionToPlayIn;
-    private Player nextPlayer;
+    SectionPosition sectionToPlayIn;
+    Player nextPlayer;
 
     protected MainGrid sectionsOwnersGrid;
 
