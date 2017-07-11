@@ -29,7 +29,7 @@ import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
 import com.diusrex.tictactoe.logic.TicTacToeEngine;
 import com.diusrex.tictactoe.logic.UndoAction;
 
-public class BoardStatus {
+public class BoardStatus implements Cloneable {
     private static final SectionPosition DEFAULT_STARTING_SECTION_TO_PLAY_IN = SectionPosition.make(1, 1);
 
     private final TicTacToeEngine engine;
@@ -62,6 +62,18 @@ public class BoardStatus {
         sectionToPlayIn = DEFAULT_STARTING_SECTION_TO_PLAY_IN;
 
         allMoves = new Stack<>();
+    }
+
+    @SuppressWarnings("unchecked")
+    public Object clone() throws CloneNotSupportedException {
+        BoardStatus other = (BoardStatus) super.clone();
+
+        other.sectionToPlayIn = sectionToPlayIn;
+        other.nextPlayer = nextPlayer;
+        other.sectionsOwnersGrid = sectionsOwnersGrid;
+        other.allMoves = (Stack<Move>) allMoves.clone();
+
+        return other;
     }
 
     public boolean possibleToWin() {

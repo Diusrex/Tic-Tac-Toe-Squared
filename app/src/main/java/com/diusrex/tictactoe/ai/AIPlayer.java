@@ -5,14 +5,16 @@ import java.io.PrintStream;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.board_status.BoardStatus;
 import com.diusrex.tictactoe.logic.GeneralTicTacToeLogic;
-import com.diusrex.tictactoe.logic.StringSaver;
 
 public abstract class AIPlayer {
     public Move getPositionToPlay(BoardStatus board) {
-        String copyString = StringSaver.getSaveString(board);
-
-        BoardStatus newBoard = new BoardStatus(board);
-        return choosePosition(StringSaver.loadBoardFromString(newBoard, copyString));
+        BoardStatus newBoard;
+        try {
+            newBoard = (BoardStatus) board.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException("Was unable to clone board");
+        }
+        return choosePosition(newBoard);
     }
 
     protected boolean canPlayInAnySection(BoardStatus board) {
