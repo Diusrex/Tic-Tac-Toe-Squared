@@ -10,7 +10,6 @@ import com.diusrex.tictactoe.data_structures.position.BoxPosition;
 import com.diusrex.tictactoe.data_structures.position.SectionPosition;
 import com.diusrex.tictactoe.logic.GridLists;
 import com.diusrex.tictactoe.logic.tests.TestUtils;
-import com.diusrex.tictactoe.textbased.HumanPlayer;
 
 public class BoardStatusFactoryTests {
     private static final Player un = Player.Unowned;
@@ -182,7 +181,6 @@ public class BoardStatusFactoryTests {
         assertPointOwnerGridsAreEqual(board, wantedPlayerGrid);
         assertSectionOwnerGridsAreEqual(board, wantedSectionOwnerGrid);
         
-        HumanPlayer.printOutBoard(board);
         Move validMove = Move.make(toPlayInto, BoxPosition.make(0, 0), nextPlayer);
         TestUtils.applyMoveToBoard(board, validMove);
         

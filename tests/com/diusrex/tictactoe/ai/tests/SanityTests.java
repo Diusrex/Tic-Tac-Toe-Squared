@@ -20,9 +20,10 @@ import com.diusrex.tictactoe.ai.UnScalingMiniMaxPlayer;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;
 import com.diusrex.tictactoe.data_structures.board_status.BoardStatus;
+import com.diusrex.tictactoe.data_structures.board_status.BoardStatusFactory;
+import com.diusrex.tictactoe.data_structures.board_status.StringSaver;
+import com.diusrex.tictactoe.data_structures.position.SectionPosition;
 import com.diusrex.tictactoe.logic.PlayerFactory;
-import com.diusrex.tictactoe.logic.StandardTicTacToeEngine;
-import com.diusrex.tictactoe.logic.StringSaver;
 import com.diusrex.tictactoe.logic.tests.TestUtils;
 
 // Some of the board state tests are so long because none of the players will prefer winning quickly.
@@ -84,61 +85,58 @@ public class SanityTests {
     }
 
     /*
-     Grid:
-
-     0 2 2  1 2 1  0 1 1
-     2 2 2  2 0 2  2 2 2
-     1 0 0  1 2 1  1 2 0
-
-     1 1 1  1 0 2  1 1 1
-     0 0 0  0 2 1  0 1 2
-     0 0 0  1 1 2  0 0 0
-
-     2 2 2  1 2 0  0 1 0
-     0 1 0  0 2 0  0 1 0
-     2 0 0  0 1 0  0 0 2
-
-     With the ownership grid:
-     2 0 2
-     1 0 1
-     2 0 0
-
      Player is playing into middle (as P1). Correct move causes win, incorrect causes other player to win
      */
     public static BoardStatus getSimpleBoardWhereWillEndByTwoTurns() {
-        BoardStatus board = new BoardStatus(new StandardTicTacToeEngine());
-        StringSaver.loadBoardFromString(board,
-                "110010011211021020020002102102100210220220201200120100100012011011001201201202122100100212211011021221201201121121121212211111122222111112022002102022021111111211121121021022122222221011012212001001021000100202201011010210201201221212112112");
-        return board;
+        final Player un = Player.Unowned;
+        final Player p1 = Player.Player_1;
+        final Player p2 = Player.Player_2;
+        return BoardStatusFactory.createSpecificStandardBoard(Player.Player_1,
+                SectionPosition.make(1, 1), new Player[][]{
+            {un, p2, p2, p1, p2, p1, un, p1, p1},
+            {p2, p2, p2, p2, un, p2, p2, p2, p2},
+            {p1, un, un, p1, p2, p1, p1, p2, un},
+            
+            {p1, p1, p1, p1, un, p2, p1, p1, p1},
+            {un, un, un, un, p2, p1, un, p1, p2},
+            {un, un, un, p1, p1, p2, un, un, un},
+            
+            {p2, p2, p2, p1, p2, un, un, p1, un},
+            {un, p1, un, un, p2, un, un, p1, un},
+            {p2, un, un, un, p1, un, un, un, p2}
+        }, new Player[][]{
+            {p2, un, p2},
+            {p1, un, p1},
+            {p2, un, un}
+        });
     }
 
     /*
-    Grid:
-
-    2 1 1  1 1 2  2 1 2
-    2 1 1  2 1 2  1 2 2
-    1 1 1  1 2 2  1 1 2
-
-    1 2 1  2 2 1  2 1 1
-    1 1 1  2 1 2  2 1 1
-    1 2 1  1 2 2  2 1 1
-
-    2 2 2  2 1 2  2 2 1
-    2 2 2  2 1 2  2 1 2
-    1 2 0  1 1 2  0 1 1
-
-    With the ownership grid:
-    1 2 2
-    1 1 2
-    2 1 0
 
     Player is playing into middle (as P2). Can play into bottom right and win, or bottom left and lose.
     */
     private BoardStatus getBoardWherePlayOutsideSectionToWin() {
-        BoardStatus board = new BoardStatus(new StandardTicTacToeEngine());
-        StringSaver.loadBoardFromString(board,
-                "11201201121102102112111111100200021020020020120002001111122222201202222211111102101111101201111111221211111212212112100200211210120121121022020210221221221220020022122012010010001201021021221202102012010110110210001000020010110202201011021221101102222222122212212012021221121120020012112012012012020220021021021010110012012212210210021022022001101122121011012212121122022012112222221211221221111");
-        return board;
+        final Player un = Player.Unowned;
+        final Player p1 = Player.Player_1;
+        final Player p2 = Player.Player_2;
+        return BoardStatusFactory.createSpecificStandardBoard(Player.Player_2,
+                SectionPosition.make(1, 1), new Player[][]{
+            {p2, p1, p1, p1, p1, p2, p2, p1, p2},
+            {p2, p1, p1, p2, p1, p2, p1, p2, p2},
+            {p1, p1, p1, p1, p2, p2, p1, p1, p2},
+            
+            {p1, p2, p1, p2, p2, p1, p2, p1, p1},
+            {p1, p1, p1, p2, p1, p2, p2, p1, p1},
+            {p1, p2, p1, p1, p2, p2, p2, p1, p1},
+            
+            {p2, p2, p2, p2, p1, p2, p2, p2, p1},
+            {p2, p2, p2, p2, p1, p2, p2, p1, p2},
+            {p1, p2, un, p1, p1, p2, un, p1, p1}
+        }, new Player[][]{
+            {p1, p2, p2},
+            {p1, p1, p2},
+            {p2, p1, un}
+        });
     }
 
     private class FullMonteCarloPlayerWrapper extends FullMonteCarloPlayer {
