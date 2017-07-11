@@ -38,7 +38,7 @@ public class BoardStatus implements Cloneable {
 
     protected MainGrid sectionsOwnersGrid;
 
-    private Stack<Move> allMoves;
+    Stack<Move> allMoves;
 
     public BoardStatus(TicTacToeEngine engine) {
         this.engine = engine;
