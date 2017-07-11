@@ -3,9 +3,9 @@ package com.diusrex.tictactoe.ai.tests;
 import com.diusrex.tictactoe.ai.*;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.board_status.BoardStatus;
+import com.diusrex.tictactoe.data_structures.board_status.StringSaver;
 import com.diusrex.tictactoe.logic.PlayerFactory;
 import com.diusrex.tictactoe.logic.StandardTicTacToeEngine;
-import com.diusrex.tictactoe.logic.StringSaver;
 
 import org.junit.Before;
 import org.junit.Test;

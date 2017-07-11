@@ -1,7 +1,7 @@
 package com.diusrex.tictactoe.ai.tournament;
 
 import com.diusrex.tictactoe.ai.AIPlayer;
-import com.diusrex.tictactoe.ai.FullMonteCarloPlayer;
+import com.diusrex.tictactoe.ai.scoring_calculations.fixed.StaticScorer;
 import com.diusrex.tictactoe.ai.tournament.recording.GameTimeRecording;
 import com.diusrex.tictactoe.data_structures.Move;
 import com.diusrex.tictactoe.data_structures.Player;

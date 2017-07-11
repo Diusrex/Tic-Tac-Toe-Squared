@@ -2,10 +2,10 @@ package com.diusrex.tictactoe.ai;
 
 import com.diusrex.tictactoe.data_structures.*;
 import com.diusrex.tictactoe.data_structures.board_status.BoardStatus;
+import com.diusrex.tictactoe.data_structures.board_status.StringSaver;
 import com.diusrex.tictactoe.data_structures.position.BoxPosition;
 import com.diusrex.tictactoe.data_structures.position.SectionPosition;
 import com.diusrex.tictactoe.logic.GridLists;
-import com.diusrex.tictactoe.logic.StringSaver;
 
 import java.io.PrintStream;
 import java.util.*;

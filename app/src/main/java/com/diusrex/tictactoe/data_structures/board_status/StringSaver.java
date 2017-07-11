@@ -1,12 +1,13 @@
-package com.diusrex.tictactoe.logic;
+package com.diusrex.tictactoe.data_structures.board_status;
 
 import java.util.Stack;
 
 import com.diusrex.tictactoe.data_structures.Move;
-import com.diusrex.tictactoe.data_structures.board_status.BoardStatus;
 
 /*
  * Is to be used to save/load the state of the board from a string.
+ * The provided string MUST be a valid game, according to the BoardStatus's game engine.
+ * Should ONLY be used for storing a game, otherwise use clone.
  * Will work with any special board, so long as the given board for loadBoardFromString has the same Engine as the one used for getSaveString.
  */
 public class StringSaver {
