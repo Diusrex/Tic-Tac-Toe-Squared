@@ -24,6 +24,6 @@ public interface AndroidPlayerController {
     // Mostly to allow the AI player to cancel their action
     void undoWasPressed();
 
-    // Basically, if it is human players turn, and they hit undo, should skip the AI players turn and undo that
+    // Basically, if it is human player's turn, and they hit undo, should skip the AI player's turn and undo that
     boolean mayUndo();
 }
